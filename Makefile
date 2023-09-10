@@ -6,3 +6,6 @@ clean:
 
 env:
 	pip freeze > requirements.txt
+
+style:
+	jupyter-book config sphinx .
