@@ -1,0 +1,1484 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to Probabilistic Machine Learning &#8212; Introduction to Probabilistic Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Lecture #1: Course Overview" href="lectures/lecture_1_notes.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Introduction to Probabilistic Machine Learning
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Models and Exact Inference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_1_notes.html">1. Lecture #1: Course Overview</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_2_notes.html">7. Lecture #2: Maximimum Likelihood Estimation</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_3_notes.html">14. Lecture #3: Bayesian Modeling</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_4_notes.html">21. Lecture #4: Bayesian versus Frequentist Inference</a></li>
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Models and Sampling-Based Inference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_5_notes.html">1. Lecture #5: Sampling for Posterior Simulation</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_6_notes.html">7. Lecture #6: Monte Carlo Integration</a></li>
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_7_notes.html">14. Lecture #7: Markov Chain Monte Carlo</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_8_notes.html">18. Lecture #8: Metropolis-Hastings and Gibbs</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_9_notes.html">23. Lecture #9: Latent Variable Models and MLE</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Models and Gradient-Based Inference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_10_notes.html">1. Lecture #10: Bayesian Latent Variable Models and Variational Inference</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_11_notes.html">3. Lecture #11: Hierarchical Models</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_12_notes.html">7. Lecture #12: Logistic Regression and Gradient Descent</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_13_notes.html">11. Lecture #13: Stochastic Gradient Descent and Simulated Annealing</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_14_notes.html">17. Lecture #14: Hamiltonian Monte Carlo</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_15_notes.html">21. Lecture #15: Parallel Tempering and Stochastic HMC</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_16_notes.html">25. Lecture #16: Neural Network Models for Regression</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_17_notes.html">31. Lecture #17: Black-box Variational Inference</a></li>
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_18_notes.html">35. Lecture #18: Automatic Differentiation</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_19_notes.html">38. Lecture #19: Variational Inference in Context</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_20_notes.html">43. Lecture #20: Variational Autoencoders</a></li>
+
+
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_21_notes.html">46. Lecture #21: Implementation of Variational Autoencoders</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Probabilistic Machine Learning</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-probabilistic-machine-learning">
+<h1>Introduction to Probabilistic Machine Learning<a class="headerlink" href="#introduction-to-probabilistic-machine-learning" title="Permalink to this heading">#</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This book is currently under construction!</p>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Models and Exact Inference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_1_notes.html">1. Lecture #1: Course Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#am-207-advanced-scientific-computing">1.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_1_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_1_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#outline">1.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_1_notes.html#what-is-this-course-about">2. What is this course about?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#how-do-we-model-patterns-in-data">2.1. How Do We Model Patterns in Data?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#id1">2.2. How Do We Model Patterns in Data?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#what-is-a-model">2.3. What is a Model?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#id2">2.4. What is a Model?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#a-notion-of-error">2.5. A Notion of Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#how-do-we-quantify-the-overall-error">2.6. How do we quantify the overall error?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#model-fitting">2.7. Model Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#linear-regression-in-sklearn">2.8. Linear Regression in <code class="docutils literal notranslate"><span class="pre">sklearn</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#what-is-a-statistical-model">2.9. What is a Statistical Model?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#a-statistical-model-for-regression">2.10. A Statistical Model for Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#how-do-we-quantify-fitness">2.11. How Do We Quantify Fitness?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#id3">2.12. Model Fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#maximimum-likelihood-and-minimum-mean-square-error">2.13. Maximimum Likelihood and Minimum Mean Square Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#model-evaluation">2.14. Model Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#model-interpretation">2.15. Model Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#what-is-a-bayesian-model">2.16. What is a Bayesian Model?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#model-inference">2.17. Model Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#bayesian-linear-regression">2.18. Bayesian Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#bayesian-versus-frequentist-uncertainty">2.19. Bayesian versus Frequentist Uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#id4">2.20. Model Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#why-is-this-hard">2.21. Why is This Hard?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#is-accuracy-enough">2.22. Is Accuracy Enough?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#what-kinds-of-predictive-uncertainty-do-we-want">2.23. What Kinds of Predictive Uncertainty Do We Want?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#id5">2.24. What Kinds of Predictive Uncertainty Do We Want?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#so-now-you-have-predictive-uncertainties-what-are-you-gonna-do-with-them">2.25. So Now You Have Predictive Uncertainties, What Are You Gonna Do With Them?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#how-do-we-explain-decisions-of-machine-learning-models">2.26. How Do We Explain Decisions of Machine Learning Models?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#how-do-you-communicate-ml-predictions-and-does-it-matter">2.27. How Do You Communicate ML Predictions, And Does It Matter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#what-interactions-do-we-need-to-think-about-when-we-design-ml-models">2.28. What Interactions Do We Need to Think About When We Design ML Models?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#the-promises-of-human-ai-systems">2.29. The Promises of Human + AI Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#the-perils-of-human-ai-systems">2.30. The Perils of Human + AI Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#the-potential-social-benifits-of-machine-learning">2.31. The Potential Social Benifits of Machine Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#the-negative-social-impacts-of-machine-learning">2.32. The Negative Social Impacts of Machine Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#why-is-this-happening">2.33. Why Is This Happening?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#alternative-problem-solving-frameworks-for-machine-learning">2.34. Alternative Problem Solving Frameworks for Machine Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#machine-learning-much-more-than-accuracy">2.35. Machine Learning: Much More Than Accuracy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#what-is-am207">2.36. What is AM207?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_1_notes.html#what-technologies-do-you-need-for-this-class">3. What technologies do you need for this class?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#for-meetings">3.1. For Meetings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#gather-town-s-virtual-environment">3.2. <code class="docutils literal notranslate"><span class="pre">gather.town</span></code>’s Virtual Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#for-completing-assignments">3.3. For Completing Assignments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#for-in-class-exercises">3.4. For In-Class Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_1_notes.html#how-is-this-course-structured">4. How is this course structured?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#graded-components">4.1. Graded Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#policies">4.2. Policies</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_1_notes.html#how-do-i-get-help-for-the-course">5. How do I get help for the course?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#teaching-staff">5.1. Teaching Staff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#tf-office-hours">5.2. TF Office Hours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#instructor-office-hours">5.3. Instructor Office Hours</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#piazza">5.4. Piazza</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_1_notes.html#final-words-of-advice">6. Final Words of Advice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#how-we-ve-changed-am207">6.1. How We’ve Changed AM207</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#what-we-are-asking-from-you">6.2. What We are Asking From You</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_1_notes.html#how-to-work-in-teams">6.3. How to Work in Teams</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_2_notes.html">7. Lecture #2: Maximimum Likelihood Estimation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#am-207-advanced-scientific-computing">7.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#outline">7.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_2_notes.html#a-motivating-example">8. A Motivating Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#a-simple-betting-game">8.1. A Simple Betting Game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#estimating-the-bias-of-a-coin">8.2. Estimating the “Bias” of a Coin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_2_notes.html#a-statistical-model-for-a-coin-toss">9. A Statistical Model for a Coin Toss</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#likelihood-for-a-coin-toss">9.1. Likelihood for a Coin Toss</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_2_notes.html#maximum-likelihood-estimation">10. Maximum Likelihood Estimation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#parameter-estimation-maximum-likelihood">10.1. Parameter Estimation: Maximum Likelihood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#maximizing-likelihood-is-equivalent-to-maximizing-log-likelihood">10.2. Maximizing Likelihood is Equivalent to Maximizing Log-Likelihood</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_2_notes.html#convex-optimization-constrained-and-unconstrained">11. Convex Optimization: Constrained and Unconstrained</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#introduction-to-optimization-types-of-optima">11.1. Introduction to Optimization: Types of Optima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#stationary-points">11.2. Stationary Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#characterization-of-local-optima">11.3. Characterization of Local Optima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#characterization-of-global-optima">11.4. Characterization of Global Optima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#unconstrained-optimization">11.5. Unconstrained Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#example-poisson-distribution">11.6. Example: Poisson Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#example-univariate-gaussian-distribution">11.7. Example: (Univariate) Gaussian Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#likelihood-and-log-likelihood">Likelihood and log-likelihood</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#id1">11.8. Example: (Univariate) Gaussian Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#gradient-of-log-likelihood">Gradient of log-likelihood</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#id2">11.9. Example: (Univariate) Gaussian Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#stationary-points-of-the-gradient">Stationary points of the gradient</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#id3">11.10. Example: (Univariate) Gaussian Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#characterize-local-and-global-optima">Characterize local and global optima</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#example-multivariate-gaussian-distribution">11.11. Example: (Multivariate) Gaussian Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#constrained-optimization">11.12. Constrained Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#constrained-optimization-via-lagrange-multipliers">11.13. Constrained Optimization via Lagrange Multipliers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#example-binomial-distribution">11.14. Example: Binomial Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#id4">Likelihood and Log-Likelihood</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#id5">11.15. Example: Binomial Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#id6">Gradient of log-likelihood</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#id7">11.16. Example: Binomial Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#stationary-points-of-the-lagrangian">Stationary points of the Lagrangian</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#id8">11.17. Example: Binomial Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_2_notes.html#characterize-global-optima">Characterize global optima</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#what-is-a-good-estimator">11.18. What Is a Good Estimator?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_2_notes.html#properties-of-mle">12. Properties of MLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#desiderata-of-estimators">12.1. Desiderata of Estimators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#id9">12.2. Desiderata of Estimators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#id10">12.3. Desiderata of Estimators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#id11">12.4. Properties of MLE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#example-the-mle-can-be-biased">12.5. Example: The MLE Can Be Biased</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_2_notes.html#uncertainty-quantification">13. Uncertainty Quantification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#confidence-intervals">13.1. Confidence Intervals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#interpretation-of-confidence-intervals">13.2. Interpretation of Confidence Intervals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_2_notes.html#bootstrap-confidence-intervals">13.3. Bootstrap Confidence Intervals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_3_notes.html">14. Lecture #3: Bayesian Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_3_notes.html#am-207-advanced-scientific-computing">15. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">15.1. Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#fall-2021">15.2. Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_3_notes.html#outline">16. Outline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_3_notes.html#review-of-the-method-of-maximum-likelihood">17. Review of the Method of Maximum Likelihood</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#the-method-of-maximum-likelihood">17.1. The Method of Maximum Likelihood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#evaluating-the-mle">17.2. Evaluating the MLE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#properties-of-the-maximum-likelihood-estimator">17.3. Properties of The Maximum Likelihood Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#is-bias-always-bad">17.4. Is Bias Always Bad?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_3_notes.html#decomposition-of-mse">Decomposition of MSE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_3_notes.html#example-of-the-bias-variance-trade-off">Example of the Bias Variance Trade-off</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#limitations-of-mle-overfitting-under-scarcity-of-data">17.5. Limitations of MLE: Overfitting Under Scarcity of Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#id1">17.6. Limitations of MLE: Overfitting Under Scarcity of Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#regularization">17.7. Regularization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_3_notes.html#models-for-real-data">18. Models for Real Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#die-roll">18.1. Die Roll</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#video-ranking">18.2. Video Ranking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#kidney-cancer-rates">18.3. Kidney Cancer Rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#id2">18.4. Kidney Cancer Rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#birth-weights">18.5. Birth Weights</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_3_notes.html#the-beta-binomial-model">19. The Beta-Binomial Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#the-coin-toss-model-revisited">19.1. The Coin Toss Model: Revisited</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#incoporating-prior-beliefs">19.2. Incoporating Prior Beliefs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#id3">19.3. The Beta-Binomial Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#posterior-for-the-beta-binomial-model">19.4. Posterior for the Beta-Binomial Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#interpreting-the-posterior-bayesian-update">19.5. Interpreting the Posterior: Bayesian Update</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#simulation-bayesian-update-for-the-coin-flip">19.6. Simulation: Bayesian Update for the Coin Flip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#simulation-iterated-bayesian-update-for-the-coin-flip">19.7. Simulation: Iterated Bayesian Update for the Coin Flip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#making-predictions">19.8. Making Predictions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#simulation-posterior-predictive-for-the-coin-flip">19.9. Simulation: Posterior Predictive for the Coin Flip</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_3_notes.html#bayesian-modeling-a-summary">20. Bayesian Modeling - A Summary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#the-bayesian-modeling-process">20.1. The Bayesian Modeling Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#evaluating-bayesian-models">20.2. Evaluating Bayesian Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#where-do-priors-come-from">20.3. Where do Priors Come From?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_3_notes.html#uninformative-priors-how-to-say-i-don-t-know">20.4. Uninformative Priors: How to Say I Don’t Know</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_4_notes.html">21. Lecture #4: Bayesian versus Frequentist Inference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#am-207-advanced-scientific-computing">21.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_4_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_4_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#outline">21.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_4_notes.html#review-of-bayesian-modeling">22. Review of Bayesian Modeling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#the-bayesian-modeling-process">22.1. The Bayesian Modeling Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#bayesian-update">22.2. Bayesian Update</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#model-evaluation">22.3. Model Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#components-of-bayesian-inference">22.4. Components of Bayesian Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_4_notes.html#examples-of-conjugate-and-non-conjugate-models">23. Examples of Conjugate and Non-Conjugate Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#bayesian-model-for-univariate-gaussian-likelihood-with-known-variance">23.1. Bayesian Model for (Univariate) Gaussian Likelihood with Known Variance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_4_notes.html#the-bayesian-model">The Bayesian Model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#id1">23.2. Bayesian Model for (Univariate) Gaussian Likelihood with Known Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#bayesian-model-for-univariate-gaussian-likelihood-with-known-mean">23.3. Bayesian Model for (Univariate) Gaussian Likelihood with Known Mean</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_4_notes.html#id2">The Bayesian Model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#id3">23.4. Bayesian Model for (Univariate) Gaussian Likelihood with Known Mean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#bayesian-model-for-univariate-gaussian-likelihood-with-unknown-mean-and-variance">23.5. Bayesian Model for (Univariate) Gaussian Likelihood with Unknown Mean and Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#bayesian-model-for-poisson-likelihood">23.6. Bayesian Model for Poisson Likelihood</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_4_notes.html#id4">The Bayesian Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_4_notes.html#inference">Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#non-conjugate-models">23.7. Non-Conjugate Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_4_notes.html#connections-with-frequentist-inference">24. Connections with Frequentist Inference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#point-estimates-from-the-posterior">24.1. Point Estimates from the Posterior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#point-estimates-can-be-misleading">24.2. Point Estimates Can Be Misleading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#id5">24.3. Point Estimates Can Be Misleading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#comparison-of-posterior-point-estimates-and-mle">24.4. Comparison of Posterior Point Estimates and MLE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#the-coin-toss-example-revisited-yet-again">24.5. The Coin Toss Example: Revisited Yet Again</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#law-of-large-numbers-for-bayesian-inference">24.6. Law of Large Numbers for Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_4_notes.html#computational-comparisons">24.7. Computational Comparisons</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Models and Sampling-Based Inference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_5_notes.html">1. Lecture #5: Sampling for Posterior Simulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#am-207-advanced-scientific-computing">1.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_5_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_5_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#outline">1.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_5_notes.html#basics-of-sampling">2. Basics of Sampling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#motivation">2.1. Motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#what-is-sampling">2.2. What is Sampling?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#simulating-a-uniform-random-variable-linear-congruence">2.3. Simulating a Uniform Random Variable: Linear Congruence</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_5_notes.html#inverse-cdf-sampling">3. Inverse CDF Sampling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#the-cumulative-distribution-function">3.1. The Cumulative Distribution Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#inverse-cdf-sampling-an-intuition">3.2. Inverse CDF Sampling: An Intuition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#id1">3.3. Inverse CDF Sampling: An Intuition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#inverse-cdf-sampling-algorithm">3.4. Inverse CDF Sampling: Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#inverse-cdf-sampling-proof-of-correctness">3.5. Inverse CDF Sampling: Proof of Correctness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#simulating-an-exponential-random-variable">3.6. Simulating an Exponential Random Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#id2">3.7. Simulating an Exponential Random Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#simulating-a-bernoulli-random-variable">3.8. Simulating a Bernoulli Random Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#id3">3.9. Simulating a Bernoulli Random Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#what-can-we-simulate">3.10. What Can We Simulate?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_5_notes.html#rejection-sampling">4. Rejection Sampling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#rejection-sampling-an-intuition">4.1. Rejection Sampling: An Intuition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#rejection-sampling-algorithm">4.2. Rejection Sampling: Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#rejection-sampling-proof-of-correctness">4.3. Rejection Sampling: Proof of Correctness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#rejection-sampling-efficiency">4.4. Rejection Sampling: Efficiency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#simulating-a-normal-random-variable">4.5. Simulating a Normal Random Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#id4">4.6. Simulating a Normal Random Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#id5">4.7. What Can We Simulate?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#limitations-of-rejection-sampling-in-high-dimensions">4.8. Limitations of Rejection Sampling in High Dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_5_notes.html#gibbs-sampling">5. Gibbs Sampling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#semi-conjugate-priors">5.1. Semi-Conjugate Priors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#gibbs-sampling-an-intuition">5.2. Gibbs Sampling: An Intuition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#gibbs-sampling-algorithm">5.3. Gibbs Sampling: Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#simulating-the-posterior-of-a-normal-normal-inverse-gamma-model">5.4. Simulating the Posterior of a Normal-Normal-Inverse Gamma Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_5_notes.html#summarizing-sampling">6. Summarizing Sampling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#samplers-for-simulating-random-variables">6.1. Samplers for Simulating Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#how-to-evaluate-a-sampler">6.2. How to Evaluate a Sampler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#why-are-we-sampling-again">6.3. Why are We Sampling Again?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_5_notes.html#what-if-we-want-posterior-point-estimates">6.4. What If We Want Posterior Point Estimates?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_6_notes.html">7. Lecture #6: Monte Carlo Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#am-207-advanced-scientific-computing">7.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_6_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_6_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#outline">7.2. Outline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#motivation">7.3. Motivation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_6_notes.html#basics-of-monte-carlo-integration">8. Basics of Monte Carlo Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#naive-monte-carlo-estimation-of-integrals">8.1. Naive Monte Carlo Estimation of Integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#the-consistency-and-unbiasedness-of-monte-carlo-estimators">8.2. The Consistency and Unbiasedness of Monte Carlo Estimators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#the-variance-and-error-of-monte-carlo-estimators">8.3. The Variance and Error of Monte Carlo Estimators</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_6_notes.html#variance-reduction-control-variates">9. Variance Reduction: Control Variates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#a-baseline-for-variance-of-monte-carlo-estimates">9.1. A Baseline for Variance of Monte Carlo Estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#the-general-idea-of-control-variates">9.2. The General Idea of Control Variates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#variance-of-control-variates">9.3. Variance of Control Variates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#the-nitty-gritty-of-control-variates">9.4. The Nitty Gritty of Control Variates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#example-control-variates">9.5. Example: Control Variates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#id1">9.6. Example: Control Variates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#id2">9.7. Example: Control Variates</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_6_notes.html#variance-reduction-stratified-sampling">10. Variance Reduction: Stratified Sampling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#the-general-idea-of-stratified-sampling">10.1. The General Idea of Stratified Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#the-stratified-sampling-monte-carlo-estimator">10.2. The Stratified Sampling Monte Carlo Estimator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#the-nitty-gritty-of-stratified-sampling-variance-reduction">10.3. The Nitty Gritty of Stratified Sampling: Variance Reduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#example-stratified-sampling">10.4. Example: Stratified Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#id3">10.5. Example: Stratified Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#id4">10.6. Example: Stratified Sampling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_6_notes.html#variance-reduction-importance-sampling">11. Variance Reduction: Importance Sampling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#the-general-idea-of-importance-sampling">11.1. The General Idea of Importance Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#variance-of-importance-sampling">11.2. Variance of Importance Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#the-nitty-gritty-of-importance-sampling-the-design-of-q">11.3. The Nitty Gritty of Importance Sampling: the Design of <span class="math notranslate nohighlight">\(q\)</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#example-importance-sampling">11.4. Example: Importance Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#id5">11.5. Example: Importance Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#id6">11.6. Example: Importance Sampling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_6_notes.html#summary-of-monte-carlo-integration">12. Summary of Monte Carlo Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#monte-carlo-integration">12.1. Monte Carlo Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#variance-reduction-for-monte-carlo-integration">12.2. Variance Reduction for Monte Carlo Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_6_notes.html#application-monte-carlo-estimation-of-arbitrary-integrals">13. Application: Monte Carlo Estimation of Arbitrary Integrals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#arbitrary-definite-integrals">13.1. Arbitrary Definite Integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#rewriting-an-arbitrary-definite-integral-as-an-expectation">13.2. Rewriting an Arbitrary Definite Integral as an Expectation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_6_notes.html#how-do-you-factor-the-integrand-f">13.3. How Do You Factor the Integrand <span class="math notranslate nohighlight">\(f\)</span>?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_7_notes.html">14. Lecture #7: Markov Chain Monte Carlo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#am-207-advanced-scientific-computing">14.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_7_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_7_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#outline">14.2. Outline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#motivation">14.3. Motivation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_7_notes.html#gibbs-sampler-for-a-discrete-distribution">15. Gibbs Sampler for a Discrete Distribution</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#gibbs-sampler-for-a-bivariate-discrete-distribution">15.1. Gibbs Sampler for a Bivariate Discrete Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#gibbs-sampler-as-transition-matrix-and-state-diagram">15.2. Gibbs Sampler as Transition Matrix and State Diagram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#limiting-distribution">15.3. Limiting Distribution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_7_notes.html#definition-and-properties-of-markov-chains">16. Definition and Properties of Markov Chains</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#markov-chains-in-discrete-and-continuous-spaces">16.1. Markov Chains in Discrete and Continuous Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#transition-matrices-and-kernels">16.2. Transition Matrices and Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#chapman-kolmogorov-equations-dynamics-as-matrix-multiplication">16.3. Chapman-Kolmogorov Equations: Dynamics as Matrix Multiplication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#example-smart-phone-market-model">16.4. Example: Smart Phone Market Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#id1">16.5. Example: Smart Phone Market Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#chapman-kolmogorov-equations-continuous-state-space">16.6. Chapman-Kolmogorov Equations: Continuous State Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#properties-of-markov-chains-irreducibility">16.7. Properties of Markov Chains: Irreducibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#properties-of-markov-chains-aperiodicity">16.8. Properties of Markov Chains: Aperiodicity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#properties-of-markov-chains-stationary-distributions">16.9. Properties of Markov Chains: Stationary Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#properties-of-markov-chains-limiting-distributions">16.10. Properties of Markov Chains: Limiting Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#fundamental-theorm-of-markov-chains">16.11. Fundamental Theorm of Markov Chains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#properties-of-markov-chains-reversibility">16.12. Properties of Markov Chains: Reversibility</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#reversibility-and-stationary-distributions">16.13. Reversibility and Stationary Distributions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_7_notes.html#markov-chain-monte-carlo">17. Markov Chain Monte Carlo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#markov-chain-monte-carlo-samplers">17.1. Markov Chain Monte Carlo Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#what-do-we-need-to-prove-to-get-pt-p-and-underset-n-to-infty-lim-pi-n-p">17.2. What Do We Need to Prove to get <span class="math notranslate nohighlight">\(pT=p\)</span> and <span class="math notranslate nohighlight">\(\underset{n\to \infty}{\lim} \pi^{(n)} = p\)</span>?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_7_notes.html#gibbs-as-mcmc">17.3. Gibbs as MCMC</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_8_notes.html">18. Lecture #8: Metropolis-Hastings and Gibbs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#am-207-advanced-scientific-computing">18.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_8_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_8_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#outline">18.2. Outline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#motivation">18.3. Motivation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_8_notes.html#markov-chain-monte-carlo">19. Markov Chain Monte Carlo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#markov-chain-monte-carlo-samplers">19.1. Markov Chain Monte Carlo Samplers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#what-do-we-need-to-prove-to-get-pt-p-and-underset-n-to-infty-lim-pi-n-p">19.2. What Do We Need to Prove to get <span class="math notranslate nohighlight">\(pT=p\)</span> and <span class="math notranslate nohighlight">\(\underset{n\to \infty}{\lim} \pi^{(n)} = p\)</span>?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#metropolis-hastings-the-idea">19.3. Metropolis-Hastings: The Idea</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#metropolis-hastings-the-algorithm">19.4. Metropolis-Hastings: The Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#metropolis-hastings-proof-of-correctness">19.5. Metropolis-Hastings: Proof of Correctness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#metropolis-hastings-proof-of-detailed-balance">19.6. Metropolis-Hastings: Proof of Detailed Balance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#gibbs-as-metropolis-hastings">19.7. Gibbs as Metropolis-Hastings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_8_notes.html#simple-mcmc-diagnostics">20. Simple MCMC Diagnostics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#traceplot-checks-for-mixing">20.1. Traceplot Checks for Mixing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#burn-in-and-thinning">20.2. Burn-in and Thinning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#example-sampling-from-a-mixture-of-two-gaussians">20.3. Example: Sampling from a Mixture of Two Gaussians</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#visual-checks-for-mixing">20.4. Visual Checks for Mixing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#visual-checks-can-be-misleading">20.5. Visual Checks Can be Misleading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#the-importance-of-tuning-your-sampler">20.6. The Importance of Tuning Your Sampler</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_8_notes.html#more-mcmc-diagnostics-and-best-practices">21. More MCMC Diagnostics and Best Practices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#more-rigorous-checks-for-convergence">21.1. More Rigorous Checks for Convergence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#visual-diagnostics-traceplots-of-multiple-chains">21.2. Visual Diagnostics: Traceplots of Multiple Chains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#autocorrelation-the-effective-sample-size">21.3. Autocorrelation: the “Effective” Sample Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#visual-diagnostics-the-autocorrelation-plot">21.4. Visual Diagnostics: The Autocorrelation Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#quantitative-diagnostics">21.5. Quantitative Diagnostics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_8_notes.html#review-of-statistical-modeling">22. Review of Statistical Modeling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#what-we-can-do-so-far">22.1. What We Can Do So Far</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#what-happens-after-inference">22.2. What Happens After Inference?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_8_notes.html#the-modeling-process">22.3. The Modeling Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_9_notes.html">23. Lecture #9: Latent Variable Models and MLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#am-207-advanced-scientific-computing">23.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#outline">23.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_9_notes.html#motivation-for-latent-variable-models">24. Motivation for Latent Variable Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#a-model-for-birth-weights">24.1. A Model for Birth Weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#a-similarity-measure-for-distributions-kullbackleibler-divergence">24.2. A Similarity Measure for Distributions: Kullback–Leibler Divergence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#why-is-the-kl-bounded-below-by-0">24.3. Why is the KL bounded below by 0?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#class-membership-as-a-latent-variable">24.4. Class Membership as a Latent Variable</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_9_notes.html#common-latent-variable-models">25. Common Latent Variable Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#latent-variable-models">25.1. Latent Variable Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#gaussian-mixture-models-gmms">25.2. Gaussian Mixture Models (GMMs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#item-response-models">25.3. Item-Response Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#factor-analysis-models">25.4. Factor Analysis Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#id1">Applications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_9_notes.html#maximum-likelihood-estimation-for-latent-variable-models-expectation-maximization">26. Maximum Likelihood Estimation for Latent Variable Models: Expectation Maximization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#expectation-maximization-estimating-the-mle-for-latent-variable-models">26.1. Expectation Maximization: Estimating the MLE for Latent Variable Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#step-i-the-m-step">Step I: the M-step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#step-ii-the-e-step">Step II: the E-step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#iteration">Iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#question-why-don-t-gradients-commute-with-expectation">26.2. Question: Why don’t gradients commute with expectation?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#question-why-do-we-need-to-maximize-the-elbo-with-respect-to-q">26.3. Question: Why do we need to maximize the ELBO with respect to q?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#the-expectation-maximization-algorithm">26.4. The Expectation Maximization Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#the-auxiliary-function">26.5. The Auxiliary Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#monotonicity-and-convergence-of-em">26.6. Monotonicity and Convergence of EM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#disclaimer">Disclaimer:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#example-em-for-the-gaussian-mixture-model-of-birth-weight">26.7. Example: EM for the Gaussian Mixture Model of Birth Weight</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#the-e-step">The E-Step</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#id2">26.8. Example: EM for the Gaussian Mixture Model of Birth Weight</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#setting-up-the-m-step">Setting Up the M-Step</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#id3">26.9. Example: EM for the Gaussian Mixture Model of Birth Weight</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#solving-the-m-step">Solving the M-Step</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#id4">26.10. Example: EM for the Gaussian Mixture Model of Birth Weight</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#all-together">All Together</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#implementing-em-for-the-gaussian-mixture-model-of-birth-weight">26.11. Implementing EM for the Gaussian Mixture Model of Birth Weight</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#example-em-for-gaussian-mixture-models-multivariate">26.12. Example: EM for Gaussian Mixture Models (Multivariate)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#e-step">E-step:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#m-step">M-Step:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#sanity-check-log-likelihood-during-training">26.13. Sanity Check: Log-Likelihood During Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_9_notes.html#review-of-em-for-latent-variable-models">27. Review of EM for Latent Variable Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_9_notes.html#review-latent-variable-models">27.1. Review: Latent Variable Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#example-gaussian-mixture-models-gmms">Example: Gaussian Mixture Models (GMMs)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_9_notes.html#maximum-likelihood-estimate-inference-for-latent-variable-models">Maximum Likelihood Estimate Inference for Latent Variable Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Models and Gradient-Based Inference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_10_notes.html">1. Lecture #10: Bayesian Latent Variable Models and Variational Inference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#am-207-advanced-scientific-computing">1.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_10_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_10_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#outline">1.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_10_notes.html#bayesian-latent-variable-models">2. Bayesian Latent Variable Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#id1">2.1. Bayesian Latent Variable Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#challenges-in-bayesian-inference">2.2. Challenges in Bayesian Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#the-idea-of-variational-inference">2.3. The Idea of Variational Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#the-design-of-the-variational-objective">2.4. The Design of the Variational Objective</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#variational-inference-as-optimization">2.5. Variational Inference as Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#gradients-of-the-elbo">2.6. Gradients of the ELBO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#coordinate-ascent-variational-inference">2.7. Coordinate Ascent Variational Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#maximizing-the-elbo-via-coordinate-ascent">2.8. Maximizing the ELBO via Coordinate Ascent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#proof-of-the-update-rule-for-q-psi-i-lambda-text-new-i">2.9. Proof of the Update Rule for <span class="math notranslate nohighlight">\(q(\psi_i | \lambda^{\text{new}}_i)\)</span></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_10_notes.html#step-1-show-that-mathbb-e-psi-sim-q-psi-lambda-ldots-mathbb-e-psi-i-sim-q-psi-i-lambda-i-left-mathbb-e-psi-i-sim-q-psi-i-lambda-i-ldots-right">Step 1: Show that <span class="math notranslate nohighlight">\(\mathbb{E}_{\psi \sim q(\psi|\lambda)}[\ldots] = \mathbb{E}_{\psi_i \sim q(\psi_i|\lambda_i)}\left[\mathbb{E}_{\psi_{-i} \sim q(\psi_{-i}|\lambda_{-i})}[\ldots] \right]\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_10_notes.html#step-2-show-that-underset-lambda-i-max-mathbb-e-psi-i-sim-q-psi-i-lambda-i-ldots-equiv-underset-lambda-i-min-d-text-kl-ldots">Step 2: Show that <span class="math notranslate nohighlight">\(\underset{\lambda_i}{\max}\mathbb{E}_{\psi_i \sim q(\psi_i|\lambda_i)}[\ldots] \equiv \underset{\lambda_i}{\min} D_{\text{KL}}[\ldots]\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_10_notes.html#step-3-minimize-the-kl-divergence">Step 3: Minimize the KL-divergence</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#bayesian-gaussian-mixture-models">2.10. Bayesian Gaussian Mixture Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#variational-inference-for-bayesian-gaussian-mixture-models">2.11. Variational Inference for Bayesian Gaussian Mixture Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#coordinate-ascent-variational-inference-updates-for-bayesian-gmm">2.12. Coordinate Ascent Variational Inference Updates for Bayesian GMM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_10_notes.html#update-rule-for-q-z-n-phi-n">Update rule for <span class="math notranslate nohighlight">\(q(Z_n | \phi_n)\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_10_notes.html#update-rule-for-q-mu-k-m-k-s-k-2">Update rule for <span class="math notranslate nohighlight">\(q(\mu_k | m_k, s_k^2)\)</span></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#implemenation-of-cavi-for-bayesian-gmm">2.13. Implemenation of CAVI for Bayesian GMM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_10_notes.html#sanity-check-elbo-during-training">2.14. Sanity Check: ELBO During Training</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_11_notes.html">3. Lecture #11: Hierarchical Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#am-207-advanced-scientific-computing">3.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_11_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_11_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#outline">3.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_11_notes.html#review-of-statistical-modeling">4. Review of Statistical Modeling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#what-we-can-do-so-far-models">4.1. What We Can Do So Far: Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#what-we-can-do-so-far-inference">4.2. What We Can Do So Far: Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#what-can-we-not-do">4.3. What Can We Not Do?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#what-happens-after-inference">4.4. What Happens After Inference?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#the-modeling-process">4.5. The Modeling Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#evaluating-the-predictive-distributions">4.6. Evaluating the Predictive Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#interpreting-the-data-log-likelihood">4.7. Interpreting the Data Log-Likelihood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#evaluating-and-quantifying-uncertainty">4.8. Evaluating and Quantifying Uncertainty</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_11_notes.html#motivation-for-hierarchical-models">5. Motivation for Hierarchical Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#a-binomial-model-for-movie-rankings">5.1. A Binomial Model for Movie Rankings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#a-beta-binomial-model-for-movie-rankings">5.2. A Beta-Binomial Model for Movie Rankings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#credible-intervals-for-movies-with-the-most-and-the-least-number-of-ratings">5.3. Credible Intervals for Movies with the Most and the Least Number of Ratings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#emprirical-bayes-ml-ii-for-the-beta-binomial-model">5.4. Emprirical Bayes (ML-II) For the Beta-Binomial Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#method-of-moments-for-empirical-bayes-ml-ii">5.5. Method of Moments for Empirical Bayes (ML-II)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#empirical-bayes-and-shrinkage">5.6. Empirical Bayes and Shrinkage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_11_notes.html#hierarchical-models-and-empirical-bayes">6. Hierarchical Models and Empirical Bayes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#a-hierarchical-model-for-movie-rankings">6.1. A Hierarchical Model for Movie Rankings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_11_notes.html#point-estimate-approximations-of-inference-in-hierachical-models-map-ii">6.2. Point Estimate Approximations of Inference in Hierachical Models (MAP-II)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_12_notes.html">7. Lecture #12: Logistic Regression and Gradient Descent</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#am-207-advanced-scientific-computing">7.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_12_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_12_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#outline">7.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_12_notes.html#logistic-regression">8. Logistic Regression</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#coin-toss-revisited-modeling-a-bernoulli-variable-with-covariates">8.1. Coin-Toss Revisited: Modeling a Bernoulli Variable with Covariates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#the-logistic-regression-model">8.2. The Logistic Regression Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#the-relationship-between-logistic-regression-and-classification">8.3. The Relationship Between Logistic Regression and Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_12_notes.html#what-is-classification">What Is Classification?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_12_notes.html#how-do-we-classify">How Do We Classify?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#interpreting-a-logistic-regression-model">8.4. Interpreting a Logistic Regression Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#with-great-explanatory-power-comes-great-responsibility">8.5. With Great Explanatory Power Comes Great Responsibility!</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_12_notes.html#when-not-to-use-sensitive-protected-attributes">When not to use sensitive/protected attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_12_notes.html#when-you-might-want-to-use-sensitive-protected-attributes">When you might want to use sensitive/protected attributes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_12_notes.html#appropriate-usage-of-sensitive-protected-attributes">Appropriate usage of sensitive/protected attributes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#interpreting-a-logistic-regression-model-log-odds">8.6. Interpreting a Logistic Regression Model: Log-Odds</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#maximizing-the-logistic-regression-log-likelihood">8.7. Maximizing the Logistic Regression Log-likelihood</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_12_notes.html#gradient-descent">9. Gradient Descent</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#gradient-as-directional-information">9.1. Gradient as Directional Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#an-intuition-for-gradient-descent">9.2. An Intuition for Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#gradient-descent-the-algorithm">9.3. Gradient Descent: the Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#diagnosing-design-choices-with-the-trajectory">9.4. Diagnosing Design Choices with the Trajectory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#diagnosing-issues-with-the-trajectory">9.5. Diagnosing Issues with the Trajectory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#id1">9.6. Diagnosing Issues with the Trajectory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#gradient-descent-step-size-matters">9.7. Gradient Descent: Step Size Matters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#gradient-descent-for-logistic-regression">9.8. Gradient Descent for Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#but-did-we-optimize-it">9.9. But Did We Optimize It?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_12_notes.html#convex-optimization">10. Convex Optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#convex-sets">10.1. Convex Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#convex-functions">10.2. Convex Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#convex-function-first-order-condition">10.3. Convex Function: First Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#convex-function-second-order-condition">10.4. Convex Function: Second Order Condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#properties-of-convex-functions">10.5. Properties of Convex Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#id2">10.6. Convex Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#convexity-of-the-logistic-regression-negative-log-likelihood">10.7. Convexity of the Logistic Regression Negative Log-Likelihood</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#but-does-it-always-converge">10.8. But Does It Always Converge?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#but-how-quickly-can-we-get-there">10.9. But How Quickly Can We Get There?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_12_notes.html#but-does-it-scale">10.10. But Does It Scale?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_13_notes.html">11. Lecture #13: Stochastic Gradient Descent and Simulated Annealing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#am-207-advanced-scientific-computing">11.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_13_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_13_notes.html#fall-2021">Fall, 2021</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="lectures/lecture_13_notes.html#img-src-fig-logos-jpg-style-height-150px"><img src="fig/logos.jpg" style="height:150px;"></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#outline">11.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_13_notes.html#generalized-linear-models">12. Generalized Linear Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#a-new-model-logistic-regression">12.1. A New Model: Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#id1">12.2. Generalized Linear Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_13_notes.html#model-selection-for-hierachical-generalized-linear-models">13. Model Selection for Hierachical Generalized Linear Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#how-many-covariates-to-include">13.1. How Many Covariates to Include?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#the-dangers-of-model-interpretation">13.2. The Dangers of Model Interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#model-selection-through-cross-validation">13.3. Model Selection through Cross-Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#model-selection-for-maximum-likelihood-models">13.4. Model Selection for Maximum Likelihood Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#model-selection-via-evidence">13.5. Model Selection Via Evidence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#model-selection-via-bayes-factor">13.6. Model Selection Via Bayes Factor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#model-selection-for-bayesian-models">13.7. Model Selection for Bayesian Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_13_notes.html#inference-for-general-linear-models">14. Inference for General Linear Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#general-linear-models">14.1. General Linear Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#a-new-inference-algorithm-maximum-likelihood-by-gradient-descent">14.2. A New Inference Algorithm: Maximum Likelihood by Gradient Descent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#subtlties-of-gradient-descent-local-vs-global-minima">14.3. Subtlties of Gradient Descent: Local vs Global Minima</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#where-does-non-convexity-come-from">14.4. Where does Non-Convexity Come From?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#subtlties-of-gradient-descent-scalability">14.5. Subtlties of Gradient Descent: Scalability</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_13_notes.html#stochastic-gradient-descent">15. Stochastic Gradient Descent</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#mini-batch-evaluation-of-the-gradient">15.1. Mini-batch Evaluation of the Gradient</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#mini-batch-evaluation-as-stochastic-gradients">15.2. Mini-batch Evaluation as Stochastic Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#maximum-likelihood-with-stochastic-gradient-descent">15.3. Maximum Likelihood with Stochastic Gradient Descent</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_13_notes.html#non-convex-optimization">16. Non-Convex Optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#a-non-convex-optimization-example">16.1. A Non-Convex Optimization Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#gradient-descent-for-non-convex-optimization">16.2. Gradient Descent for Non-Convex Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#stochastic-optimization-for-non-convex-optimization">16.3. Stochastic Optimization for Non-Convex Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#another-non-convex-optimization-example">16.4. Another Non-Convex Optimization Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#id2">16.5. Stochastic Optimization for Non-Convex Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#the-idea-of-monte-carlo-optimization">16.6. The Idea of Monte Carlo Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#the-idea-of-simulated-annealing">16.7. The Idea of Simulated Annealing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#design-choices-in-simulated-annealing">16.8. Design Choices in Simulated Annealing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#the-simulated-annealing-algorithm">16.9. The Simulated Annealing Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_13_notes.html#simulated-annealing-for-non-convex-optimization">16.10. Simulated Annealing for Non-Convex Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_14_notes.html">17. Lecture #14: Hamiltonian Monte Carlo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#am-207-advanced-scientific-computing">17.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_14_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_14_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#outline">17.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_14_notes.html#hierarchical-generalized-linear-models">18. Hierarchical Generalized Linear Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#generalized-linear-models">18.1. Generalized Linear Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#kidney-cancer-dataset-pooling-vs-fully-independent-estimation">18.2. Kidney Cancer Dataset: Pooling vs Fully Independent Estimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#kidney-cancer-dataset-hierachical-vs-non-hiearchical-models">18.3. Kidney Cancer Dataset : Hierachical vs Non-Hiearchical Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#a-hierarchical-generalized-linear-model-for-kidney-cancer">18.4. A Hierarchical Generalized Linear Model for Kidney Cancer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_14_notes.html#sampling-as-optimization">19. Sampling as Optimization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#when-is-metropolis-hastings-efficient">19.1. When is Metropolis Hastings Efficient?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#when-is-metropolis-hastings-inefficient">19.2. When is Metropolis Hastings Inefficient?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#the-connection-between-energy-and-density-functions">19.3. The Connection Between Energy and Density Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#the-connection-between-optimization-and-sampling">19.4. The Connection Between Optimization and Sampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#gradient-descent-with-random-momentum-simulating-mechanics-of-moving-particles">19.5. Gradient Descent with Random Momentum: Simulating Mechanics of Moving Particles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#sampling-by-physical-simulation">19.6. Sampling by Physical Simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_14_notes.html#hamiltonian-monte-carlo">20. Hamiltonian Monte Carlo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#hamiltonian-motion-as-differential-equations">20.1. Hamiltonian Motion as Differential Equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#hamiltonian-monte-carlo-with-exact-integration">20.2. Hamiltonian Monte Carlo: with Exact Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#correctness-of-hmc-with-exact-integration">20.3. Correctness of HMC with Exact Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#approximating-flows-sympletic-integrators">20.4. Approximating Flows: Sympletic Integrators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#approximating-flows-adjusting-for-error">20.5. Approximating Flows: Adjusting for Error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#hamiltonian-monte-carlo-with-the-leap-frog-integrator">20.6. Hamiltonian Monte Carlo: with the Leap Frog Integrator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#hmc-with-leap-frog-integrator-in-action">20.7. HMC with Leap Frog Integrator in Action</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#hamiltonian-monte-carlo-summary">20.8. Hamiltonian Monte Carlo: Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#example-euclidean-gaussian-kinetic-energy">20.9. Example: Euclidean-Gaussian Kinetic Energy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_14_notes.html#hmc-for-multimodal-distributions">20.10. HMC for Multimodal Distributions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_15_notes.html">21. Lecture #15: Parallel Tempering and Stochastic HMC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#am-207-advanced-scientific-computing">21.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_15_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_15_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#outline">21.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_15_notes.html#review-of-hmc">22. Review of HMC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#hamiltonian-monte-carlo-hmc">22.1. Hamiltonian Monte Carlo (HMC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#faqs-about-hmc">22.2. FAQs About HMC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#hmc-for-multimodal-distributions">22.3. HMC for Multimodal Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#signs-of-maybe-convergence">22.4. Signs of Maybe Convergence?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#visual-diagnostics-traceplots-of-multiple-chains">22.5. Visual Diagnostics: Traceplots of Multiple Chains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#autocorrelation-the-effective-sample-size">22.6. Autocorrelation: the “Effective” Sample Size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#visual-diagnostics-the-autocorrelation-plot">22.7. Visual Diagnostics: The Autocorrelation Plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#quantitative-diagnostics">22.8. Quantitative Diagnostics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_15_notes.html#parallel-tempering">23. Parallel Tempering</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#multimodal-posteriors">23.1. Multimodal Posteriors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#the-effect-of-temperature">23.2. The Effect of Temperature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#the-idea-of-parallel-tempering">23.3. The Idea of Parallel Tempering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#parallel-tempering-with-hmc">23.4. Parallel Tempering with HMC</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_15_notes.html#stochastic-gradient-hmc">24. Stochastic Gradient HMC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#problems-with-scaling-hmc">24.1. Problems with Scaling HMC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#naive-stochastic-gradient-hmc">24.2. Naïve Stochastic Gradient HMC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#stochastic-gradient-hmc-with-friction">24.3. Stochastic Gradient HMC with Friction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_15_notes.html#stochastic-gradient-hmc-in-practice">24.4. Stochastic Gradient HMC in Practice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_16_notes.html">25. Lecture #16: Neural Network Models for Regression</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#am-207-advanced-scientific-computing">25.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_16_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_16_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#outline">25.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_16_notes.html#regression-as-generalized-linear-models">26. Regression as Generalized Linear Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#linear-regression-models">26.1. Linear Regression Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#how-would-you-parameterize-a-non-linear-trend">26.2. How Would You Parameterize a Non-linear Trend?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#review-of-the-geometry-of-logistic-regression">26.3. Review of the Geometry of Logistic Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#how-would-you-parametrize-a-ellipitical-decision-boundary">26.4. How would you parametrize a ellipitical decision boundary?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#how-would-you-parametrize-an-arbitrary-complex-decision-boundary">26.5. How would you parametrize an arbitrary complex decision boundary?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_16_notes.html#neural-networks">27. Neural Networks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#approximating-arbitrarily-complex-decision-boundaries">27.1. Approximating Arbitrarily Complex Decision Boundaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#what-is-a-neural-network">27.2. What is a Neural Network?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#neural-networks-as-function-approximators">27.3. Neural Networks as Function Approximators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#a-flexible-framework-for-function-approximation">27.4. A Flexible Framework for Function Approximation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#common-choices-for-the-activation-function">27.5. Common Choices for the Activation Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#neural-networks-are-universal-function-approximators">27.6. Neural Networks are Universal Function Approximators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#neural-networks-regression">27.7. Neural Networks Regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_16_notes.html#automatic-differentiation-and-backpropagation">28. Automatic Differentiation and Backpropagation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#gradient-computation-for-neural-networks">28.1. Gradient Computation for Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#example-computing-neural-network-gradients">28.2. Example: Computing Neural Network Gradients</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#backpropagation-gradient-descent-for-neural-networks">28.3. Backpropagation: Gradient Descent for Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#gradient-computation-with-automatic-differentiation">28.4. Gradient Computation with Automatic Differentiation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_16_notes.html#what-does-a-neural-network-learn">29. What Does a Neural Network Learn?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#why-is-a-neural-network-classifier-so-effective">29.1. Why is a Neural Network Classifier So Effective?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#id1">29.2. Why is a Neural Network Classifier So Effective?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#two-interpretations-of-a-neural-network-classifier">29.3. Two Interpretations of a Neural Network Classifier:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_16_notes.html#with-great-flexibility-comes-with-great-problems">30. With Great Flexibility Comes with Great Problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#neural-network-regression-vs-linear-regression">30.1. Neural Network Regression vs Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#interpretable-deep-learning">30.2. Interpretable Deep Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#can-machine-learning-models-make-use-of-human-concepts">30.3. Can Machine Learning Models Make Use of Human Concepts?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#can-machine-learning-models-learn-to-explore-hypothetical-scenarios">30.4. Can Machine Learning Models Learn to Explore Hypothetical Scenarios?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#right-for-the-right-reasons">30.5. Right for the Right Reasons?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#the-perils-of-explanations">30.6. The Perils of Explanations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#generalization-error-and-bias-variance">30.7. Generalization Error and Bias/Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_16_notes.html#generalization-of-deep-models">30.8. Generalization of Deep Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_17_notes.html">31. Lecture #17: Black-box Variational Inference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#am-207-advanced-scientific-computing">31.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_17_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_17_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#outline">31.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_17_notes.html#review-of-neural-network-models">32. Review of Neural Network Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#how-would-you-parameterize-a-non-linear-trend">32.1. How Would You Parameterize a Non-linear Trend?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#representing-arbitrarily-complex-functions">32.2. Representing Arbitrarily Complex Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#design-choices-depth-or-width">32.3. Design Choices: Depth or Width</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#neural-networks-regression">32.4. Neural Networks Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#the-maximum-likelihood-objective-is-non-convex-for-neural-networks">32.5. The Maximum Likelihood Objective is Non-Convex for Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#neural-network-regression-vs-linear-regression">32.6. Neural Network Regression vs Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#generalization-error-and-bias-variance">32.7. Generalization Error and Bias/Variance</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_17_notes.html#bayesian-neural-networks">33. Bayesian Neural Networks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#bayesian-polynomial-regression-is-bayesian-linear-regression">33.1. Bayesian Polynomial Regression is Bayesian Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#id1">33.2. Bayesian Neural Networks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_17_notes.html#black-box-variational-inference">34. Black-box Variational Inference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#review-of-variational-inference">34.1. Review of Variational Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#variational-inference-as-optimization">34.2. Variational Inference as Optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#variational-inference-for-bayesian-neural-networks">34.3. Variational Inference for Bayesian Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#rewriting-the-gradient-of-the-elbo">34.4. Rewriting the Gradient of the ELBO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#id2">34.5. Black-Box Variational Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#variance-of-the-gradient-estimate">34.6. Variance of the Gradient Estimate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#gradient-of-the-elbo-with-the-reparametrization-trick">34.7. Gradient of the ELBO with the Reparametrization Trick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#black-box-variational-inference-with-the-reparametrization-trick">34.8. Black-Box Variational Inference with the Reparametrization Trick</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#bbvi-for-bayesian-linear-regression-posterior-predictives">34.9. BBVI for Bayesian Linear Regression (Posterior Predictives)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_17_notes.html#bbvi-for-bayesian-linear-regression-posteriors">34.10. BBVI for Bayesian Linear Regression (Posteriors)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_18_notes.html">35. Lecture #18: Automatic Differentiation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#am-207-advanced-scientific-computing">35.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_18_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_18_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#outline">35.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_18_notes.html#review-of-black-box-variational-inference">36. Review of Black Box Variational Inference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#developments-in-computationally-efficient-variational-inference">36.1. Developments in Computationally Efficient Variational Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#id1">36.2. Developments in Computationally Efficient Variational Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#id2">36.3. Developments in Computationally Efficient Variational Inference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_18_notes.html#automatic-differentiation">37. Automatic Differentiation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#types-of-computational-differentiation">37.1. Types of Computational Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#numeric-differentiation">37.2. Numeric Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#symbolic-differentiation">37.3. Symbolic Differentiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#automatic-differentiation-the-idea">37.4. Automatic Differentiation: The Idea</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#evaluation-trace-and-computational-graph">37.5. Evaluation Trace and Computational Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#automatic-differentiation-forward-mode">37.6. Automatic Differentiation: Forward Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#automatic-differentiation-reverse-mode">37.7. Automatic Differentiation: Reverse Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#implementing-reverse-mode-autodiff">37.8. Implementing Reverse Mode AutoDiff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_18_notes.html#an-example-of-reverse-mode-autodiff-in-python">37.9. An Example of Reverse Mode AutoDiff in <code class="docutils literal notranslate"><span class="pre">python</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_19_notes.html">38. Lecture #19: Variational Inference in Context</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#am-207-advanced-scientific-computing">38.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_19_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_19_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#outline">38.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_19_notes.html#how-to-evaluate-approximate-inference">39. How to Evaluate Approximate Inference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#how-good-is-your-variational-approximation-of-the-true-posterior">39.1. How Good is Your Variational Approximation of the True Posterior?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#alternative-posterior-evaluation-metrics">39.2. Alternative Posterior Evaluation Metrics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_19_notes.html#how-to-improve-approximate-inference">40. How to Improve Approximate Inference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#your-variational-approximation-sucks-can-you-fix-it">40.1. Your Variational Approximation Sucks, Can You Fix It?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#are-there-any-good-properties-of-variational-approximations-that-we-are-sure-about">40.2. Are There Any Good Properties of Variational Approximations that We Are Sure About?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#why-is-inference-for-neural-networks-hard">40.3. Why is Inference for Neural Networks Hard?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#it-s-weirder-than-you-can-imagine">40.4. It’s Weirder Than You Can Imagine</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_19_notes.html#but-why-do-i-care">41. But why do I care?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#evaluation-of-variational-approximation-for-real-down-stream-tasks">41.1. Evaluation of Variational Approximation for Real Down-stream Tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#predictiveness-of-the-variational-approximate-posterior">41.2. Predictiveness of the Variational Approximate Posterior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#quality-of-variational-approximate-posterior-predictive-uncertainty">41.3. Quality of Variational Approximate Posterior Predictive Uncertainty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#does-a-poor-posterior-approximation-imply-a-poor-posterior-predictive">41.4. Does a Poor Posterior Approximation Imply a Poor Posterior Predictive?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_19_notes.html#new-developments-in-deep-bayes">42. New Developments in Deep Bayes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#what-s-wrong-with-posterior-approximations-for-bnns">42.1. What’s Wrong with Posterior Approximations for BNNs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#what-did-we-learn">42.2. What Did We Learn?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#what-s-wrong-with-the-predictions-from-mean-field-variational-posteriors-of-bnns">42.3. What’s Wrong with the Predictions from Mean-Field Variational Posteriors of BNNs?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#relationships-between-deep-ensembles-and-bayesian-neural-networks">42.4. Relationships Between Deep Ensembles and Bayesian Neural Networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#alternative-models-for-uncertainty-quantification">42.5. Alternative Models for Uncertainty Quantification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#predictive-uncertainties-of-alternative-deep-bayesian-models-may-not-be-better">42.6. Predictive Uncertainties of Alternative Deep Bayesian Models May Not be Better</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_19_notes.html#what-uncertainties-do-we-need-in-deep-learning">42.7. What Uncertainties Do We Need in Deep Learning?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_20_notes.html">43. Lecture #20: Variational Autoencoders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_20_notes.html#am-207-advanced-scientific-computing">43.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_20_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_20_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_20_notes.html#outline">43.2. Outline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_20_notes.html#applications-of-generative-models">44. Applications of generative models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_20_notes.html#review-of-latent-variable-models">44.1. Review of Latent Variable Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_20_notes.html#factor-analysis-models">44.2. Factor Analysis Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_20_notes.html#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_20_notes.html#motivation-for-generative-models">44.3. Motivation for Generative Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_20_notes.html#motivation-for-deep-generative-models">44.4. Motivation for Deep Generative Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_20_notes.html#generating-data-with-variational-autoencoders">44.5. Generating Data with Variational Autoencoders</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_20_notes.html#inference-for-deep-generative-models-vaes">45. Inference for deep generative models: VAEs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_20_notes.html#expectation-maximization-estimating-the-mle-for-latent-variable-models">45.1. Expectation Maximization: Estimating the MLE for Latent Variable Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lectures/lecture_21_notes.html">46. Lecture #21: Implementation of Variational Autoencoders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_21_notes.html#am-207-advanced-scientific-computing">46.1. AM 207: Advanced Scientific Computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_21_notes.html#stochastic-methods-for-data-analysis-inference-and-optimization">Stochastic Methods for Data Analysis, Inference and Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lectures/lecture_21_notes.html#fall-2021">Fall, 2021</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_21_notes.html#outline">46.2. Outline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_21_notes.html#overall-structure-of-vae-implementation">46.3. Overall Structure of VAE Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_21_notes.html#defining-make-objective">46.4. Defining <code class="docutils literal notranslate"><span class="pre">.make_objective</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="lectures/lecture_21_notes.html#defining-log-likelihood">46.5. Defining <code class="docutils literal notranslate"><span class="pre">.log_likelihood</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="right-next"
+       href="lectures/lecture_1_notes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>Lecture #1: Course Overview</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Weiwei Pan and Yaniv Yacoby
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
