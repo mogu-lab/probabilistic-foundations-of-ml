@@ -1,5 +1,5 @@
 
-# Probabilistic Foundations of Machine Learning (CS349)
+# Probabilistic Foundations of Machine Learning (CS349), Fall 2024
 
 ## Installation
 
