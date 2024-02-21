@@ -1,5 +1,5 @@
 
-# Introduction to Probabilistic Machine Learning
+# Probabilistic Foundations of Machine Learning (CS349)
 
 ## Installation
 
