@@ -4,6 +4,9 @@
 This book is currently under construction!
 ```
 
+![banner](banner.png)
+
+
 **Instructor:** [Yaniv Yacoby](https://yanivyacoby.github.io/)
 
 **Semester:** Fall 2024
