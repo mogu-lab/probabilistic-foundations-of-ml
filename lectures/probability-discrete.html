@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>2. Discrete Probability &#8212; Probabilistic Foundations of ML (CS349)</title>
+    <title>3. Discrete Probability &#8212; Probabilistic Foundations of ML (CS349)</title>
   
   
   
@@ -67,8 +67,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/lectures/probability-discrete.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="3. Continuous Probability" href="probability-continuous.html" />
-    <link rel="prev" title="1. What is Probabilistic ML?" href="introduction.html" />
+    <link rel="next" title="4. Continuous Probability" href="probability-continuous.html" />
+    <link rel="prev" title="2. Introduction to Jax Array Operations" href="basics-of-jax.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -162,9 +162,10 @@ const thebe_selector_output = ".output, .cell_output"
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1. What is Probabilistic ML?</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Discrete Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">3. Continuous Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="frequentist-learning.html">4. The Basics of Frequentist Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics-of-jax.html">2. Introduction to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> Array Operations</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Discrete Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">4. Continuous Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="frequentist-learning.html">5. The Basics of Frequentist Learning</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Specification</span></p>
 <ul class="nav bd-sidenav">
@@ -364,12 +365,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">2.1. Motivation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">2.2. Terminology and Notation for Discrete Probability</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-distribution-to-scenario">2.3. Matching Distribution to Scenario</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-comfortable-with-notation">2.4. Getting Comfortable with Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-with-jax">2.5. Practice with Jax</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-with-numpyro">2.6. Practice with NumPyro</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">3.2. Terminology and Notation for Discrete Probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-distribution-to-scenario">3.3. Matching Distribution to Scenario</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-comfortable-with-notation">3.4. Getting Comfortable with Notation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-with-numpyro">3.5. Practice with NumPyro</a></li>
 </ul>
             </nav>
         </div>
@@ -382,9 +382,9 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="discrete-probability">
-<h1><span class="section-number">2. </span>Discrete Probability<a class="headerlink" href="#discrete-probability" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">3. </span>Discrete Probability<a class="headerlink" href="#discrete-probability" title="Permalink to this heading">#</a></h1>
 <section id="motivation">
-<h2><span class="section-number">2.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.1. </span>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
 <p><strong>Context:</strong> As your first assignment at IHH’s ML team, you’ve been tasked with better understanding their Emergency Room (ER). Since you’re new, you’d first like to better understand how the ER works at a high level. Specifically, you’d like to answer questions like:</p>
 <ul class="simple">
 <li><p>Q1: How many beings come to ER every day?</p></li>
@@ -400,7 +400,7 @@ document.write(`
 </ol>
 </section>
 <section id="terminology-and-notation-for-discrete-probability">
-<h2><span class="section-number">2.2. </span>Terminology and Notation for Discrete Probability<a class="headerlink" href="#terminology-and-notation-for-discrete-probability" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.2. </span>Terminology and Notation for Discrete Probability<a class="headerlink" href="#terminology-and-notation-for-discrete-probability" title="Permalink to this heading">#</a></h2>
 <p>As in the spirit of all Computer Science classes, if we want the help of a computer to solve a problem, we need a <em>language</em> to precisely specify what we want it to do. Today, we will introduce the language—terminology and notation—from statistics, and we will then translate it into code that a computer can run.</p>
 <p>The terminology that we introduce here is slightly different from ones that you may have seen in a statistics class. The reason for this is that we’re honing in on the minimal subset of terminology we need to describe a probabilistic ML model.</p>
 <p><strong>Random Variable (RV):</strong> A variable whose possible values are outcomes of a random phenomenon.</p>
@@ -436,7 +436,7 @@ document.write(`
 </ul>
 </section>
 <section id="matching-distribution-to-scenario">
-<h2><span class="section-number">2.3. </span>Matching Distribution to Scenario<a class="headerlink" href="#matching-distribution-to-scenario" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.3. </span>Matching Distribution to Scenario<a class="headerlink" href="#matching-distribution-to-scenario" title="Permalink to this heading">#</a></h2>
 <p>We’ll now start working with data from IHH’s ER. We’ll use a Python library called <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to read in the data, which is stored as a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -490,34 +490,34 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>357</th>
-      <td>8</td>
+      <th>2182</th>
+      <td>50</td>
       <td>High Fever</td>
       <td>No</td>
     </tr>
     <tr>
-      <th>379</th>
-      <td>9</td>
-      <td>Allergic Reaction</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <th>2879</th>
-      <td>65</td>
-      <td>Broken Limb</td>
+      <th>3960</th>
+      <td>91</td>
+      <td>High Fever</td>
       <td>No</td>
     </tr>
     <tr>
-      <th>6493</th>
-      <td>150</td>
+      <th>1056</th>
+      <td>24</td>
+      <td>Broken Limb</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>5812</th>
+      <td>135</td>
       <td>Allergic Reaction</td>
       <td>Yes</td>
     </tr>
     <tr>
-      <th>8197</th>
-      <td>192</td>
-      <td>Allergic Reaction</td>
-      <td>Yes</td>
+      <th>7780</th>
+      <td>182</td>
+      <td>High Fever</td>
+      <td>No</td>
     </tr>
   </tbody>
 </table>
@@ -581,17 +581,11 @@ document.write(`
 <p>TODO: write your answer here.</p>
 </section>
 <section id="getting-comfortable-with-notation">
-<h2><span class="section-number">2.4. </span>Getting Comfortable with Notation<a class="headerlink" href="#getting-comfortable-with-notation" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.4. </span>Getting Comfortable with Notation<a class="headerlink" href="#getting-comfortable-with-notation" title="Permalink to this heading">#</a></h2>
 <p>For the distributions that you selected</p>
 </section>
-<section id="practice-with-jax">
-<h2><span class="section-number">2.5. </span>Practice with Jax<a class="headerlink" href="#practice-with-jax" title="Permalink to this heading">#</a></h2>
-<p>Before continuing to play with distributions, we first need to introduce the buliding blocks we’ll use to develop probabilistic ML models: <code class="docutils literal notranslate"><span class="pre">Jax</span></code>.</p>
-<p><code class="docutils literal notranslate"><span class="pre">Jax</span></code> is a Python library for high-performance numerical computing and array operations. Unlike in previous classes you may have taken, where you were encouraged to write loops, if/else-expressions, in Jax we’ll take a different paradigm; we will rely as much as possible to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls because, in contrast to vanilla Python code, <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is very, very fast (and has some other features we will rely on later).</p>
-<p>The main part of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> you’ll be interacting with (for now) comes from: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.numpy</span> <span class="pre">as</span> <span class="pre">jnp</span></code> (already imported above for you). This portion of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is concerned with fast array operations.</p>
-</section>
 <section id="practice-with-numpyro">
-<h2><span class="section-number">2.6. </span>Practice with NumPyro<a class="headerlink" href="#practice-with-numpyro" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.5. </span>Practice with NumPyro<a class="headerlink" href="#practice-with-numpyro" title="Permalink to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> is a “Probabilistic Programming Language” that’s based in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>. It provides an interface for (nearly) directly translating the stats/math we wrote above into code that we can use to fit to data, make prediction, etc.</p>
 <p><strong>Exercise C:</strong> Once you’ve decided which distribution best fits each of the variables in the data, let’s see if we can match them to data from IHH. To do this, you will need two things:</p>
 <ul class="simple">
@@ -634,12 +628,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="introduction.html"
+       href="basics-of-jax.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>What is Probabilistic ML?</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Introduction to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> Array Operations</p>
       </div>
     </a>
     <a class="right-next"
@@ -647,7 +641,7 @@ document.write(`
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Continuous Probability</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Continuous Probability</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -669,12 +663,11 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">2.1. Motivation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">2.2. Terminology and Notation for Discrete Probability</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-distribution-to-scenario">2.3. Matching Distribution to Scenario</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-comfortable-with-notation">2.4. Getting Comfortable with Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-with-jax">2.5. Practice with Jax</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-with-numpyro">2.6. Practice with NumPyro</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">3.1. Motivation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">3.2. Terminology and Notation for Discrete Probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-distribution-to-scenario">3.3. Matching Distribution to Scenario</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-comfortable-with-notation">3.4. Getting Comfortable with Notation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-with-numpyro">3.5. Practice with NumPyro</a></li>
 </ul>
   </nav></div>
 
