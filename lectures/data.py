@@ -22,12 +22,12 @@ def generate_data_for_q1():
     key = jrandom.PRNGKey(seed=0)
     key_weekday, key_weekend, key_condition, key_hospitalized = jrandom.split(key, 4)
     
-    NUM_DAYS = 100
+    NUM_DAYS = 200
 
     day = jnp.arange(NUM_DAYS)
     
     p_visits_weekday = D.Poisson(rate=50.0)
-    p_visits_weekend = D.Poisson(rate=20.0)
+    p_visits_weekend = D.Poisson(rate=25.0)
 
     num_visits = jnp.where(
         (day % 7 == 5) | (day % 7 == 6),
@@ -36,7 +36,7 @@ def generate_data_for_q1():
     )
 
     p_condition = D.Categorical(jnp.array([0.2, 0.4, 0.1, 0.3]))
-    p_hospitalized = D.Bernoulli(jnp.array([0.8, 0.1, 0.1, 0.7]))
+    p_hospitalized = D.Bernoulli(jnp.array([0.2, 0.1, 0.1, 0.7]))
     
     conditions = p_condition.sample(key_condition, (int(num_visits.sum()),))
     hospitalized = p_hospitalized.sample(key_condition, (int(num_visits.sum()),))    
@@ -55,13 +55,14 @@ def generate_data_for_q1():
             idx += 1
 
     df = pd.DataFrame(rows)
+    df.index.name = 'Patient ID'
 
     return df
 
         
 def main():
     df = generate_data_for_q1()
-    df.to_csv('IHH-ER.csv', index=False)
+    df.to_csv('IHH-ER.csv')
 
 
 if __name__ == '__main__':
