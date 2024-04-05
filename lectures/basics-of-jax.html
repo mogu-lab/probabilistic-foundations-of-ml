@@ -61,6 +61,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/basics-of-jax';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/lectures/basics-of-jax.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -366,8 +368,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-and-advice">2.1. Tips and Advice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-arrays">2.2. Properties of Arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.3. Array Creation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.4. Array Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.5. Shape Manipulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.5. Array Operations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.6. Indexing</a></li>
 </ul>
             </nav>
@@ -405,13 +407,10 @@ This is because, in contrast to vanilla Python code (which is slow), <code class
 </section>
 <section id="properties-of-arrays">
 <h2><span class="section-number">2.2. </span>Properties of Arrays<a class="headerlink" href="#properties-of-arrays" title="Permalink to this heading">#</a></h2>
-<p>So what does an array look like? Consider the following example:</p>
+<p><strong>So what does an array look like?</strong> Here’s an example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-    <span class="p">[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
-     <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">]]</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">]])</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 </pre></div>
@@ -441,11 +440,11 @@ Size (total number of elements): 6
 </div>
 </div>
 </div>
-<p>Arrays can also store different types of elements (e.g. ints, floats, etc.). You can determine what type of elements they store as follows:</p>
+<p><strong>Array Types:</strong> Arrays can also store different types of elements (e.g. ints, floats, etc.). You can determine what type of elements they store as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">array_of_ints</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;An array of ints has dtype:&#39;</span><span class="p">,</span> <span class="n">array_of_ints</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;An array of ints has dtype:  &#39;</span><span class="p">,</span> <span class="n">array_of_ints</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
 <span class="n">array_of_floats</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;An array of floats has dtype:&#39;</span><span class="p">,</span> <span class="n">array_of_floats</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -453,7 +452,7 @@ Size (total number of elements): 6
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>An array of ints has dtype: int32
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>An array of ints has dtype:   int32
 An array of floats has dtype: float32
 </pre></div>
 </div>
@@ -531,9 +530,95 @@ From 4 to 20 in increments of 5: [ 4.  9. 14. 19.]
 </div>
 </div>
 </section>
+<section id="shape-manipulation">
+<h2><span class="section-number">2.4. </span>Shape Manipulation<a class="headerlink" href="#shape-manipulation" title="Permalink to this heading">#</a></h2>
+<p><strong>Reshaping arrays:</strong> Sometimes you may find the need to change the shape of an array (while keeping its size the same). This can be done in a number of ways, depending on the need. First, you can simply <code class="docutils literal notranslate"><span class="pre">reshape</span></code> it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a.reshape(3, 4) =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a.reshape(2, -1) =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [ 0  1  2  3  4  5  6  7  8  9 10 11]
+
+a.reshape(3, 4) =
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+
+a.reshape(2, -1) =
+[[ 0  1  2  3  4  5]
+ [ 6  7  8  9 10 11]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the above example, using the <code class="docutils literal notranslate"><span class="pre">-1</span></code> argument tells <code class="docutils literal notranslate"><span class="pre">reshape</span></code> to automatically calculate the shape for that dimension.</p>
+<p><strong>Unsqueesing and Squeezing:</strong> Next, you may often find yourself needing to pad the dimension by 1—this is known as “unsqueezing.” By that, we mean that you may want to turn an array with shape <span class="math notranslate nohighlight">\((N,)\)</span> into an array with shape <span class="math notranslate nohighlight">\((N, 1)\)</span> or <span class="math notranslate nohighlight">\((1, N)\)</span>. This can be helpful if we want to concatenate several arrays together along a dimension they currently do not have. For example, we can concatenate two arrays of shape <span class="math notranslate nohighlight">\((1, N)\)</span> into a single array of <span class="math notranslate nohighlight">\((2, N)\)</span>.</p>
+<p>We can do this as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create two arrays and print out their shape</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a       =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b       =&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a.shape =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b.shape =&#39;</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c1"># &quot;Unsqueeze&quot; the array along it&#39;s 0-th axis</span>
+<span class="n">a_unsqueezed</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="n">b_unsqueezed</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a_unsqueezed       =&#39;</span><span class="p">,</span> <span class="n">a_unsqueezed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a_unsqueezed.shape =&#39;</span><span class="p">,</span> <span class="n">a_unsqueezed</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b_unsqueezed       =&#39;</span><span class="p">,</span> <span class="n">b_unsqueezed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b_unsqueezed.shape =&#39;</span><span class="p">,</span> <span class="n">b_unsqueezed</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="c1"># Concatenate along its 0th axis</span>
+<span class="n">a_and_b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a_unsqueezed</span><span class="p">,</span> <span class="n">b_unsqueezed</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a_and_b =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a_and_b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a_and_b.shape =&#39;</span><span class="p">,</span> <span class="n">a_and_b</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a       = [0 1 2]
+b       = [3 4 5]
+a.shape = (3,)
+b.shape = (3,)
+
+a_unsqueezed       = [[0 1 2]]
+a_unsqueezed.shape = (1, 3)
+b_unsqueezed       = [[3 4 5]]
+b_unsqueezed.shape = (1, 3)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a_and_b =
+[[0 1 2]
+ [3 4 5]]
+a_and_b.shape = (2, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can similarly take a way a dimension of size one by squeezing it: <code class="docutils literal notranslate"><span class="pre">a_unsqueezed.squeeze(axis=1)</span></code>, where the <code class="docutils literal notranslate"><span class="pre">axis</span></code> argument tells us which dimension to remove.</p>
+</section>
 <section id="array-operations">
-<h2><span class="section-number">2.4. </span>Array Operations<a class="headerlink" href="#array-operations" title="Permalink to this heading">#</a></h2>
-<p>Arithmetic operators on arrays apply elementwise. By this, we mean that the operation is applied independently to each element of the original array. A new array is then created and filled with the result.</p>
+<h2><span class="section-number">2.5. </span>Array Operations<a class="headerlink" href="#array-operations" title="Permalink to this heading">#</a></h2>
+<p><strong>Elementwise (shape-preserving) operations:</strong> Arithmetic operators on arrays apply elementwise. By this, we mean that the operation is applied independently to each element of the original array. A new array is then created and filled with the result.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
@@ -559,18 +644,69 @@ b^2         = [0. 1. 4. 9.]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
+a &lt; 35      = [ True  True False False]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a &lt; 35      = [ True  True False False]
-a * b       = [  0.  30.  80. 150.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a * b       = [  0.  30.  80. 150.]
 </pre></div>
 </div>
 </div>
 </div>
-<p>Of course, these are just a few examples. Any function you may be interested in likely already exists in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> – be sure to look at the documentation (linked above) and google around before deciding to write your own!</p>
-</section>
-<section id="shape-manipulation">
-<h2><span class="section-number">2.5. </span>Shape Manipulation<a class="headerlink" href="#shape-manipulation" title="Permalink to this heading">#</a></h2>
+<p>All of the operations we showed above are <em>element-wise operations</em>, meaning that shapes of the inputs match the shapes of the outputs. <code class="docutils literal notranslate"><span class="pre">Jax</span></code> also has many useful operations that do not preserve the shape of the array. For example, an operation that computes a sum, minimum, or maximum, as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a       =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a.sum() =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a.min() =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a.max() =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a       = [0. 1. 2. 3. 4.]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum() = 10.0
+a.min() = 0.0
+a.max() = 4.0
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Non-shape preserving operations:</strong> Oftentimes, we will use these non-shape preserving operations on only <em>one</em> of the arrays dimensions. For these, we will need to specify the axis along which we would like to perform the operation. The axis is specified as a number, where, for 2-dimensional arrays, 0 means the operation will be performed over columns, and 1 means the operation will be performed over rows. See below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">12.0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a.sum(axis=0) =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a.min(axis=1) =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a =
+[[ 0.  1.  2.  3.]
+ [ 4.  5.  6.  7.]
+ [ 8.  9. 10. 11.]]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum(axis=0) = [12. 15. 18. 21.]
+a.min(axis=1) = [0. 1. 2. 3.]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Best practice for specifying axes:</strong> The axes can also be indexed in reverse, relative to the shape of the array. For example,</p>
+<ul class="simple">
+<li><p>For a 3-dimensional array with shape <span class="math notranslate nohighlight">\((3, 4, 5)\)</span>, specifying <code class="docutils literal notranslate"><span class="pre">axis=-1</span></code> means performing the operation on the dimension of size 5, resulting in a 2-dimensional array of shape <span class="math notranslate nohighlight">\((3, 4)\)</span>.</p></li>
+<li><p>Similarly, specifying <code class="docutils literal notranslate"><span class="pre">axis=-2</span></code> means performing the operation on the dimension of size 4, resulting in a 2-dimensional array of shape <span class="math notranslate nohighlight">\((3, 5)\)</span>.</p></li>
+</ul>
+<p>In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, which we will introduce later, it is best to always specify dimensions using the reverse/negative indexing.</p>
+<p><strong>What other operations exist in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>?</strong> A lot. These are just a few examples. Any function you may be interested in likely already exists in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> – be sure to look at the documentation (linked above) and google around before deciding to write your own!</p>
 </section>
 <section id="indexing">
 <h2><span class="section-number">2.6. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
@@ -647,8 +783,8 @@ a * b       = [  0.  30.  80. 150.]
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-and-advice">2.1. Tips and Advice</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-arrays">2.2. Properties of Arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.3. Array Creation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.4. Array Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.5. Shape Manipulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.5. Array Operations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.6. Indexing</a></li>
 </ul>
   </nav></div>
