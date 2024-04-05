@@ -381,7 +381,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-jax-array-operations">
 <h1><span class="section-number">2. </span>Introduction to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> Array Operations<a class="headerlink" href="#introduction-to-jax-array-operations" title="Permalink to this heading">#</a></h1>
-<p>(This tutorial has been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">this</a> Numpy tutorial).</p>
+<p>(This tutorial has been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">this NumPy tutorial</a>).</p>
 <p><code class="docutils literal notranslate"><span class="pre">Jax</span></code> is a Python library for high-performance numerical computing and array operations. Unlike in previous classes you may have taken, where you were encouraged to write loops, if/else-expressions, in Jax we’ll take a different paradigm: we will avoid writing loops and if/else-expressions, instead relying on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls.
 This is because, in contrast to vanilla Python code (which is slow), <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is very, very fast (and has some other features we will rely on later).</p>
 <p>The main part of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> you’ll be interacting with (for now) comes from:</p>
@@ -473,7 +473,7 @@ An array of floats has dtype: float32
 </div>
 </div>
 </div>
-<p>The function <code class="docutils literal notranslate"><span class="pre">jnp.zeros</span></code> creates an array full of zeros, the function <code class="docutils literal notranslate"><span class="pre">jnp.ones</span></code> creates an array full of ones, and the function <code class="docutils literal notranslate"><span class="pre">jnp.empty</span></code> creates an array whose initial content is random and depends on the state of the memory. These functions all require the shape of the desired array. (Note that by default, the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the created array is <code class="docutils literal notranslate"><span class="pre">float64</span></code>, but it can be specified via the keyword argument <code class="docutils literal notranslate"><span class="pre">dtype</span></code>).</p>
+<p>The function <code class="docutils literal notranslate"><span class="pre">jnp.zeros</span></code> creates an array full of zeros, and the function <code class="docutils literal notranslate"><span class="pre">jnp.ones</span></code> creates an array full of ones. These functions all require the shape of the desired array. (Note that by default, the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> of the created array is <code class="docutils literal notranslate"><span class="pre">float64</span></code>, but it can be specified via the keyword argument <code class="docutils literal notranslate"><span class="pre">dtype</span></code>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">array_of_zeros</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -484,11 +484,6 @@ An array of floats has dtype: float32
 <span class="n">array_of_ones</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array of ones:&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">array_of_ones</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-
-<span class="n">empty_array</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Empty array:&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">empty_array</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -506,10 +501,6 @@ Array of ones:
  [[1. 1. 1. 1.]
   [1. 1. 1. 1.]
   [1. 1. 1. 1.]]]
-
-Empty array:
-[[0. 0. 0.]
- [0. 0. 0.]]
 </pre></div>
 </div>
 </div>
@@ -552,15 +543,14 @@ From 4 to 20 in increments of 5: [ 4.  9. 14. 19.]
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a           = [20. 30. 40. 50.]
 b           = [0. 1. 2. 3.]
-
-a - b       = [20. 29. 38. 47.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b^2         = [0. 1. 4. 9.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a - b       = [20. 29. 38. 47.]
+b^2         = [0. 1. 4. 9.]
+10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
-a &lt; 35      = [ True  True False False]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a &lt; 35      = [ True  True False False]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a * b       = [  0.  30.  80. 150.]
