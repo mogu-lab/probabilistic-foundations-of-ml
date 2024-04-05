@@ -363,11 +363,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-arrays">2.1. Properties of Arrays</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.2. Array Creation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.3. Array Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.5. Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-and-advice">2.1. Tips and Advice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-arrays">2.2. Properties of Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.3. Array Creation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.4. Array Operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.5. Shape Manipulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.6. Indexing</a></li>
 </ul>
             </nav>
         </div>
@@ -393,8 +394,17 @@ This is because, in contrast to vanilla Python code (which is slow), <code class
 </div>
 </div>
 <p>This portion of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> introduces its main building block multidimensional arrays. You may be wondering, why do we need arrays for ML? This is because, as it turns out, all of the code we will write can be conveniently expressed in terms of array operations. <code class="docutils literal notranslate"><span class="pre">Jax</span></code> will make these fast for us so we can spend more time thinking and less time waiting for the model to fit to data.</p>
+<section id="tips-and-advice">
+<h2><span class="section-number">2.1. </span>Tips and Advice<a class="headerlink" href="#tips-and-advice" title="Permalink to this heading">#</a></h2>
+<p><strong>Reading Documentation.</strong> <code class="docutils literal notranslate"><span class="pre">Jax</span></code> was built to imitate another popular library, <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>. Just about all functions implemented in <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> have ae sa corresponding <code class="docutils literal notranslate"><span class="pre">Jax</span></code> version with the same interface. Often, you’ll find the internet has more resources on <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> than on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> (since <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is newer) – that’s ok! The same tips often translate. Moreover, you may consider purposely looking up <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> documentation to answer your questions because they often have <em>examples</em> (which the <code class="docutils literal notranslate"><span class="pre">Jax</span></code> documentation usually does not have).</p>
+<ul class="simple">
+<li><p>You can find <code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/jax.numpy.html">here</a>.</p></li>
+<li><p>You can find <code class="docutils literal notranslate"><span class="pre">numpy</span></code> documentation <a class="reference external" href="https://numpy.org/doc/stable/reference/routines.math.html">here</a>.</p></li>
+</ul>
+<p><strong>Caution: do NOT mix up <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays with <code class="docutils literal notranslate"><span class="pre">Jax</span></code> arrays.</strong> You can technically call <code class="docutils literal notranslate"><span class="pre">Jax</span></code> functions on <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays and vice versa. PLEASE DO NOT. Doing so will not throw any errors, but may result in other bugs that are difficult to find. One way you can keep yourself from making this mistake is: do not import <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> at all.</p>
+</section>
 <section id="properties-of-arrays">
-<h2><span class="section-number">2.1. </span>Properties of Arrays<a class="headerlink" href="#properties-of-arrays" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2. </span>Properties of Arrays<a class="headerlink" href="#properties-of-arrays" title="Permalink to this heading">#</a></h2>
 <p>So what does an array look like? Consider the following example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -464,7 +474,7 @@ An array of floats has dtype: float32
 </div>
 </section>
 <section id="array-creation">
-<h2><span class="section-number">2.2. </span>Array Creation<a class="headerlink" href="#array-creation" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.3. </span>Array Creation<a class="headerlink" href="#array-creation" title="Permalink to this heading">#</a></h2>
 <p>There are several ways to create arrays. For example, you can create an array from a regular Python list or tuple using the <code class="docutils literal notranslate"><span class="pre">jnp.array</span></code> function. The type of the resulting array is deduced from the type of the elements in the sequences:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -522,7 +532,7 @@ From 4 to 20 in increments of 5: [ 4.  9. 14. 19.]
 </div>
 </section>
 <section id="array-operations">
-<h2><span class="section-number">2.3. </span>Array Operations<a class="headerlink" href="#array-operations" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.4. </span>Array Operations<a class="headerlink" href="#array-operations" title="Permalink to this heading">#</a></h2>
 <p>Arithmetic operators on arrays apply elementwise. By this, we mean that the operation is applied independently to each element of the original array. A new array is then created and filled with the result.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -543,27 +553,27 @@ From 4 to 20 in increments of 5: [ 4.  9. 14. 19.]
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a           = [20. 30. 40. 50.]
 b           = [0. 1. 2. 3.]
+
+a - b       = [20. 29. 38. 47.]
+b^2         = [0. 1. 4. 9.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a - b       = [20. 29. 38. 47.]
-b^2         = [0. 1. 4. 9.]
-10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a &lt; 35      = [ True  True False False]
+a * b       = [  0.  30.  80. 150.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a * b       = [  0.  30.  80. 150.]
-</pre></div>
 </div>
 </div>
-</div>
+<p>Of course, these are just a few examples. Any function you may be interested in likely already exists in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> – be sure to look at the documentation (linked above) and google around before deciding to write your own!</p>
 </section>
 <section id="shape-manipulation">
-<h2><span class="section-number">2.4. </span>Shape Manipulation<a class="headerlink" href="#shape-manipulation" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.5. </span>Shape Manipulation<a class="headerlink" href="#shape-manipulation" title="Permalink to this heading">#</a></h2>
 </section>
 <section id="indexing">
-<h2><span class="section-number">2.5. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.6. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -634,11 +644,12 @@ b^2         = [0. 1. 4. 9.]
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-arrays">2.1. Properties of Arrays</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.2. Array Creation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.3. Array Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.5. Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tips-and-advice">2.1. Tips and Advice</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-arrays">2.2. Properties of Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.3. Array Creation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.4. Array Operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.5. Shape Manipulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.6. Indexing</a></li>
 </ul>
   </nav></div>
 
