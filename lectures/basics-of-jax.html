@@ -385,7 +385,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-jax-array-operations">
 <h1><span class="section-number">2. </span>Introduction to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> Array Operations<a class="headerlink" href="#introduction-to-jax-array-operations" title="Permalink to this heading">#</a></h1>
 <p>(This tutorial has been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">this NumPy tutorial</a>).</p>
-<p><code class="docutils literal notranslate"><span class="pre">Jax</span></code> is a Python library for high-performance numerical computing and array operations. Unlike in previous classes you may have taken, where you were encouraged to write loops, if/else-expressions, in Jax we’ll take a different paradigm: we will avoid writing loops and if/else-expressions, instead relying on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls.
+<p><code class="docutils literal notranslate"><span class="pre">Jax</span></code> is a Python library for high-performance numerical computing and array operations. Unlike in previous classes you may have taken, where you were encouraged to write loops, if/else-expressions, in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> we’ll take a different paradigm: we will avoid writing loops and if/else-expressions, instead relying on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls.
 This is because, in contrast to vanilla Python code (which is slow), <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is very, very fast (and has some other features we will rely on later).</p>
 <p>The main part of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> you’ll be interacting with (for now) comes from:</p>
 <div class="cell docutils container">
@@ -395,16 +395,16 @@ This is because, in contrast to vanilla Python code (which is slow), <code class
 </div>
 </div>
 </div>
-<p>This portion of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> introduces its main building block multidimensional arrays. You may be wondering, why do we need arrays for ML? This is because, as it turns out, all of the code we will write can be conveniently expressed in terms of array operations. <code class="docutils literal notranslate"><span class="pre">Jax</span></code> will make these fast for us so we can spend more time thinking and less time waiting for the model to fit to data.</p>
+<p>This portion of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> introduces its main building block multidimensional arrays. You may be wondering, why do we need arrays for ML? This is because, as it turns out, all of the code we will write can be conveniently expressed in terms of array operations. <code class="docutils literal notranslate"><span class="pre">Jax</span></code> will make these fast for us so we can spend more time thinking and less time waiting for your code to run.</p>
 <section id="tips-and-advice">
 <h2><span class="section-number">2.1. </span>Tips and Advice<a class="headerlink" href="#tips-and-advice" title="Permalink to this heading">#</a></h2>
-<p><strong>Reading Documentation.</strong> <code class="docutils literal notranslate"><span class="pre">Jax</span></code> was built to imitate another popular library, <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>. Just about all functions implemented in <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> have ae sa corresponding <code class="docutils literal notranslate"><span class="pre">Jax</span></code> version with the same interface. Often, you’ll find the internet has more resources on <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> than on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> (since <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is newer) – that’s ok! The same tips often translate. Moreover, you may consider purposely looking up <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> documentation to answer your questions because they often have <em>examples</em> (which the <code class="docutils literal notranslate"><span class="pre">Jax</span></code> documentation usually does not have).</p>
+<p><strong>Reading Documentation.</strong> <code class="docutils literal notranslate"><span class="pre">Jax</span></code> was built to imitate another popular library, <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>. Just about all functions implemented in <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> have a corresponding <code class="docutils literal notranslate"><span class="pre">Jax</span></code> version with the same interface. Often, you’ll find the internet has more resources on <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> than on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> (since <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is newer) – that’s ok! The same tips often translate. Moreover, you may consider purposely looking up <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> documentation to answer your questions because they often have <em>examples</em> (which the <code class="docutils literal notranslate"><span class="pre">Jax</span></code> documentation usually does not have).</p>
 <ul class="simple">
 <li><p>You can find <code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code> documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/jax.numpy.html">here</a>.</p></li>
 <li><p>You can find <code class="docutils literal notranslate"><span class="pre">numpy</span></code> documentation <a class="reference external" href="https://numpy.org/doc/stable/reference/routines.math.html">here</a>.</p></li>
 </ul>
-<p><strong>Caution: do NOT mix up <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays with <code class="docutils literal notranslate"><span class="pre">Jax</span></code> arrays.</strong> You can technically call <code class="docutils literal notranslate"><span class="pre">Jax</span></code> functions on <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays and vice versa. PLEASE DO NOT. Doing so will not throw any errors, but may result in other bugs that are difficult to find. One way you can keep yourself from making this mistake is: do not import <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> at all.</p>
-<p><strong>Unlike <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays, <code class="docutils literal notranslate"><span class="pre">Jax</span></code> are immutable.</strong> By this, we mean that once created, they cannot be altered. Any operation you perform on a <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array will return a brand new array. You might think: this seems really inefficient? <code class="docutils literal notranslate"><span class="pre">Jax</span></code> actually leverages this property to speed things up (this is not something we’ll cover in the class). We note this property here because it’s important to be aware of it! <em>Any operation you perform on a <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array needs to be saved into a new variable.</em></p>
+<p><strong>Caution: do NOT mix up <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays with <code class="docutils literal notranslate"><span class="pre">Jax</span></code> arrays.</strong> You can technically call <code class="docutils literal notranslate"><span class="pre">Jax</span></code> functions on <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays and vice versa. PLEASE DO NOT DO THAT. Doing so will not throw any errors, but may result in other bugs that are difficult to find. One way you can keep yourself from making this mistake is: do not import <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> at all.</p>
+<p><strong>Unlike <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays, <code class="docutils literal notranslate"><span class="pre">Jax</span></code> are immutable.</strong> By this, we mean that once created, they cannot be altered. Any operation you perform on a <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array will return a brand new array. For example, in <code class="docutils literal notranslate"><span class="pre">Numpy</span></code> you can set the 0th index of an array equal to some value with <code class="docutils literal notranslate"><span class="pre">arr[0]</span> <span class="pre">=</span> <span class="pre">value</span></code>, but in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, this will throw an error. You might think: this seems really inefficient—does this mean we are constantly burdening our computer by requesting for memory? <code class="docutils literal notranslate"><span class="pre">Jax</span></code> actually leverages this property to speed things up (this is not something we’ll cover in the class). We note this property here because it’s important to be aware of it! <em>Any operation you perform on a <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array needs to be saved into a new variable.</em></p>
 </section>
 <section id="properties-of-arrays">
 <h2><span class="section-number">2.2. </span>Properties of Arrays<a class="headerlink" href="#properties-of-arrays" title="Permalink to this heading">#</a></h2>
@@ -558,7 +558,9 @@ a.reshape(3, 4) =
  [ 8  9 10 11]]
 
 a.reshape(2, -1) =
-[[ 0  1  2  3  4  5]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0  1  2  3  4  5]
  [ 6  7  8  9 10 11]]
 </pre></div>
 </div>
@@ -600,14 +602,14 @@ a.reshape(2, -1) =
 b       = [3 4 5]
 a.shape = (3,)
 b.shape = (3,)
-
-a_unsqueezed       = [[0 1 2]]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a_unsqueezed       = [[0 1 2]]
 a_unsqueezed.shape = (1, 3)
 b_unsqueezed       = [[3 4 5]]
 b_unsqueezed.shape = (1, 3)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a_and_b =
+
+a_and_b =
 [[0 1 2]
  [3 4 5]]
 a_and_b.shape = (2, 3)
@@ -645,10 +647,10 @@ b^2         = [0. 1. 4. 9.]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
+a &lt; 35      = [ True  True False False]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a &lt; 35      = [ True  True False False]
-a * b       = [  0.  30.  80. 150.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a * b       = [  0.  30.  80. 150.]
 </pre></div>
 </div>
 </div>
@@ -669,7 +671,9 @@ a * b       = [  0.  30.  80. 150.]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum() = 10.0
-a.min() = 0.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min() = 0.0
 a.max() = 4.0
 </pre></div>
 </div>
@@ -693,9 +697,8 @@ a.max() = 4.0
 [[ 0.  1.  2.  3.]
  [ 4.  5.  6.  7.]
  [ 8.  9. 10. 11.]]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum(axis=0) = [12. 15. 18. 21.]
+
+a.sum(axis=0) = [12. 15. 18. 21.]
 a.min(axis=1) = [0. 1. 2. 3.]
 </pre></div>
 </div>
