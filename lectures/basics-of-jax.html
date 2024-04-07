@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>2. Introduction to Jax Array Operations &#8212; Probabilistic Foundations of ML (CS349)</title>
+    <title>2. An Introduction to “Vectorization” in Jax &#8212; Probabilistic Foundations of ML (CS349)</title>
   
   
   
@@ -162,7 +162,7 @@ const thebe_selector_output = ".output, .cell_output"
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1. What is Probabilistic ML?</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Introduction to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> Array Operations</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-discrete.html">3. Discrete Probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">4. Continuous Probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="frequentist-learning.html">5. The Basics of Frequentist Learning</a></li>
@@ -355,7 +355,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction to Jax Array Operations</h1>
+    <h1>An Introduction to “Vectorization” in Jax</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -382,12 +382,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-jax-array-operations">
-<h1><span class="section-number">2. </span>Introduction to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> Array Operations<a class="headerlink" href="#introduction-to-jax-array-operations" title="Permalink to this heading">#</a></h1>
-<p>(This tutorial has been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">this NumPy tutorial</a>).</p>
-<p><code class="docutils literal notranslate"><span class="pre">Jax</span></code> is a Python library for high-performance numerical computing and array operations. Unlike in previous classes you may have taken, where you were encouraged to write loops, if/else-expressions, in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> we’ll take a different paradigm: we will avoid writing loops and if/else-expressions, instead relying on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls.
-This is because, in contrast to vanilla Python code (which is slow), <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is very, very fast (and has some other features we will rely on later).</p>
-<p>The main part of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> you’ll be interacting with (for now) comes from:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="an-introduction-to-vectorization-in-jax">
+<h1><span class="section-number">2. </span>An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code><a class="headerlink" href="#an-introduction-to-vectorization-in-jax" title="Permalink to this heading">#</a></h1>
+<p><strong>What is <code class="docutils literal notranslate"><span class="pre">Jax</span></code>?</strong> <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is a Python library for high-performance numerical computing and array operations. It is developed by Google and is very popular for ML because it is fast, more intuitive than other similar libraries, and can automatically run on different hardware (e.g. it can run on Graphical Processing Units—or GPUs—which are commonly used for training ML models). The main part of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> you’ll be interacting with (for now) comes from:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
@@ -395,7 +392,15 @@ This is because, in contrast to vanilla Python code (which is slow), <code class
 </div>
 </div>
 </div>
-<p>This portion of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> introduces its main building block multidimensional arrays. You may be wondering, why do we need arrays for ML? This is because, as it turns out, all of the code we will write can be conveniently expressed in terms of array operations. <code class="docutils literal notranslate"><span class="pre">Jax</span></code> will make these fast for us so we can spend more time thinking and less time waiting for your code to run.</p>
+<p>This portion of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> introduces its main building block: multi-dimensional arrays. Unlike other similar libraries that offer similar array-based framework (e.g. <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>), <code class="docutils literal notranslate"><span class="pre">Jax</span></code> has some features that will make it possible for us to efficiently build and train ML models. Specifically, it will allow us to easily and accurately (no approximations!) compute gradients of functions written in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> calls, which will become useful for training models (though more on that at a much later part of the course).</p>
+<p><strong>Array operations: the building blocks behind ML code.</strong> You may be wondering, why do we need arrays for ML? This is because, as you will see throughout this course, all of the code we will write can be conveniently expressed in terms of array operations. <code class="docutils literal notranslate"><span class="pre">Jax</span></code> will make these fast for us so we can spend more time thinking and less time waiting for your code to run. It’s therefore important that we re-learn how to <em>think</em> and how to <em>write</em> algorithms in terms of array operations.</p>
+<p><strong>Vectorization: a paradigm shift.</strong> Vanilla Python code is slow, and for many practical purposes, that’s not a problem. For training ML models, however, it does become a problem. Unlike in previous classes you may have taken, where you were encouraged to write loops, if/else-expressions, and more, in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> we’ll take a different paradigm: we will avoid writing loops and if/else-expressions. By this, don’t mean that you completely let go of all your previous coding knowledge. It will come in handy when reading in data, creating visualizations, etc. But for the compute-heavy part of your code, we will rely on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls to do the work for us. This practice—of avoiding writing loops and if/else-expressions in the compute-heavy part of the code—is known as <em>vectorization</em>. Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is implemented to be very, very fast under the hood.</p>
+<p><strong>Outline:</strong></p>
+<ol class="arabic simple">
+<li><p>We’ll introduce the basics of <code class="docutils literal notranslate"><span class="pre">Jax</span></code></p></li>
+<li><p>Once you have the basics down, we will show you how to <em>vectorize</em> code you would normally have written using loops</p></li>
+</ol>
+<p><strong>Acknowledgement.</strong> Parts of this tutorial have been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">this NumPy tutorial</a>.</p>
 <section id="tips-and-advice">
 <h2><span class="section-number">2.1. </span>Tips and Advice<a class="headerlink" href="#tips-and-advice" title="Permalink to this heading">#</a></h2>
 <p><strong>Reading Documentation.</strong> <code class="docutils literal notranslate"><span class="pre">Jax</span></code> was built to imitate another popular library, <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>. Just about all functions implemented in <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> have a corresponding <code class="docutils literal notranslate"><span class="pre">Jax</span></code> version with the same interface. Often, you’ll find the internet has more resources on <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> than on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> (since <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is newer) – that’s ok! The same tips often translate. Moreover, you may consider purposely looking up <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> documentation to answer your questions because they often have <em>examples</em> (which the <code class="docutils literal notranslate"><span class="pre">Jax</span></code> documentation usually does not have).</p>
@@ -692,9 +697,8 @@ a.max() = 4.0
 [[ 0.  1.  2.  3.]
  [ 4.  5.  6.  7.]
  [ 8.  9. 10. 11.]]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum(axis=0) = [12. 15. 18. 21.]
+
+a.sum(axis=0) = [12. 15. 18. 21.]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min(axis=1) = [0. 1. 2. 3.]
@@ -709,6 +713,14 @@ a.max() = 4.0
 </ul>
 <p>In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, which we will introduce later, <em>it is best to always specify dimensions using the reverse/negative indexing.</em></p>
 <p><strong>What other operations exist in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>?</strong> A lot. These are just a few examples. Any function you may be interested in likely already exists in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> – be sure to look at the documentation (linked above) and google around before deciding to write your own!</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Compute the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only:</p>
+<ol class="arabic simple">
+<li><p>Write a function that, given <span class="math notranslate nohighlight">\(N\)</span>, returns <span class="math notranslate nohighlight">\(\sum\limits_{i=0}^{N - 1} \log(i + 1)\)</span>.</p></li>
+<li><p>Write a function that, given <span class="math notranslate nohighlight">\(N, M\)</span>, returns <span class="math notranslate nohighlight">\(\sum\limits_{i=0}^{N - 1} \sum\limits_{j=0}^{M - 1} \log(i * j + 1)\)</span>. Hint: you may want to look up <code class="docutils literal notranslate"><span class="pre">jnp.tile</span></code> and <code class="docutils literal notranslate"><span class="pre">jnp.transpose</span></code>.</p></li>
+</ol>
+</div>
 </section>
 <section id="indexing">
 <h2><span class="section-number">2.6. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
