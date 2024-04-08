@@ -370,7 +370,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.3. Array Creation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.5. Array Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.6. Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-and-indexing">2.6. Slicing and Indexing</a></li>
 </ul>
             </nav>
         </div>
@@ -384,7 +384,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="an-introduction-to-vectorization-in-jax">
 <h1><span class="section-number">2. </span>An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code><a class="headerlink" href="#an-introduction-to-vectorization-in-jax" title="Permalink to this heading">#</a></h1>
-<p><strong>What is <code class="docutils literal notranslate"><span class="pre">Jax</span></code>?</strong> <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is a Python library for high-performance numerical computing and array operations. It is developed by Google and is very popular for ML because it is fast, more intuitive than other similar libraries, and can automatically run on different hardware (e.g. it can run on Graphical Processing Units—or GPUs—which are commonly used for training ML models). The main part of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> you’ll be interacting with (for now) comes from:</p>
+<p><strong>What is <code class="docutils literal notranslate"><span class="pre">Jax</span></code>?</strong> <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is a Python library for high-performance numerical computing and array operations capable of automatically run on different hardware (e.g. it can run on Graphical Processing Units—or GPUs—which are commonly used for training ML models). The main part of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> you’ll be interacting with (for now) comes from:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
@@ -410,6 +410,7 @@ document.write(`
 </ul>
 <p><strong>Caution: do NOT mix up <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays with <code class="docutils literal notranslate"><span class="pre">Jax</span></code> arrays.</strong> You can technically call <code class="docutils literal notranslate"><span class="pre">Jax</span></code> functions on <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays and vice versa. PLEASE DO NOT DO THAT. Doing so will not throw any errors, but may result in other bugs that are difficult to find. One way you can keep yourself from making this mistake is: do not import <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> at all.</p>
 <p><strong>Unlike <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> arrays, <code class="docutils literal notranslate"><span class="pre">Jax</span></code> are immutable.</strong> By this, we mean that once created, they cannot be altered. Any operation you perform on a <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array will return a brand new array. For example, in <code class="docutils literal notranslate"><span class="pre">Numpy</span></code> you can set the 0th index of an array equal to some value with <code class="docutils literal notranslate"><span class="pre">arr[0]</span> <span class="pre">=</span> <span class="pre">value</span></code>, but in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, this will throw an error. You might think: this seems really inefficient—does this mean we are constantly burdening our computer by requesting for memory? <code class="docutils literal notranslate"><span class="pre">Jax</span></code> actually leverages this property to speed things up (this is not something we’ll cover in the class). We note this property here because it’s important to be aware of it! <em>Any operation you perform on a <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array needs to be saved into a new variable.</em></p>
+<p><strong>When unsure, play!</strong> Whenever you find yourself unsure of how something works, or confused by all the jargon in the documentation, that’s totally normal. To gain intuition, we recommend you tinker and play: try out little bits of code on small arrays in a controlled setting and see what happens.</p>
 </section>
 <section id="properties-of-arrays">
 <h2><span class="section-number">2.2. </span>Properties of Arrays<a class="headerlink" href="#properties-of-arrays" title="Permalink to this heading">#</a></h2>
@@ -620,7 +621,7 @@ a_and_b.shape = (2, 3)
 </div>
 </div>
 </div>
-<p>You can similarly take a way a dimension of size one by squeezing it: <code class="docutils literal notranslate"><span class="pre">a_unsqueezed.squeeze(axis=1)</span></code>, where the <code class="docutils literal notranslate"><span class="pre">axis</span></code> argument tells us which dimension to remove.</p>
+<p>(We will explain what is meant by the ellipsis, <code class="docutils literal notranslate"><span class="pre">...</span></code>, below). You can similarly take a way a dimension of size one by squeezing it: <code class="docutils literal notranslate"><span class="pre">a_unsqueezed.squeeze(axis=1)</span></code>, where the <code class="docutils literal notranslate"><span class="pre">axis</span></code> argument tells us which dimension to remove.</p>
 </section>
 <section id="array-operations">
 <h2><span class="section-number">2.5. </span>Array Operations<a class="headerlink" href="#array-operations" title="Permalink to this heading">#</a></h2>
@@ -644,15 +645,16 @@ a_and_b.shape = (2, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a           = [20. 30. 40. 50.]
 b           = [0. 1. 2. 3.]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a - b       = [20. 29. 38. 47.]
+
+a - b       = [20. 29. 38. 47.]
 b^2         = [0. 1. 4. 9.]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
 a &lt; 35      = [ True  True False False]
-a * b       = [  0.  30.  80. 150.]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a * b       = [  0.  30.  80. 150.]
 </pre></div>
 </div>
 </div>
@@ -671,15 +673,13 @@ a * b       = [  0.  30.  80. 150.]
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a       = [0. 1. 2. 3. 4.]
 a.sum() = 10.0
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min() = 0.0
+a.min() = 0.0
 a.max() = 4.0
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Non-shape preserving operations:</strong> Oftentimes, we will use these non-shape preserving operations on only <em>one</em> of the arrays dimensions. For these, we will need to specify the axis along which we would like to perform the operation. The axis is specified as a number, where, for 2-dimensional arrays, 0 means the operation will be performed over columns, and 1 means the operation will be performed over rows. See below:</p>
+<p><strong>Non shape-preserving operations:</strong> Oftentimes, we will use these non-shape preserving operations on only <em>one</em> of the arrays dimensions. For these, we will need to specify the axis along which we would like to perform the operation. The axis is specified as a number, where, for 2-dimensional arrays, 0 means the operation will be performed over columns, and 1 means the operation will be performed over rows. See below:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">12.0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
@@ -697,11 +697,10 @@ a.max() = 4.0
 [[ 0.  1.  2.  3.]
  [ 4.  5.  6.  7.]
  [ 8.  9. 10. 11.]]
-
-a.sum(axis=0) = [12. 15. 18. 21.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min(axis=1) = [0. 1. 2. 3.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum(axis=0) = [12. 15. 18. 21.]
+a.min(axis=1) = [0. 1. 2. 3.]
 </pre></div>
 </div>
 </div>
@@ -715,15 +714,157 @@ a.sum(axis=0) = [12. 15. 18. 21.]
 <p><strong>What other operations exist in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>?</strong> A lot. These are just a few examples. Any function you may be interested in likely already exists in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> – be sure to look at the documentation (linked above) and google around before deciding to write your own!</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Compute the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only:</p>
+<p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops!):</p>
 <ol class="arabic simple">
 <li><p>Write a function that, given <span class="math notranslate nohighlight">\(N\)</span>, returns <span class="math notranslate nohighlight">\(\sum\limits_{i=0}^{N - 1} \log(i + 1)\)</span>.</p></li>
-<li><p>Write a function that, given <span class="math notranslate nohighlight">\(N, M\)</span>, returns <span class="math notranslate nohighlight">\(\sum\limits_{i=0}^{N - 1} \sum\limits_{j=0}^{M - 1} \log(i * j + 1)\)</span>. Hint: you may want to look up <code class="docutils literal notranslate"><span class="pre">jnp.tile</span></code> and <code class="docutils literal notranslate"><span class="pre">jnp.transpose</span></code>.</p></li>
+<li><p>Write a function that, given <span class="math notranslate nohighlight">\(N\)</span> and <span class="math notranslate nohighlight">\(M\)</span>, returns <span class="math notranslate nohighlight">\(\sum\limits_{i=0}^{N - 1} \sum\limits_{j=0}^{M - 1} \log(i * j + 1)\)</span>. <em>Hint: one way to do this is with <code class="docutils literal notranslate"><span class="pre">jnp.tile</span></code> and <code class="docutils literal notranslate"><span class="pre">jnp.transpose</span></code>.</em></p></li>
 </ol>
 </div>
 </section>
-<section id="indexing">
-<h2><span class="section-number">2.6. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
+<section id="slicing-and-indexing">
+<h2><span class="section-number">2.6. </span>Slicing and Indexing<a class="headerlink" href="#slicing-and-indexing" title="Permalink to this heading">#</a></h2>
+<p>Now that we have some general machinery for performing basic mathematical computation with arrays in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, we will introduce some ways of extracting subsections of arrays in different ways. These will enable us to do some pretty fancy things!</p>
+<p><strong>Slicing.</strong> Oftentimes, we just want to get a subsection of an array. We can do this as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Everything until the 5th index           =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[:</span><span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Everything from the 5th index onwards    =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">5</span><span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Everything between the 2nd and 6th index =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Everything except the last element       =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [0 1 2 3 4 5 6 7 8 9]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything until the 5th index           = [0 1 2 3 4]
+Everything from the 5th index onwards    = [5 6 7 8 9]
+Everything between the 2nd and 6th index = [2 3 4 5]
+Everything except the last element       = [0 1 2 3 4 5 6 7 8]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of course, we can extend this to higher-dimensional arrays. First, note that a multi-dimensional array can be thought of as an array of arrays. That is, an array with shape <span class="math notranslate nohighlight">\((N, M)\)</span> can be thought of an array of length <span class="math notranslate nohighlight">\(N\)</span>, in which every element is an array of length <span class="math notranslate nohighlight">\(M\)</span>. Given this view, the notation we just introduced still works, it just returns 2-dimensional slices instead of 1-dimensional slices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Everything until the 3th index =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Everything from the 3th index onwards =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Everything between the 1st and 3rd index =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Everything except the last element =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a =
+[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 9 10 11]
+ [12 13 14]]
+
+Everything until the 3th index =
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 2]
+ [3 4 5]
+ [6 7 8]]
+
+Everything from the 3th index onwards =
+[[ 9 10 11]
+ [12 13 14]]
+
+Everything between the 1st and 3rd index =
+[[3 4 5]
+ [6 7 8]]
+
+Everything except the last element =
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 9 10 11]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also slice arrays along multiple dimensions simultaneously:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Example: slicing each axis differently =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">:])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Example: slicing only the second axis =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a =
+[[ 0  1  2]
+ [ 3  4  5]
+ [ 6  7  8]
+ [ 9 10 11]
+ [12 13 14]]
+
+Example: slicing each axis differently =
+[[1 2]
+ [4 5]
+ [7 8]]
+
+Example: slicing only the second axis =
+[[ 1  2]
+ [ 4  5]
+ [ 7  8]
+ [10 11]
+ [13 14]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice in the above, <code class="docutils literal notranslate"><span class="pre">:</span></code> indicates “take everything along axis”.</p>
+<p>Last but not least, we introduce the elipsis notation you saw earlier (when squeezing and unsqueezing): <code class="docutils literal notranslate"><span class="pre">...</span></code>. This notation is similar to <code class="docutils literal notranslate"><span class="pre">:</span></code>. It says “take everything along all axes up until current axis.” This might be confusing, so let’s illustrate this with an example. Suppose we have an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K, L)\)</span>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a[...,</span> <span class="pre">:5]</span></code> will return an array of size <span class="math notranslate nohighlight">\((N, M, K, 5)\)</span>. It leaves all axes alone except the very last one, from which it keeps only the first 5 entries.</p></li>
+<li><p>Similarly, <code class="docutils literal notranslate"><span class="pre">a[...,</span> <span class="pre">:3,</span> <span class="pre">:5]</span></code> will return an array of size <span class="math notranslate nohighlight">\((N, M, 3, 5)\)</span>.</p></li>
+<li><p>We can also put the elipsis at the end. <code class="docutils literal notranslate"><span class="pre">a[:-2,</span> <span class="pre">...]</span></code> will return an array of size <span class="math notranslate nohighlight">\((N - 2, M, K, L)\)</span>.</p></li>
+</ul>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops!):</p>
+<ol class="arabic simple">
+<li><p>Write a function that, given an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N,)\)</span>, returns a new array <code class="docutils literal notranslate"><span class="pre">b</span></code> of shape <span class="math notranslate nohighlight">\((N - 1,)\)</span> in which index <span class="math notranslate nohighlight">\(i\)</span> contains <code class="docutils literal notranslate"><span class="pre">b[i]</span> <span class="pre">=</span> <span class="pre">a[i</span> <span class="pre">+</span> <span class="pre">1]</span> <span class="pre">-</span> <span class="pre">a[i]</span></code>.</p></li>
+<li><p>Extend the function you wrote to multi-dimensional arrays, where the operation is only performed on the last dimension. That is, if an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K)\)</span> is given, return an array of shape <span class="math notranslate nohighlight">\((N, M, K-1)\)</span>.</p></li>
+</ol>
+</div>
+<p><strong>Indexing.</strong></p>
 </section>
 </section>
 
@@ -799,7 +940,7 @@ a.sum(axis=0) = [12. 15. 18. 21.]
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.3. Array Creation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.5. Array Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.6. Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-and-indexing">2.6. Slicing and Indexing</a></li>
 </ul>
   </nav></div>
 
