@@ -366,10 +366,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">6.1. Indexing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">6.2. Broadcasting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping">6.3. Mapping</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asserting">6.4. Asserting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">6.1. Indexing with Boolean Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-integer-arrays">6.2. Indexing with Integer Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">6.3. Broadcasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-mapping-with-vmap">6.4. Fast Mapping with <code class="docutils literal notranslate"><span class="pre">vmap</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">6.5. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -383,18 +384,22 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="advanced-vectorization-in-jax">
 <h1><span class="section-number">6. </span>Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code><a class="headerlink" href="#advanced-vectorization-in-jax" title="Permalink to this heading">#</a></h1>
-<p><strong>Acknowledgement.</strong> Parts of this tutorial have been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">this NumPy tutorial</a>.</p>
+<p>In the previous guide on <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, we introduced the basic building blocks—multi-dimensional arrays—as well as a new paradigm for writing code without loops or if/else-expressions. Here, we continue building on this paradigm with more advanced (yet common) uses of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> in ML.</p>
+<p>Let’s get ourselves started by importing some libraries.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">chex</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="indexing">
-<h2><span class="section-number">6.1. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
-<p>Whereas <em>slicing</em> is typically used to extract contiguous chunks from an array (i.e. a subsection of elements that belonged together in the original array), <em>indexing</em> will allow us to extract non-contiguous parts. We introduce two ways of doing this here.</p>
-<p><strong>Boolean Indexing.</strong> You may have already noticed above that performing boolean operations on an array returns a boolean area. Here’s an example:</p>
+<p><strong>Acknowledgement.</strong> Parts of this tutorial have been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">this NumPy tutorial</a>.</p>
+<section id="indexing-with-boolean-arrays">
+<h2><span class="section-number">6.1. </span>Indexing with Boolean Arrays<a class="headerlink" href="#indexing-with-boolean-arrays" title="Permalink to this heading">#</a></h2>
+<p>Whereas <em>slicing</em> is typically used to extract contiguous chunks from an array (i.e. a subsection of elements that belonged together in the original array), <em>indexing</em> will allow us to extract non-contiguous parts. How? It’s easier shown than explained.</p>
+<p>You may remember from the introductory guide to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> that performing boolean operations on an array returns a boolean array. Here’s an example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -520,16 +525,19 @@ x^3 &amp; \text{if $x$ is odd} \\
 </div>
 </div>
 </div>
-<p><strong>Integer Indexing.</strong> Whereas boolean indexing selected elements from an array based on a boolean statement, we can also select elements from an array by using</p>
+</section>
+<section id="indexing-with-integer-arrays">
+<h2><span class="section-number">6.2. </span>Indexing with Integer Arrays<a class="headerlink" href="#indexing-with-integer-arrays" title="Permalink to this heading">#</a></h2>
+<p>Whereas boolean indexing selected elements from an array based on a boolean statement, we can also select elements from an array by using</p>
 </section>
 <section id="broadcasting">
-<h2><span class="section-number">6.2. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">6.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
 </section>
-<section id="mapping">
-<h2><span class="section-number">6.3. </span>Mapping<a class="headerlink" href="#mapping" title="Permalink to this heading">#</a></h2>
+<section id="fast-mapping-with-vmap">
+<h2><span class="section-number">6.4. </span>Fast Mapping with <code class="docutils literal notranslate"><span class="pre">vmap</span></code><a class="headerlink" href="#fast-mapping-with-vmap" title="Permalink to this heading">#</a></h2>
 </section>
-<section id="asserting">
-<h2><span class="section-number">6.4. </span>Asserting<a class="headerlink" href="#asserting" title="Permalink to this heading">#</a></h2>
+<section id="catching-bugs-early-with-chex">
+<h2><span class="section-number">6.5. </span>Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code><a class="headerlink" href="#catching-bugs-early-with-chex" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -600,10 +608,11 @@ x^3 &amp; \text{if $x$ is odd} \\
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">6.1. Indexing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">6.2. Broadcasting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping">6.3. Mapping</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#asserting">6.4. Asserting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">6.1. Indexing with Boolean Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-integer-arrays">6.2. Indexing with Integer Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">6.3. Broadcasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-mapping-with-vmap">6.4. Fast Mapping with <code class="docutils literal notranslate"><span class="pre">vmap</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">6.5. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
 </ul>
   </nav></div>
 
