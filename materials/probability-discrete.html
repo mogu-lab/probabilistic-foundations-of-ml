@@ -370,7 +370,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">3.2. Terminology and Notation for Discrete Probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-distribution-to-scenario">3.3. Matching Distribution to Scenario</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-comfortable-with-notation">3.4. Getting Comfortable with Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-with-numpyro">3.5. Practice with NumPyro</a></li>
 </ul>
             </nav>
         </div>
@@ -455,7 +454,7 @@ document.write(`
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_fname</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;Patient ID&#39;</span><span class="p">)</span>
 
 <span class="c1"># Print a random sample of 5 patients, just to see what&#39;s in the data</span>
-<span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -491,33 +490,63 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>4535</th>
-      <td>105</td>
+      <th>2769</th>
+      <td>63</td>
+      <td>Entangled Antennas</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>3421</th>
+      <td>78</td>
       <td>Broken Limb</td>
       <td>No</td>
     </tr>
     <tr>
-      <th>7861</th>
-      <td>184</td>
+      <th>5420</th>
+      <td>126</td>
+      <td>High Fever</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>6335</th>
+      <td>147</td>
+      <td>High Fever</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>5385</th>
+      <td>125</td>
       <td>Broken Limb</td>
       <td>No</td>
     </tr>
     <tr>
-      <th>7690</th>
+      <th>7701</th>
       <td>179</td>
-      <td>Allergic Reaction</td>
+      <td>High Fever</td>
       <td>No</td>
     </tr>
     <tr>
-      <th>5265</th>
-      <td>122</td>
+      <th>7283</th>
+      <td>169</td>
       <td>Allergic Reaction</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>3134</th>
+      <td>72</td>
+      <td>High Fever</td>
       <td>No</td>
     </tr>
     <tr>
-      <th>1098</th>
-      <td>25</td>
-      <td>Broken Limb</td>
+      <th>2580</th>
+      <td>58</td>
+      <td>High Fever</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>7076</th>
+      <td>164</td>
+      <td>High Fever</td>
       <td>No</td>
     </tr>
   </tbody>
@@ -575,7 +604,7 @@ document.write(`
 </div>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Browse the Wikipedia pages for the following distirbutions, and determine which ones best matches the variables in the data.</p>
+<p>Browse the Wikipedia pages for the following distirbutions.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Bernoulli_distribution">Bernoulli</a></p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Categorical_distribution">Categorical</a></p></li>
@@ -583,26 +612,17 @@ document.write(`
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Geometric_distribution">Geometric</a></p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson</a></p></li>
 </ul>
-<p>Hint: On each Wikipedia page, there’s a panel on the right side that summarizes the properties of the distribution (including its support), and provides example plots.</p>
+<ol class="arabic simple">
+<li><p>Determine which distribution from the list best matches each variable in the data. How did you decide which one to choose? <em>Hint: On each Wikipedia page, there’s a panel on the right side that summarizes the properties of the distribution (e.g. its support, PMF, example plots, etc.).</em></p></li>
+<li><p>Are the matches you selected perfect? If not, how are they lacking?</p></li>
+<li><p>What kind of information do we miss when considering each variable separately? For our ER data, are there variables you would recommend the IHH consider at jointly? Please back your recommendation up with evidence (i.e. plots).</p></li>
+</ol>
 </div>
 <p>TODO: write your answer here.</p>
 </section>
 <section id="getting-comfortable-with-notation">
 <h2><span class="section-number">3.4. </span>Getting Comfortable with Notation<a class="headerlink" href="#getting-comfortable-with-notation" title="Permalink to this heading">#</a></h2>
 <p>For the distributions that you selected</p>
-</section>
-<section id="practice-with-numpyro">
-<h2><span class="section-number">3.5. </span>Practice with NumPyro<a class="headerlink" href="#practice-with-numpyro" title="Permalink to this heading">#</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> is a “Probabilistic Programming Language” that’s based in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>. It provides an interface for (nearly) direct translation of the stats/math we wrote above into code that we can use to fit to data, make predictions, and more.</p>
-<div class="admonition-exercise admonition">
-<p class="admonition-title">Exercise</p>
-<p>Once you’ve decided which distribution best fits each of the variables in the data, let’s see if we can match them to data from IHH. To do this, you will need two things:</p>
-<ul class="simple">
-<li><p>Code to visualize the data (which you just wrote)</p></li>
-<li><p>Code to visualize the PMF of the distribution.</p></li>
-</ul>
-<p>When you have both, you can plot the distribution of the observed data against the PMF of the distribution to see how well they align. Note that each distribution has <em>parameters</em> that control its shape – you will have to play with these to find settings that best match.</p>
-</div>
 </section>
 </section>
 
@@ -677,7 +697,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">3.2. Terminology and Notation for Discrete Probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-distribution-to-scenario">3.3. Matching Distribution to Scenario</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-comfortable-with-notation">3.4. Getting Comfortable with Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-with-numpyro">3.5. Practice with NumPyro</a></li>
 </ul>
   </nav></div>
 
