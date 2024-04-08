@@ -370,7 +370,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.3. Array Creation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.5. Array Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-and-indexing">2.6. Slicing and Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing">2.6. Slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.7. Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">2.8. Broadcasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping">2.9. Mapping</a></li>
 </ul>
             </nav>
         </div>
@@ -558,7 +561,9 @@ From 4 to 20 in increments of 5: [ 4.  9. 14. 19.]
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [ 0  1  2  3  4  5  6  7  8  9 10 11]
 
 a.reshape(3, 4) =
-[[ 0  1  2  3]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0  1  2  3]
  [ 4  5  6  7]
  [ 8  9 10 11]]
 
@@ -610,8 +615,9 @@ a_unsqueezed       = [[0 1 2]]
 a_unsqueezed.shape = (1, 3)
 b_unsqueezed       = [[3 4 5]]
 b_unsqueezed.shape = (1, 3)
-
-a_and_b =
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a_and_b =
 [[0 1 2]
  [3 4 5]]
 a_and_b.shape = (2, 3)
@@ -643,16 +649,17 @@ a_and_b.shape = (2, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a           = [20. 30. 40. 50.]
 b           = [0. 1. 2. 3.]
-
-a - b       = [20. 29. 38. 47.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b^2         = [0. 1. 4. 9.]
-10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a - b       = [20. 29. 38. 47.]
+b^2         = [0. 1. 4. 9.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a &lt; 35      = [ True  True False False]
-a * b       = [  0.  30.  80. 150.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
+a &lt; 35      = [ True  True False False]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a * b       = [  0.  30.  80. 150.]
 </pre></div>
 </div>
 </div>
@@ -671,10 +678,10 @@ a * b       = [  0.  30.  80. 150.]
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a       = [0. 1. 2. 3. 4.]
 a.sum() = 10.0
+a.min() = 0.0
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min() = 0.0
-a.max() = 4.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.max() = 4.0
 </pre></div>
 </div>
 </div>
@@ -697,10 +704,11 @@ a.max() = 4.0
 [[ 0.  1.  2.  3.]
  [ 4.  5.  6.  7.]
  [ 8.  9. 10. 11.]]
+
+a.sum(axis=0) = [12. 15. 18. 21.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum(axis=0) = [12. 15. 18. 21.]
-a.min(axis=1) = [0. 1. 2. 3.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min(axis=1) = [0. 1. 2. 3.]
 </pre></div>
 </div>
 </div>
@@ -721,10 +729,9 @@ a.min(axis=1) = [0. 1. 2. 3.]
 </ol>
 </div>
 </section>
-<section id="slicing-and-indexing">
-<h2><span class="section-number">2.6. </span>Slicing and Indexing<a class="headerlink" href="#slicing-and-indexing" title="Permalink to this heading">#</a></h2>
-<p>Now that we have some general machinery for performing basic mathematical computation with arrays in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, we will introduce some ways of extracting subsections of arrays in different ways. These will enable us to do some pretty fancy things!</p>
-<p><strong>Slicing.</strong> Oftentimes, we just want to get a subsection of an array. We can do this as follows:</p>
+<section id="slicing">
+<h2><span class="section-number">2.6. </span>Slicing<a class="headerlink" href="#slicing" title="Permalink to this heading">#</a></h2>
+<p>Now that we have some general machinery for performing basic mathematical computation with arrays in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, we will introduce some ways of extracting subsections of arrays in different ways. We can do this as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -743,10 +750,10 @@ a.min(axis=1) = [0. 1. 2. 3.]
 
 Everything until the 5th index           = [0 1 2 3 4]
 Everything from the 5th index onwards    = [5 6 7 8 9]
+Everything between the 2nd and 6th index = [2 3 4 5]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything between the 2nd and 6th index = [2 3 4 5]
-Everything except the last element       = [0 1 2 3 4 5 6 7 8]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything except the last element       = [0 1 2 3 4 5 6 7 8]
 </pre></div>
 </div>
 </div>
@@ -867,7 +874,75 @@ Example: slicing only the second axis =
 <li><p>Extend the function you wrote to multi-dimensional arrays, where the operation is only performed on the last dimension. That is, if an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K)\)</span> is given, return an array <code class="docutils literal notranslate"><span class="pre">b</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K-1)\)</span>.</p></li>
 </ol>
 </div>
-<p><strong>Indexing.</strong></p>
+</section>
+<section id="indexing">
+<h2><span class="section-number">2.7. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
+<p>Whereas <em>slicing</em> is typically used to extract contiguous chunks from an array (i.e. a subsection of elements that belonged together in the original array), <em>indexing</em> will allow us to extract non-contiguous parts. We introduce two ways of doing this here.</p>
+<p><strong>Boolean Indexing.</strong> You may have already noticed above that performing boolean operations on an array returns a boolean area. Here’s an example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a       =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;is even =&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a       = [0 1 2 3 4 5 6 7 8 9]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is even = [ True False  True False  True False  True False  True False]
+</pre></div>
+</div>
+</div>
+</div>
+<p>By using these boolean arrays, we can perform subselections:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Even elements from a =&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Even elements from a = [0 2 4 6 8]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using this, you can easily write functions that have some very complicated behaviors. As an example, the function,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+f(x) &amp;= \begin{cases}
+x^2 &amp; \text{if $x$ is even} \\
+x^3 &amp; \text{if $x$ is odd} \\
+\end{cases}
+\end{align*}\]</div>
+<p>can be implemented as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">is_even</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">is_even</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">+</span> <span class="o">~</span><span class="n">is_even</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mf">3.0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[  0.   1.   4.  27.  16. 125.  36. 343.  64. 729.]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the above, we first created a boolean variable <code class="docutils literal notranslate"><span class="pre">is_even</span></code>, which has values <code class="docutils literal notranslate"><span class="pre">True</span></code> only at indices where <span class="math notranslate nohighlight">\(x\)</span> is even. By multiplying <code class="docutils literal notranslate"><span class="pre">is_even</span></code> times <span class="math notranslate nohighlight">\(x\)</span>, we automatically cast it to an integer. This means that wherever <code class="docutils literal notranslate"><span class="pre">is_even</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, it becomes 1, and when it’s false, it becomes 0. As such, <code class="docutils literal notranslate"><span class="pre">is_even</span> <span class="pre">*</span> <span class="pre">(x</span> <span class="pre">**</span> <span class="pre">2.0)</span></code> returns an array in which every element is <span class="math notranslate nohighlight">\(x^2\)</span> when <span class="math notranslate nohighlight">\(x\)</span> is even and is <span class="math notranslate nohighlight">\(0\)</span> otherwise. In contrast, <code class="docutils literal notranslate"><span class="pre">~is_even</span> <span class="pre">*</span> <span class="pre">(x</span> <span class="pre">**</span> <span class="pre">3.0)</span></code> returns an array in which every element is 0 when <span class="math notranslate nohighlight">\(x\)</span> is even and is <span class="math notranslate nohighlight">\(x^3\)</span> otherwise (the <code class="docutils literal notranslate"><span class="pre">~</span></code> notation flips the boolean values). When we add the two resultant arrays, we get the answer we were looking for.</p>
+<p><strong>Integer Indexing.</strong> Whereas boolean indexing selected elements from an array based on</p>
+</section>
+<section id="broadcasting">
+<h2><span class="section-number">2.8. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="mapping">
+<h2><span class="section-number">2.9. </span>Mapping<a class="headerlink" href="#mapping" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -943,7 +1018,10 @@ Example: slicing only the second axis =
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-creation">2.3. Array Creation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.5. Array Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-and-indexing">2.6. Slicing and Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing">2.6. Slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.7. Indexing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">2.8. Broadcasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping">2.9. Mapping</a></li>
 </ul>
   </nav></div>
 
