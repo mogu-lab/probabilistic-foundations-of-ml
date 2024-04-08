@@ -1,4 +1,4 @@
-# Probabilistic Foundations of Machine Learning
+# Probabilistic Foundations of ML
 
 ```{warning}
 This book is currently under construction!
@@ -26,7 +26,7 @@ TODO
 TODO
 
 
-## Lecture Notes
+## Course Materials
 
 
 ```{tableofcontents}
