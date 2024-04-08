@@ -63,8 +63,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/basics-of-jax';</script>
-    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/lectures/basics-of-jax.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'materials/vectorization-basics';</script>
+    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/materials/vectorization-basics.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="3. Discrete Probability" href="probability-discrete.html" />
@@ -166,6 +166,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="probability-discrete.html">3. Discrete Probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">4. Continuous Probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="frequentist-learning.html">5. The Basics of Frequentist Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorization-advanced.html">6. Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Specification</span></p>
 <ul class="nav bd-sidenav">
@@ -224,7 +225,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/mogu-lab/cs349-fall-2024/blob/master/lectures/basics-of-jax.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/mogu-lab/cs349-fall-2024/blob/master/materials/vectorization-basics.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -242,7 +243,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fmogu-lab%2Fcs349-fall-2024%2Fblob%2Fmaster%2Flectures/basics-of-jax.ipynb" target="_blank"
+      <li><a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fmogu-lab%2Fcs349-fall-2024%2Fblob%2Fmaster%2Fmaterials/vectorization-basics.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onDeepnote"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -273,7 +274,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/lectures/basics-of-jax.ipynb" target="_blank"
+      <li><a href="../_sources/materials/vectorization-basics.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -371,9 +372,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.5. Array Operations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing">2.6. Slicing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.7. Indexing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">2.8. Broadcasting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping">2.9. Mapping</a></li>
 </ul>
             </nav>
         </div>
@@ -566,9 +564,7 @@ a.reshape(3, 4) =
  [ 8  9 10 11]]
 
 a.reshape(2, -1) =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0  1  2  3  4  5]
+[[ 0  1  2  3  4  5]
  [ 6  7  8  9 10 11]]
 </pre></div>
 </div>
@@ -610,8 +606,9 @@ a.reshape(2, -1) =
 b       = [3 4 5]
 a.shape = (3,)
 b.shape = (3,)
-
-a_unsqueezed       = [[0 1 2]]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a_unsqueezed       = [[0 1 2]]
 a_unsqueezed.shape = (1, 3)
 b_unsqueezed       = [[3 4 5]]
 b_unsqueezed.shape = (1, 3)
@@ -649,15 +646,14 @@ a_and_b.shape = (2, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a           = [20. 30. 40. 50.]
 b           = [0. 1. 2. 3.]
-
-a - b       = [20. 29. 38. 47.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b^2         = [0. 1. 4. 9.]
-10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a - b       = [20. 29. 38. 47.]
+b^2         = [0. 1. 4. 9.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a &lt; 35      = [ True  True False False]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
+a &lt; 35      = [ True  True False False]
 a * b       = [  0.  30.  80. 150.]
 </pre></div>
 </div>
@@ -703,9 +699,12 @@ a.max() = 4.0
 [[ 0.  1.  2.  3.]
  [ 4.  5.  6.  7.]
  [ 8.  9. 10. 11.]]
-
-a.sum(axis=0) = [12. 15. 18. 21.]
-a.min(axis=1) = [0. 1. 2. 3.]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum(axis=0) = [12. 15. 18. 21.]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min(axis=1) = [0. 1. 2. 3.]
 </pre></div>
 </div>
 </div>
@@ -746,7 +745,9 @@ a.min(axis=1) = [0. 1. 2. 3.]
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [0 1 2 3 4 5 6 7 8 9]
 
 Everything until the 5th index           = [0 1 2 3 4]
-Everything from the 5th index onwards    = [5 6 7 8 9]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything from the 5th index onwards    = [5 6 7 8 9]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything between the 2nd and 6th index = [2 3 4 5]
@@ -794,9 +795,7 @@ Everything until the 3th index =
  [6 7 8]]
 
 Everything from the 3th index onwards =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 9 10 11]
+[[ 9 10 11]
  [12 13 14]]
 
 Everything between the 1st and 3rd index =
@@ -840,7 +839,9 @@ Everything except the last element =
  [12 13 14]]
 
 Example: slicing each axis differently =
-[[1 2]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2]
  [4 5]
  [7 8]]
 
@@ -870,147 +871,6 @@ Example: slicing only the second axis =
 </ol>
 </div>
 </section>
-<section id="indexing">
-<h2><span class="section-number">2.7. </span>Indexing<a class="headerlink" href="#indexing" title="Permalink to this heading">#</a></h2>
-<p>Whereas <em>slicing</em> is typically used to extract contiguous chunks from an array (i.e. a subsection of elements that belonged together in the original array), <em>indexing</em> will allow us to extract non-contiguous parts. We introduce two ways of doing this here.</p>
-<p><strong>Boolean Indexing.</strong> You may have already noticed above that performing boolean operations on an array returns a boolean area. Here’s an example:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a       =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;is even =&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a       = [0 1 2 3 4 5 6 7 8 9]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is even = [ True False  True False  True False  True False  True False]
-</pre></div>
-</div>
-</div>
-</div>
-<p>By using these boolean arrays, we can perform subselections:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Even elements from a =&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Even elements from a =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> [0 2 4 6 8]
-</pre></div>
-</div>
-</div>
-</div>
-<p>Using this, you can easily write functions that have some very complicated behaviors. As an example, the function,</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-f(x) &amp;= \begin{cases}
-x^2 &amp; \text{if $x$ is even} \\
-x^3 &amp; \text{if $x$ is odd} \\
-\end{cases}
-\end{align*}\]</div>
-<p>can be implemented as follows:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="n">is_even</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">is_even</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">+</span> <span class="o">~</span><span class="n">is_even</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mf">3.0</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[  0.   1.   4.  27.  16. 125.  36. 343.  64. 729.]
-</pre></div>
-</div>
-</div>
-</div>
-<p>In the above, we first created a boolean variable <code class="docutils literal notranslate"><span class="pre">is_even</span></code>, which has values <code class="docutils literal notranslate"><span class="pre">True</span></code> only at indices where <span class="math notranslate nohighlight">\(x\)</span> is even. By multiplying <code class="docutils literal notranslate"><span class="pre">is_even</span></code> times <span class="math notranslate nohighlight">\(x\)</span>, we automatically cast it to an integer. This means that wherever <code class="docutils literal notranslate"><span class="pre">is_even</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, it becomes 1, and when it’s false, it becomes 0. As such, <code class="docutils literal notranslate"><span class="pre">is_even</span> <span class="pre">*</span> <span class="pre">(x</span> <span class="pre">**</span> <span class="pre">2.0)</span></code> returns an array in which every element is <span class="math notranslate nohighlight">\(x^2\)</span> when <span class="math notranslate nohighlight">\(x\)</span> is even and is <span class="math notranslate nohighlight">\(0\)</span> otherwise. In contrast, <code class="docutils literal notranslate"><span class="pre">~is_even</span> <span class="pre">*</span> <span class="pre">(x</span> <span class="pre">**</span> <span class="pre">3.0)</span></code> returns an array in which every element is 0 when <span class="math notranslate nohighlight">\(x\)</span> is even and is <span class="math notranslate nohighlight">\(x^3\)</span> otherwise (the <code class="docutils literal notranslate"><span class="pre">~</span></code> notation flips the boolean values). When we add the two resultant arrays, we get the answer we were looking for.</p>
-<p>While the above example has pedagogical value, the logic does become a little obfuscated with all of the casting and such. Here’s another, cleaner way to implement the above function using <code class="docutils literal notranslate"><span class="pre">jnp.where</span></code>:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">x</span> <span class="o">**</span> <span class="mf">3.0</span><span class="p">)</span>
-    
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[  0.   1.   4.  27.  16. 125.  36. 343.  64. 729.]
-</pre></div>
-</div>
-</div>
-</div>
-<p>Here, <code class="docutils literal notranslate"><span class="pre">jnp.where</span></code> uses the condition <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">==</span> <span class="pre">0</span></code> (is even) to select elements from one of two arrays, <span class="math notranslate nohighlight">\(x^2\)</span> or <span class="math notranslate nohighlight">\(x^3\)</span>.</p>
-<div class="admonition-exercise admonition">
-<p class="admonition-title">Exercise</p>
-<p><strong>Part 1:</strong> Write a function that takes in an integer <span class="math notranslate nohighlight">\(N\)</span>, a coordinate <span class="math notranslate nohighlight">\(x, y\)</span>, and a radius <span class="math notranslate nohighlight">\(r\)</span>. The function should return an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> in which every element is 0 except elements that are within radius <span class="math notranslate nohighlight">\(r\)</span> of <span class="math notranslate nohighlight">\((x, y)\)</span> (i.e. every element <span class="math notranslate nohighlight">\(i, j\)</span> should be 1 if <span class="math notranslate nohighlight">\((x - i)^2 + (y - j)^2 \leq r^2\)</span>) and 0 otherwise. For example, for <span class="math notranslate nohighlight">\(N = 10\)</span>, <span class="math notranslate nohighlight">\(x = 5\)</span>, <span class="math notranslate nohighlight">\(y = 5\)</span>, and <span class="math notranslate nohighlight">\(r = 2\)</span>, the function should return:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Similarly, for <span class="math notranslate nohighlight">\(N = 10\)</span>, <span class="math notranslate nohighlight">\(x = 5\)</span>, <span class="math notranslate nohighlight">\(y = 0\)</span>, and <span class="math notranslate nohighlight">\(r = 2\)</span>, the function should return:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><strong>Part 2:</strong> Write a function that, given an integer <span class="math notranslate nohighlight">\(N \geq 2\)</span>, returns an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> with a checkerboard pattern of 0s and 1s. For example, for <span class="math notranslate nohighlight">\(N = 5\)</span>, the function should return:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">indexing_q1</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
-    <span class="n">rows</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">N</span><span class="p">)</span>
-    <span class="n">cols</span> <span class="o">=</span> <span class="n">rows</span><span class="o">.</span><span class="n">T</span>
-    <span class="k">return</span> <span class="p">((</span><span class="n">rows</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">cols</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.0</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">indexing_q2</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Integer Indexing.</strong> Whereas boolean indexing selected elements from an array based on a boolean statement, we can also select elements from an array by using</p>
-</section>
-<section id="broadcasting">
-<h2><span class="section-number">2.8. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="mapping">
-<h2><span class="section-number">2.9. </span>Mapping<a class="headerlink" href="#mapping" title="Permalink to this heading">#</a></h2>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1026,7 +886,7 @@ x^3 &amp; \text{if $x$ is odd} \\
         },
         kernelOptions: {
             name: "python3",
-            path: "./lectures"
+            path: "./materials"
         },
         predefinedOutput: true
     }
@@ -1086,9 +946,6 @@ x^3 &amp; \text{if $x$ is odd} \\
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-manipulation">2.4. Shape Manipulation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#array-operations">2.5. Array Operations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing">2.6. Slicing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">2.7. Indexing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">2.8. Broadcasting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mapping">2.9. Mapping</a></li>
 </ul>
   </nav></div>
 

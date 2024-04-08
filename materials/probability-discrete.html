@@ -63,12 +63,12 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/probability-discrete';</script>
-    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/lectures/probability-discrete.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'materials/probability-discrete';</script>
+    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/materials/probability-discrete.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="4. Continuous Probability" href="probability-continuous.html" />
-    <link rel="prev" title="2. An Introduction to “Vectorization” in Jax" href="basics-of-jax.html" />
+    <link rel="prev" title="2. An Introduction to “Vectorization” in Jax" href="vectorization-basics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -162,10 +162,11 @@ const thebe_selector_output = ".output, .cell_output"
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1. What is Probabilistic ML?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basics-of-jax.html">2. An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorization-basics.html">2. An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Discrete Probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">4. Continuous Probability</a></li>
 <li class="toctree-l1"><a class="reference internal" href="frequentist-learning.html">5. The Basics of Frequentist Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorization-advanced.html">6. Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Specification</span></p>
 <ul class="nav bd-sidenav">
@@ -224,7 +225,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/mogu-lab/cs349-fall-2024/blob/master/lectures/probability-discrete.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/mogu-lab/cs349-fall-2024/blob/master/materials/probability-discrete.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -242,7 +243,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fmogu-lab%2Fcs349-fall-2024%2Fblob%2Fmaster%2Flectures/probability-discrete.ipynb" target="_blank"
+      <li><a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fmogu-lab%2Fcs349-fall-2024%2Fblob%2Fmaster%2Fmaterials/probability-discrete.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onDeepnote"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -273,7 +274,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/lectures/probability-discrete.ipynb" target="_blank"
+      <li><a href="../_sources/materials/probability-discrete.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -490,33 +491,33 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>7078</th>
-      <td>164</td>
+      <th>2072</th>
+      <td>46</td>
+      <td>Allergic Reaction</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>4492</th>
+      <td>104</td>
       <td>High Fever</td>
       <td>No</td>
     </tr>
     <tr>
-      <th>1504</th>
-      <td>35</td>
+      <th>6149</th>
+      <td>142</td>
       <td>Allergic Reaction</td>
       <td>Yes</td>
     </tr>
     <tr>
-      <th>6779</th>
-      <td>157</td>
+      <th>390</th>
+      <td>9</td>
       <td>Allergic Reaction</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <th>1311</th>
-      <td>30</td>
-      <td>High Fever</td>
       <td>No</td>
     </tr>
     <tr>
-      <th>4517</th>
-      <td>105</td>
-      <td>Allergic Reaction</td>
+      <th>2794</th>
+      <td>63</td>
+      <td>High Fever</td>
       <td>No</td>
     </tr>
   </tbody>
@@ -618,7 +619,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./lectures"
+            path: "./materials"
         },
         predefinedOutput: true
     }
@@ -637,7 +638,7 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="basics-of-jax.html"
+       href="vectorization-basics.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
