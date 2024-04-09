@@ -582,7 +582,9 @@ Rows with number divisible by 5:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [  0   1   4   9  16  25  36  49  64  81 100 121]
-a[i] = [ 1  1  9 64 25]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a[i] = [ 1  1  9 64 25]
 a[j] =
 </pre></div>
 </div>
@@ -674,6 +676,37 @@ a[j] =
 </div>
 </div>
 <p>By indexing into <code class="docutils literal notranslate"><span class="pre">a</span></code> using the tuple <code class="docutils literal notranslate"><span class="pre">(i,</span> <span class="pre">j)</span></code>, we paired each element of <span class="math notranslate nohighlight">\(i\)</span> with each element of <span class="math notranslate nohighlight">\(j\)</span> to select items at indices: <span class="math notranslate nohighlight">\((3, 0)\)</span>, <span class="math notranslate nohighlight">\((5, 1)\)</span>, and <span class="math notranslate nohighlight">\((2, 1)\)</span>.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops, no if/else!):</p>
+<p><strong>Part 1:</strong> Write a function that, given a square matrix <code class="docutils literal notranslate"><span class="pre">a</span></code>, returns the elements along its diagonal. For example, given,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span><span class="p">]</span>
+     <span class="p">[</span> <span class="mi">4</span>  <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span><span class="p">]</span>
+     <span class="p">[</span> <span class="mi">8</span>  <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span><span class="p">]</span>
+     <span class="p">[</span><span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">15</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>the function should return, <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">15]</span></code>. Note that there already exists a function in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> that does exactly this: <code class="docutils literal notranslate"><span class="pre">jnp.diagonal</span></code>. Please <strong>do not</strong> use it for the sake of this exercise!</p>
+<p><strong>Part 2:</strong> Extend the function from the previous part to include a second, keyword argument, <code class="docutils literal notranslate"><span class="pre">offset=0</span></code>, to offset the diagonal. Continuing with the above example,</p>
+<ul class="simple">
+<li><p>When <code class="docutils literal notranslate"><span class="pre">offset=0</span></code>, the function’s behavior should not change.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">offset=1</span></code>, the function should return: <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">6,</span> <span class="pre">11]</span></code>.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">offset=2</span></code>, the function should return: <code class="docutils literal notranslate"><span class="pre">[2,</span> <span class="pre">7]</span></code>.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">offset=-1</span></code>, the function should return: <code class="docutils literal notranslate"><span class="pre">[4,</span> <span class="pre">9,</span> <span class="pre">14]</span></code>.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">offset=-2</span></code>, the function should return: <code class="docutils literal notranslate"><span class="pre">[8,</span> <span class="pre">13]</span></code>.</p></li>
+</ul>
+<p>Again, this functionality is already built-in to <code class="docutils literal notranslate"><span class="pre">jnp.diagonal</span></code>, but for the purpose of the exercise, implement this yourself.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">integer_indexing_q1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">offset</span><span class="p">))</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">*</span> <span class="p">(</span><span class="n">offset</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">offset</span><span class="p">))</span> <span class="o">+</span> <span class="n">offset</span> <span class="o">*</span> <span class="p">(</span><span class="n">offset</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="broadcasting">
 <h2><span class="section-number">6.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
