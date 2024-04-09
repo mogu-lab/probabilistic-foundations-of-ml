@@ -369,8 +369,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">6.1. Indexing with Boolean Arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-arrays-of-indices">6.2. Indexing with Arrays of Indices</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">6.3. Broadcasting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-mapping-with-vmap">6.4. Fast Mapping with <code class="docutils literal notranslate"><span class="pre">vmap</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">6.5. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">6.4. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -388,8 +387,7 @@ document.write(`
 <p>Let’s get ourselves started by importing some libraries.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 <span class="kn">import</span> <span class="nn">chex</span>
 </pre></div>
 </div>
@@ -508,7 +506,7 @@ Rows with number divisible by 5:
 <p class="admonition-title">Exercise</p>
 <p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops, no if/else!):</p>
 <p><strong>Part 1:</strong> Write a function that takes in a 2-dimensional array <code class="docutils literal notranslate"><span class="pre">a</span></code> and returns only rows whose sum is positive.</p>
-<p><strong>Part 2:</strong> Write a function that takes in an integer <span class="math notranslate nohighlight">\(N\)</span>, a coordinate <span class="math notranslate nohighlight">\(x, y\)</span>, and a radius <span class="math notranslate nohighlight">\(r\)</span>. The function should return an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> in which every element is 0 except elements that are within radius <span class="math notranslate nohighlight">\(r\)</span> of <span class="math notranslate nohighlight">\((x, y)\)</span> (i.e. every element <span class="math notranslate nohighlight">\(i, j\)</span> should be 1 if <span class="math notranslate nohighlight">\((x - i)^2 + (y - j)^2 \leq r^2\)</span>) and 0 otherwise. For example, for <span class="math notranslate nohighlight">\(N = 10\)</span>, <span class="math notranslate nohighlight">\(x = 5\)</span>, <span class="math notranslate nohighlight">\(y = 5\)</span>, and <span class="math notranslate nohighlight">\(r = 2\)</span>, the function should return:</p>
+<p><strong>Part 2:</strong> Write a function that takes in an integer <span class="math notranslate nohighlight">\(N &gt; 0\)</span>, a coordinate <span class="math notranslate nohighlight">\(x, y\)</span>, and a radius <span class="math notranslate nohighlight">\(r\)</span>. The function should return an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> in which every element is 0 except elements that are within radius <span class="math notranslate nohighlight">\(r &gt; 0\)</span> of <span class="math notranslate nohighlight">\((x, y)\)</span> (i.e. every element <span class="math notranslate nohighlight">\(i, j\)</span> should be 1 if <span class="math notranslate nohighlight">\((x - i)^2 + (y - j)^2 \leq r^2\)</span>) and 0 otherwise. For example, for <span class="math notranslate nohighlight">\(N = 10\)</span>, <span class="math notranslate nohighlight">\(x = 5\)</span>, <span class="math notranslate nohighlight">\(y = 5\)</span>, and <span class="math notranslate nohighlight">\(r = 2\)</span>, the function should return:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -533,33 +531,6 @@ Rows with number divisible by 5:
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
 </pre></div>
-</div>
-<p><strong>Part 3:</strong> Write a function that, given an integer <span class="math notranslate nohighlight">\(N \geq 2\)</span>, returns an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> with a checkerboard pattern of 0s and 1s. For example, for <span class="math notranslate nohighlight">\(N = 5\)</span>, the function should return:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">boolean_indexing_q1</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="n">positive_sum</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.0</span>
-    <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="n">positive_sum</span><span class="p">]</span>
-
-<span class="k">def</span> <span class="nf">boolean_indexing_q2</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
-    <span class="n">rows</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">N</span><span class="p">)</span>
-    <span class="n">cols</span> <span class="o">=</span> <span class="n">rows</span><span class="o">.</span><span class="n">T</span>
-    <span class="k">return</span> <span class="p">((</span><span class="n">rows</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">cols</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.0</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">boolean_indexing_q3</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">b</span>
-</pre></div>
-</div>
 </div>
 </div>
 </section>
@@ -628,9 +599,8 @@ a[i] =
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 4  5]
  [ 6  7]
  [10 11]]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a[j] =
+
+a[j] =
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[[ 2  3]
@@ -698,20 +668,6 @@ a[i] =
 </ul>
 <p>Again, this functionality is already built-in to <code class="docutils literal notranslate"><span class="pre">jnp.diagonal</span></code>, but for the purpose of the exercise, implement this yourself.</p>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">integer_indexing_q1</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">a</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span>
-
-<span class="k">def</span> <span class="nf">integer_indexing_q2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">offset</span><span class="p">))</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">*</span> <span class="p">(</span><span class="n">offset</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="n">j</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">offset</span><span class="p">))</span> <span class="o">+</span> <span class="n">offset</span> <span class="o">*</span> <span class="p">(</span><span class="n">offset</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">a</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span>
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 <section id="broadcasting">
 <h2><span class="section-number">6.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
@@ -775,9 +731,8 @@ b =
 [[ 5]
  [ 8]
  [12]]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c =
+
+c =
 [[ 4  3  2  1]
  [ 7  6  5  4]
  [11 10  9  8]]
@@ -792,21 +747,62 @@ b =
 <p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops, no if/else!):</p>
 <p>Write a function that accepts two arrays, <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N, D)\)</span> and <code class="docutils literal notranslate"><span class="pre">b</span></code> of shape <span class="math notranslate nohighlight">\((M, D)\)</span>. Write a function that computes mean squared difference between their rows (pairwise). That is, return an array <code class="docutils literal notranslate"><span class="pre">c</span></code> of shape <span class="math notranslate nohighlight">\((N, M)\)</span>, in which <span class="math notranslate nohighlight">\(c_{i,j} = \sum\limits_{d=0}^{D-1} (b_{j,d} - a_{i,d})^2\)</span>.</p>
 </div>
+<p>For more information on broadcasting, checkout <a class="reference external" href="https://numpy.org/doc/stable/user/basics.broadcasting.html#basics-broadcasting">this tutorial</a>.</p>
+</section>
+<section id="catching-bugs-early-with-chex">
+<h2><span class="section-number">6.4. </span>Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code><a class="headerlink" href="#catching-bugs-early-with-chex" title="Permalink to this heading">#</a></h2>
+<p><strong>What’s <code class="docutils literal notranslate"><span class="pre">chex</span></code>?</strong> As we just saw, while powerful, <code class="docutils literal notranslate"><span class="pre">Jax</span></code>’s broadcasting can subtly sneak in bugs into your code. Luckily, there’s a great Python library that can help us: <code class="docutils literal notranslate"><span class="pre">chex</span></code>. <code class="docutils literal notranslate"><span class="pre">chex</span></code> is a library for asserting <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array shapes.</p>
+<p><strong>What are assertions?</strong> Assertions are lines in your code that raise an exception if something that should be true is false. They are useful for catching bugs and for debugging. For example, if you write a function that takes in argument <span class="math notranslate nohighlight">\(p \in [0, 1]\)</span>, you can write:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this way, whenever <span class="math notranslate nohighlight">\(p \notin [0, 1]\)</span>, your code will raise an exception. This tells you not only that something went wrong, it also tells you where and why it went wrong, speeding up your debugging process.</p>
+<p><strong>Best practices: asserting array shapes.</strong> In <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, we will use it to ensure that all arguments passed into any function we write have the correct shapes, and that every operation we perform results in the correct shape. When <code class="docutils literal notranslate"><span class="pre">chex</span></code> raises an exception, the statement that it failed on will give us a clue as to where the bug is.</p>
+<p><strong>Why use <code class="docutils literal notranslate"><span class="pre">chex</span></code> assertions instead of Python’s built-in <code class="docutils literal notranslate"><span class="pre">assert</span></code>?</strong> As we will see later, to speed things up, <code class="docutils literal notranslate"><span class="pre">Jax</span></code> sometimes removes lines of code that do not affect the output. Since Python’s built-in <code class="docutils literal notranslate"><span class="pre">assert</span></code> technically does not return anything, <code class="docutils literal notranslate"><span class="pre">Jax</span></code> might optimize it out. <code class="docutils literal notranslate"><span class="pre">chex</span></code> provides specialized assertions that do not get optimized out by <code class="docutils literal notranslate"><span class="pre">Jax</span></code>. As such, as a rule of thumb:</p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">chex</span></code> on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> arrays</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">assert</span></code> on non-<code class="docutils literal notranslate"><span class="pre">Jax</span></code> arrays (e.g. checking a float is within range, a list has the right length, etc.)</p></li>
+</ul>
+<p><strong>Example.</strong> Let’s give it a go! Suppose you have a function that takes an array and splits into two parts. Specifically, the function,</p>
+<ol class="arabic simple">
+<li><p>Takes an array of shape <span class="math notranslate nohighlight">\((N, D)\)</span> and a variable <span class="math notranslate nohighlight">\(p \in [0, 1]\)</span> (that determines the size of the split).</p></li>
+<li><p>Returns two array of shape <span class="math notranslate nohighlight">\((p \cdot N, D)\)</span> and <span class="math notranslate nohighlight">\(((1 - p) \cdot N, D)\)</span>.</p></li>
+</ol>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">chex</span></code> to ensure the following properties are true:</p>
+<ol class="arabic simple">
+<li><p>The input is a 2-dimensional array. In <code class="docutils literal notranslate"><span class="pre">chex</span></code> lingo, it is a “rank-2” array.</p></li>
+<li><p>The size of the 0th dimension of the resultant arrays should sum to <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
+</ol>
+<p>We can implement this as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">broadcasting_q1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">b</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">-</span> <span class="n">a</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">split_2d_array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="c1"># ensure &#39;p&#39; is between 0 and 1</span>
+    <span class="k">assert</span><span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="c1"># ensures &#39;a&#39; is a 2-dimensional array</span>
+    <span class="n">chex</span><span class="o">.</span><span class="n">assert_rank</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">partition_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">part1</span> <span class="o">=</span> <span class="n">a</span><span class="p">[:</span><span class="n">partition_size</span><span class="p">]</span>
+    <span class="n">part2</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">partition_size</span><span class="p">:]</span>
+
+    <span class="c1"># asserts that the shapes of the resultant arrays sums to a.shape[0]</span>
+    <span class="n">chex</span><span class="o">.</span><span class="n">assert_shape</span><span class="p">(</span><span class="n">part1</span><span class="p">,</span> <span class="p">(</span><span class="n">partition_size</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">chex</span><span class="o">.</span><span class="n">assert_shape</span><span class="p">(</span><span class="n">part2</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">partition_size</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    
+    <span class="k">return</span> <span class="n">part1</span><span class="p">,</span> <span class="n">part2</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>For more information on broadcasting, checkout <a class="reference external" href="https://numpy.org/doc/stable/user/basics.broadcasting.html#basics-broadcasting">this tutorial</a>.</p>
-</section>
-<section id="fast-mapping-with-vmap">
-<h2><span class="section-number">6.4. </span>Fast Mapping with <code class="docutils literal notranslate"><span class="pre">vmap</span></code><a class="headerlink" href="#fast-mapping-with-vmap" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="catching-bugs-early-with-chex">
-<h2><span class="section-number">6.5. </span>Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code><a class="headerlink" href="#catching-bugs-early-with-chex" title="Permalink to this heading">#</a></h2>
+<p>If you were to pass in an array that is not 2-dimensional, or if there was a bug in the array-splitting code inside the function, <code class="docutils literal notranslate"><span class="pre">chex</span></code> would have raised an exception (try it!)</p>
+<p>You can find the <code class="docutils literal notranslate"><span class="pre">chex</span></code> documentation <a class="reference external" href="https://chex.readthedocs.io/en/latest/api.html">here</a>. For this course, we will only focus on assertions that have to do with <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array shapes. That is, for simplicity, only consider assertions concerned with: dimension, shape, and rank.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Go back and add assertions to <strong>every function</strong> you implemented as part of this tutorial. Your assertions should, at the very least, check the inputs and outputs for correct shapes.</p>
+</div>
 </section>
 </section>
 
@@ -880,8 +876,7 @@ b =
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">6.1. Indexing with Boolean Arrays</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-arrays-of-indices">6.2. Indexing with Arrays of Indices</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">6.3. Broadcasting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-mapping-with-vmap">6.4. Fast Mapping with <code class="docutils literal notranslate"><span class="pre">vmap</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">6.5. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">6.4. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
 </ul>
   </nav></div>
 
