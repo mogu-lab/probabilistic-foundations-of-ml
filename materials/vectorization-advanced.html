@@ -582,12 +582,8 @@ Rows with number divisible by 5:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [  0   1   4   9  16  25  36  49  64  81 100 121]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a[i] = [ 1  1  9 64 25]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a[j] =
+a[i] = [ 1  1  9 64 25]
+a[j] =
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 9 16]
@@ -716,6 +712,79 @@ a[j] =
 </section>
 <section id="broadcasting">
 <h2><span class="section-number">6.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
+<p>The term <em>broadcasting</em> describes how <code class="docutils literal notranslate"><span class="pre">Jax</span></code> treats arrays with different shapes during arithmetic operations. Subject to certain constraints, the smaller array is “broadcast” across the larger array so that they have compatible shapes. Broadcasting provides a means of vectorizing array operations so that looping occurs very fast under the hood without making needless copies of data. Broadcasting follows two rules:</p>
+<p><strong>Rule 1:</strong> If all input arrays do not have the same number of dimensions, a “1” will be repeatedly prepended to the shapes of the smaller arrays until all the arrays have the same number of dimensions.</p>
+<blockquote>
+<div><p>Example: If we were to add an array of shape <span class="math notranslate nohighlight">\((N, D)\)</span> to an array of shape <span class="math notranslate nohighlight">\((D,)\)</span>, under the hood, broadcasting will change the second array’s shape to <span class="math notranslate nohighlight">\((1, D)\)</span>. Notice that the arrays are still not the same shape, so how can we add them? This is where Rule 2 comes in.</p>
+</div></blockquote>
+<p><strong>Rule 2:</strong> Arrays with a size of 1 along a particular dimension act as if they had the size of the array with the largest shape along that dimension. The value of the array element is assumed to be the same along that dimension for the “broadcast” array.</p>
+<blockquote>
+<div><p>Example: If we were to add an array of shape <span class="math notranslate nohighlight">\((N, D)\)</span> to an array of shape <span class="math notranslate nohighlight">\((1, D)\)</span>, under the hood, broadcasting would repeat the <span class="math notranslate nohighlight">\((1, D)\)</span>-array <span class="math notranslate nohighlight">\(N\)</span> times along it’s 0th axis. This would mean both arrays are now of shape <span class="math notranslate nohighlight">\((N, D)\)</span> and can be added elementwise.</p>
+</div></blockquote>
+<p>Here’s the example in code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a + [1, 2, 3, 4] =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a =
+[[ 0  1  2  3]
+ [ 4  5  6  7]
+ [ 8  9 10 11]]
+
+a + [1, 2, 3, 4] =
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1  3  5  7]
+ [ 5  7  9 11]
+ [ 9 11 13 15]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>And of course, the above addition can be replaced with any other operation and <code class="docutils literal notranslate"><span class="pre">Jax</span></code> will broadcast in the same way.</p>
+<p>While broadcasting is a powerful tool, it can sometimes catch us by surprise. For example, what would happen if we were to subtract a <span class="math notranslate nohighlight">\((N, 1)\)</span> array from a <span class="math notranslate nohighlight">\((1, M)\)</span> array? Let’s see:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">12</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">a</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;c =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [[1 2 3 4]]
+b =
+[[ 5]
+ [ 8]
+ [12]]
+
+c =
+[[ 4  3  2  1]
+ [ 7  6  5  4]
+ [11 10  9  8]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The resultant array <code class="docutils literal notranslate"><span class="pre">c</span></code> contains differences between every pair of elements in <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code>. That is, <code class="docutils literal notranslate"><span class="pre">c[i,</span> <span class="pre">j]</span> <span class="pre">=</span> <span class="pre">b[i]</span> <span class="pre">-</span> <span class="pre">a[j]</span></code>. There are many applications in ML in which computing pairwise differences is helpful, and this is one great way to do it!</p>
+<p>However, if you forget to check the shapes of your arrays before operating on them, you may also trigger some broadcasting behavior unintentionally, resulting in bugs that are hard to find. For this reason, we recommend adding shape-checking code after every line that operates of arrays of unequal shapes. The shape-checking code should error if the resultant array does not have its desired shape. How can we do this? See the section below about the library <code class="docutils literal notranslate"><span class="pre">chex</span></code>.</p>
 </section>
 <section id="fast-mapping-with-vmap">
 <h2><span class="section-number">6.4. </span>Fast Mapping with <code class="docutils literal notranslate"><span class="pre">vmap</span></code><a class="headerlink" href="#fast-mapping-with-vmap" title="Permalink to this heading">#</a></h2>
