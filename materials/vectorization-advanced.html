@@ -585,7 +585,9 @@ Rows with number divisible by 5:
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a[i] = [ 1  1  9 64 25]
-a[j] =
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a[j] =
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 9 16]
@@ -689,7 +691,7 @@ a[j] =
 <p>the function should return, <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">15]</span></code>. Note that there already exists a function in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> that does exactly this: <code class="docutils literal notranslate"><span class="pre">jnp.diagonal</span></code>. Please <strong>do not</strong> use it for the sake of this exercise!</p>
 <p><strong>Part 2:</strong> Extend the function from the previous part to include a second, keyword argument, <code class="docutils literal notranslate"><span class="pre">offset=0</span></code>, to offset the diagonal. Continuing with the above example,</p>
 <ul class="simple">
-<li><p>When <code class="docutils literal notranslate"><span class="pre">offset=0</span></code>, the function’s behavior should not change.</p></li>
+<li><p>When <code class="docutils literal notranslate"><span class="pre">offset=0</span></code>, the function’s behavior should not change from the previous part.</p></li>
 <li><p>When <code class="docutils literal notranslate"><span class="pre">offset=1</span></code>, the function should return: <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">6,</span> <span class="pre">11]</span></code>.</p></li>
 <li><p>When <code class="docutils literal notranslate"><span class="pre">offset=2</span></code>, the function should return: <code class="docutils literal notranslate"><span class="pre">[2,</span> <span class="pre">7]</span></code>.</p></li>
 <li><p>When <code class="docutils literal notranslate"><span class="pre">offset=-1</span></code>, the function should return: <code class="docutils literal notranslate"><span class="pre">[4,</span> <span class="pre">9,</span> <span class="pre">14]</span></code>.</p></li>
@@ -699,7 +701,11 @@ a[j] =
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">integer_indexing_q1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">integer_indexing_q1</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span>
+
+<span class="k">def</span> <span class="nf">integer_indexing_q2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">i</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">offset</span><span class="p">))</span> <span class="o">-</span> <span class="n">offset</span> <span class="o">*</span> <span class="p">(</span><span class="n">offset</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">j</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">offset</span><span class="p">))</span> <span class="o">+</span> <span class="n">offset</span> <span class="o">*</span> <span class="p">(</span><span class="n">offset</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">a</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span>
