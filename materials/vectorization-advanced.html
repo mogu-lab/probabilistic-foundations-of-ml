@@ -367,7 +367,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">6.1. Indexing with Boolean Arrays</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-integer-arrays">6.2. Indexing with Integer Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-arrays-of-indices">6.2. Indexing with Arrays of Indices</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">6.3. Broadcasting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-mapping-with-vmap">6.4. Fast Mapping with <code class="docutils literal notranslate"><span class="pre">vmap</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">6.5. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
@@ -415,7 +415,7 @@ is even = [ True False  True False  True False  True False  True False]
 </div>
 </div>
 </div>
-<p>By using these boolean arrays, we can perform subselections:</p>
+<p>By using these boolean arrays, we can select all elements for which the boolean expression <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">==</span> <span class="pre">0</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
@@ -526,9 +526,35 @@ x^3 &amp; \text{if $x$ is odd} \\
 </div>
 </div>
 </section>
-<section id="indexing-with-integer-arrays">
-<h2><span class="section-number">6.2. </span>Indexing with Integer Arrays<a class="headerlink" href="#indexing-with-integer-arrays" title="Permalink to this heading">#</a></h2>
-<p>Whereas boolean indexing selected elements from an array based on a boolean statement, we can also select elements from an array by using</p>
+<section id="indexing-with-arrays-of-indices">
+<h2><span class="section-number">6.2. </span>Indexing with Arrays of Indices<a class="headerlink" href="#indexing-with-arrays-of-indices" title="Permalink to this heading">#</a></h2>
+<p>Sometimes, it’s useful to select elements an array not just using a single index, but using an array of indices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> <span class="c1"># a 1-dimensional array of indices</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a[i] =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="n">j</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">]])</span> <span class="c1"># a 2-dimensional array of indices</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a[j] =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [  0   1   4   9  16  25  36  49  64  81 100 121]
+a[i] = [ 1  1  9 64 25]
+a[j] =
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 9 16]
+ [81 49]]
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="broadcasting">
 <h2><span class="section-number">6.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
@@ -609,7 +635,7 @@ x^3 &amp; \text{if $x$ is odd} \\
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">6.1. Indexing with Boolean Arrays</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-integer-arrays">6.2. Indexing with Integer Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-arrays-of-indices">6.2. Indexing with Arrays of Indices</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">6.3. Broadcasting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-mapping-with-vmap">6.4. Fast Mapping with <code class="docutils literal notranslate"><span class="pre">vmap</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">6.5. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
