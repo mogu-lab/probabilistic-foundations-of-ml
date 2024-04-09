@@ -472,10 +472,43 @@ x^3 &amp; \text{if $x$ is odd} \\
 </div>
 </div>
 <p>Here, <code class="docutils literal notranslate"><span class="pre">jnp.where</span></code> uses the condition <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">2</span> <span class="pre">==</span> <span class="pre">0</span></code> (is even) to select elements from one of two arrays, <span class="math notranslate nohighlight">\(x^2\)</span> or <span class="math notranslate nohighlight">\(x^3\)</span>.</p>
+<p>Lastly, remember that an a multi-dimensional array can be interpreted as an array of arrays. For example, an array of shape <span class="math notranslate nohighlight">\((N, D)\)</span> can be thought of an array of <span class="math notranslate nohighlight">\(N\)</span> elements, each of which is an array with <span class="math notranslate nohighlight">\(D\)</span> elements. As such, indexing into a an <span class="math notranslate nohighlight">\((N, D)\)</span> array using a 1-dimensional boolean array will select <em>rows</em>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a =&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+<span class="n">contains_number_divisible_by_5</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Row contains a number that is divisible by 5:&#39;</span><span class="p">,</span> <span class="n">contains_number_divisible_by_5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Rows with number divisible by 5:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">contains_number_divisible_by_5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a =
+[[ 1  2  3]
+ [ 4  5  6]
+ [ 7  8  9]
+ [10 11 12]]
+
+Row contains a number that is divisible by 5: [False  True False  True]
+Rows with number divisible by 5:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 4  5  6]
+ [10 11 12]]
+</pre></div>
+</div>
+</div>
+</div>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>As before, please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops, no if/else!):</p>
-<p><strong>Part 1:</strong> Write a function that takes in an integer <span class="math notranslate nohighlight">\(N\)</span>, a coordinate <span class="math notranslate nohighlight">\(x, y\)</span>, and a radius <span class="math notranslate nohighlight">\(r\)</span>. The function should return an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> in which every element is 0 except elements that are within radius <span class="math notranslate nohighlight">\(r\)</span> of <span class="math notranslate nohighlight">\((x, y)\)</span> (i.e. every element <span class="math notranslate nohighlight">\(i, j\)</span> should be 1 if <span class="math notranslate nohighlight">\((x - i)^2 + (y - j)^2 \leq r^2\)</span>) and 0 otherwise. For example, for <span class="math notranslate nohighlight">\(N = 10\)</span>, <span class="math notranslate nohighlight">\(x = 5\)</span>, <span class="math notranslate nohighlight">\(y = 5\)</span>, and <span class="math notranslate nohighlight">\(r = 2\)</span>, the function should return:</p>
+<p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops, no if/else!):</p>
+<p><strong>Part 1:</strong> Write a function that takes in a 2-dimensional array <code class="docutils literal notranslate"><span class="pre">a</span></code> and returns only rows whose sum is positive.</p>
+<p><strong>Part 2:</strong> Write a function that takes in an integer <span class="math notranslate nohighlight">\(N\)</span>, a coordinate <span class="math notranslate nohighlight">\(x, y\)</span>, and a radius <span class="math notranslate nohighlight">\(r\)</span>. The function should return an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> in which every element is 0 except elements that are within radius <span class="math notranslate nohighlight">\(r\)</span> of <span class="math notranslate nohighlight">\((x, y)\)</span> (i.e. every element <span class="math notranslate nohighlight">\(i, j\)</span> should be 1 if <span class="math notranslate nohighlight">\((x - i)^2 + (y - j)^2 \leq r^2\)</span>) and 0 otherwise. For example, for <span class="math notranslate nohighlight">\(N = 10\)</span>, <span class="math notranslate nohighlight">\(x = 5\)</span>, <span class="math notranslate nohighlight">\(y = 5\)</span>, and <span class="math notranslate nohighlight">\(r = 2\)</span>, the function should return:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -501,7 +534,7 @@ x^3 &amp; \text{if $x$ is odd} \\
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Part 2:</strong> Write a function that, given an integer <span class="math notranslate nohighlight">\(N \geq 2\)</span>, returns an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> with a checkerboard pattern of 0s and 1s. For example, for <span class="math notranslate nohighlight">\(N = 5\)</span>, the function should return:</p>
+<p><strong>Part 3:</strong> Write a function that, given an integer <span class="math notranslate nohighlight">\(N \geq 2\)</span>, returns an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> with a checkerboard pattern of 0s and 1s. For example, for <span class="math notranslate nohighlight">\(N = 5\)</span>, the function should return:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
@@ -555,6 +588,7 @@ a[j] =
 </div>
 </div>
 </div>
+<p>Since</p>
 </section>
 <section id="broadcasting">
 <h2><span class="section-number">6.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
