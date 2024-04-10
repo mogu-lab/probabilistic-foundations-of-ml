@@ -1,0 +1,3 @@
+data:
+	python data.py
+

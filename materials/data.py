@@ -5,6 +5,7 @@ import jax.numpy as jnp
 import jax.random as jrandom
 import numpyro
 import numpyro.distributions as D
+import numpyro.distributions.constraints as C
 import numpyro.handlers as H
 import chex
 
@@ -42,12 +43,13 @@ def model_discrete_IHH_ER(N, data=None):
             'Condition': None,
             'Hospitalized': None,
             'Antibiotics': None,
+            'Attempts-to-Disentangle': None,
         }
-
     
     pi_day_of_week = numpyro.param(
         'pi_day_of_week',
         jnp.array([0.20, 0.15, 0.14, 0.14, 0.14, 0.11, 0.12]),
+        constraint=C.simplex,
     )
 
     pi_condition_given_is_weekend = numpyro.param(
@@ -56,18 +58,27 @@ def model_discrete_IHH_ER(N, data=None):
             [0.3, 0.1, 0.1, 0.4, 0.1],
             [0.2, 0.06666667, 0.06666667, 0.26666667, 0.4],
         ]),
+        constraint=C.simplex,        
     )
 
     pi_hospitalized_given_condition = numpyro.param(
         'pi_hospitalized_given_condition',
         jnp.array([0.7, 0.1, 0.1, 0.5, 0.0]),
+        constraint=C.unit_interval,
     )
 
     pi_antibiotics_given_is_allergy_and_hospitalized = numpyro.param(
         'pi_antibiotics_given_condition_and_hospitalized',
         jnp.array([0.0, 0.8]),
+        constraint=C.unit_interval,        
     )
-    
+
+    rho_attempts_to_disentangle = numpyro.param(
+        'rho_attempts_to_disentangle',
+        jnp.array([1.0, 0.3]),
+        constraint=C.unit_interval,        
+    )
+
     with numpyro.plate('data', N):
         p_day_of_week = D.Categorical(pi_day_of_week)                    
         day_of_week = numpyro.sample(
@@ -101,6 +112,17 @@ def model_discrete_IHH_ER(N, data=None):
         )
         chex.assert_shape(antibiotics, (N,))
 
+        entangled = (condition == 2).astype('int32')
+        p_attempts_to_disentangle = D.Geometric(
+            rho_attempts_to_disentangle[entangled],
+        )
+        attempts = numpyro.sample(
+            'Attempts-to-Disentangle',
+            p_attempts_to_disentangle,
+            obs=data['Attempts-to-Disentangle']
+        )
+        chex.assert_shape(attempts, (N,))
+
 
 def jax_int_array_to_str_list(a, idx_to_s):
     return [idx_to_s[i] for i in a.tolist()]
@@ -127,6 +149,9 @@ def main():
         'Antibiotics': jax_int_array_to_str_list(
             exec_trace['Antibiotics']['value'],
             IDX_TO_BOOL,
+        ),
+        'Attempts-to-Disentangle': (
+            exec_trace['Attempts-to-Disentangle']['value'].tolist()
         ),
     })
 
