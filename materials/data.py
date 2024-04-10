@@ -63,7 +63,7 @@ def model_discrete_IHH_ER(N, data=None):
 
     pi_hospitalized_given_condition = numpyro.param(
         'pi_hospitalized_given_condition',
-        jnp.array([0.7, 0.1, 0.1, 0.5, 0.0]),
+        jnp.array([0.7, 0.1, 0.0, 0.5, 0.1]),
         constraint=C.unit_interval,
     )
 
@@ -75,7 +75,7 @@ def model_discrete_IHH_ER(N, data=None):
 
     rho_attempts_to_disentangle = numpyro.param(
         'rho_attempts_to_disentangle',
-        jnp.array([1.0, 0.3]),
+        jnp.array([jnp.nan, 0.3]),
         constraint=C.unit_interval,        
     )
 
@@ -151,7 +151,7 @@ def main():
             IDX_TO_BOOL,
         ),
         'Attempts-to-Disentangle': (
-            exec_trace['Attempts-to-Disentangle']['value'].tolist()
+            exec_trace['Attempts-to-Disentangle']['value']
         ),
     })
 
