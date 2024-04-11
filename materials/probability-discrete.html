@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>3. Probability (Discrete) &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
+    <title>4. Probability (Discrete) &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
   
   
   
@@ -67,8 +67,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/materials/probability-discrete.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="4. Advanced Vectorization in Jax" href="vectorization-advanced.html" />
-    <link rel="prev" title="2. An Introduction to “Vectorization” in Jax" href="vectorization-basics.html" />
+    <link rel="next" title="5. Conditional Probability (Discrete)" href="probability-conditional.html" />
+    <link rel="prev" title="3. Advanced Vectorization in Jax" href="vectorization-advanced.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -159,12 +159,15 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Specification</span></p>
-<ul class="current nav bd-sidenav">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1. What is Probabilistic ML?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vectorization-basics.html">2. An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Probability (Discrete)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vectorization-advanced.html">4. Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorization-advanced.html">3. Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Specification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Probability (Discrete)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-conditional.html">5. Conditional Probability (Discrete)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dgms.html">6. Directed Graphical Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="frequentist-learning.html">7. The Basics of Frequentist Learning</a></li>
@@ -376,9 +379,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">3.1. Terminology and Notation for Discrete Probability</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-familiar-with-useful-discrete-distributions">3.2. Getting Familiar with Useful Discrete Distributions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-the-distribution-to-the-scenario">3.3. Matching the Distribution to the Scenario</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">4.1. Terminology and Notation for Discrete Probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-familiar-with-useful-discrete-distributions">4.2. Getting Familiar with Useful Discrete Distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-the-distribution-to-the-scenario">4.3. Matching the Distribution to the Scenario</a></li>
 </ul>
             </nav>
         </div>
@@ -391,7 +394,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="probability-discrete">
-<h1><span class="section-number">3. </span>Probability (Discrete)<a class="headerlink" href="#probability-discrete" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">4. </span>Probability (Discrete)<a class="headerlink" href="#probability-discrete" title="Permalink to this heading">#</a></h1>
 <p><strong>Context:</strong> As your first assignment at IHH’s ML team, you’ve been tasked with better understanding their Emergency Room (ER). Since you’re new, you’d first like to better understand how the ER works at a high level. Specifically, you’d like to answer questions like:</p>
 <ul class="simple">
 <li><p>How many beings come to ER every day?</p></li>
@@ -406,7 +409,7 @@ document.write(`
 <li><p>Answer the above questions using this new toolset.</p></li>
 </ol>
 <section id="terminology-and-notation-for-discrete-probability">
-<h2><span class="section-number">3.1. </span>Terminology and Notation for Discrete Probability<a class="headerlink" href="#terminology-and-notation-for-discrete-probability" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">4.1. </span>Terminology and Notation for Discrete Probability<a class="headerlink" href="#terminology-and-notation-for-discrete-probability" title="Permalink to this heading">#</a></h2>
 <p>As in the spirit of all Computer Science classes, if we want the help of a computer to solve a problem, we need a <em>language</em> to precisely specify what we want it to do. Today, we will introduce the language—terminology and notation—from statistics, and we will then translate it into code that a computer can run.</p>
 <p>The terminology that we introduce here is slightly different from ones that you may have seen in a statistics class. The reason for this is that we’re honing in on the minimal subset of terminology we need to describe a probabilistic ML model.</p>
 <p><strong>Random Variable (RV):</strong> A variable whose possible values are outcomes of a random phenomenon.</p>
@@ -442,7 +445,7 @@ document.write(`
 </ul>
 </section>
 <section id="getting-familiar-with-useful-discrete-distributions">
-<h2><span class="section-number">3.2. </span>Getting Familiar with Useful Discrete Distributions<a class="headerlink" href="#getting-familiar-with-useful-discrete-distributions" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">4.2. </span>Getting Familiar with Useful Discrete Distributions<a class="headerlink" href="#getting-familiar-with-useful-discrete-distributions" title="Permalink to this heading">#</a></h2>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p>Browse the Wikipedia pages for the following distributions:</p>
@@ -470,7 +473,7 @@ document.write(`
 <p>TODO: write your response here.</p>
 </section>
 <section id="matching-the-distribution-to-the-scenario">
-<h2><span class="section-number">3.3. </span>Matching the Distribution to the Scenario<a class="headerlink" href="#matching-the-distribution-to-the-scenario" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">4.3. </span>Matching the Distribution to the Scenario<a class="headerlink" href="#matching-the-distribution-to-the-scenario" title="Permalink to this heading">#</a></h2>
 <p>We’ll now start working with data from IHH’s ER. We’ll use a Python library called <code class="docutils literal notranslate"><span class="pre">pandas</span></code> to read in the data, which is stored as a <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -765,20 +768,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="vectorization-basics.html"
+       href="vectorization-advanced.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></p>
       </div>
     </a>
     <a class="right-next"
-       href="vectorization-advanced.html"
+       href="probability-conditional.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Conditional Probability (Discrete)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -800,9 +803,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">3.1. Terminology and Notation for Discrete Probability</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-familiar-with-useful-discrete-distributions">3.2. Getting Familiar with Useful Discrete Distributions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-the-distribution-to-the-scenario">3.3. Matching the Distribution to the Scenario</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation-for-discrete-probability">4.1. Terminology and Notation for Discrete Probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-familiar-with-useful-discrete-distributions">4.2. Getting Familiar with Useful Discrete Distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-the-distribution-to-the-scenario">4.3. Matching the Distribution to the Scenario</a></li>
 </ul>
   </nav></div>
 

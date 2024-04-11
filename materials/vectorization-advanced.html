@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>4. Advanced Vectorization in Jax &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
+    <title>3. Advanced Vectorization in Jax &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
   
   
   
@@ -67,8 +67,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/materials/vectorization-advanced.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="5. Conditional Probability (Discrete)" href="probability-conditional.html" />
-    <link rel="prev" title="3. Probability (Discrete)" href="probability-discrete.html" />
+    <link rel="next" title="4. Probability (Discrete)" href="probability-discrete.html" />
+    <link rel="prev" title="2. An Introduction to “Vectorization” in Jax" href="vectorization-basics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -159,12 +159,15 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Specification</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1. What is Probabilistic ML?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vectorization-basics.html">2. An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="probability-discrete.html">3. Probability (Discrete)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Specification</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="probability-discrete.html">4. Probability (Discrete)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-conditional.html">5. Conditional Probability (Discrete)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dgms.html">6. Directed Graphical Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="frequentist-learning.html">7. The Basics of Frequentist Learning</a></li>
@@ -376,10 +379,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">4.1. Indexing with Boolean Arrays</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-arrays-of-indices">4.2. Indexing with Arrays of Indices</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">4.3. Broadcasting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">4.4. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">3.1. Indexing with Boolean Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-arrays-of-indices">3.2. Indexing with Arrays of Indices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">3.3. Broadcasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">3.4. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -392,7 +395,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="advanced-vectorization-in-jax">
-<h1><span class="section-number">4. </span>Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code><a class="headerlink" href="#advanced-vectorization-in-jax" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">3. </span>Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code><a class="headerlink" href="#advanced-vectorization-in-jax" title="Permalink to this heading">#</a></h1>
 <p>In the previous guide on <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, we introduced the basic building blocks—multi-dimensional arrays—as well as a new paradigm for writing code without loops or if/else-expressions. Here, we continue building on this paradigm with more advanced (yet common) uses of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> in ML.</p>
 <p>Let’s get ourselves started by importing some libraries.</p>
 <div class="cell docutils container">
@@ -405,7 +408,7 @@ document.write(`
 </div>
 <p><strong>Acknowledgement.</strong> Parts of this tutorial have been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">this NumPy tutorial</a>.</p>
 <section id="indexing-with-boolean-arrays">
-<h2><span class="section-number">4.1. </span>Indexing with Boolean Arrays<a class="headerlink" href="#indexing-with-boolean-arrays" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.1. </span>Indexing with Boolean Arrays<a class="headerlink" href="#indexing-with-boolean-arrays" title="Permalink to this heading">#</a></h2>
 <p>Whereas <em>slicing</em> is typically used to extract contiguous chunks from an array (i.e. a subsection of elements that belonged together in the original array), <em>indexing</em> will allow us to extract non-contiguous parts. How? It’s easier shown than explained.</p>
 <p>You may remember from the introductory guide to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> that performing boolean operations on an array returns a boolean array. Here’s an example:</p>
 <div class="cell docutils container">
@@ -556,7 +559,7 @@ Rows with number divisible by 5:
 </div>
 </section>
 <section id="indexing-with-arrays-of-indices">
-<h2><span class="section-number">4.2. </span>Indexing with Arrays of Indices<a class="headerlink" href="#indexing-with-arrays-of-indices" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.2. </span>Indexing with Arrays of Indices<a class="headerlink" href="#indexing-with-arrays-of-indices" title="Permalink to this heading">#</a></h2>
 <p>Sometimes, it’s useful to select elements an array not just using a single index, but using an array of indices.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -620,8 +623,9 @@ a[i] =
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 4  5]
  [ 6  7]
  [10 11]]
-
-a[j] =
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a[j] =
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[[ 2  3]
@@ -702,7 +706,7 @@ a[j] =
 </div>
 </section>
 <section id="broadcasting">
-<h2><span class="section-number">4.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
 <p>The term <em>broadcasting</em> describes how <code class="docutils literal notranslate"><span class="pre">Jax</span></code> treats arrays with different shapes during arithmetic operations. Subject to certain constraints, the smaller array is “broadcast” across the larger array so that they have compatible shapes. Broadcasting provides a means of vectorizing array operations so that looping occurs very fast under the hood without making needless copies of data. Broadcasting follows two rules:</p>
 <p><strong>Rule 1:</strong> If all input arrays do not have the same number of dimensions, a “1” will be repeatedly prepended to the shapes of the smaller arrays until all the arrays have the same number of dimensions.</p>
 <blockquote>
@@ -791,7 +795,7 @@ b =
 <p>For more information on broadcasting, checkout <a class="reference external" href="https://numpy.org/doc/stable/user/basics.broadcasting.html#basics-broadcasting">this tutorial</a>.</p>
 </section>
 <section id="catching-bugs-early-with-chex">
-<h2><span class="section-number">4.4. </span>Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code><a class="headerlink" href="#catching-bugs-early-with-chex" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.4. </span>Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code><a class="headerlink" href="#catching-bugs-early-with-chex" title="Permalink to this heading">#</a></h2>
 <p><strong>What’s <code class="docutils literal notranslate"><span class="pre">chex</span></code>?</strong> As we just saw, while powerful, <code class="docutils literal notranslate"><span class="pre">Jax</span></code>’s broadcasting can subtly sneak in bugs into your code. Luckily, there’s a great Python library that can help us: <code class="docutils literal notranslate"><span class="pre">chex</span></code>. <code class="docutils literal notranslate"><span class="pre">chex</span></code> is a library for asserting <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array shapes.</p>
 <p><strong>What are assertions?</strong> Assertions are lines in your code that raise an exception if something that should be true is false. They are useful for catching bugs and for debugging. For example, if you write a function that takes in argument <span class="math notranslate nohighlight">\(p \in [0, 1]\)</span>, you can write:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
@@ -879,20 +883,20 @@ b =
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="probability-discrete.html"
+       href="vectorization-basics.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>Probability (Discrete)</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></p>
       </div>
     </a>
     <a class="right-next"
-       href="probability-conditional.html"
+       href="probability-discrete.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>Conditional Probability (Discrete)</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Probability (Discrete)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -914,10 +918,10 @@ b =
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">4.1. Indexing with Boolean Arrays</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-arrays-of-indices">4.2. Indexing with Arrays of Indices</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">4.3. Broadcasting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">4.4. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-boolean-arrays">3.1. Indexing with Boolean Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-with-arrays-of-indices">3.2. Indexing with Arrays of Indices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">3.3. Broadcasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#catching-bugs-early-with-chex">3.4. Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code></a></li>
 </ul>
   </nav></div>
 
