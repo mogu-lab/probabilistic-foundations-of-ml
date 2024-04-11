@@ -594,12 +594,12 @@ document.write(`
 <span class="n">num_total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">naive_probability_of_intoxication</span> <span class="o">=</span> <span class="n">num_intoxicated</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">num_total</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Portion with Intoxication =&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">naive_probability_of_intoxication</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Portion with Intoxication (Naive Estimate) =&#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">naive_probability_of_intoxication</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Portion with Intoxication = 0.171
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Portion with Intoxication (Naive Estimate) = 0.171
 </pre></div>
 </div>
 </div>
@@ -650,7 +650,15 @@ document.write(`
 <li><p>Let <span class="math notranslate nohighlight">\(I\)</span> denote whether the patient arrives with intoxication.</p></li>
 </ul>
 <p>Here, <span class="math notranslate nohighlight">\(p_I(\cdot)\)</span> describes the (non-conditional) probability that a patient arrives with intoxication. It represents our initial <em>naive</em> prediction. In contrast, <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d)\)</span> describes the <em>conditional</em> probability of intoxication given the day. In this notation, what comes on the right side of the vertical line is the “condition” (here, <span class="math notranslate nohighlight">\(D = d\)</span>). For different values of <span class="math notranslate nohighlight">\(d\)</span>, the conditional distribution <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d)\)</span> also changes.</p>
-<p>Since a discrete conditional distribution is still a discrete distribution, all notation/terminology from discrete probability still holds. That is, a conditional probability distribution still has a sample space, a PMF, etc.</p>
+<p><strong>Sample Space:</strong> Since a discrete conditional distribution is still a discrete distribution, all notation/terminology from discrete probability still holds. The sample space is that of variable to the left of the line, <span class="math notranslate nohighlight">\(I\)</span>. That is, the sample space of <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d)\)</span> is <span class="math notranslate nohighlight">\(I \in \{ 0, 1 \}\)</span> (with 1 means Yes and 0 means No).</p>
+<p><strong>PMF:</strong> The PMF is, again, that of the variable to the left of the vertical line, <span class="math notranslate nohighlight">\(I\)</span>. Here, the PMF is that of a Bernoulli random variable (since <span class="math notranslate nohighlight">\(I\)</span> can only take on two values). However, what makes a conditional probability different is that the parameter of the distribution is now a <em>function of the condition</em>. Here, we mean that:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{I | D}(i | d) = \mathrm{Bern}\left( \rho(d) \right), \text{ where } \rho(d) = \begin{cases}
+0.1 &amp; \text{if $d$ is weekday} \\
+0.4 &amp; \text{if $d$ is weekend} 
+\end{cases}
+\end{align*}\]</div>
 <p><strong>Statistical Independence:</strong> Similarly, given that <span class="math notranslate nohighlight">\(D = d\)</span>, we write that I is sampled i.i.d from the conditional as follows: <span class="math notranslate nohighlight">\(I | d \sim p_{I | D}(\cdot | d)\)</span>.</p>
 </section>
 </section>
