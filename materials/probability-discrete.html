@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>3. Discrete Probability &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
+    <title>3. Probability (Discrete) &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
   
   
   
@@ -67,7 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/materials/probability-discrete.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="4. Continuous Probability" href="probability-continuous.html" />
+    <link rel="next" title="4. Conditional Probability (Discrete)" href="probability-conditional.html" />
     <link rel="prev" title="2. An Introduction to “Vectorization” in Jax" href="vectorization-basics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -159,18 +159,28 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Specification</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">1. What is Probabilistic ML?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vectorization-basics.html">2. An Introduction to “Vectorization” in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Discrete Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">4. Continuous Probability</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Probability (Discrete)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probability-conditional.html">4. Conditional Probability (Discrete)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="frequentist-learning.html">5. The Basics of Frequentist Learning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vectorization-advanced.html">6. Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="dgms.html">6. Directed Graphical Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">7. Continuous Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorization-advanced.html">8. Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Model Specification</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Predictive Models</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="dgms.html">1. Directed Graphical Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="predictive-models.html">1. Predictive Models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="latent-variable-models.html">1. Latent Variable Models (LVMs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Inference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="inference.html">1. Inference</a></li>
 </ul>
 
     </div>
@@ -356,7 +366,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Discrete Probability</h1>
+    <h1>Probability (Discrete)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -380,18 +390,19 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="discrete-probability">
-<h1><span class="section-number">3. </span>Discrete Probability<a class="headerlink" href="#discrete-probability" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="probability-discrete">
+<h1><span class="section-number">3. </span>Probability (Discrete)<a class="headerlink" href="#probability-discrete" title="Permalink to this heading">#</a></h1>
 <p><strong>Context:</strong> As your first assignment at IHH’s ML team, you’ve been tasked with better understanding their Emergency Room (ER). Since you’re new, you’d first like to better understand how the ER works at a high level. Specifically, you’d like to answer questions like:</p>
 <ul class="simple">
 <li><p>How many beings come to ER every day?</p></li>
 <li><p>Overall, what conditions do the beings come to the ER for? (e.g. inflamed antenna, fever, etc.)</p></li>
 <li><p>How many being remain hospitalized over night?</p></li>
 </ul>
+<p>As such, today you’re carry out a preliminary “exploratory data analysis” (EDA).</p>
 <p><strong>Challenge:</strong> The answer to both of these questions cannot be given by a single number (e.g. the number of beings that come to the ER changes from day to day). So how can we give a deterministic answer to a question whose response is inherently variable or <em>stochastic</em>? Answer: <em>probability distributions</em>. Probability distributions are the basic building block that we will use to build complex ML systems.</p>
 <p><strong>Outline:</strong></p>
 <ol class="arabic simple">
-<li><p>Introduce and practice the concepts, terminology, and notation behind discrete probability distributions (continuous distributions will be covered next).</p></li>
+<li><p>Introduce and practice the concepts, terminology, and notation behind discrete probability distributions (leaving continuous distributions to a later time).</p></li>
 <li><p>Answer the above questions using this new toolset.</p></li>
 </ol>
 <section id="terminology-and-notation-for-discrete-probability">
@@ -763,11 +774,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="probability-continuous.html"
+       href="probability-conditional.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>Continuous Probability</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Conditional Probability (Discrete)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
