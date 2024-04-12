@@ -4,7 +4,7 @@
 This book is currently under construction!
 ```
 
-![banner](banner.png)
+![banner](img/banner.png)
 
 
 **Instructor:** [Yaniv Yacoby](https://yanivyacoby.github.io/)
