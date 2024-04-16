@@ -658,17 +658,16 @@ a_and_b.shape = (2, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a           = [20. 30. 40. 50.]
 b           = [0. 1. 2. 3.]
+
+a - b       = [20. 29. 38. 47.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a - b       = [20. 29. 38. 47.]
-b^2         = [0. 1. 4. 9.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b^2         = [0. 1. 4. 9.]
+10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
-a &lt; 35      = [ True  True False False]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a * b       = [  0.  30.  80. 150.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a &lt; 35      = [ True  True False False]
+a * b       = [  0.  30.  80. 150.]
 </pre></div>
 </div>
 </div>
@@ -690,7 +689,9 @@ a &lt; 35      = [ True  True False False]
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum() = 10.0
 a.min() = 0.0
-a.max() = 4.0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.max() = 4.0
 </pre></div>
 </div>
 </div>
@@ -715,7 +716,9 @@ a.max() = 4.0
  [ 8.  9. 10. 11.]]
 
 a.sum(axis=0) = [12. 15. 18. 21.]
-a.min(axis=1) = [0. 1. 2. 3.]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min(axis=1) = [0. 1. 2. 3.]
 </pre></div>
 </div>
 </div>
@@ -729,11 +732,19 @@ a.min(axis=1) = [0. 1. 2. 3.]
 <p><strong>What other operations exist in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>?</strong> A lot. These are just a few examples. Any function you may be interested in likely already exists in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> – be sure to look at the documentation (linked above) and google around before deciding to write your own!</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops!):</p>
-<ol class="arabic simple">
-<li><p>Write a function that, given <span class="math notranslate nohighlight">\(N\)</span>, returns <span class="math notranslate nohighlight">\(\sum\limits_{i=0}^{N - 1} \log(i + 1)\)</span>.</p></li>
-<li><p>Write a function that, given <span class="math notranslate nohighlight">\(N\)</span> and <span class="math notranslate nohighlight">\(M\)</span>, returns <span class="math notranslate nohighlight">\(\sum\limits_{i=0}^{N - 1} \sum\limits_{j=0}^{M - 1} \log(i \cdot j + 1)\)</span>. <em>Hint: one way to do this is with <code class="docutils literal notranslate"><span class="pre">jnp.tile</span></code> and <code class="docutils literal notranslate"><span class="pre">jnp.transpose</span></code>.</em></p></li>
-</ol>
+<p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops!):
+<strong>Part 1:</strong> Write a function that, given <span class="math notranslate nohighlight">\(N\)</span>, returns <span class="math notranslate nohighlight">\(\sum\limits_{i=0}^{N - 1} \log(i + 1)\)</span>.</p>
+<p>Test cases:</p>
+<ul class="simple">
+<li><p>For <span class="math notranslate nohighlight">\(N = 10\)</span>, the result is <span class="math notranslate nohighlight">\(15.104412\)</span>.</p></li>
+<li><p>For <span class="math notranslate nohighlight">\(N = 20\)</span>, the result is <span class="math notranslate nohighlight">\(42.335617\)</span>.</p></li>
+</ul>
+<p><strong>Part 2:</strong> Write a function that, given <span class="math notranslate nohighlight">\(N\)</span> and <span class="math notranslate nohighlight">\(M\)</span>, returns <span class="math notranslate nohighlight">\(\sum\limits_{i=0}^{N - 1} \sum\limits_{j=0}^{M - 1} \log(i \cdot j + 1)\)</span>. <em>Hint: one way to do this is with <code class="docutils literal notranslate"><span class="pre">jnp.tile</span></code> and <code class="docutils literal notranslate"><span class="pre">jnp.transpose</span></code>.</em></p>
+<p>Test cases:</p>
+<ul class="simple">
+<li><p>For <span class="math notranslate nohighlight">\(N = 5, M = 10\)</span>, the result is <span class="math notranslate nohighlight">\(84.905975\)</span>.</p></li>
+<li><p>For <span class="math notranslate nohighlight">\(N = 30, M = 20\)</span>, the result is <span class="math notranslate nohighlight">\(2507.8206\)</span>.</p></li>
+</ul>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -765,9 +776,8 @@ a.min(axis=1) = [0. 1. 2. 3.]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [0 1 2 3 4 5 6 7 8 9]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything until the 5th index           = [0 1 2 3 4]
+
+Everything until the 5th index           = [0 1 2 3 4]
 Everything from the 5th index onwards    = [5 6 7 8 9]
 </pre></div>
 </div>
@@ -811,14 +821,14 @@ Everything except the last element       = [0 1 2 3 4 5 6 7 8]
  [12 13 14]]
 
 Everything until the 3th index =
-[[0 1 2]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 2]
  [3 4 5]
  [6 7 8]]
 
 Everything from the 3th index onwards =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 9 10 11]
+[[ 9 10 11]
  [12 13 14]]
 
 Everything between the 1st and 3rd index =
@@ -885,11 +895,17 @@ Example: slicing only the second axis =
 </ul>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops!):</p>
-<ol class="arabic simple">
-<li><p>Write a function that, given an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N,)\)</span>, returns a new array <code class="docutils literal notranslate"><span class="pre">b</span></code> of shape <span class="math notranslate nohighlight">\((N - 1,)\)</span> in which index <span class="math notranslate nohighlight">\(i\)</span> contains <code class="docutils literal notranslate"><span class="pre">b[i]</span> <span class="pre">=</span> <span class="pre">a[i</span> <span class="pre">+</span> <span class="pre">1]</span> <span class="pre">-</span> <span class="pre">a[i]</span></code>.</p></li>
-<li><p>Extend the function you wrote to multi-dimensional arrays, where the operation is only performed on the last dimension. That is, if an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K)\)</span> is given, return an array <code class="docutils literal notranslate"><span class="pre">b</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K-1)\)</span>.</p></li>
-</ol>
+<p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops!):
+<strong>Part 1:</strong> Write a function that, given an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N,)\)</span>, returns a new array <code class="docutils literal notranslate"><span class="pre">b</span></code> of shape <span class="math notranslate nohighlight">\((N - 1,)\)</span> in which index <span class="math notranslate nohighlight">\(i\)</span> contains <code class="docutils literal notranslate"><span class="pre">b[i]</span> <span class="pre">=</span> <span class="pre">a[i</span> <span class="pre">+</span> <span class="pre">1]</span> <span class="pre">-</span> <span class="pre">a[i]</span></code>.</p>
+<p>Test cases:</p>
+<ul class="simple">
+<li><p>For <span class="math notranslate nohighlight">\(a = [0.0, 1.0, 5.0, 10.0, 20.0]\)</span>, the result is: <span class="math notranslate nohighlight">\([ 1.0,  4.0,  5.0, 10.0]\)</span>.</p></li>
+</ul>
+<p><strong>Part 2:</strong> Extend the function you wrote to multi-dimensional arrays, where the operation is only performed on the last dimension. That is, if an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K)\)</span> is given, return an array <code class="docutils literal notranslate"><span class="pre">b</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K-1)\)</span>.</p>
+<p>Test cases:</p>
+<ul class="simple">
+<li><p>For <span class="math notranslate nohighlight">\(a = [[0.0, 1.0, 5.0, 10.0, 20.0], [2.0, 5.0, 6.0, 20.0, 30.0]]\)</span>, the result is: <span class="math notranslate nohighlight">\([[ 1.0,  4.0,  5.0, 10.0], [ 3.0,  1.0, 14.0, 10.0]]\)</span>.</p></li>
+</ul>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
