@@ -170,7 +170,7 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="probability-discrete.html">4. Probability (Discrete)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-conditional.html">5. Conditional Probability (Discrete)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dgms.html">6. Directed Graphical Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probability-joint.html">6. Joint Probability (Discrete)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="frequentist-learning.html">7. The Basics of Frequentist Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">8. Continuous Probability</a></li>
 </ul>
@@ -520,7 +520,7 @@ Rows with number divisible by 5:
 <p class="admonition-title">Exercise</p>
 <p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops, no if/else!):</p>
 <p><strong>Part 1:</strong> Write a function that takes in a 2-dimensional array <code class="docutils literal notranslate"><span class="pre">a</span></code> and returns only rows whose sum is positive.</p>
-<p><strong>Part 2:</strong> Write a function that takes in an integer <span class="math notranslate nohighlight">\(N &gt; 0\)</span>, a coordinate <span class="math notranslate nohighlight">\(x, y\)</span>, and a radius <span class="math notranslate nohighlight">\(r\)</span>. The function should return an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> in which every element is 0 except elements that are within radius <span class="math notranslate nohighlight">\(r &gt; 0\)</span> of <span class="math notranslate nohighlight">\((x, y)\)</span> (i.e. every element <span class="math notranslate nohighlight">\(i, j\)</span> should be 1 if <span class="math notranslate nohighlight">\((x - i)^2 + (y - j)^2 \leq r^2\)</span>) and 0 otherwise. For example, for <span class="math notranslate nohighlight">\(N = 10\)</span>, <span class="math notranslate nohighlight">\(x = 5\)</span>, <span class="math notranslate nohighlight">\(y = 5\)</span>, and <span class="math notranslate nohighlight">\(r = 2\)</span>, the function should return:</p>
+<p><strong>Part 2:</strong> Write a function that takes in an integer <span class="math notranslate nohighlight">\(N &gt; 0\)</span>, a coordinate <span class="math notranslate nohighlight">\(x, y\)</span>, and a radius <span class="math notranslate nohighlight">\(r\)</span> (where <span class="math notranslate nohighlight">\(0 \leq x \leq N\)</span>, <span class="math notranslate nohighlight">\(0 \leq y \leq N\)</span>, and <span class="math notranslate nohighlight">\(r &gt; 0\)</span>). The function should return an integer array of shape <span class="math notranslate nohighlight">\((N, N)\)</span> in which every element is 0 except elements that are within radius <span class="math notranslate nohighlight">\(r\)</span> of <span class="math notranslate nohighlight">\((x, y)\)</span> (i.e. every element <span class="math notranslate nohighlight">\(i, j\)</span> should be 1 if <span class="math notranslate nohighlight">\((x - i)^2 + (y - j)^2 \leq r^2\)</span>) and 0 otherwise. For example, for <span class="math notranslate nohighlight">\(N = 10\)</span>, <span class="math notranslate nohighlight">\(x = 5\)</span>, <span class="math notranslate nohighlight">\(y = 5\)</span>, and <span class="math notranslate nohighlight">\(r = 2\)</span>, the function should return:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -578,12 +578,7 @@ Rows with number divisible by 5:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a = [  0   1   4   9  16  25  36  49  64  81 100 121]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a[i] =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> [ 1  1  9 64 25]
+a[i] = [ 1  1  9 64 25]
 a[j] =
 </pre></div>
 </div>
@@ -630,9 +625,7 @@ a[i] =
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a[j] =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[[ 2  3]
+[[[ 2  3]
   [ 6  7]]
 
  [[ 4  5]
