@@ -685,13 +685,11 @@ a * b       = [  0.  30.  80. 150.]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a       = [0. 1. 2. 3. 4.]
+a.sum() = 10.0
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum() = 10.0
-a.min() = 0.0
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.max() = 4.0
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min() = 0.0
+a.max() = 4.0
 </pre></div>
 </div>
 </div>
@@ -714,11 +712,10 @@ a.min() = 0.0
 [[ 0.  1.  2.  3.]
  [ 4.  5.  6.  7.]
  [ 8.  9. 10. 11.]]
-
-a.sum(axis=0) = [12. 15. 18. 21.]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min(axis=1) = [0. 1. 2. 3.]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum(axis=0) = [12. 15. 18. 21.]
+a.min(axis=1) = [0. 1. 2. 3.]
 </pre></div>
 </div>
 </div>
@@ -782,7 +779,9 @@ Everything from the 5th index onwards    = [5 6 7 8 9]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything between the 2nd and 6th index = [2 3 4 5]
-Everything except the last element       = [0 1 2 3 4 5 6 7 8]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything except the last element       = [0 1 2 3 4 5 6 7 8]
 </pre></div>
 </div>
 </div>
@@ -836,7 +835,9 @@ Everything between the 1st and 3rd index =
  [6 7 8]]
 
 Everything except the last element =
-[[ 0  1  2]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0  1  2]
  [ 3  4  5]
  [ 6  7  8]
  [ 9 10 11]]
@@ -897,15 +898,20 @@ Example: slicing only the second axis =
 <p class="admonition-title">Exercise</p>
 <p>Please solve the following using <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls only (no loops!):
 <strong>Part 1:</strong> Write a function that, given an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N,)\)</span>, returns a new array <code class="docutils literal notranslate"><span class="pre">b</span></code> of shape <span class="math notranslate nohighlight">\((N - 1,)\)</span> in which index <span class="math notranslate nohighlight">\(i\)</span> contains <code class="docutils literal notranslate"><span class="pre">b[i]</span> <span class="pre">=</span> <span class="pre">a[i</span> <span class="pre">+</span> <span class="pre">1]</span> <span class="pre">-</span> <span class="pre">a[i]</span></code>.</p>
-<p>Test cases:</p>
-<ul class="simple">
-<li><p>For <span class="math notranslate nohighlight">\(a = [0.0, 1.0, 5.0, 10.0, 20.0]\)</span>, the result is: <span class="math notranslate nohighlight">\([ 1.0,  4.0,  5.0, 10.0]\)</span>.</p></li>
-</ul>
+<p>For example, given, <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">jnp.array([0.0,</span> <span class="pre">1.0,</span> <span class="pre">5.0,</span> <span class="pre">10.0,</span> <span class="pre">20.0])</span></code>, the function should return <code class="docutils literal notranslate"><span class="pre">Array([</span> <span class="pre">1.,</span>&#160; <span class="pre">4.,</span>&#160; <span class="pre">5.,</span> <span class="pre">10.],</span> <span class="pre">dtype=float32)</span></code>.</p>
 <p><strong>Part 2:</strong> Extend the function you wrote to multi-dimensional arrays, where the operation is only performed on the last dimension. That is, if an array <code class="docutils literal notranslate"><span class="pre">a</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K)\)</span> is given, return an array <code class="docutils literal notranslate"><span class="pre">b</span></code> of shape <span class="math notranslate nohighlight">\((N, M, K-1)\)</span>.</p>
-<p>Test cases:</p>
-<ul class="simple">
-<li><p>For <span class="math notranslate nohighlight">\(a = [[0.0, 1.0, 5.0, 10.0, 20.0], [2.0, 5.0, 6.0, 20.0, 30.0]]\)</span>, the result is: <span class="math notranslate nohighlight">\([[ 1.0,  4.0,  5.0, 10.0], [ 3.0,  1.0, 14.0, 10.0]]\)</span>.</p></li>
-</ul>
+<p>For example, given,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">,</span> <span class="mf">30.0</span><span class="p">],</span>
+<span class="p">])</span>
+</pre></div>
+</div>
+<p>the function should return,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span><span class="p">([[</span> <span class="mf">1.</span><span class="p">,</span>  <span class="mf">4.</span><span class="p">,</span>  <span class="mf">5.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">3.</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
