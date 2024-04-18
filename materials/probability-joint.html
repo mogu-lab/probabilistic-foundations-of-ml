@@ -609,11 +609,41 @@ p_{A, B}(a, b) &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad \text{(Option 1)} \\
 <a class="reference internal image-reference" href="../_images/joint-probability-eq-marginal.png"><img alt="../_images/joint-probability-eq-marginal.png" class="align-center" src="../_images/joint-probability-eq-marginal.png" style="width: 300px;" /></a>
 <p>The conditional <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span> is the ratio of the purple intersection relative to the blue circle. This is because the blue circle represents us conditioning on <span class="math notranslate nohighlight">\(B = b\)</span>, and the intersection of the circles represents the observations for which we <em>also</em> have <span class="math notranslate nohighlight">\(A = a\)</span>.</p>
 <a class="reference internal image-reference" href="../_images/joint-probability-eq-conditional.png"><img alt="../_images/joint-probability-eq-conditional.png" class="align-center" src="../_images/joint-probability-eq-conditional.png" style="width: 300px;" /></a>
-<p>Finally, the joint <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span> is the ratio between the purple intersection and the whole space (the gray square). Intuitively, this is because the intersection is the place where both <span class="math notranslate nohighlight">\(A = a\)</span> and <span class="math notranslate nohighlight">\(B = b\)</span>.</p>
+<p>Finally, the joint <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span> is the ratio between the purple intersection and the whole space (the gray square). This is because the intersection is the place where both <span class="math notranslate nohighlight">\(A = a\)</span> and <span class="math notranslate nohighlight">\(B = b\)</span>.</p>
 <a class="reference internal image-reference" href="../_images/joint-probability-eq-joint.png"><img alt="../_images/joint-probability-eq-joint.png" class="align-center" src="../_images/joint-probability-eq-joint.png" style="width: 300px;" /></a>
-<p>Now we can see that the joint is the product of the conditional and the marginal as follows (notice that the blue circles “cancel out”):</p>
+<p>Now we can see that the joint is the product of the conditional and the marginal because the blue circles “cancel out”:</p>
 <a class="reference internal image-reference" href="../_images/joint-probability-eq-joint-expanded.png"><img alt="../_images/joint-probability-eq-joint-expanded.png" class="align-center" src="../_images/joint-probability-eq-joint-expanded.png" style="width: 500px;" /></a>
-<p><strong>Choice of Factorization:</strong> Lastly, notice that we have a <em>choice</em> to factorize the distribution in two ways. How do you know which one to use? Typically, we choose a factorization that is <em>intuitive to us</em>.</p>
+<p><strong>Choice of Factorization:</strong> Lastly, notice that we have a <em>choice</em> to factorize the distribution in two ways. How do you know which one to use? Typically, we choose a factorization that is <em>intuitive to us</em> and what we can compute.</p>
+<blockquote>
+<div><p>For example, suppose you want to model the joint distribution of the day of the week, <span class="math notranslate nohighlight">\(D\)</span> and whether a patient arrive with intoxication, <span class="math notranslate nohighlight">\(I\)</span>. The joint distribution can be factorized in two ways:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e6366ab9-5459-4728-9488-05591c5cb398">
+<span class="eqno">(6.1)<a class="headerlink" href="#equation-e6366ab9-5459-4728-9488-05591c5cb398" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_{D, I}(d, i) &amp;= p_{I | D}(i | d) \cdot p_D(d) \quad \text{Option 1} \\
+&amp;= p_{D | I}(d | i) \cdot p_I(i) \quad \text{Option 2} \\
+\end{align}\]</div>
+<p>Which one makes more intuitive sense? Well, it’s a little weird to try to predict the day of the week given whether a patient arrives with intoxication; we typically know what the day of the week is and we don’t need to predict it. In contrast, given the day of the week, it makes a lot of sense to wonder about the probability of a patient arriving with intoxication. As such, Option 1 makes more sense here.</p>
+</div></blockquote>
+<p><strong>Generalizations:</strong> So now we have the tools to work with joint distributions with two RVs. What do we do if we have three or more? The same ideas apply. The joint distribution for random variables <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span> and <span class="math notranslate nohighlight">\(C\)</span> can be factorized in a number of ways. For example, we can condition on two variables at a time:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{A, B, C}(a, b, c) &amp;= p_{A | B, C}(a | b, c) \cdot p_{B, C}(b, c) \quad \text{(Option 1)} \\
+&amp;= p_{B | A, C}(b | a, c) \cdot p_{A, C}(a, c) \quad \text{(Option 2)} \\
+&amp;= p_{C | A, B}(c | a, b) \cdot p_{A, B}(a, b) \quad \text{(Option 3)}
+\end{align*}\]</div>
+<p>Here, we already know how to factorize <span class="math notranslate nohighlight">\(p_{B, C}(b, c)\)</span>, <span class="math notranslate nohighlight">\(p_{A, C}(a, c)\)</span>, and <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span>.</p>
+<p>We can also condition on one variable at a time:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{A, B, C}(a, b, c) &amp;= p_{A, B | C}(a, b | c) \cdot p_C(c) \quad \text{(Option 1)} \\
+&amp;= p_{A, C | B}(a, c | b) \cdot p_B(b) \quad \text{(Option 2)} \\
+&amp;= p_{B, C | A}(b, c | a) \cdot p_A(a) \quad \text{(Option 3)}
+\end{align*}\]</div>
+<p>And how do we further factorize distributions of the form <span class="math notranslate nohighlight">\(p_{A, B | C}(a, b | c)\)</span>? We apply the same factorization for a joint distribution with two variables, and simply add a “conditioned on <span class="math notranslate nohighlight">\(C\)</span>” to each one:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{A, B | C}(a, b | c) &amp;= p_{A | B, C}(a | b, c) \cdot p_{B | C}(b | c) \quad \text{(Option 1)} \\
+&amp;= p_{B | A, C}(b | a, c) \cdot p_{A | C}(a | c) \quad \text{(Option 2)} \\
+\end{align*}\]</div>
 <p><strong>Statistical Independence:</strong></p>
 </section>
 <section id="graphical-representation">
