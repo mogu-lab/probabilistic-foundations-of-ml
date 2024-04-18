@@ -595,17 +595,16 @@ document.write(`
 <section id="terminology-and-notation">
 <h2><span class="section-number">6.1. </span>Terminology and Notation<a class="headerlink" href="#terminology-and-notation" title="Permalink to this heading">#</a></h2>
 <p>We, again introduce the statistical language—terminology and notation—to precisely specify to a computer how to model our data. We will then translate statements in this language directly into code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> that a computer can run.</p>
-<p><strong>Concept:</strong> The concept behind a joint probability is elegant. It allows us to build complicated distributions over many variables using simple conditional and non-conditional distributions (that we already covered).</p>
+<p><strong>Concept:</strong> The concept behind a joint probability is elegant; it allows us to build complicated distributions over many variables using simple conditional and non-conditional distributions (that we already covered).</p>
 <p>We can illustrate this using an example with just two variables. Suppose you have two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>. The probability that <span class="math notranslate nohighlight">\(A = a\)</span> and <span class="math notranslate nohighlight">\(B = b\)</span> are <em>both</em> satisfied is called their <em>joint probability</em>. It is denoted by <span class="math notranslate nohighlight">\(p_{A,B}(a, b)\)</span>. This joint distribution can be <em>factorized</em> to a product of conditional and non-conditional (or “marginal”) distributions as follows:</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
 p_{A, B}(a, b) &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad \text{(Option \#1)} \\
-&amp;= p_{B | A}(b | a) \cdot p_A(a) \quad \text{(Option \#2)}
+\underbrace{\phantom{p_{A, B}(a, b)}}_{\text{joint}} &amp;= \underbrace{p_{B | A}(b | a)}_{\text{conditional}} \cdot \underbrace{p_A(a)}_{\text{marginal}} \quad \text{(Option \#2)}
 \end{align*}\]</div>
 <p>Notice that the joint is now described in terms of conditional and marginal distributions, which we already know how to work with!</p>
 <p><strong>Intuition:</strong> So what’s the intuition behind this formula? If we look at Option #1, <span class="math notranslate nohighlight">\(p_B(b)\)</span> evaluates the probability that <span class="math notranslate nohighlight">\(B = b\)</span> independently of <span class="math notranslate nohighlight">\(A = a\)</span>. By using <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>, we make sure that we</p>
-<p><strong>Choice of Factorization:</strong> Lastly, notice that we have a <em>choice</em> to factorize the distribution in two ways. How do you know which one to use? Typically, we choose a factorization that is <em>intuitive to us</em>.</p>
-<div class="cell docutils container">
+<img alt="../_images/joint-probability-venn.svg" src="../_images/joint-probability-venn.svg" /><img alt="../_images/joint-probability-equations.svg" src="../_images/joint-probability-equations.svg" /><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display_joint_probability_illustration</span><span class="p">()</span>
 </pre></div>
@@ -615,6 +614,8 @@ p_{A, B}(a, b) &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad \text{(Option \#1)} \\
 <img alt="../_images/ba208ed6842fa1e979bd33ef0ed0f7a74d524320c59efe841dd35e6a00936869.png" src="../_images/ba208ed6842fa1e979bd33ef0ed0f7a74d524320c59efe841dd35e6a00936869.png" />
 </div>
 </div>
+<p><strong>Choice of Factorization:</strong> Lastly, notice that we have a <em>choice</em> to factorize the distribution in two ways. How do you know which one to use? Typically, we choose a factorization that is <em>intuitive to us</em>.</p>
+<p><strong>Statistical Independence:</strong></p>
 </section>
 <section id="graphical-representation">
 <h2><span class="section-number">6.2. </span>Graphical Representation<a class="headerlink" href="#graphical-representation" title="Permalink to this heading">#</a></h2>
