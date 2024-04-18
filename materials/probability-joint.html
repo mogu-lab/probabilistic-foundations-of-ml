@@ -381,8 +381,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation">6.1. Terminology and Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representation">6.2. Graphical Representation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-math-to-code-with-numpyro">6.3. Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-math-to-code-with-numpyro">6.2. Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -405,7 +404,7 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, you’ve spent some time conducting a preliminary exploratory data analysis (EDA) of IHH’s ER data. You noticed that considering variables separately can result in misleading information. As a result, you decided to use <em>conditional distributions</em> to model the <em>relationship between variables</em>. Using these conditional distributions, you were able to develop <em>predictive models</em> (e.g. predicting the probability of intoxication given the day of the week), These predictive models are useful for the IHH administration to make decisions.</p>
-<p>However, you’ve noticed that your modeling toolkit is still limited. The conditional distributions we introduced can model how the probability of one variable changes given a <em>set</em> of variables. What if we wanted to describe how the probability of a <em>set</em> of variables (i.e. more than one) changes given a <em>set</em> of variables? For example, we may want to answer questions like: “how does the probability that a patient is hospitalized for an allergic reaction change given the day of the week?”. In this question, we’re asking a question about two variables—that the condition is an allergic reaction, <em>and</em> that the patient was hospitalized—given the day of the week.</p>
+<p>However, you’ve noticed that your modeling toolkit is still limited. The conditional distributions we introduced can model how the probability of one variable changes given a <em>set</em> of variables. What if we wanted to describe how the probability of a <em>set</em> of variables (i.e. more than one) changes given a <em>set</em> of variables? For example, we may want to answer questions like: “how does the probability that a patient is hospitalized for an allergic reaction change given the day of the week?” In this question, we’re inquiring about two variables—that the condition is an allergic reaction, <em>and</em> that the patient was hospitalized—given the day of the week.</p>
 <p><strong>Challenge:</strong> We need to expand our modeling toolkit to include yet another tool—joint probabilities.</p>
 <p><strong>Outline:</strong></p>
 <ol class="arabic simple">
@@ -413,185 +412,6 @@ document.write(`
 <li><p>Introduce a graphical representation to describe joint distributions.</p></li>
 <li><p>Translate this graphical representation directly into code in a probabilistic programming language (using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>) that we can then use to fit the data.</p></li>
 </ol>
-<p>Before getting started, let’s load in our IHH ER data:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import a bunch of libraries we&#39;ll be using below</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpyro</span>
-<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
-<span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-
-<span class="c1"># Load the data into a pandas dataframe</span>
-<span class="n">csv_fname</span> <span class="o">=</span> <span class="s1">&#39;IHH-ER.csv&#39;</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_fname</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;Patient ID&#39;</span><span class="p">)</span>
-
-<span class="c1"># Print a random sample of 5 patients, just to see what&#39;s in the data</span>
-<span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Day-of-Week</th>
-      <th>Condition</th>
-      <th>Hospitalized</th>
-      <th>Antibiotics</th>
-      <th>Attempts-to-Disentangle</th>
-    </tr>
-    <tr>
-      <th>Patient ID</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>9394</th>
-      <td>Friday</td>
-      <td>Allergic Reaction</td>
-      <td>No</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>898</th>
-      <td>Sunday</td>
-      <td>Allergic Reaction</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2398</th>
-      <td>Saturday</td>
-      <td>Entangled Antennas</td>
-      <td>No</td>
-      <td>No</td>
-      <td>4.0</td>
-    </tr>
-    <tr>
-      <th>5906</th>
-      <td>Saturday</td>
-      <td>Allergic Reaction</td>
-      <td>No</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2343</th>
-      <td>Monday</td>
-      <td>High Fever</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>8225</th>
-      <td>Thursday</td>
-      <td>High Fever</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>5506</th>
-      <td>Tuesday</td>
-      <td>High Fever</td>
-      <td>No</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>6451</th>
-      <td>Thursday</td>
-      <td>Allergic Reaction</td>
-      <td>No</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2670</th>
-      <td>Sunday</td>
-      <td>Intoxication</td>
-      <td>No</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3497</th>
-      <td>Tuesday</td>
-      <td>Allergic Reaction</td>
-      <td>No</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1087</th>
-      <td>Monday</td>
-      <td>High Fever</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>1819</th>
-      <td>Tuesday</td>
-      <td>High Fever</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>2308</th>
-      <td>Tuesday</td>
-      <td>Allergic Reaction</td>
-      <td>No</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>6084</th>
-      <td>Monday</td>
-      <td>High Fever</td>
-      <td>No</td>
-      <td>No</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3724</th>
-      <td>Tuesday</td>
-      <td>Allergic Reaction</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
 <section id="terminology-and-notation">
 <h2><span class="section-number">6.1. </span>Terminology and Notation<a class="headerlink" href="#terminology-and-notation" title="Permalink to this heading">#</a></h2>
 <p>We, again introduce the statistical language—terminology and notation—to precisely specify to a computer how to model our data. We will then translate statements in this language directly into code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> that a computer can run.</p>
@@ -616,8 +436,8 @@ p_{A, B}(a, b) &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad \text{(Option 1)} \\
 <p><strong>Choice of Factorization:</strong> Lastly, notice that we have a <em>choice</em> to factorize the distribution in two ways. How do you know which one to use? Typically, we choose a factorization that is <em>intuitive to us</em> and what we can compute.</p>
 <blockquote>
 <div><p>For example, suppose you want to model the joint distribution of the day of the week, <span class="math notranslate nohighlight">\(D\)</span> and whether a patient arrive with intoxication, <span class="math notranslate nohighlight">\(I\)</span>. The joint distribution can be factorized in two ways:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-92580578-2140-4559-ab3f-04a11eed4226">
-<span class="eqno">(6.1)<a class="headerlink" href="#equation-92580578-2140-4559-ab3f-04a11eed4226" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-38b4b9f4-2cf0-4851-80b3-185f5b4e1239">
+<span class="eqno">(6.1)<a class="headerlink" href="#equation-38b4b9f4-2cf0-4851-80b3-185f5b4e1239" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{D, I}(d, i) &amp;= p_{I | D}(i | d) \cdot p_D(d) \quad \text{(Option 1)} \\
 &amp;= p_{D | I}(d | i) \cdot p_I(i) \quad \text{(Option 2)} \\
 \end{align}\]</div>
@@ -644,13 +464,14 @@ p_{A, B, C}(a, b, c) &amp;= p_{A, B | C}(a, b | c) \cdot p_C(c) \quad \text{(Opt
 p_{A, B | C}(a, b | c) &amp;= p_{A | B, C}(a | b, c) \cdot p_{B | C}(b | c) \quad \text{(Option 1)} \\
 &amp;= p_{B | A, C}(b | a, c) \cdot p_{A | C}(a | c) \quad \text{(Option 2)} \\
 \end{align*}\]</div>
-<p><strong>Statistical Independence:</strong></p>
-</section>
-<section id="graphical-representation">
-<h2><span class="section-number">6.2. </span>Graphical Representation<a class="headerlink" href="#graphical-representation" title="Permalink to this heading">#</a></h2>
+<p><strong>Sampling from Joint Distributions:</strong></p>
 </section>
 <section id="translating-math-to-code-with-numpyro">
-<h2><span class="section-number">6.3. </span>Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#translating-math-to-code-with-numpyro" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">6.2. </span>Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#translating-math-to-code-with-numpyro" title="Permalink to this heading">#</a></h2>
+<p><strong>What is <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>?</strong></p>
+<p><strong>Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</strong></p>
+<p><strong>Random number generators in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</strong></p>
+<p><strong>Putting it all together.</strong></p>
 </section>
 </section>
 
@@ -722,8 +543,7 @@ p_{A, B | C}(a, b | c) &amp;= p_{A | B, C}(a | b, c) \cdot p_{B | C}(b | c) \qua
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation">6.1. Terminology and Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representation">6.2. Graphical Representation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-math-to-code-with-numpyro">6.3. Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-math-to-code-with-numpyro">6.2. Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
   </nav></div>
 
