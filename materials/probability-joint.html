@@ -541,24 +541,26 @@ Third batch drawn with key2:  [1 1 1 0 1 1 1 1 1 1 1 1 0 1 1]
 </div>
 </div>
 <p>Notice in the above code, when using the same key twice (or the same <code class="docutils literal notranslate"><span class="pre">seed</span></code>), we get the <em>exact same batch of samples</em>. This is both a blessing and a curse. It’s a blessing because this allows us to precisely control the randomness of our ML code. This will prove crucial for debugging later on. However, it can also be a curse if we accidentally use the same key in a place where we need two different sources of randomness.</p>
-<p>As a rule of thumb, we therefore introduce the following paradigm: NEVER USE THE SAME KEY TWICE. How can we do this? <code class="docutils literal notranslate"><span class="pre">Jax</span></code> allows us to take a random key and split it into separate keys. This means we can create ONE KEY to control the randomness of our entire code. We can then split this key into multiple keys as needed. Here’s how we can do this:</p>
+<p><strong>Best Practice: How to Manage Your Keys.</strong> As a rule of thumb, we introduce the following paradigm: NEVER USE THE SAME KEY TWICE. How can we do this? <code class="docutils literal notranslate"><span class="pre">Jax</span></code> allows us to take a random key and split it into multiple different keys, each of which can be used for different purposes. This means we can create ONE KEY to control the randomness of our entire code. We can then split this key into multiple keys as needed. Here’s how we can do this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create ONE KEY to be used by your WHOLE CODE</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create ONE KEY to be used by your ENTIRE CODE</span>
 <span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># Whenever you need to use the key for multiple purposes, split it into parts:</span>
-<span class="n">key_first</span><span class="p">,</span> <span class="n">key_second</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> 
+<span class="n">key_first</span><span class="p">,</span> <span class="n">key_second</span><span class="p">,</span> <span class="n">key_third</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> 
 
 <span class="c1"># Use each part for each need</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;First batch drawn with key_first:  &#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_first</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Second batch drawn with key_second:&#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_second</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Second batch drawn with key_third: &#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_third</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First batch drawn with key_first:   [0 0 0 0 1 1 1 1 0 0 1 1 0 1 1]
-Second batch drawn with key_second: [1 1 1 1 1 1 1 1 1 1 1 1 0 1 1]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First batch drawn with key_first:   [1 1 1 1 1 1 1 1 0 1 1 0 1 1 1]
+Second batch drawn with key_second: [1 1 0 0 1 1 0 1 1 1 0 1 1 0 1]
+Second batch drawn with key_third:  [0 0 1 1 1 1 1 1 1 0 1 1 1 0 0]
 </pre></div>
 </div>
 </div>
