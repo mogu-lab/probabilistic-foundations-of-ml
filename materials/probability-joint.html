@@ -61,6 +61,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'materials/probability-joint';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/materials/probability-joint.html" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -394,6 +396,14 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="joint-probability-discrete">
 <h1><span class="section-number">6. </span>Joint Probability (Discrete)<a class="headerlink" href="#joint-probability-discrete" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span> 
+</pre></div>
+</div>
+</div>
+</div>
 <p><strong>Context:</strong> So far, you’ve spent some time conducting a preliminary exploratory data analysis (EDA) of IHH’s ER data. You noticed that considering variables separately can result in misleading information. As a result, you decided to use <em>conditional distributions</em> to model the <em>relationship between variables</em>. Using these conditional distributions, you were able to develop <em>predictive models</em> (e.g. predicting the probability of intoxication given the day of the week), These predictive models are useful for the IHH administration to make decisions.</p>
 <p>However, you’ve noticed that your modeling toolkit is still limited. The conditional distributions we introduced can model how the probability of one variable changes given a <em>set</em> of variables. What if we wanted to describe how the probability of a <em>set</em> of variables (i.e. more than one) changes given a <em>set</em> of variables? For example, we may want to answer questions like: “how does the probability that a patient is hospitalized for an allergic reaction change given the day of the week?”. In this question, we’re asking a question about two variables—that the condition is an allergic reaction, <em>and</em> that the patient was hospitalized—given the day of the week.</p>
 <p><strong>Challenge:</strong> We need to expand our modeling toolkit to include yet another tool—joint probabilities.</p>
@@ -584,9 +594,27 @@ document.write(`
 </div>
 <section id="terminology-and-notation">
 <h2><span class="section-number">6.1. </span>Terminology and Notation<a class="headerlink" href="#terminology-and-notation" title="Permalink to this heading">#</a></h2>
-<p>As with (non-conditional) discrete probability, the statistical language—terminology and notation—we introduce here will allow us to precisely specify to a computer how to model our data. In the future, we will translate statements in this language directly into code that a computer can run.</p>
-<p><strong>Concept:</strong> TODO</p>
-<p><strong>Formula:</strong> TODO</p>
+<p>We, again introduce the statistical language—terminology and notation—to precisely specify to a computer how to model our data. We will then translate statements in this language directly into code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> that a computer can run.</p>
+<p><strong>Concept:</strong> The concept behind a joint probability is elegant. It allows us to build complicated distributions over many variables using simple conditional and non-conditional distributions (that we already covered).</p>
+<p>We can illustrate this using an example with just two variables. Suppose you have two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>. The probability that <span class="math notranslate nohighlight">\(A = a\)</span> and <span class="math notranslate nohighlight">\(B = b\)</span> are <em>both</em> satisfied is called their <em>joint probability</em>. It is denoted by <span class="math notranslate nohighlight">\(p_{A,B}(a, b)\)</span>. This joint distribution can be <em>factorized</em> to a product of conditional and non-conditional (or “marginal”) distributions as follows:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{A, B}(a, b) &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad \text{(Option \#1)} \\
+&amp;= p_{B | A}(b | a) \cdot p_A(a) \quad \text{(Option \#2)}
+\end{align*}\]</div>
+<p>Notice that the joint is now described in terms of conditional and marginal distributions, which we already know how to work with!</p>
+<p><strong>Intuition:</strong> So what’s the intuition behind this formula? If we look at Option #1, <span class="math notranslate nohighlight">\(p_B(b)\)</span> evaluates the probability that <span class="math notranslate nohighlight">\(B = b\)</span> independently of <span class="math notranslate nohighlight">\(A = a\)</span>. By using <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>, we make sure that we</p>
+<p><strong>Choice of Factorization:</strong> Lastly, notice that we have a <em>choice</em> to factorize the distribution in two ways. How do you know which one to use? Typically, we choose a factorization that is <em>intuitive to us</em>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display_joint_probability_illustration</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6b87feefce50b12d5bbbef40511eabeb5c3fe3e7c026c221815764f119760eb6.png" src="../_images/6b87feefce50b12d5bbbef40511eabeb5c3fe3e7c026c221815764f119760eb6.png" />
+</div>
+</div>
 </section>
 <section id="graphical-representation">
 <h2><span class="section-number">6.2. </span>Graphical Representation<a class="headerlink" href="#graphical-representation" title="Permalink to this heading">#</a></h2>
