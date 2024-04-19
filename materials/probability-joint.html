@@ -383,7 +383,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation">6.1. Terminology and Notation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directed-graphical-models-dgms">6.2. Directed Graphical Models (DGMs)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-math-to-code-with-numpyro">6.3. Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-dgms-into-code-with-numpyro">6.3. Translating DGMs into Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -498,7 +498,7 @@ p_{A, B, C}(a, b, c) &amp;= p_{B | A}(b | a) \cdot p_A(a) \cdot p_C(c)
 \end{align*}\]</div>
 <p>As you can see, relative to the numerous ways we can factorize <span class="math notranslate nohighlight">\(p_{A, B, C}(a, b, c)\)</span> above, this factorization is much simpler: the conditional dependencies/independencies implied by the DGM allows us to reduce the number of terms in ther factorization.</p>
 <p>So what does this this simplicity cost us? Expressivity. By assuming certain variables do not have conditional dependencies, we are limiting the possible joint distributions we represent. Is this a problem? Not if you make reasonable dependence assumptions based on your domain knowledge!</p>
-<p><em>Note:</em> In a DGM, we cannot have “cycles.” By this, we mean that if you start at a given node and follow the arrows, there should not exist a way to get back to that same node.</p>
+<p><strong>Cycles in DGMs.</strong> In a DGM, we cannot have “cycles.” By this, we mean that if you start at a given node and follow the arrows, there <em>should not</em> exist a way to get back to that same node.</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p>Let’s practice converting between distribution notation and DGMs.</p>
@@ -512,8 +512,8 @@ p_{A, B, C, D, E}(a, b, c, d, e) &amp;= p_{C | A, B, D}(c | a, b, d) \cdot p_{A 
 </div>
 <p>TODO write your answer here</p>
 </section>
-<section id="translating-math-to-code-with-numpyro">
-<h2><span class="section-number">6.3. </span>Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#translating-math-to-code-with-numpyro" title="Permalink to this heading">#</a></h2>
+<section id="translating-dgms-into-code-with-numpyro">
+<h2><span class="section-number">6.3. </span>Translating DGMs into Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#translating-dgms-into-code-with-numpyro" title="Permalink to this heading">#</a></h2>
 <p><strong>What is <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>?</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> is a “Probabilistic Programming Language” based in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>. It provides an interface for (nearly) direct translation of the stats/math we wrote above into code that we can use to fit to data, make predictions, and more. This will allow us to focus on the conceptual ideas behind probabilistic ML.</p>
 <p><strong>Instantiating Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> comes with many distributions already implemented. For a complete list of all available discrete distributions, check out the <a class="reference external" href="https://num.pyro.ai/en/stable/distributions.html#discrete-distributions">this part of the documentation</a>. So why use <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> instead of implementing the distributions on our own? It’s easy to write subtle bugs that are hard to catch when implementing mathematical formulas in code. Also, using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>’s distributions will help us highlight the overall <em>logic</em> of the code, instead of getting bogged down by the mathematical details.</p>
 <p>Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> have several notable properties and methods we will rely on. Let’s explore them together. First, we import the necessary components of <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>:</p>
@@ -625,6 +625,9 @@ Third batch drawn with key_third:   [0 0 1 1 1 1 1 1 1 0 1 1 1 0 0]
 <p class="admonition-title">Exercise</p>
 <p><strong>Context:</strong> Your friend is an ML researcher at a nearby university. She heard all about the interesting data you have from the IHH ER and wants to help with the analysis. However, because this is sensitive medical data, she needs to obtain the right credentials, undergo a lengthy training on secure data management, and more, before obtaining access to the data. Realistically, this means she’ll only be able to gain access to the IHH ER data in several months.</p>
 <p><strong>Idea:</strong> To help her out, you have an idea: instead of sending her the data directly, you will develop a <em>generative model</em> of the IHH ER data and send that to her instead. This generative model will allow your friend to generate (or sample) realistic data with the same characteristics as the real data without violating any privacy constraints. But what is exactly a generative model? A generative model is a joint probability distribution over all variables in the data: <span class="math notranslate nohighlight">\(D\)</span>, <span class="math notranslate nohighlight">\(C\)</span>, <span class="math notranslate nohighlight">\(H\)</span>, <span class="math notranslate nohighlight">\(M\)</span>, and <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<p><strong>Domain Expertise:</strong> You consulted with your clinical collaborators at the IHH ER and have come up with the following DGM.</p>
+<a class="reference internal image-reference" href="../_images/joint-probability-ihh-er-dgm.png"><img alt="../_images/joint-probability-ihh-er-dgm.png" class="align-center" src="../_images/joint-probability-ihh-er-dgm.png" style="width: 500px;" /></a>
+<p>Notice that the distributions described in this DGM are ones you’ve previously learned (by hand)!</p>
 <p><strong>Problem:</strong> Use what you already know about the marginal and conditional distributions of the IHH ER data, in tandem with what you learned here about joint distributions to implement this generative model. Your model should take the form of a function that takes in a <code class="docutils literal notranslate"><span class="pre">key</span></code> and outputs a Python dictionary with a single sample from the joint distribution <span class="math notranslate nohighlight">\(p_{D, C, H, M, A}(\cdot)\)</span>.</p>
 <p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> discrete distributions only work with integers, not strings. For example, instead of using <span class="math notranslate nohighlight">\(d = \text{Monday}\)</span>, you should convert the days of the week into an integers from 0 to 7, and instead use <span class="math notranslate nohighlight">\(d = 0\)</span>. We provide some code below to help you do this.</p>
 </div>
@@ -742,7 +745,7 @@ Third batch drawn with key_third:   [0 0 1 1 1 1 1 1 1 0 1 1 1 0 0]
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation">6.1. Terminology and Notation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directed-graphical-models-dgms">6.2. Directed Graphical Models (DGMs)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-math-to-code-with-numpyro">6.3. Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-dgms-into-code-with-numpyro">6.3. Translating DGMs into Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
   </nav></div>
 
