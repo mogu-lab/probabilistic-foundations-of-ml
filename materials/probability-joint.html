@@ -556,7 +556,7 @@ Third batch drawn with key2:  [1 1 1 0 1 1 1 1 1 1 1 1 0 1 1]
 <span class="c1"># Whenever you need to use the key for multiple purposes, split it into parts:</span>
 <span class="n">key_first</span><span class="p">,</span> <span class="n">key_second</span><span class="p">,</span> <span class="n">key_third</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> 
 
-<span class="c1"># Use each key for each need</span>
+<span class="c1"># Use a different key for each need</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;First batch drawn with key_first:  &#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_first</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Second batch drawn with key_second:&#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_second</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Third batch drawn with key_third:  &#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_third</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
@@ -579,12 +579,47 @@ Third batch drawn with key_third:   [0 0 1 1 1 1 1 1 1 0 1 1 1 0 0]
 <p class="admonition-title">Exercise</p>
 <p><strong>Context:</strong> Your friend is an ML researcher at a nearby university. She heard all about the interesting data you have from the IHH ER and wants to help with the analysis. However, because this is sensitive medical data, she needs to obtain the right credentials, undergo a lengthy training on secure data management, and more, before obtaining access to the data. Realistically, this means she’ll only be able to gain access to the IHH ER data in several months.</p>
 <p><strong>Idea:</strong> To help her out, you have an idea: instead of sending her the data directly, you will develop a <em>generative model</em> of the IHH ER data and send that to her instead. This generative model will allow your friend to generate (or sample) realistic data with the same characteristics as the real data without violating any privacy constraints. But what is exactly a generative model? A generative model is a joint probability distribution over all variables in the data: <span class="math notranslate nohighlight">\(D\)</span>, <span class="math notranslate nohighlight">\(C\)</span>, <span class="math notranslate nohighlight">\(H\)</span>, <span class="math notranslate nohighlight">\(M\)</span>, and <span class="math notranslate nohighlight">\(A\)</span>.</p>
-<p><strong>Problem:</strong> Use what you already know about the marginal and conditional distributions of the IHH ER data, in tandem with what you learned here about joint distributions to implement this generative model. Your model should take the form of a function that takes in a <code class="docutils literal notranslate"><span class="pre">key</span></code> and outputs a Python dictionary with a sample from the joint distribution <span class="math notranslate nohighlight">\(p_{D, C, H, M, A}(\cdot)\)</span>.</p>
+<p><strong>Problem:</strong> Use what you already know about the marginal and conditional distributions of the IHH ER data, in tandem with what you learned here about joint distributions to implement this generative model. Your model should take the form of a function that takes in a <code class="docutils literal notranslate"><span class="pre">key</span></code> and outputs a Python dictionary with a single sample from the joint distribution <span class="math notranslate nohighlight">\(p_{D, C, H, M, A}(\cdot)\)</span>.</p>
+<p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> discrete distributions only work with integers, not strings. For example, instead of using <span class="math notranslate nohighlight">\(d = \text{Monday}\)</span>, you should convert every day of the week into an integer. We provide some code below to help you do this.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sample_ihh_er_generative_model</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A list mapping numbers 0 through 7 to days of the week</span>
+<span class="c1"># You may need to implement a mapping (e.g. using a dictionary) for the opposite way</span>
+<span class="n">IDX_TO_DAY_OF_WEEK</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Monday&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Tuesday&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Wednesday&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Thursday&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Friday&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Sunday&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># A list mapping numbers 0 through 4 to conditions</span>
+<span class="c1"># You may need to implement a mapping (e.g. using a dictionary) for the opposite way</span>
+<span class="n">IDX_TO_CONDITION</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;High Fever&#39;</span><span class="p">,</span>    
+    <span class="s1">&#39;Broken Limb&#39;</span><span class="p">,</span>    
+    <span class="s1">&#39;Entangled Antennas&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Allergic Reaction&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Intoxication&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="c1"># A list mapping numbers 0 and 1 to Yes and No</span>
+<span class="c1"># You may need to implement a mapping (e.g. using a dictionary) for the opposite way</span>
+<span class="n">IDX_TO_BOOL</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;No&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Yes&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sample_IHH_ER_generative_model</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
 </div>
