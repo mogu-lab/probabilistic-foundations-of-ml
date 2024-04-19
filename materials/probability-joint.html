@@ -403,7 +403,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p><strong>Context:</strong> So far, you’ve spent some time conducting a preliminary exploratory data analysis (EDA) of IHH’s ER data. You noticed that considering variables separately can result in misleading information. As a result, you decided to use <em>conditional distributions</em> to model the <em>relationship between variables</em>. Using these conditional distributions, you were able to develop <em>predictive models</em> (e.g. predicting the probability of intoxication given the day of the week), These predictive models are useful for the IHH administration to make decisions.</p>
+<p><strong>Context:</strong> So far, you’ve spent some time conducting a preliminary exploratory data analysis (EDA) of IHH’s ER data. You noticed that considering variables separately can result in misleading information. As a result, you decided to use <em>conditional distributions</em> to model the <em>relationship between variables</em>. Using these conditional distributions, you were able to develop <em>predictive models</em> (e.g. predicting the probability of intoxication given the day of the week). These predictive models are useful for the IHH administration to make decisions.</p>
 <p>However, you’ve noticed that your modeling toolkit is still limited. The conditional distributions we introduced can model how the probability of one variable changes given a <em>set</em> of variables. What if we wanted to describe how the probability of a <em>set</em> of variables (i.e. more than one) changes given a <em>set</em> of variables? For example, we may want to answer questions like: “how does the probability that a patient is hospitalized for an allergic reaction change given the day of the week?” In this question, we’re inquiring about two variables—that the condition is an allergic reaction, <em>and</em> that the patient was hospitalized—given the day of the week.</p>
 <p><strong>Challenge:</strong> We need to expand our modeling toolkit to include yet another tool—joint probabilities.</p>
 <p><strong>Outline:</strong></p>
@@ -450,7 +450,7 @@ p_{A, B, C}(a, b, c) &amp;= p_{A | B, C}(a | b, c) \cdot p_{B, C}(b, c) \quad \t
 &amp;= p_{B | A, C}(b | a, c) \cdot p_{A, C}(a, c) \quad \text{(Option 2)} \\
 &amp;= p_{C | A, B}(c | a, b) \cdot p_{A, B}(a, b) \quad \text{(Option 3)}
 \end{align*}\]</div>
-<p>Here, we already know how to factorize <span class="math notranslate nohighlight">\(p_{B, C}(b, c)\)</span>, <span class="math notranslate nohighlight">\(p_{A, C}(a, c)\)</span>, and <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span>.</p>
+<p>wherein the above, we already know how to factorize <span class="math notranslate nohighlight">\(p_{B, C}(b, c)\)</span>, <span class="math notranslate nohighlight">\(p_{A, C}(a, c)\)</span>, and <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span> (since they are joint distributions with two variables).</p>
 <p>We can also condition on one variable at a time:</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
@@ -541,7 +541,7 @@ Third batch drawn with key2:  [1 1 1 0 1 1 1 1 1 1 1 1 0 1 1]
 </div>
 </div>
 <p>Notice in the above code, when using the same key twice (or the same <code class="docutils literal notranslate"><span class="pre">seed</span></code>), we get the <em>exact same batch of samples</em>. This is both a blessing and a curse. It’s a blessing because this allows us to precisely control the randomness of our ML code. This will prove crucial for debugging later on. However, it can also be a curse if we accidentally use the same key in a place where we need two different sources of randomness.</p>
-<p><strong>Best Practice: How to Manage Your Keys.</strong> Here are some rules of thumb we will follow:</p>
+<p><strong>Best Practice: How to Manage Your Keys.</strong> We will follow to rules of thumb:</p>
 <ol class="arabic simple">
 <li><p>Make only ONE CALL to <code class="docutils literal notranslate"><span class="pre">jrandom.PRNGKey</span></code> in your entire code.</p></li>
 <li><p>Never use the same key twice.</p></li>
