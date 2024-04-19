@@ -382,7 +382,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation">6.1. Terminology and Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directed-graphical-models">6.2. Directed Graphical Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directed-graphical-models-dgms">6.2. Directed Graphical Models (DGMs)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-math-to-code-with-numpyro">6.3. Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
             </nav>
@@ -467,8 +467,8 @@ p_{A, B | C}(a, b | c) &amp;= p_{A | B, C}(a | b, c) \cdot p_{B | C}(b | c) \qua
 &amp;= p_{B | A, C}(b | a, c) \cdot p_{A | C}(a | c) \quad \text{(Option 2)} \\
 \end{align*}\]</div>
 </section>
-<section id="directed-graphical-models">
-<h2><span class="section-number">6.2. </span>Directed Graphical Models<a class="headerlink" href="#directed-graphical-models" title="Permalink to this heading">#</a></h2>
+<section id="directed-graphical-models-dgms">
+<h2><span class="section-number">6.2. </span>Directed Graphical Models (DGMs)<a class="headerlink" href="#directed-graphical-models-dgms" title="Permalink to this heading">#</a></h2>
 <p>As you may have already noticed, the number of possible ways to factorize a joint distribution increases <em>very quickly</em> with the number of RVs. In fact, the more RVs we have, the more unwieldy it becomes for us as data analysts to specify each component in the factorization. What can we do to simplify our model? Often, we can use our <em>domain knowledge</em> (knowledge of the specifics of the problem) to simplify the joint distribution. Specifically, we’ll use our knowledge of “conditional independence” to do this. Let’s get started by first introducing the idea of <em>statistical independence</em>.</p>
 <p><strong>Statistical Independence.</strong> We say two variables <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are statistically independent if their joint can be factorized to the product of their marginals:</p>
 <div class="amsmath math notranslate nohighlight">
@@ -482,8 +482,13 @@ p_{A, B}(a, b) &amp;= p_B(b) \cdot p_A(a)
 p_{A, B}(a, b) &amp;= \underbrace{p_{B | A}(b | a)}_{\text{must equal } p_B(b)} \cdot p_A(a)
 \end{align*}\]</div>
 <p>We then observe that <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> must equal <span class="math notranslate nohighlight">\(p_B(b)\)</span> to satisfy our definition of statistical independence. And <span class="math notranslate nohighlight">\(p_{B | A}(b | a) = p_B(b)\)</span> implies that having observed <span class="math notranslate nohighlight">\(A = a\)</span> does not affect the probability of <span class="math notranslate nohighlight">\(B = b\)</span>.</p>
-<p><strong>Graphical Representation of Statistical Dependencies.</strong>
-TODO.</p>
+<p><strong>Graphical Representation of Statistical Dependencies.</strong> Since reasoning about many variables jointly is difficult, we introduce a graphical representation to aid with it. This representation is called a <em>directed graphical model</em> (DGM), and it will help us convey which variables depend on one another in what way. A DGM is represented using a <em>graph</em> (or network) in which nodes represent RVs and arrows represent conditional dependencies. For example, consider the following DGM for some hypothetical joint distribution, <span class="math notranslate nohighlight">\(p_{A, B, C, D, E, F, G, H}(\cdot)\)</span>:</p>
+<a class="reference internal image-reference" href="../_images/joint-probability-example-dgm.png"><img alt="../_images/joint-probability-example-dgm.png" class="align-center" src="../_images/joint-probability-example-dgm.png" style="width: 500px;" /></a>
+<p>The above representation represents the following factorization:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{A, B, C, D, E, F, G, H}(a, b, c, d, e, f, g, h) &amp;= p_A(a) \cdot p_B(b) \cdot p_{C | A, B}(c | a, b) \cdot p_D(d) \cdot p_F(f) \cdot p_{E | F}(e | f) \cdot p_{G | E}(g | e) \cdot p_{H | E}(h | e)
+\end{align*}\]</div>
 </section>
 <section id="translating-math-to-code-with-numpyro">
 <h2><span class="section-number">6.3. </span>Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#translating-math-to-code-with-numpyro" title="Permalink to this heading">#</a></h2>
@@ -714,7 +719,7 @@ Third batch drawn with key_third:   [0 0 1 1 1 1 1 1 1 0 1 1 1 0 0]
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation">6.1. Terminology and Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directed-graphical-models">6.2. Directed Graphical Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#directed-graphical-models-dgms">6.2. Directed Graphical Models (DGMs)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#translating-math-to-code-with-numpyro">6.3. Translating Math to Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
   </nav></div>
