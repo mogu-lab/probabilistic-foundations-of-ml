@@ -482,17 +482,29 @@ p_{A, B}(a, b) &amp;= p_B(b) \cdot p_A(a)
 p_{A, B}(a, b) &amp;= \underbrace{p_{B | A}(b | a)}_{\text{must equal } p_B(b)} \cdot p_A(a)
 \end{align*}\]</div>
 <p>We then observe that <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> must equal <span class="math notranslate nohighlight">\(p_B(b)\)</span> to satisfy our definition of statistical independence. And <span class="math notranslate nohighlight">\(p_{B | A}(b | a) = p_B(b)\)</span> implies that having observed <span class="math notranslate nohighlight">\(A = a\)</span> does not affect the probability of <span class="math notranslate nohighlight">\(B = b\)</span>.</p>
-<p><strong>Graphical Representation of Statistical Dependencies.</strong> Since reasoning about many variables jointly is difficult, we introduce a graphical representation to aid with it. This representation is called a <em>directed graphical model</em> (DGM), and it will help us convey which variables depend on one another in what way. A DGM is represented using a <em>graph</em> (or network) in which nodes represent RVs and arrows represent conditional dependencies. For example, consider the following DGM for some hypothetical joint distribution, <span class="math notranslate nohighlight">\(p_{A, B, C}(\cdot)\)</span>:</p>
+<p><strong>Graphical Representation of Statistical Dependencies.</strong> Since reasoning about many variables jointly is difficult, we introduce a graphical representation to aid with it. This representation is called a <em>directed graphical model</em> (DGM), and it will help us convey which variables depend on one another in what way.</p>
+<p>A DGM is represented using a <em>graph</em> (or network) in which nodes represent RVs and arrows represent conditional dependencies. For example, consider the following DGM for some hypothetical joint distribution, <span class="math notranslate nohighlight">\(p_{A, B, C}(\cdot)\)</span>:</p>
 <a class="reference internal image-reference" href="../_images/joint-probability-example-dgm.png"><img alt="../_images/joint-probability-example-dgm.png" class="align-center" src="../_images/joint-probability-example-dgm.png" style="width: 500px;" /></a>
-<p>The above representation represents the following factorization:</p>
+<p>In this DGM, there are three nodes, corresponding to our three RVs. Our factorization then consists of one factor for each node:</p>
+<ul class="simple">
+<li><p>The factor corresponding to <span class="math notranslate nohighlight">\(B\)</span> is <span class="math notranslate nohighlight">\(p_{B | A}(\cdot)\)</span>, since there’s an arrow from <span class="math notranslate nohighlight">\(A\)</span> to <span class="math notranslate nohighlight">\(B\)</span>, indicating a conditional dependence.</p></li>
+<li><p>The factor corresponding to <span class="math notranslate nohighlight">\(A\)</span> is <span class="math notranslate nohighlight">\(p_{A}(\cdot)\)</span>, since there aren’t any arrows pointing into <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+<li><p>The factor corresponding to <span class="math notranslate nohighlight">\(B\)</span> is <span class="math notranslate nohighlight">\(p_{C}(\cdot)\)</span>, since there aren’t any arrows pointing into <span class="math notranslate nohighlight">\(C\)</span>.</p></li>
+</ul>
+<p>In total, the DGM represents the following factorization:</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-p_{A, B, C}(a, b, c) &amp;= p_{B | A}(b | a) \cdot p_C(c)
+p_{A, B, C}(a, b, c) &amp;= p_{B | A}(b | a) \cdot p_A(a) \cdot p_C(c)
 \end{align*}\]</div>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Write down the factorization for <span class="math notranslate nohighlight">\(p_{A, B, C, D, E, F, G, H}(\cdot)\)</span> implied by the following DGM:</p>
+<p><strong>Part 1:</strong> Write down the factorization for <span class="math notranslate nohighlight">\(p_{A, B, C, D, E, F, G, H}(\cdot)\)</span> implied by the following DGM:</p>
 <a class="reference internal image-reference" href="../_images/joint-probability-exercise-dgm.png"><img alt="../_images/joint-probability-exercise-dgm.png" class="align-center" src="../_images/joint-probability-exercise-dgm.png" style="width: 500px;" /></a>
+<p><strong>Part 2:</strong> Draw a DGM representing the following joint distribution:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{A, B, C, D, E}(a, b, c, d, e) &amp;= p_{C | A, B, D}(c | a, b, d) \cdot p_{A | D}(a | d) \cdot p_{D | B, E}(d | b, e) \cdot p_{B}(b) \cdot p_{E}(e)
+\end{align*}\]</div>
 </div>
 <p>TODO write your answer here</p>
 </section>
