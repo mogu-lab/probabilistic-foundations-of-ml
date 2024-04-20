@@ -514,9 +514,7 @@ p_{A, B, C, D, E}(a, b, c, d, e) &amp;= p_{C | A, B, D}(c | a, b, d) \cdot p_{A 
 </section>
 <section id="translating-dgms-into-code-with-numpyro">
 <h2><span class="section-number">6.3. </span>Translating DGMs into Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#translating-dgms-into-code-with-numpyro" title="Permalink to this heading">#</a></h2>
-<p><strong>What is <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>?</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> is a “Probabilistic Programming Language” based in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>. It provides an interface for (nearly) direct translation of the stats/math we wrote above into code that we can use to fit to data, make predictions, and more. This will allow us to focus on the conceptual ideas behind probabilistic ML.</p>
-<p><strong>Instantiating Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> comes with many distributions already implemented. For a complete list of all available discrete distributions, check out the <a class="reference external" href="https://num.pyro.ai/en/stable/distributions.html#discrete-distributions">this part of the documentation</a>. So why use <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> instead of implementing the distributions on our own? It’s easy to write subtle bugs that are hard to catch when implementing mathematical formulas in code. Also, using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>’s distributions will help us highlight the overall <em>logic</em> of the code, instead of getting bogged down by the mathematical details.</p>
-<p>Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> have several notable properties and methods we will rely on. Let’s explore them together. First, we import the necessary components of <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>:</p>
+<p>Let’s start by importing some helpful libraries:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
@@ -527,98 +525,6 @@ p_{A, B, C, D, E}(a, b, c, d, e) &amp;= p_{C | A, B, D}(c | a, b, d) \cdot p_{A 
 </div>
 </div>
 </div>
-<p>Now, let’s instantiate the simplest discrete distribution we know: the Bernoulli distribution.</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-p_X(x) &amp;= \mathrm{Bern}(\rho) = \rho^x \cdot (1 - \rho)^{1 - x}
-\end{align*}\]</div>
-<p>Recall that a Bernoulli distribution takes in just one parameter, <span class="math notranslate nohighlight">\(\rho \in [0, 1]\)</span>, which determines the probability of sampling <span class="math notranslate nohighlight">\(X = 1\)</span> vs. <span class="math notranslate nohighlight">\(X = 0\)</span>. Here let’s instantiate the Bernoulli distribution with <span class="math notranslate nohighlight">\(\rho = 0.7\)</span>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rho</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.7</span><span class="p">)</span>
-<span class="n">p_X</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>That’s it!</p>
-<p><strong>Evaluating the PMF of <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> Distributions.</strong> Now, if we want to evaluate the PMF, we can use <code class="docutils literal notranslate"><span class="pre">log_prob</span></code> method as follows (note that this returns the <em>log</em> of the PMF, so we’ll have to exponentiate the result):</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log_p_x_eq_1</span> <span class="o">=</span> <span class="n">p_X</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Probability of sampling a 1:&#39;</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_p_x_eq_1</span><span class="p">))</span>
-
-<span class="n">log_p_x_eq_0</span> <span class="o">=</span> <span class="n">p_X</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Probability of sampling a 0:&#39;</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_p_x_eq_0</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Probability of sampling a 1: 0.7
-Probability of sampling a 0: 0.3
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Sampling from <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> Distributions.</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> distributions all have a <code class="docutils literal notranslate"><span class="pre">sample</span></code> method which can be used to draw samples. It takes in two arguments:</p>
-<ol class="arabic simple">
-<li><p>A random-generator “key,” which controls the randomness of the sample.</p></li>
-<li><p>A shape, describing the number of i.i.d samples you want to draw.</p></li>
-</ol>
-<p>Let’s give it a go:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,)</span> <span class="c1"># Shape of i.i.d samples we wish to draw </span>
-
-<span class="n">key1</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Create a random-generator key</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;First batch drawn with key1: &#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key1</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Second batch drawn with key1:&#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key1</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
-
-<span class="n">key2</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Create a random-generator key</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Third batch drawn with key2: &#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key2</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First batch drawn with key1:  [1 0 1 0 1 1 0 1 1 1 0 0 1 1 1]
-Second batch drawn with key1: [1 0 1 0 1 1 0 1 1 1 0 0 1 1 1]
-Third batch drawn with key2:  [1 1 1 0 1 1 1 1 1 1 1 1 0 1 1]
-</pre></div>
-</div>
-</div>
-</div>
-<p>Notice in the above code, when using the same key twice (or the same <code class="docutils literal notranslate"><span class="pre">seed</span></code>), we get the <em>exact same batch of samples</em>. This is both a blessing and a curse. It’s a blessing because this allows us to precisely control the randomness of our ML code. This will prove crucial for debugging later on. However, it can also be a curse if we accidentally use the same key in a place where we need two different sources of randomness.</p>
-<p><strong>Best Practice: How to Manage Your Keys.</strong> We will follow to rules of thumb:</p>
-<ol class="arabic simple">
-<li><p>Make only ONE CALL to <code class="docutils literal notranslate"><span class="pre">jrandom.PRNGKey</span></code> in your entire code.</p></li>
-<li><p>Never use the same key twice.</p></li>
-</ol>
-<p>But if we’re restricting ourselves to only creating one key with <code class="docutils literal notranslate"><span class="pre">jrandom.PRNGKey</span></code>, how can we possibly call <code class="docutils literal notranslate"><span class="pre">sample</span></code> multiple times with different keys? <code class="docutils literal notranslate"><span class="pre">Jax</span></code> allows us to take a random key and split it into multiple different keys, each of which can be used for different purposes. This means we can create ONE KEY to control the randomness of our entire code. We can then split this key into multiple keys as needed. Here’s how we can do this:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create ONE KEY to be used by your ENTIRE CODE</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># Whenever you need to use the key for multiple purposes, split it into parts:</span>
-<span class="n">key_first</span><span class="p">,</span> <span class="n">key_second</span><span class="p">,</span> <span class="n">key_third</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> 
-
-<span class="c1"># Use a different key for each need</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;First batch drawn with key_first:  &#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_first</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Second batch drawn with key_second:&#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_second</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Third batch drawn with key_third:  &#39;</span><span class="p">,</span> <span class="n">p_X</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_third</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First batch drawn with key_first:   [1 1 1 1 1 1 1 1 0 1 1 0 1 1 1]
-Second batch drawn with key_second: [1 1 0 0 1 1 0 1 1 1 0 1 1 0 1]
-Third batch drawn with key_third:   [0 0 1 1 1 1 1 1 1 0 1 1 1 0 0]
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Sampling from Conditional Distributions:</strong></p>
-<p>TODO</p>
 <p><strong>Sampling from Joint Distributions:</strong></p>
 <p>TODO</p>
 <div class="admonition-exercise admonition">
@@ -629,11 +535,11 @@ Third batch drawn with key_third:   [0 0 1 1 1 1 1 1 1 0 1 1 1 0 0]
 <a class="reference internal image-reference" href="../_images/joint-probability-ihh-er-dgm.png"><img alt="../_images/joint-probability-ihh-er-dgm.png" class="align-center" src="../_images/joint-probability-ihh-er-dgm.png" style="width: 500px;" /></a>
 <p>Notice the conditional distributions in this DGM are ones you’ve previously learned (by hand)!</p>
 <p><strong>Problem:</strong> Use what you already know about the marginal and conditional distributions of the IHH ER data, in tandem with what you learned here about joint distributions to implement this generative model. Implement your model as a function that takes in a <code class="docutils literal notranslate"><span class="pre">key</span></code> and outputs a Python dictionary with a single sample from the joint distribution <span class="math notranslate nohighlight">\(p_{D, C, H, M, A}(\cdot)\)</span>. That is, the dictionary has keys <span class="math notranslate nohighlight">\(D\)</span>, <span class="math notranslate nohighlight">\(C\)</span>, <span class="math notranslate nohighlight">\(H\)</span>, <span class="math notranslate nohighlight">\(M\)</span>, and <span class="math notranslate nohighlight">\(A\)</span>, with values corresponding to the sample.</p>
-<p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> discrete distributions only work with integers, not strings. For example, instead of using <span class="math notranslate nohighlight">\(d = \text{Monday}\)</span>, you should convert the days of the week into integers from 0 to 7 (Monday to Sunday), and instead use <span class="math notranslate nohighlight">\(d = 0\)</span>. We provide some code below to help you do this.</p>
+<p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> discrete distributions only work with integers, not strings. For example, instead of using <span class="math notranslate nohighlight">\(d = \text{Monday}\)</span>, you should convert the days of the week into integers from 0 to 6 (Monday to Sunday), and instead use <span class="math notranslate nohighlight">\(d = 0\)</span>. We provide some code below to help you do this.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A list mapping numbers 0 through 7 to days of the week</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A list mapping numbers 0 through 6 to days of the week</span>
 <span class="c1"># You may need to implement a mapping (e.g. using a dictionary) for the opposite way</span>
 <span class="n">IDX_TO_DAY_OF_WEEK</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;Monday&#39;</span><span class="p">,</span>
