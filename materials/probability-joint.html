@@ -511,6 +511,33 @@ p_{A, B, C, D, E}(a, b, c, d, e) &amp;= p_{C | A, B, D}(c | a, b, d) \cdot p_{A 
 \end{align*}\]</div>
 </div>
 <p>TODO write your answer here</p>
+<p><strong>Sampling from Joint Distributions:</strong> Sampling from a joint distribution can be done by sampling from each component in their factorization. Let’s illustrate this with some examples.</p>
+<blockquote>
+<div><p><em>Example 1:</em> Consider the distribution,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{A, B, C}(a, b, c) &amp;= p_{B | A}(b | a) \cdot p_A(a) \cdot p_C(c)
+\end{align*}\]</div>
+<p>To sample from it, we:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(c \sim p_C(\cdot)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(a \sim p_A(\cdot)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(b | a \sim p_{B | A}(\cdot | a)\)</span> (wherein <span class="math notranslate nohighlight">\(a\)</span> was sampled in the previous step)</p></li>
+</ol>
+<p>Notice that here, steps (1) and (2) are interchangeable, since they don’t depend on one another; i.e. it doesn’t matter if we sample <span class="math notranslate nohighlight">\(a\)</span> first or <span class="math notranslate nohighlight">\(c\)</span> first. In contrast, step (3) <em>had</em> to happen after step (2), because depends on the value of <span class="math notranslate nohighlight">\(a\)</span> sampled.</p>
+<p><em>Example 2:</em> Consider the distribution,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{A, B, C}(a, b, c) &amp;= p_{B | A, C}(b | a, c) \cdot p_{A | C}(a | c) \cdot p_C(c)
+\end{align*}\]</div>
+<p>To sample from it, we:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(c \sim p_C(\cdot)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(a | c \sim p_{A | C}(\cdot | c)\)</span> (wherein <span class="math notranslate nohighlight">\(c\)</span> was sampled in the previous step)</p></li>
+<li><p><span class="math notranslate nohighlight">\(b | a, c \sim p_{B | A, C}(\cdot | a, c)\)</span> (wherein <span class="math notranslate nohighlight">\(a, c\)</span> were sampled in the previous steps)</p></li>
+</ol>
+<p>Notice again that step (2) depends on <span class="math notranslate nohighlight">\(c\)</span>, which was sampled in step (1), and that step (3) depends on both <span class="math notranslate nohighlight">\(c\)</span> <em>and</em> <span class="math notranslate nohighlight">\(a\)</span>, sampled in step (2). Thus, the order of the sampling does matter!</p>
+</div></blockquote>
 </section>
 <section id="translating-dgms-into-code-with-numpyro">
 <h2><span class="section-number">6.3. </span>Translating DGMs into Code with <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#translating-dgms-into-code-with-numpyro" title="Permalink to this heading">#</a></h2>
@@ -525,8 +552,6 @@ p_{A, B, C, D, E}(a, b, c, d, e) &amp;= p_{C | A, B, D}(c | a, b, d) \cdot p_{A 
 </div>
 </div>
 </div>
-<p><strong>Sampling from Joint Distributions:</strong></p>
-<p>TODO</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p><strong>Context:</strong> Your friend is an ML researcher at a nearby university. She heard all about the interesting data you have from the IHH ER and wants to help with the analysis. However, because this is sensitive medical data, she needs to obtain the right credentials, undergo a lengthy training on secure data management, and more, before obtaining access to the data. Realistically, this means she’ll only be able to gain access to the IHH ER data in several months.</p>
@@ -534,7 +559,8 @@ p_{A, B, C, D, E}(a, b, c, d, e) &amp;= p_{C | A, B, D}(c | a, b, d) \cdot p_{A 
 <p><strong>Domain Expertise:</strong> You consulted with clinical collaborators at the IHH ER and together came up with the following DGM.</p>
 <a class="reference internal image-reference" href="../_images/joint-probability-ihh-er-dgm.png"><img alt="../_images/joint-probability-ihh-er-dgm.png" class="align-center" src="../_images/joint-probability-ihh-er-dgm.png" style="width: 500px;" /></a>
 <p>Notice the conditional distributions in this DGM are ones you’ve previously learned (by hand)!</p>
-<p><strong>Problem:</strong> Use what you already know about the marginal and conditional distributions of the IHH ER data, in tandem with what you learned here about joint distributions to implement this generative model. Implement your model as a function that takes in a <code class="docutils literal notranslate"><span class="pre">key</span></code> and outputs a Python dictionary with a single sample from the joint distribution <span class="math notranslate nohighlight">\(p_{D, C, H, M, A}(\cdot)\)</span>. That is, the dictionary has keys <span class="math notranslate nohighlight">\(D\)</span>, <span class="math notranslate nohighlight">\(C\)</span>, <span class="math notranslate nohighlight">\(H\)</span>, <span class="math notranslate nohighlight">\(M\)</span>, and <span class="math notranslate nohighlight">\(A\)</span>, with values corresponding to the sample.</p>
+<p><strong>Part 1:</strong> Use what you already know about the marginal and conditional distributions of the IHH ER data, in tandem with what you learned here about joint distributions to implement this generative model. Implement your model as a function that takes in a <code class="docutils literal notranslate"><span class="pre">key</span></code> and outputs a Python dictionary with a single sample from the joint distribution <span class="math notranslate nohighlight">\(p_{D, C, H, M, A}(\cdot)\)</span>. That is, the dictionary has keys <span class="math notranslate nohighlight">\(D\)</span>, <span class="math notranslate nohighlight">\(C\)</span>, <span class="math notranslate nohighlight">\(H\)</span>, <span class="math notranslate nohighlight">\(M\)</span>, and <span class="math notranslate nohighlight">\(A\)</span>, with values corresponding to the sample.</p>
+<p><strong>Part 2:</strong> Implement a second function that, given <span class="math notranslate nohighlight">\(D = d\)</span>, <span class="math notranslate nohighlight">\(C = c\)</span>, <span class="math notranslate nohighlight">\(H = h\)</span>, <span class="math notranslate nohighlight">\(M =m\)</span>, and <span class="math notranslate nohighlight">\(A = a\)</span>, computes the log probability of the joint, <span class="math notranslate nohighlight">\(\log p_{D, C, H, M, A}(d, c, h, m, a)\)</span>. <em>Hint: <span class="math notranslate nohighlight">\(\log (X \cdot Y) = \log X + \log Y\)</span></em>.</p>
 <p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> discrete distributions only work with integers, not strings. For example, instead of using <span class="math notranslate nohighlight">\(d = \text{Monday}\)</span>, you should convert the days of the week into integers from 0 to 6 (Monday to Sunday), and instead use <span class="math notranslate nohighlight">\(d = 0\)</span>. We provide some code below to help you do this.</p>
 </div>
 <div class="cell docutils container">
@@ -573,7 +599,15 @@ p_{A, B, C, D, E}(a, b, c, d, e) &amp;= p_{C | A, B, D}(c | a, b, d) \cdot p_{A 
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sample_IHH_ER_generative_model</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">IHH_ER_generative_model_sample</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    <span class="k">pass</span> <span class="c1"># TODO implement</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">IHH_ER_generative_model_log_prob</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
