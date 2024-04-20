@@ -689,7 +689,7 @@ document.write(`
 <div><p>In our example, the PMF is that of a Bernoulli random variable (since <span class="math notranslate nohighlight">\(I\)</span> can only take on two values). Since it’s a <em>conditional</em> distribution, it’s parameter depends on the condition (the day <span class="math notranslate nohighlight">\(D = d\)</span>). We can write this as follows:</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-p_{I | D}(i | d) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - i}}_{\text{Bernoulli PMF (see Wikipedia)}},
+p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - i}}_{\text{Bernoulli PMF (see Wikipedia)}},
 \end{align*}\]</div>
 <p>where</p>
 <div class="amsmath math notranslate nohighlight">
@@ -870,15 +870,11 @@ Third batch drawn with key_third:   [0 0 0 1 0 1 0 1 0 0 1 0 0 0 0]
 </div>
 </div>
 </div>
-<p>In the above, <code class="docutils literal notranslate"><span class="pre">p_I_given_Monday</span></code> and <code class="docutils literal notranslate"><span class="pre">p_I_given_Saturday</span></code> are just <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> distributions, so you can use their <code class="docutils literal notranslate"><span class="pre">log_prob</span></code> and <code class="docutils literal notranslate"><span class="pre">sample</span></code> function just like before.</p>
-<p>We can also use the above code to create a vectorized distribution. By this, we mean that we can compute <span class="math notranslate nohighlight">\(p_{I | D}(i | d)\)</span> for many choices of <span class="math notranslate nohighlight">\(d\)</span> in one go. We can do this by simply passing in a <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array as the argument:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">days</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
-<span class="n">p_I_given_days</span> <span class="o">=</span> <span class="n">p_intoxication_given_day</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
+<p>In the above, <code class="docutils literal notranslate"><span class="pre">p_I_given_Monday</span></code> and <code class="docutils literal notranslate"><span class="pre">p_I_given_Saturday</span></code> are just <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> Bernoulli distributions, so you can use their <code class="docutils literal notranslate"><span class="pre">log_prob</span></code> and <code class="docutils literal notranslate"><span class="pre">sample</span></code> functions just like before.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p><strong>Part 1:</strong> Implement each one of the conditional distributions from the previous exercise in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, following the example of <code class="docutils literal notranslate"><span class="pre">p_intoxication_given_day</span></code> above.</p>
+<p><strong>Part 2:</strong> Verify that your implementation is correct by sampling from each conditional distribution and eye-balling that the samples look correct. Be sure to follow the rules of thumb above when using a random generator key.</p>
 </div>
 </section>
 </section>
