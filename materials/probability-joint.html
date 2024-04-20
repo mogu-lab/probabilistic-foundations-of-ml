@@ -561,40 +561,13 @@ p_{A, B, C}(a, b, c) &amp;= p_{B | A, C}(b | a, c) \cdot p_{A | C}(a | c) \cdot 
 <p>Notice the conditional distributions in this DGM are ones you’ve previously learned (by hand)!</p>
 <p><strong>Part 1:</strong> Use what you already know about the marginal and conditional distributions of the IHH ER data, in tandem with what you learned here about joint distributions to implement this generative model. Implement your model as a function that takes in a <code class="docutils literal notranslate"><span class="pre">key</span></code> and outputs a Python dictionary with a single sample from the joint distribution <span class="math notranslate nohighlight">\(p_{D, C, H, M, A}(\cdot)\)</span>. That is, the dictionary has keys <span class="math notranslate nohighlight">\(D\)</span>, <span class="math notranslate nohighlight">\(C\)</span>, <span class="math notranslate nohighlight">\(H\)</span>, <span class="math notranslate nohighlight">\(M\)</span>, and <span class="math notranslate nohighlight">\(A\)</span>, with values corresponding to the sample.</p>
 <p><strong>Part 2:</strong> Implement a second function that, given <span class="math notranslate nohighlight">\(D = d\)</span>, <span class="math notranslate nohighlight">\(C = c\)</span>, <span class="math notranslate nohighlight">\(H = h\)</span>, <span class="math notranslate nohighlight">\(M =m\)</span>, and <span class="math notranslate nohighlight">\(A = a\)</span>, computes the log probability of the joint, <span class="math notranslate nohighlight">\(\log p_{D, C, H, M, A}(d, c, h, m, a)\)</span>. <em>Hint: <span class="math notranslate nohighlight">\(\log (X \cdot Y) = \log X + \log Y\)</span></em>.</p>
-<p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> discrete distributions only work with integers, not strings. For example, instead of using <span class="math notranslate nohighlight">\(d = \text{Monday}\)</span>, you should convert the days of the week into integers from 0 to 6 (Monday to Sunday), and instead use <span class="math notranslate nohighlight">\(d = 0\)</span>. We provide some code below to help you do this.</p>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A list mapping numbers 0 through 6 to days of the week</span>
-<span class="c1"># You may need to implement a mapping (e.g. using a dictionary) for the opposite way</span>
-<span class="n">IDX_TO_DAY_OF_WEEK</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;Monday&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Tuesday&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Wednesday&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Thursday&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Friday&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Sunday&#39;</span><span class="p">,</span>
-<span class="p">]</span>
-
-<span class="c1"># A list mapping numbers 0 through 4 to conditions</span>
-<span class="c1"># You may need to implement a mapping (e.g. using a dictionary) for the opposite way</span>
-<span class="n">IDX_TO_CONDITION</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;High Fever&#39;</span><span class="p">,</span>    
-    <span class="s1">&#39;Broken Limb&#39;</span><span class="p">,</span>    
-    <span class="s1">&#39;Entangled Antennas&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Allergic Reaction&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Intoxication&#39;</span><span class="p">,</span>
-<span class="p">]</span>
-
-<span class="c1"># A list mapping numbers 0 and 1 to Yes and No</span>
-<span class="c1"># You may need to implement a mapping (e.g. using a dictionary) for the opposite way</span>
-<span class="n">IDX_TO_BOOL</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;No&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;Yes&#39;</span><span class="p">,</span>
-<span class="p">]</span>
+<p><strong>Note:</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> discrete distributions only work with integers, not strings. For example, instead of using <span class="math notranslate nohighlight">\(d = \text{Monday}\)</span>, you should convert the days of the week into integers from 0 to 6 (Monday to Sunday), and instead use <span class="math notranslate nohighlight">\(d = 0\)</span> for “Monday”. Please use the following conversion for the conditions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;High Fever&#39;</span>    
+<span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Broken Limb&#39;</span>    
+<span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Entangled Antennas&#39;</span>
+<span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;Allergic Reaction&#39;</span>
+<span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;Intoxication&#39;</span>
 </pre></div>
-</div>
 </div>
 </div>
 <div class="cell docutils container">
