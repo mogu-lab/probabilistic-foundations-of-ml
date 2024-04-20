@@ -789,7 +789,7 @@ Probability of sampling a 0: 0.8
 </div>
 <p><strong>Sampling from <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> Distributions.</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> distributions all have a <code class="docutils literal notranslate"><span class="pre">sample</span></code> method which can be used to draw samples. It takes in two arguments:</p>
 <ol class="arabic simple">
-<li><p>A random-generator “key,” which controls the randomness of the sample.</p></li>
+<li><p>A random number generator “key,” which controls the randomness of the sample.</p></li>
 <li><p>A shape, describing the number of i.i.d samples you want to draw.</p></li>
 </ol>
 <p>Let’s give it a go:</p>
@@ -797,11 +797,11 @@ Probability of sampling a 0: 0.8
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,)</span> <span class="c1"># Shape of i.i.d samples we wish to draw </span>
 
-<span class="n">key1</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Create a random-generator key</span>
+<span class="n">key1</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Create a random number generator key</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;First batch drawn with key1: &#39;</span><span class="p">,</span> <span class="n">p_I</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key1</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Second batch drawn with key1:&#39;</span><span class="p">,</span> <span class="n">p_I</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key1</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
 
-<span class="n">key2</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Create a random-generator key</span>
+<span class="n">key2</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Create a random number generator key</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Third batch drawn with key2: &#39;</span><span class="p">,</span> <span class="n">p_I</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key2</span><span class="p">,</span> <span class="n">shape</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -815,7 +815,7 @@ Third batch drawn with key2:  [0 1 0 0 0 0 1 1 1 1 0 1 0 1 1]
 </div>
 </div>
 <p>Notice in the above code, when using the same key twice (or the same <code class="docutils literal notranslate"><span class="pre">seed</span></code>), we get the <em>exact same batch of samples</em>. This is both a blessing and a curse. It’s a blessing because this allows us to precisely control the randomness of our ML code. This will prove crucial for debugging later on. However, it can also be a curse if we accidentally use the same key in a place where we need two different sources of randomness.</p>
-<p><strong>Best Practice: How to Manage Your Keys.</strong> We will follow to rules of thumb:</p>
+<p><strong>Best Practice: How to Manage Your Keys.</strong> We will follow two rules of thumb:</p>
 <ol class="arabic simple">
 <li><p>Make only ONE CALL to <code class="docutils literal notranslate"><span class="pre">jrandom.PRNGKey</span></code> in your entire code.</p></li>
 <li><p>Never use the same key twice.</p></li>
@@ -874,7 +874,7 @@ Third batch drawn with key_third:   [0 0 0 1 0 1 0 1 0 0 1 0 0 0 0]
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
 <p><strong>Part 1:</strong> Implement each one of the conditional distributions from the previous exercise in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, following the example of <code class="docutils literal notranslate"><span class="pre">p_intoxication_given_day</span></code> above.</p>
-<p><strong>Part 2:</strong> Verify that your implementation is correct by sampling from each conditional distribution and eye-balling that the samples look correct. Be sure to follow the rules of thumb above when using a random generator key.</p>
+<p><strong>Part 2:</strong> Verify that your implementation is correct by sampling from each conditional distribution and eye-balling that the samples look correct. Be sure to follow the best practices above when using a random number generator key.</p>
 </div>
 </section>
 </section>
