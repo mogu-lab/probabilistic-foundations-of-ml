@@ -26,7 +26,7 @@ TODO
 TODO
 
 
-## Course Materials
+## Modules
 
 
 ```{tableofcontents}
