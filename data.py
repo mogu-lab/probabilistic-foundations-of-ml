@@ -156,7 +156,7 @@ def main():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv('IHH-ER.csv')
+    df.to_csv('data/IHH-ER.csv')
 
         
 if __name__ == '__main__':

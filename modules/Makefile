@@ -1,3 +1,0 @@
-data:
-	python data.py
-
