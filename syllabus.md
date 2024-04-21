@@ -8,7 +8,9 @@
 ## About the Course Staff
 
 
-We're here because we care. We are dedicating ourselves to this course because we care about its mission and about your experience. So what does that mean? It means that...
+We're here because we care. So what does that mean? It means that...
+
+**We want you to find meaning in the course, and we want you succeed.** TODO.
 
 **We want you to come to our office hours.** We want to get to know you all, both in the context of the class and as individuals – we want to know what research you're working on, what you do for fun, what you're finding most challenging in the program, what you find most rewarding, etc. This is one aspect of the course we enjoy most.
 
