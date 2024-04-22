@@ -2,6 +2,7 @@
 
 
 ```{contents}
+:local:
 ```
 
 
