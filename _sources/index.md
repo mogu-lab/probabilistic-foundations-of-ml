@@ -108,7 +108,7 @@ This course is currently under construction!
 
 ## Ready to take CS 349?
 
-CS 349 is a new course, so fasten your seatbelt---it's gonna be a bumpy ride!
+Fasten your seatbelts---**it's going to be an adventure!**
 
 ![banner](img/banner.png)
 
