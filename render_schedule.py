@@ -12,7 +12,7 @@ def main():
 
     with doc.add(tags.tbody()):
         with tags.thead():
-            header = tags.tr(cls='col_headers dark_row')
+            header = tags.tr(cls='col_headers')
             for day in DISPLAY_DAYS:
                 header += tags.th(day, scope='col')
 
@@ -20,18 +20,23 @@ def main():
         cur_month = ''
         for event in events:
             if event['day-of-week'] == DISPLAY_DAYS[0]:
-                row = tags.tr(cls='light_row')
+                row = tags.tr(cls='col_headers')
 
             special = event.get('special', None)
             pre_class = event.get('pre-class', None)
             topic = event.get('topic', None)
             due = event.get('due', None)
             released = event.get('released', None)
+            class_over = event.get('class-meetings-over', None)
 
-            td_tags = 'normalday' if special is None else 'holiday'
+            td_tags = 'light_row '
+            td_tags += 'normalday' if special is None else 'holiday'
             if event['month'] != cur_month:
                 cur_month = event['month']
                 td_tags += ' new_month'
+
+            if class_over:
+                td_tags += ' readingperiod'
                 
             with row.add(tags.td(cls=td_tags)):                    
                 tags.span(event['day'], cls='date_label date_label_day')   
