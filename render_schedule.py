@@ -11,7 +11,7 @@ def main():
     doc =tags.table(cls='table course_calendar')
 
     with doc.add(tags.tbody()):
-        with tags.thead(cls='col_headers dark_row'):
+        with tags.thead(cls='col_headers'):
             header = tags.tr()
             for day in DISPLAY_DAYS:
                 header += tags.th(day, scope='col')
@@ -28,14 +28,14 @@ def main():
             due = event.get('due', None)
             released = event.get('released', None)
 
-            with row.add(tags.td(cls='normalday' if special is None else 'holiday')):
-                added_month_cls = ''
-                if event['month'] != cur_month:
-                    cur_month = event['month']
-                    added_month_cls = ' new_month'
-                    
+            td_tags = 'normalday' if special is None else 'holiday'
+            if event['month'] != cur_month:
+                cur_month = event['month']
+                td_tags += ' new_month'
+                
+            with row.add(tags.td(cls=td_tags)):                    
                 tags.span(event['day'], cls='date_label_day')              
-                tags.span(event['month'], cls='date_label_month' + added_month_cls)
+                tags.span(event['month'], cls='date_label_month')
 
                 with tags.ul(cls='day_agenda'):
                     if special is not None:
