@@ -1,7 +1,7 @@
 # Probabilistic Foundations of ML
 
 ```{warning}
-This course is currently under construction!
+This course is currently under construction. Everything you see here is likely to change!
 ```
 
 **Instructor:** [Yaniv Yacoby](https://yanivyacoby.github.io/) (he/him)
