@@ -108,7 +108,7 @@ This course is currently under construction. Everything you see here is likely t
 
 ## Ready to take CS 349?
 
-Fasten your seatbelts---**it's going to be an adventure!**
+Fasten your seatbelts---*it's going to be an adventure!*
 
 ![banner](img/banner.png)
 
