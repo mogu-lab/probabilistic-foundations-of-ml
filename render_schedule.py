@@ -11,8 +11,8 @@ def main():
     doc =tags.table(cls='table course_calendar')
 
     with doc.add(tags.tbody()):
-        with tags.thead(cls='col_headers'):
-            header = tags.tr()
+        with tags.thead():
+            header = tags.tr(cls='col_headers dark_row')
             for day in DISPLAY_DAYS:
                 header += tags.th(day, scope='col')
 
