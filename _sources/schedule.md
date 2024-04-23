@@ -1,5 +1,6 @@
 # Schedule
 
+
 <table class="table course_calendar">
   <tbody>
     <thead>
@@ -30,7 +31,10 @@
         <span class="date_label date_label_day">04</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
-          <li>Pre-class work: TBD</li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span> TBD</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span> What is Probabilistic ML?</span>
@@ -496,3 +500,9 @@
     </tr>
   </tbody>
 </table>
+
+<br/>
+
+**Acknowledgements:** Schedule design and CSS based on [Fall 2018's CS240's schedule](https://cs.wellesley.edu/~cs240/f18/).
+
+
