@@ -2,6 +2,7 @@ import datetime
 
 
 DISPLAY_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+CLASS_DAYS = ['Monday', 'Wednesday', 'Thursday']
 
 
 SPECIAL_DATES = [
@@ -98,11 +99,45 @@ def generate_csv_calendar():
             
         current = current + datetime.timedelta(days=1)
 
-    
+
+def generate_yml_calendar():
+    course_start = datetime.datetime(2024, 9, 2)
+    course_end = datetime.datetime(2024, 12, 17)
+
+    start = course_start - datetime.timedelta(days=course_start.weekday())
+    end = course_end + datetime.timedelta(days=6 - course_end.weekday())
+
+    print('events:')
+
+    current = start
+    while current <= end:
+        day = current.strftime('%A')
+
+        if day in DISPLAY_DAYS:        
+            print('  - month: "{}"'.format(current.strftime('%B')))
+            print('    day: "{}"'.format(current.strftime('%d')))
+            print('    day-of-week: "{}"'.format(day))
+
+            desc = is_date_special(current)
+            if desc is not None:
+                print('    special: "{}"'.format(desc))
+
+            if day in CLASS_DAYS:
+                print('    topic:')
+
+            print('    due:')
+            print('    released:')
+            print('    pre-class:')
+            print('')
+
+        current = current + datetime.timedelta(days=1)
+
+
 
 def main():    
     #generate_md_calendar()
-    generate_csv_calendar()
+    #generate_csv_calendar()
+    generate_yml_calendar()
 
     
 if __name__ == '__main__':
