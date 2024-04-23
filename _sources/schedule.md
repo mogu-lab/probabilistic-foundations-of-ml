@@ -2,8 +2,8 @@
 
 <table class="table course_calendar">
   <tbody>
-    <thead class="col_headers">
-      <tr>
+    <thead>
+      <tr class="col_headers dark_row">
         <th scope="col">Monday</th>
         <th scope="col">Tuesday</th>
         <th scope="col">Wednesday</th>
