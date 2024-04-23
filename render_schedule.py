@@ -42,7 +42,9 @@ def main():
                         tags.li(tags.span(special, cls='day_note'))
 
                     if pre_class is not None:
-                        tags.li('Pre-class work: {}'.format(pre_class))
+                        with tags.li():
+                            tags.span('Pre-Class:', cls='tag preclass_tag')
+                            tags.span(' ' + pre_class)
                         
                     if topic is not None:
                         with tags.li():
@@ -60,9 +62,13 @@ def main():
                             tags.span(' ' + released)
                     
                     
-    print('# Schedule')
-    print('')
+    with open('schedule_pre.md', 'r') as f:
+        print(f.read())
+        
     print(doc)
+
+    with open('schedule_post.md', 'r') as f:
+        print(f.read())
     
 
 if __name__ == '__main__':
