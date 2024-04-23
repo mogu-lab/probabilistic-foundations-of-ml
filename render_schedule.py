@@ -20,7 +20,7 @@ def main():
         cur_month = ''
         for event in events:
             if event['day-of-week'] == DISPLAY_DAYS[0]:
-                row = tags.tr(cls='col_headers')
+                row = tags.tr(cls='col_headers light_row')
 
             special = event.get('special', None)
             pre_class = event.get('pre-class', None)
@@ -29,8 +29,7 @@ def main():
             released = event.get('released', None)
             class_over = event.get('class-meetings-over', None)
 
-            td_tags = 'light_row '
-            td_tags += 'normalday' if special is None else 'holiday'
+            td_tags = 'normalday' if special is None else 'holiday'
             if event['month'] != cur_month:
                 cur_month = event['month']
                 td_tags += ' new_month'
