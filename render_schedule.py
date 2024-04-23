@@ -34,8 +34,8 @@ def main():
                 td_tags += ' new_month'
                 
             with row.add(tags.td(cls=td_tags)):                    
-                tags.span(event['day'], cls='date_label_day')              
-                tags.span(event['month'], cls='date_label_month')
+                tags.span(event['day'], cls='date_label date_label_day')   
+                tags.span(event['month'], cls='date_label date_label_month')
 
                 with tags.ul(cls='day_agenda'):
                     if special is not None:
@@ -45,13 +45,19 @@ def main():
                         tags.li('Pre-class work: {}'.format(pre_class))
                         
                     if topic is not None:
-                        tags.li('Topic: {}'.format(topic))
+                        with tags.li():
+                            tags.span('Topic:', cls='tag topic_tag')
+                            tags.span(' ' + topic)
 
                     if due is not None:
-                        tags.li('Due: {}'.format(due))
+                        with tags.li():
+                            tags.span('Due:', cls='tag due_tag')
+                            tags.span(' ' + due)
                         
                     if released is not None:
-                        tags.li('Released: {}'.format(released))
+                        with tags.li():
+                            tags.span('Released:', cls='tag released_tag')
+                            tags.span(' ' + released)
                     
                     
     print('# Schedule')
