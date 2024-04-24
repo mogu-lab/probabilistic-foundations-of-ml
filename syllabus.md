@@ -8,7 +8,6 @@
 
 ## About the Course Staff
 
-
 We're here because we care. So what does that mean? It means that...
 
 **We want you to find meaning in the course, and we want you succeed.** TODO.
@@ -25,47 +24,67 @@ We're here because we care. So what does that mean? It means that...
 
 ## How to Succeed in CS 349?
 
+TODO
 
 
 ## Classroom Environment
 
-
-**Diversity, Equity, and Inclusion (DEI):** It is the mission of the teaching staff that students from all diverse backgrounds and perspectives be well served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that students bring to this class be viewed as a resource, strength and benefit. We aim to create a learning environment that is inclusive and respectful of diversity: gender, sexuality, disability, age, socioeconomic status, ethnicity, race, and culture. Your suggestions for how to better our classroom community are always encouraged and appreciated.
+**Diversity, Equity, and Inclusion (DEI):** It is the mission of the teaching staff that students from all diverse backgrounds and perspectives be well served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that students bring to this class be viewed as a resource, strength, and benefit. We aim to create a learning environment that is inclusive and respectful of diversity: gender, sexuality, disability, age, socioeconomic status, ethnicity, race, and culture. Your suggestions for how to better our classroom community are always encouraged and appreciated.
 
 Since a large part of this course requires students to work in groups, in alignment with our teaching mission, we ask that students explicitly reflect on and implement practices for building teams that are diverse along many axes. The teaching staff is happy to help you brainstorm how to create an inclusive and productive working culture for your team.
 
 
-**Mental Health:**
+**Mental Health:** TODO
 
 
 
 ## Logistics
 
+TODO
+
 
 
 ## Grades
+
+TODO
 
 
 
 ## Late Policy
 
+TODO
+
 
 
 ## Honor Code and Collaboration/Resource Policies
+
+TODO
 
 
 
 ## Accessibility and Disability
 
+Every student has a right to full access in this course. If you need any accommodations for CS 349, please contact Wellesley’s Disability Services. You should request accommodations as early as possible during the course, since some situations can require significant time for accommodation design. If you need immediate accommodations, please arrange an appointment with me as soon as possible. If you are unsure but suspect you may have an undocumented need for accommodations, you are encouraged to contact Disability Services. They can provide assistance including screening and referral for assessments. Disability Services can be reached at `disabilityservices@wellesley.edu`, at `781-283-2434`, or by [scheduling an appointment online](https://www.wellesley.edu/disability).
 
 
 ## Religious Observance
+
+Students whose religious observances conflict with scheduled course events should contact the instructors in advance to discuss alternative arrangements. You may do this through the [Wellesley College Religious Observance Notification System](https://webapps.wellesley.edu/religious_calendar/) if you prefer.
 
 
 
 ## Policies on Discrimination, Harassment, and Sexual Misconduct
 
+Wellesley College considers diversity essential to educational excellence, and we are committed to being a community in which each member thrives. The College does not allow discrimination or harassment based on race, color, sex, gender identity or expression, sexual orientation, ethnic or national origin or ancestry, physical or mental disability, pregnancy or any other protected status under applicable local, state or federal law.
+
+If you or someone you know has experienced discrimination or harassment, support is available to you:
+* **Confidential Reporting:** Students can report their experiences to [Health Services](https://www.wellesley.edu/healthservice) (`781-283-2810`); [Stone Center Counseling Service](https://www.wellesley.edu/counseling) (`781-283-2839`); or [Religious and Spiritual Life](https://www.wellesley.edu/campuslife/community/religiousandspirituallife) (`781-283-2685`). *These offices are not required to report allegations of sexual misconduct to the College.*
+* **Non-Confidential Reporting:** You can let either of your CS 349 instructors know. As faculty members, we are obligated to report allegations of sex-based discrimination to the [Non-discrimination/Title IX Office](https://www.wellesley.edu/administration/offices/titleix).
+  * You can report directly to the [Non-discrimination/Title IX Office](https://www.wellesley.edu/administration/offices/titleix) (`781-283-2451`) to receive support, and to learn more about your options for a response by the College or about reporting to a different institution.
+  * You can report to the [Wellesley College Police Department](https://www.wellesley.edu/police) (Emergency: `781-283-5555`, Non-emergency: `781-283-2121`) if you believe a crime has been committed, or if there is an immediate safety risk.
 
 
 ## Acknowledgements
+
+This page draws heavily on [CS 240's syllabus](https://cs.wellesley.edu/~cs240/s24/about/).
 
