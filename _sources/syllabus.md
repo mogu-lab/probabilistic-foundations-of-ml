@@ -6,11 +6,6 @@
 ```
 
 
-## Topics
-
-TODO
-
-
 ## Goals
 
 Our goal is that at the end of this course, you will be able to:
@@ -67,11 +62,6 @@ Since a large part of this course requires students to work in groups, in alignm
 
 **Mental Health:** TODO
 
-
-
-## Logistics
-
-TODO
 
 
 

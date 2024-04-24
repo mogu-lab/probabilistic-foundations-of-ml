@@ -12,6 +12,13 @@ This course is currently under construction. Everything you see here is likely t
 
 **Description:** In recent years, Artificial Intelligence has enabled applications that were previously not thought possible—from systems that propose novel drugs or generate new art/music, to systems that accurately and reliably predict outcomes of medical interventions in real-time. But what has enabled these developments? Probabilistic Machine Learning, a paradigm that casts recent advances in Machine Learning, like neural networks, into a statistical learning framework. In this course, we introduce the foundational concepts behind this paradigm—statistical model specification, and statistical learning and inference—focusing on connecting theory with real-world applications and hands-on practice. This course lays the foundation for advanced study and research in Machine Learning. Topics include: directed graphical models, deep Bayesian regression/classification, generative models (latent variable models) for clustering, dimensionality reduction, and time-series forecasting. Students will get hands-on experience building models for specific tasks, most taken from healthcare contexts, using a probabilistic programming language based in Python.
 
+**Meeting Times:**
+* Mondays, 9:55-11:10am 
+* Wednesdays, 9:30-10:20am
+* Thursdays, 9:55-11:10am
+
+**Location:** Gray Lot Modular M212 Computer Classroom
+
 
 <br/>
 
