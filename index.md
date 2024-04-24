@@ -34,21 +34,6 @@ This course is currently under construction. Everything you see here is likely t
 <br/>
 
 
-
-```{contents}
-:local:
-```
-
-
-
-## Goals
-
-
-
-## Topics
-
-
-
 ## Frequently Asked Questions
 
 
@@ -105,10 +90,4 @@ This course is currently under construction. Everything you see here is likely t
 > The current plan is: once a year! (though the course number and title might change as we figure out how it best fits into the broader Wellesley Computer Science and Data Science curriculums).
   
 
-
-## Ready to take CS 349?
-
-Fasten your seatbelts---*it's going to be an adventure!*
-
-![banner](img/banner.png)
 
