@@ -19,6 +19,8 @@ This course is currently under construction. Everything you see here is likely t
 
 **Location:** Gray Lot Modular M212 Computer Classroom
 
+**Prerequisites:** CS 230 and at least one of the following - MATH 205, MATH 206, MATH 225. Permission of the instructor is also required.
+
 
 <br/>
 
