@@ -19,7 +19,7 @@ Our goal is that at the end of this course, you will be able to:
 
 
 
-## What We Want You to Know About Us (the Course Staff)
+## What You Should Know About Us (the Course Staff)
 
 We're here because we care about your experiences as students and as individuals. So what does that mean? It means that...
 
@@ -32,14 +32,24 @@ We're here because we care about your experiences as students and as individuals
 **We have high expectations for you to be thoughtful and engaged.** We expect you to be thoughtful in your engagement with the course materials and in your interaction with your peers. Substantial amounts of research have shown that [Computer Science programs can create cultures of isolation and impostorism](https://courses.cs.washington.edu/courses/cse590e/02sp/defensive_20climate.pdf), in which students feel judged for common struggles many experience, instead of coming together to support one another. We ask you to be thoughtful in how you validate your peer's identities and create a safe and supportive space for everyone.
 
 
-**Acknowledgments.** This section of the syllabus is inspired by Evan Peck's [What I want you to know about me as your professor](https://medium.com/bucknell-hci/what-i-want-you-to-know-about-me-as-your-professor-58c9c2e91e33).
-
-
 
 
 ## How to Succeed in CS 349?
 
-TODO
+
+**Come to class and participate.** While thorough, the course materials is *not a substitute* for the classroom experience. We expect you to attend all classroom sessions, engage with the lecture components and with your peers in the in-class exercises. 
+
+
+**Attending office hours is an expected and normal part of the learning experience.**
+
+
+**Embrace confusion.**
+
+
+**Experiment and tinker.**
+
+
+
 
 
 **Ready to take CS 349?** Fasten your seatbelts---*it's going to be an adventure!*
@@ -109,5 +119,5 @@ If you or someone you know has experienced discrimination or harassment, support
 
 ## Acknowledgements
 
-This page draws heavily on [CS 240's syllabus](https://cs.wellesley.edu/~cs240/s24/about/).
+This syllabus draws on [CS 240's syllabus](https://cs.wellesley.edu/~cs240/s24/about/), and Evan Peck's [What I want you to know about me as your professor](https://medium.com/bucknell-hci/what-i-want-you-to-know-about-me-as-your-professor-58c9c2e91e33).
 
