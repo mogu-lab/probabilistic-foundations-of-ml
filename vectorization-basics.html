@@ -417,7 +417,7 @@ document.write(`
 </div>
 <p>This portion of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> introduces its main building block: multi-dimensional arrays. Unlike other similar libraries that offer similar array-based framework (e.g. <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>), <code class="docutils literal notranslate"><span class="pre">Jax</span></code> has some features that will make it possible for us to efficiently build and train ML models. Specifically, it will allow us to easily and accurately (no approximations!) compute gradients of functions written in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> calls, which will become useful for training models (though more on that at a much later part of the course).</p>
 <p><strong>Array operations: the building blocks behind ML code.</strong> You may be wondering, why do we need arrays for ML? This is because, as you will see throughout this course, all of the code we will write can be conveniently expressed in terms of array operations. <code class="docutils literal notranslate"><span class="pre">Jax</span></code> will make these fast for us so we can spend more time thinking and less time waiting for your code to run. It’s therefore important that we re-learn how to <em>think</em> and how to <em>write</em> algorithms in terms of array operations.</p>
-<p><strong>Vectorization: a paradigm shift.</strong> Vanilla Python code is slow, and for many practical purposes, that’s not a problem. For training ML models, however, it does become a problem. Unlike in previous classes you may have taken, where you were encouraged to write loops, if/else-expressions, and more, in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> we’ll take a different paradigm: we will avoid writing loops and if/else-expressions. By this, don’t mean that you completely let go of all your previous coding knowledge. It will come in handy when reading in data, creating visualizations, etc. But for the compute-heavy part of your code, we will rely on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls to do the work for us. This practice—of avoiding writing loops and if/else-expressions in the compute-heavy part of the code—is known as <em>vectorization</em>. Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is implemented to be very, very fast under the hood.</p>
+<p><strong>Vectorization: a paradigm shift.</strong> Vanilla Python code is slow, and for many practical purposes, that’s not a problem. For training ML models, however, it does become a problem. Unlike in previous classes you may have taken, where you were encouraged to write loops, if/else-expressions, and more, in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> we’ll take a different paradigm: we will avoid writing loops and if/else-expressions. By this, we don’t mean that you completely let go of all your previous coding knowledge. It will come in handy when reading in data, creating visualizations, etc. But for the compute-heavy part of your code, we will rely on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls to do the work for us. This practice—of avoiding writing loops and if/else-expressions in the compute-heavy part of the code—is known as <em>vectorization</em>. Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is implemented to be very, very fast under the hood.</p>
 <p><strong>Outline:</strong></p>
 <ol class="arabic simple">
 <li><p>We’ll introduce the basics of <code class="docutils literal notranslate"><span class="pre">Jax</span></code></p></li>
@@ -633,8 +633,9 @@ a_unsqueezed       = [[0 1 2]]
 a_unsqueezed.shape = (1, 3)
 b_unsqueezed       = [[3 4 5]]
 b_unsqueezed.shape = (1, 3)
-
-a_and_b =
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a_and_b =
 [[0 1 2]
  [3 4 5]]
 a_and_b.shape = (2, 3)
@@ -671,10 +672,10 @@ a - b       = [20. 29. 38. 47.]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b^2         = [0. 1. 4. 9.]
-10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a &lt; 35      = [ True  True False False]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
+a &lt; 35      = [ True  True False False]
 a * b       = [  0.  30.  80. 150.]
 </pre></div>
 </div>
@@ -723,7 +724,9 @@ a.max() = 4.0
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum(axis=0) = [12. 15. 18. 21.]
-a.min(axis=1) = [0. 1. 2. 3.]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min(axis=1) = [0. 1. 2. 3.]
 </pre></div>
 </div>
 </div>
@@ -787,7 +790,9 @@ Everything from the 5th index onwards    = [5 6 7 8 9]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything between the 2nd and 6th index = [2 3 4 5]
-Everything except the last element       = [0 1 2 3 4 5 6 7 8]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything except the last element       = [0 1 2 3 4 5 6 7 8]
 </pre></div>
 </div>
 </div>
@@ -826,9 +831,7 @@ Everything except the last element       = [0 1 2 3 4 5 6 7 8]
  [12 13 14]]
 
 Everything until the 3th index =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 2]
+[[0 1 2]
  [3 4 5]
  [6 7 8]]
 
@@ -877,14 +880,14 @@ Everything except the last element =
  [12 13 14]]
 
 Example: slicing each axis differently =
-[[1 2]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2]
  [4 5]
  [7 8]]
 
 Example: slicing only the second axis =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1  2]
+[[ 1  2]
  [ 4  5]
  [ 7  8]
  [10 11]
