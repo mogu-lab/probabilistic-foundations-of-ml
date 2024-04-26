@@ -40,13 +40,13 @@ We're here because we care about your experiences as students and as individuals
 **Come to class and participate.** While thorough, the course materials is *not a substitute* for the classroom experience. We expect you to attend all classroom sessions, engage with the lecture components and with your peers in the in-class exercises. 
 
 
-**Attending office hours is an expected and normal part of the learning experience.**
+**Attending office hours is an expected and normal part of the learning experience.** TODO.
 
 
-**Embrace confusion.**
+**Embrace confusion.** TODO.
 
 
-**Experiment and tinker.**
+**Experiment and tinker.** TODO.
 
 
 
