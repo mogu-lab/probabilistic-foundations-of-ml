@@ -63,6 +63,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'mle';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/mle.html" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
@@ -363,7 +365,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -379,6 +383,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mle-goal">7.1. The MLE Goal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plate-notation-for-directed-graphical-models">7.2. “Plate Notation” for Directed Graphical Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-in-numpyro">7.3. MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -398,16 +412,40 @@ document.write(`
 </div>
 </div>
 </div>
-<p><strong>Topics:</strong></p>
+<p><strong>Context:</strong> At this point, our modeling toolkit is already getting quite expressive.</p>
+<ol class="arabic simple">
+<li><p>We can develop simple <em>predictive models</em> using <em>conditional distributions</em>: we can specify models of the form <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>, which allow us to predict the probability that <span class="math notranslate nohighlight">\(A = a\)</span> given that <span class="math notranslate nohighlight">\(B = b\)</span>. We do this by specifying a distribution over random variable (RV) <span class="math notranslate nohighlight">\(A\)</span>, whose parameters are a <em>function</em> of <span class="math notranslate nohighlight">\(b\)</span>.</p></li>
+<li><p>We can develop simple <em>generative models</em> using <em>joint distributions</em>: we can specify models of the form <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span>, which allow us to sample (or generate) data. We do this by factorizing this joint probability into a product of conditional and marginal distributions, e.g. <span class="math notranslate nohighlight">\(p_{A, B}(a, b) = p_{A | B}(a | b) \cdot p_B(b)\)</span>, which we already know how to specify.</p></li>
+</ol>
+<p>Of course, the predictive and generative models you may have heard about in the news are capable of doing more than the instances we’ve covert so far—we will build up to these fancy models over the course of the semester. What’s important for now, though, is that you understand how such models can be represented using probability distributions.</p>
+<p><strong>Challenge:</strong> So what stands in our way of applying our modeling tools to real-world data? First, we’ve only instantiated our models with <em>discrete</em> distributions. Many real-world data, however, requires <em>continuous</em> distributions; that is, distributions over real numbers (e.g. blood pressure, body-mass index, time spent in REM sleep, etc.). We’ll get more into the details of continuous modeling a bit later. Our second obstacle is: we still don’t have a way of <em>automatically</em> fitting a model to data. So far, you’ve fit all models to data by hand via inspection—you looked at the data and tried to match the model to the data. With increasing model and data complexity, it becomes prohibitively difficult to fit the model to the data by hand. Today, we’ll introduce one technique for doing this: maximum likelihood estimation (MLE). The idea behind MLE is to find a model under which the probability of the data is highest.</p>
+<p><strong>Outline:</strong></p>
+<ul class="simple">
+<li><p>Formally introduce and motivate the MLE</p></li>
+<li><p>Extend notation of directed graphical models to represent a full data-set instead of just one observation</p></li>
+<li><p>Implement MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></p></li>
+</ul>
+<section id="the-mle-goal">
+<h2><span class="section-number">7.1. </span>The MLE Goal<a class="headerlink" href="#the-mle-goal" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Goal: describe probability of data given parameters, then maximize</p></li>
+</ul>
+</section>
+<section id="plate-notation-for-directed-graphical-models">
+<h2><span class="section-number">7.2. </span>“Plate Notation” for Directed Graphical Models<a class="headerlink" href="#plate-notation-for-directed-graphical-models" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
 <li><p>Introduce statistical independence (between observations)</p></li>
 <li><p>Introduce graphical representation</p></li>
+</ul>
+</section>
+<section id="mle-in-numpyro">
+<h2><span class="section-number">7.3. </span>MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#mle-in-numpyro" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
 <li><p>Vectorization in NumPyro distributions</p></li>
 <li><p>NumPyro primitives</p></li>
 <li><p>Implement model in NumPyro</p></li>
-<li><p>Optimization (leave for next unit?)</p></li>
 </ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -468,6 +506,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-mle-goal">7.1. The MLE Goal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plate-notation-for-directed-graphical-models">7.2. “Plate Notation” for Directed Graphical Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-in-numpyro">7.3. MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
