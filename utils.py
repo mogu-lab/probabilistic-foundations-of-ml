@@ -16,4 +16,18 @@ def plot_poisson_example():
     plt.title(r'PMF of Poisson Distributions for Different $\lambda$s')
     plt.legend()
     plt.show()
-    
+
+
+def plot_invariance_of_argmax_under_log():
+    x = jnp.linspace(-1.0, 1.0, 100)
+    y = -(x ** 2.0) + 1.1
+
+    plt.plot(x, y, label=r'$f(x) = -x^2 + 1$')
+    plt.plot(x, jnp.log(y), label=r'$\log f(x)$')
+    plt.axvline(x=0.0, label='argmax of $f(x)$ and $\log f(x)$', c='black', ls='--')
+
+    plt.xlabel('$x$')
+    plt.ylabel('$y$')
+    plt.title('Argmax is invariance to $\log$')
+    plt.legend(loc='lower right')
+    plt.show()
