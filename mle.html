@@ -425,13 +425,207 @@ document.write(`
 <li><p>Extend notation of directed graphical models to represent a full data-set instead of just one observation.</p></li>
 <li><p>Implement MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p></li>
 </ul>
+<p>Let’s load our IHH ER data again so we remember what we’re working with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import a bunch of libraries we&#39;ll be using below</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpyro</span>
+<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="c1"># Load the data into a pandas dataframe</span>
+<span class="n">csv_fname</span> <span class="o">=</span> <span class="s1">&#39;data/IHH-ER.csv&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_fname</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;Patient ID&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print a random sample of 5 patients, just to see what&#39;s in the data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Day-of-Week</th>
+      <th>Condition</th>
+      <th>Hospitalized</th>
+      <th>Antibiotics</th>
+      <th>Attempts-to-Disentangle</th>
+    </tr>
+    <tr>
+      <th>Patient ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>9394</th>
+      <td>Friday</td>
+      <td>Allergic Reaction</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>898</th>
+      <td>Sunday</td>
+      <td>Allergic Reaction</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2398</th>
+      <td>Saturday</td>
+      <td>Entangled Antennas</td>
+      <td>No</td>
+      <td>No</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>5906</th>
+      <td>Saturday</td>
+      <td>Allergic Reaction</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2343</th>
+      <td>Monday</td>
+      <td>High Fever</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8225</th>
+      <td>Thursday</td>
+      <td>High Fever</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5506</th>
+      <td>Tuesday</td>
+      <td>High Fever</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6451</th>
+      <td>Thursday</td>
+      <td>Allergic Reaction</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2670</th>
+      <td>Sunday</td>
+      <td>Intoxication</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3497</th>
+      <td>Tuesday</td>
+      <td>Allergic Reaction</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1087</th>
+      <td>Monday</td>
+      <td>High Fever</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1819</th>
+      <td>Tuesday</td>
+      <td>High Fever</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2308</th>
+      <td>Tuesday</td>
+      <td>Allergic Reaction</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6084</th>
+      <td>Monday</td>
+      <td>High Fever</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3724</th>
+      <td>Tuesday</td>
+      <td>Allergic Reaction</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <section id="mle-notation-and-formalism">
 <h2><span class="section-number">7.1. </span>MLE: Notation and Formalism<a class="headerlink" href="#mle-notation-and-formalism" title="Permalink to this heading">#</a></h2>
-<p>The idea behind MLE is to find the model parameters that maximize the probability of the data. Let’s introduce some notation to help us formalize what this means mathematically.</p>
+<p>The idea behind the MLE is to find the model parameters that maximize the probability of the data. Let’s introduce some notation to help us formalize what this means mathematically.</p>
+<p><strong>Notation for Data.</strong> Let <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> denote our <em>all</em> of our observed data (<span class="math notranslate nohighlight">\(\mathcal{D}\)</span> represents the entirety of the above table). Let <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> represent observation number <span class="math notranslate nohighlight">\(n\)</span> (i.e. row <span class="math notranslate nohighlight">\(n\)</span>) from the table. <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is a tuple of values at each of the columns: <span class="math notranslate nohighlight">\(\mathcal{D}_n = (D_n, C_n, H_n, A_n, M_n)\)</span>. Recall that we define:</p>
 <ul class="simple">
-<li><p>Let <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> denote our observed data.</p></li>
-<li><p>Let the notation <span class="math notranslate nohighlight">\(p_{\mathcal{D}}(\cdot; \theta)\)</span> denote the probability of the observed data using a distribution with parameters <span class="math notranslate nohighlight">\(\theta\)</span> (<span class="math notranslate nohighlight">\(\theta\)</span> control the shape of this distribution).</p></li>
+<li><p><span class="math notranslate nohighlight">\(D\)</span>: Day-of-Week</p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span>: Condition</p></li>
+<li><p><span class="math notranslate nohighlight">\(H\)</span>: Hospitalized</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span>: Antibiotics</p></li>
+<li><p><span class="math notranslate nohighlight">\(M\)</span>: Attempts-to-Disentangle</p></li>
 </ul>
+<p><strong>Notation for Parameters.</strong> For simplicity, we’ve omitted the notation for each distribution’s parameters from the notation so far. From now on, we’ll explicitly write out the parameters as arguments to the distribution by listing them after a semi-colon.</p>
+<blockquote>
+<div><p>For example, we can denote that a joint distribution over RVs <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> depends on a parameter <span class="math notranslate nohighlight">\(\theta\)</span> as follows: <span class="math notranslate nohighlight">\(p_{A, B}(a, b; \theta)\)</span>. Similarly, we can write a conditional that depends on <span class="math notranslate nohighlight">\(\theta\)</span> using <span class="math notranslate nohighlight">\(p_{A | B}(A | B; \theta)\)</span>.</p>
+<p>If different components of the distribution depend on different parameters, we can list them. For example, in a joint distribution over <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, we can have the conditional depend on <span class="math notranslate nohighlight">\(\theta\)</span> and the marginal depend on <span class="math notranslate nohighlight">\(\phi\)</span>: <span class="math notranslate nohighlight">\(p_{A, B}(a, b; \theta, \phi) = p_{A | B}(a | b; \theta) \cdot p_B(b; \phi)\)</span>.</p>
+</div></blockquote>
+<p><strong>The MLE objective.</strong>
+Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-29435516-f8c1-4e48-8b04-4e0e97dbfe3a">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-29435516-f8c1-4e48-8b04-4e0e97dbfe3a" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta^\text{MLE} = \mathrm{argmax}_{\theta} p_{D, C, H, A, M}(\mathcal{D}; \theta)
+\end{align}\]</div>
 </section>
 <section id="plate-notation-for-directed-graphical-models">
 <h2><span class="section-number">7.2. </span>“Plate Notation” for Directed Graphical Models<a class="headerlink" href="#plate-notation-for-directed-graphical-models" title="Permalink to this heading">#</a></h2>
