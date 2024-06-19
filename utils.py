@@ -62,4 +62,23 @@ def cs349_sample(model, key, *args, **kwargs):
 
     return result
 
+
+def cs349_mle(model, key, num_steps, *args, learning_rate=0.01, **kwargs):
+    def guide(*args, **kwargs):
+        pass
+
+    optimizer = numpyro.optim.Adam(step_size=learning_rate)
+    svi = numpyro.infer.SVI(
+        model, guide, optimizer, loss=numpyro.infer.Trace_ELBO(),
+    )
+
+    svi_result = svi.run(key, num_steps, *args, **kwargs)
+    params = svi_result.params
+
+    return argparse.Namespace(
+        model_mle=H.substitute(model, data=params), 
+        parameters_mle=params,
+        log_likelihood=-svi_result.losses,
+    )
+
     
