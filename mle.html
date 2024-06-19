@@ -624,20 +624,20 @@ document.write(`
 </div></blockquote>
 <p><strong>The MLE Objective.</strong>
 Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5d0f6f83-d051-4b05-8447-d2343f609c39">
-<span class="eqno">(7.1)<a class="headerlink" href="#equation-5d0f6f83-d051-4b05-8447-d2343f609c39" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-11d57716-6179-471b-acaa-1e369e1c6c23">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-11d57716-6179-471b-acaa-1e369e1c6c23" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n, m_n)\)</span> for every <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d0c63780-29cc-4a13-8d8c-1155bbaa392f">
-<span class="eqno">(7.2)<a class="headerlink" href="#equation-d0c63780-29cc-4a13-8d8c-1155bbaa392f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-28f75ee2-6f75-45b6-8128-26dbb4b27188">
+<span class="eqno">(7.2)<a class="headerlink" href="#equation-28f75ee2-6f75-45b6-8128-26dbb4b27188" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
 <p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2272a45a-a672-456e-a323-b5e5050e2759">
-<span class="eqno">(7.3)<a class="headerlink" href="#equation-2272a45a-a672-456e-a323-b5e5050e2759" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c68a4619-f0ef-40af-818d-26316db11449">
+<span class="eqno">(7.3)<a class="headerlink" href="#equation-c68a4619-f0ef-40af-818d-26316db11449" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
@@ -650,15 +650,15 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <ol class="arabic simple">
 <li><p>Logs turn products into sums: <span class="math notranslate nohighlight">\(\log X \cdot Y = \log X + \log Y\)</span>. Applying this formula to our MLE objective results in a <em>sum</em> of fractions, which is numerically stable:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-47752f3e-7e0c-4cf6-8715-79aca404749f">
-<span class="eqno">(7.4)<a class="headerlink" href="#equation-47752f3e-7e0c-4cf6-8715-79aca404749f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fff7a2af-2291-48cc-a7bd-11d3c732b6b1">
+<span class="eqno">(7.4)<a class="headerlink" href="#equation-fff7a2af-2291-48cc-a7bd-11d3c732b6b1" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>But by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability instead, will we get the wrong answer? Because the <span class="math notranslate nohighlight">\(\log\)</span> function is a <em>strictly increasing function</em>, our maxima will remain in the same location. That is:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-806f0101-c293-4d0b-98e2-0a37add0661c">
-<span class="eqno">(7.5)<a class="headerlink" href="#equation-806f0101-c293-4d0b-98e2-0a37add0661c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f871dd7d-7fab-4b17-bb45-007bc5e534fd">
+<span class="eqno">(7.5)<a class="headerlink" href="#equation-f871dd7d-7fab-4b17-bb45-007bc5e534fd" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
@@ -678,13 +678,13 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <section id="graphically-representing-i-i-d-observations-and-model-parameters">
 <h2><span class="section-number">7.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Permalink to this heading">#</a></h2>
 <p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model representation (DGM) to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4187e296-8272-43b8-9349-8a53c1ce2c63">
-<span class="eqno">(7.6)<a class="headerlink" href="#equation-4187e296-8272-43b8-9349-8a53c1ce2c63" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3c082651-c694-40ad-ac5f-fca4a85c12cc">
+<span class="eqno">(7.6)<a class="headerlink" href="#equation-3c082651-c694-40ad-ac5f-fca4a85c12cc" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
 \end{align}\]</div>
 <p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>. This gives us the following joint distribution over the entire data:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-75d3a54d-c816-4119-beca-cec4a77a3814">
-<span class="eqno">(7.7)<a class="headerlink" href="#equation-75d3a54d-c816-4119-beca-cec4a77a3814" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-48d7dc2e-6f5a-4bbb-9eba-f4f125768188">
+<span class="eqno">(7.7)<a class="headerlink" href="#equation-48d7dc2e-6f5a-4bbb-9eba-f4f125768188" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
 &amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
@@ -715,23 +715,23 @@ p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \qua
 <p>We’ll walk you through how to use these primitives to build the model, but we additionally recommend you get in the habit of reading the <a class="reference external" href="https://num.pyro.ai/en/stable/primitives.html" rel="noopener noreferrer" target="_blank">relevant documentation</a>.</p>
 <p><strong>Concept:</strong> In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions, which use the above primitives to sample from the joint distribution. We do this by factorizing the joint distribution and sampling from its components in some valid ordering. This will suffice in providing <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> with enough information to do the heavy lifting of the MLE.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Suppose we want to model the joint distribution of the day-of-the-week, <span class="math notranslate nohighlight">\(D\)</span>, and whether a patient is intorixated, <span class="math notranslate nohighlight">\(I\)</span>. We can do this via the model,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-90eb9492-47cf-453f-ab90-b9535ddc639a">
-<span class="eqno">(7.8)<a class="headerlink" href="#equation-90eb9492-47cf-453f-ab90-b9535ddc639a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-64d3ac24-631e-47a0-a1cd-ef1f8f426243">
+<span class="eqno">(7.8)<a class="headerlink" href="#equation-64d3ac24-631e-47a0-a1cd-ef1f8f426243" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi).
 \end{align}\]</div>
 <p>In this model,</p>
 <ul class="simple">
 <li><p><em>Marginal:</em> <span class="math notranslate nohighlight">\(p_D(\cdot; \pi)\)</span> is a distribution over the days of the week. We will therefore define it to be a Categorical distribution:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-e3c4fe9c-a747-4e0c-8ed1-d964a499fa24">
-<span class="eqno">(7.9)<a class="headerlink" href="#equation-e3c4fe9c-a747-4e0c-8ed1-d964a499fa24" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ddc48f37-7549-4f99-a9a7-b08576dcc6e1">
+<span class="eqno">(7.9)<a class="headerlink" href="#equation-ddc48f37-7549-4f99-a9a7-b08576dcc6e1" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi).
 \end{align}\]</div>
 <ul class="simple">
 <li><p><em>Conditional:</em> <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d_n; \rho)\)</span> is the probability that a patient arrives at the ER with intoxication given that <span class="math notranslate nohighlight">\(D = d_n\)</span>. Since “intoxication” is a binary outcome, we will model it using a Bernoulli. However, recall that the probability of intoxication <em>changes with the day of the week</em>—on some days, we’re more likely to treat patients with intoxication. The parameter of the Bernoulli distribution therefore needs to change depending on the day of the week. We therefore define:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-173e9a53-1094-4eb2-a904-347fdcdda1b1">
-<span class="eqno">(7.10)<a class="headerlink" href="#equation-173e9a53-1094-4eb2-a904-347fdcdda1b1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-996c7744-e834-4268-8f8e-f0fbc7d1c565">
+<span class="eqno">(7.10)<a class="headerlink" href="#equation-996c7744-e834-4268-8f8e-f0fbc7d1c565" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 \end{align}\]</div>
 <p><strong>Valid Parameter Values:</strong> Since each entry of <span class="math notranslate nohighlight">\(\rho\)</span> represents a Bernoulli distribution, each entry must be on between 0 and 1 (i.e. on the “unit interval”). And since <span class="math notranslate nohighlight">\(\pi\)</span> is represents a Categorical distribution, its entries must sum to 1 (a fancy name of this is that <span class="math notranslate nohighlight">\(\pi\)</span> lies on a “simplex”). We note this briefly because we will have to communicate to <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> the valid values these parameters may take on (but don’t worry, this isn’t hard to do).</p>
@@ -987,7 +987,7 @@ We start by creating a function to represent our model:</p>
 <span class="ne">ExecutableNotFound</span>: failed to execute PosixPath(&#39;dot&#39;), make sure the Graphviz executables are on your systems&#39; PATH
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;graphviz.graphs.Digraph at 0x7f8d0fa972b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;graphviz.graphs.Digraph at 0x7f65701aac80&gt;
 </pre></div>
 </div>
 </div>
@@ -1012,8 +1012,8 @@ We start by creating a function to represent our model:</p>
 </div>
 </div>
 <p><strong>Performing the MLE:</strong> We will now perform the MLE using another helper function we’ve created. Recall that the MLE for this model is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa5cbc75-0d7b-4b89-9b95-544e04e3d419">
-<span class="eqno">(7.11)<a class="headerlink" href="#equation-aa5cbc75-0d7b-4b89-9b95-544e04e3d419" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dfcbaa3c-6431-4f45-81a5-39a4942d422f">
+<span class="eqno">(7.11)<a class="headerlink" href="#equation-dfcbaa3c-6431-4f45-81a5-39a4942d422f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi^\text{MLE}, \rho^\text{MLE} &amp;= \mathrm{argmax}_{\pi, \rho} \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \log \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \sum\limits_{n=1}^N \log p_{I | D}(i_n | d_n; \rho) + \log p_D(d_n; \pi)
@@ -1026,7 +1026,7 @@ We start by creating a function to represent our model:</p>
 <span class="n">i</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Condition&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Intoxication&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 
 <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="n">NUM_STEPS</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">NUM_STEPS</span> <span class="o">=</span> <span class="mi">2000</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">cs349_mle</span><span class="p">(</span>
     <span class="n">model_of_intoxication_given_day</span><span class="p">,</span> 
     <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
@@ -1040,31 +1040,37 @@ We start by creating a function to represent our model:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">8</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">NUM_STEPS</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="ne">----&gt; </span><span class="mi">8</span> <span class="n">result</span> <span class="o">=</span> <span class="n">cs349_mle</span><span class="p">(</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">model_of_intoxication_given_day</span><span class="p">,</span> 
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">NUM_STEPS</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">N</span><span class="p">,</span> 
-<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> 
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="p">)</span>
-
-<span class="nn">File ~/work/cs349-fall-2024/cs349-fall-2024/utils.py:70,</span> in <span class="ni">cs349_mle</span><span class="nt">(model, key, num_steps, learning_rate, *args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">67</span> <span class="k">def</span> <span class="nf">guide</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">68</span>     <span class="k">pass</span>
-<span class="ne">---&gt; </span><span class="mi">70</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">step_size</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">71</span> <span class="n">svi</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">infer</span><span class="o">.</span><span class="n">SVI</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">72</span>     <span class="n">model</span><span class="p">,</span> <span class="n">guide</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">numpyro</span><span class="o">.</span><span class="n">infer</span><span class="o">.</span><span class="n">Trace_ELBO</span><span class="p">(),</span>
-<span class="g g-Whitespace">     </span><span class="mi">73</span> <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">75</span> <span class="n">svi_result</span> <span class="o">=</span> <span class="n">svi</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;numpyro&#39; is not defined
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/2000 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/2000 [00:00&lt;20:20,  1.64it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 13%|█▎        | 266/2000 [00:00&lt;00:03, 503.53it/s, init loss: 26390.5742, avg. loss [101-200]: 23832.8136]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 27%|██▋       | 531/2000 [00:00&lt;00:01, 960.61it/s, init loss: 26390.5742, avg. loss [401-500]: 23345.8833]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|███▉      | 797/2000 [00:00&lt;00:00, 1356.87it/s, init loss: 26390.5742, avg. loss [601-700]: 23336.0634]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 53%|█████▎    | 1063/2000 [00:01&lt;00:00, 1681.55it/s, init loss: 26390.5742, avg. loss [901-1000]: 23335.5550]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 66%|██████▋   | 1330/2000 [00:01&lt;00:00, 1941.19it/s, init loss: 26390.5742, avg. loss [1201-1300]: 23335.5538]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 80%|███████▉  | 1598/2000 [00:01&lt;00:00, 2142.46it/s, init loss: 26390.5742, avg. loss [1401-1500]: 23335.5538]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 93%|█████████▎| 1855/2000 [00:01&lt;00:00, 2181.39it/s, init loss: 26390.5742, avg. loss [1701-1800]: 23335.5539]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 2000/2000 [00:01&lt;00:00, 1444.92it/s, init loss: 26390.5742, avg. loss [1901-2000]: 23335.5537]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1081,7 +1087,7 @@ We start by creating a function to represent our model:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3e8e2563db4cc7163f0d3e52df29a5babe1ba65e3bf86f5eb8cff2ddadb700e6.png" src="_images/3e8e2563db4cc7163f0d3e52df29a5babe1ba65e3bf86f5eb8cff2ddadb700e6.png" />
+<img alt="_images/95973e9f806d49fb3f15cbef36b54d62dac9fa7514aeeb0cdaf82116d2b18f81.png" src="_images/95973e9f806d49fb3f15cbef36b54d62dac9fa7514aeeb0cdaf82116d2b18f81.png" />
 </div>
 </div>
 <p><strong>Visualizing the Model’s Parameters:</strong> The learned model’s parameters can be accessed as below.</p>
@@ -1092,10 +1098,10 @@ We start by creating a function to represent our model:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.19870001, 0.1529    , 0.13990001, 0.1419    , 0.136     ,
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.19870001, 0.15289998, 0.13989998, 0.14190003, 0.136     ,
         0.113     , 0.11760001], dtype=float32),
- &#39;rho&#39;: Array([0.09473917, 0.09301588, 0.09448019, 0.10785804, 0.10519359,
-        0.40796468, 0.41496596], dtype=float32)}
+ &#39;rho&#39;: Array([0.09461552, 0.09287171, 0.09435357, 0.10782291, 0.10514758,
+        0.40796465, 0.41496596], dtype=float32)}
 </pre></div>
 </div>
 </div>
@@ -1105,7 +1111,8 @@ We start by creating a function to represent our model:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">days_of_week</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Monday&#39;</span><span class="p">,</span> <span class="s1">&#39;Tuesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Wednesday&#39;</span><span class="p">,</span> <span class="s1">&#39;Thursday&#39;</span><span class="p">,</span> <span class="s1">&#39;Friday&#39;</span><span class="p">,</span> <span class="s1">&#39;Saturday&#39;</span><span class="p">,</span> <span class="s1">&#39;Sunday&#39;</span><span class="p">]</span>
 
-<span class="n">probabilities_from_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">marginal_probabilities_from_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">conditional_probabilities_from_data</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="c1"># Iterate over the days of the week</span>
 <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">days_of_week</span><span class="p">:</span>
@@ -1118,12 +1125,41 @@ We start by creating a function to represent our model:</p>
     <span class="c1"># Compute the portion of patients with intoxication on this day</span>
     <span class="n">portion_intoxicated_on_day</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">patient_intoxicated_on_day</span><span class="p">))</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">patients_on_day</span><span class="p">))</span>
 
-    <span class="c1"># Print the day and the percentage</span>
-    <span class="n">probabilities_from_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">portion_intoxicated_on_day</span><span class="p">)</span>
-
-<span class="c1"># Plot!</span>
+    <span class="c1"># Compute the portion of patients arriving on this day</span>
+    <span class="n">portion_arriving_on_day</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">patients_on_day</span><span class="p">))</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    
+    <span class="n">marginal_probabilities_from_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">portion_arriving_on_day</span><span class="p">)</span>
+    <span class="n">conditional_probabilities_from_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">portion_intoxicated_on_day</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot marginal</span>
 <span class="n">width</span> <span class="o">=</span> <span class="mf">0.3</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">probabilities_from_data</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">marginal_probabilities_from_data</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">parameters_mle</span><span class="p">[</span><span class="s1">&#39;pi&#39;</span><span class="p">],</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MLE&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add axis labels and titles</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="n">days_of_week</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Day of Week&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability of Day-of-Week&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Marginal Probability of Being Arriving on Each Day&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ad85c19df9bef295944ff678166ab80d49259a5b8756e165b539027d337d8429.png" src="_images/ad85c19df9bef295944ff678166ab80d49259a5b8756e165b539027d337d8429.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot conditional</span>
+<span class="n">width</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">conditional_probabilities_from_data</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">parameters_mle</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">],</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MLE&#39;</span><span class="p">)</span>
 
 <span class="c1"># Add axis labels and titles</span>
@@ -1150,12 +1186,12 @@ We start by creating a function to represent our model:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.19870001, 0.1529    , 0.13990001, 0.1419    , 0.136     ,
-        0.11300001, 0.11759999], dtype=float32),
- &#39;rho&#39;: Array([0.10611166, 0.1048743 , 0.10592494, 0.11592095, 0.11387242,
-        0.40796468, 0.41496596], dtype=float32),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.19870001, 0.15289998, 0.13989998, 0.14190003, 0.136     ,
+        0.113     , 0.11760001], dtype=float32),
+ &#39;rho&#39;: Array([0.09461552, 0.09287171, 0.09435357, 0.10782291, 0.10514758,
+        0.40796465, 0.41496596], dtype=float32),
  &#39;d&#39;: Array([4, 2, 3, 4, 6, 4, 4, 5, 3, 1, 5, 1, 2, 1, 4, 0, 2, 0, 0, 4], dtype=int32),
- &#39;i&#39;: Array([0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1], dtype=int32)}
+ &#39;i&#39;: Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1], dtype=int32)}
 </pre></div>
 </div>
 </div>
