@@ -42,7 +42,7 @@ def plot_invariance_of_argmax_under_log():
 
     plt.xlabel('$x$')
     plt.ylabel('$y$')
-    plt.title('Argmax is invariance to $\log$')
+    plt.title('argmax is invariant to $\log$')
     plt.legend(loc='lower right')
     plt.show()
 
