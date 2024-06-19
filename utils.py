@@ -4,8 +4,6 @@ import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 import jax
 import jax.numpy as jnp
-import numpyro
-import numpyro.handlers as H
 
 
 def convert_categorical_to_int(d, categories):
@@ -50,36 +48,3 @@ def plot_invariance_of_argmax_under_log():
     plt.legend(loc='lower right')
     plt.show()
 
-
-def cs349_sample(model, key, *args, **kwargs):
-    exec = H.trace(H.seed(model, key)).get_trace(*args, **kwargs)
-    
-    result = dict()
-    for k, v in exec.items():
-        if v['type'] == 'plate':
-            continue
-
-        result[k] = v['value']
-
-    return result
-
-
-def cs349_mle(model, key, num_steps, *args, learning_rate=0.01, **kwargs):
-    def guide(*args, **kwargs):
-        pass
-
-    optimizer = numpyro.optim.Adam(step_size=learning_rate)
-    svi = numpyro.infer.SVI(
-        model, guide, optimizer, loss=numpyro.infer.Trace_ELBO(),
-    )
-
-    svi_result = svi.run(key, num_steps, *args, **kwargs)
-    params = svi_result.params
-
-    return argparse.Namespace(
-        model_mle=H.substitute(model, data=params), 
-        parameters_mle=params,
-        log_likelihood=-svi_result.losses,
-    )
-
-    
