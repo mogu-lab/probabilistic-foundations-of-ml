@@ -4,6 +4,7 @@ import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 import jax
 import jax.numpy as jnp
+import numpyro
 import numpyro.handlers as H
 
 
