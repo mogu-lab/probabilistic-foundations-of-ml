@@ -624,20 +624,20 @@ document.write(`
 </div></blockquote>
 <p><strong>The MLE Objective.</strong>
 Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-620455ed-4d67-4f8f-92d9-f304d281f15d">
-<span class="eqno">(7.1)<a class="headerlink" href="#equation-620455ed-4d67-4f8f-92d9-f304d281f15d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ecdd2bf3-6766-4eb4-ae79-dfd923d93234">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-ecdd2bf3-6766-4eb4-ae79-dfd923d93234" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n, m_n)\)</span> for every <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae378f6b-86fa-4772-a104-049c2e22ae37">
-<span class="eqno">(7.2)<a class="headerlink" href="#equation-ae378f6b-86fa-4772-a104-049c2e22ae37" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0f6779b5-740f-4f43-bc78-9657701b071b">
+<span class="eqno">(7.2)<a class="headerlink" href="#equation-0f6779b5-740f-4f43-bc78-9657701b071b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
 <p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-86ba4218-a598-4ea0-a72f-8aa154ea381f">
-<span class="eqno">(7.3)<a class="headerlink" href="#equation-86ba4218-a598-4ea0-a72f-8aa154ea381f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-195a75a1-3300-46be-95ed-fbbbf5bd0a31">
+<span class="eqno">(7.3)<a class="headerlink" href="#equation-195a75a1-3300-46be-95ed-fbbbf5bd0a31" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
@@ -650,15 +650,15 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <ol class="arabic simple">
 <li><p>Logs turn products into sums: <span class="math notranslate nohighlight">\(\log X \cdot Y = \log X + \log Y\)</span>. Applying this formula to our MLE objective results in a <em>sum</em> of fractions, which is numerically stable:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-08a473a5-4b52-474e-848f-04f6fc3fb1dc">
-<span class="eqno">(7.4)<a class="headerlink" href="#equation-08a473a5-4b52-474e-848f-04f6fc3fb1dc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8eb55ba8-a355-45a2-9c2a-74c3abb33c54">
+<span class="eqno">(7.4)<a class="headerlink" href="#equation-8eb55ba8-a355-45a2-9c2a-74c3abb33c54" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>But by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability instead, will we get the wrong answer? Because the <span class="math notranslate nohighlight">\(\log\)</span> function is a <em>strictly increasing function</em>, our maxima will remain in the same location. That is:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-4439edbc-bfa1-4dd4-81ad-339a7f79f74d">
-<span class="eqno">(7.5)<a class="headerlink" href="#equation-4439edbc-bfa1-4dd4-81ad-339a7f79f74d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c1ed10b9-df45-443f-ac11-79866f557c82">
+<span class="eqno">(7.5)<a class="headerlink" href="#equation-c1ed10b9-df45-443f-ac11-79866f557c82" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
@@ -678,13 +678,13 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <section id="graphically-representing-i-i-d-observations-and-model-parameters">
 <h2><span class="section-number">7.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Permalink to this heading">#</a></h2>
 <p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model representation (DGM) to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c7893239-458f-4449-9bbe-6192e1c95b1c">
-<span class="eqno">(7.6)<a class="headerlink" href="#equation-c7893239-458f-4449-9bbe-6192e1c95b1c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-14228ec4-5605-4c36-ab08-6b06000ce873">
+<span class="eqno">(7.6)<a class="headerlink" href="#equation-14228ec4-5605-4c36-ab08-6b06000ce873" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
 \end{align}\]</div>
 <p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>. This gives us the following joint distribution over the entire data:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-382148bf-5092-4d3a-8eff-8eed7b91937f">
-<span class="eqno">(7.7)<a class="headerlink" href="#equation-382148bf-5092-4d3a-8eff-8eed7b91937f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5004e705-7115-4cef-87eb-262b5285a007">
+<span class="eqno">(7.7)<a class="headerlink" href="#equation-5004e705-7115-4cef-87eb-262b5285a007" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
 &amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
@@ -715,26 +715,74 @@ p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \qua
 <p>We’ll walk you through how to use these primitives to build the model, but we additionally recommend you get in the habit of reading the <a class="reference external" href="https://num.pyro.ai/en/stable/primitives.html" rel="noopener noreferrer" target="_blank">relevant documentation</a>.</p>
 <p><strong>Concept:</strong> In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions, which use the above primitives to sample from the joint distribution. We do this by factorizing the joint distribution and sampling from its components in some valid ordering. This will suffice in providing <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> with enough information to do the heavy lifting of the MLE.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Consider the simple model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fc5cdf8c-bbfa-4853-bb2b-c70b36cc49b8">
-<span class="eqno">(7.8)<a class="headerlink" href="#equation-fc5cdf8c-bbfa-4853-bb2b-c70b36cc49b8" title="Permalink to this equation">#</a></span>\[\begin{align}
-p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \rho) \cdot p_A(a_n; \pi),
+<div class="amsmath math notranslate nohighlight" id="equation-ac653243-bd45-416e-bc95-f9e32f1dd0b1">
+<span class="eqno">(7.8)<a class="headerlink" href="#equation-ac653243-bd45-416e-bc95-f9e32f1dd0b1" title="Permalink to this equation">#</a></span>\[\begin{align}
+p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N \underbrace{p_{B | A}(b_n | a_n; \rho)}_{\mathrm{Ber}(\rho)} \cdot \underbrace{p_A(a_n; \pi)}_{\mathrm{Cat}(\pi)},
 \end{align}\]</div>
-<p>where <span class="math notranslate nohighlight">\(p_A(a_n; \pi) = \mathrm{Cat}(\pi)\)</span> is a Categorical distribution with parameter <span class="math notranslate nohighlight">\(\pi\)</span>, and <span class="math notranslate nohighlight">\(p_{B | A}(b_n | a_n; \rho) = \mathrm{Ber}(\rho)\)</span> is a Bernoulli distribution with parameter <span class="math notranslate nohighlight">\(\rho\)</span>. Let’s write the sampling algorithm for this model:</p>
-<ol class="arabic simple">
-<li><p>Given specific values of <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\rho\)</span></p></li>
-<li><p>For every <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>:</p></li>
-</ol>
+<p>where <span class="math notranslate nohighlight">\(p_A(a_n; \pi) = \mathrm{Cat}(\pi)\)</span> is a Categorical distribution with parameter <span class="math notranslate nohighlight">\(\pi\)</span>, and <span class="math notranslate nohighlight">\(p_{B | A}(b_n | a_n; \rho) = \mathrm{Ber}(\rho)\)</span> is a Bernoulli distribution with parameter <span class="math notranslate nohighlight">\(\rho\)</span>. For this model, we assume the data was sampled (or generated) as follows:</p>
 <ul class="simple">
-<li><p>We sample <span class="math notranslate nohighlight">\(a_n\)</span> from the marginal: <span class="math notranslate nohighlight">\(a_n \sim p_A(\cdot; \pi)\)</span></p></li>
-<li><p>Given the specific value of <span class="math notranslate nohighlight">\(a_n\)</span> we just sampled, we sample from the conditional: <span class="math notranslate nohighlight">\(b_n \sim p_{B | A}(\cdot | a_n; \rho)\)</span></p></li>
+<li><p>Step 1: We’re given specific values of <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\rho\)</span>. In our case, <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> will randomly pick them and then optimize them as per the MLE objective.</p></li>
+<li><p>Step 2: For every <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>:</p>
+<ul>
+<li><p>Step 2a: We sample <span class="math notranslate nohighlight">\(a_n\)</span> from the marginal, <span class="math notranslate nohighlight">\(a_n \sim p_A(\cdot; \pi)\)</span>.</p></li>
+<li><p>Step 2b: Given the specific value of <span class="math notranslate nohighlight">\(a_n\)</span> we just sampled, we sample from the conditional, <span class="math notranslate nohighlight">\(b_n \sim p_{B | A}(\cdot | a_n; \rho)\)</span>.</p></li>
+</ul>
+</li>
 </ul>
 <p>Now let’s translate this into code!</p>
 <p><strong>Code:</strong> We start by creating a function to represent our model.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simple_model</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
-<p>Our</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">jax.random</span> <span class="k">as</span> <span class="nn">jrandom</span>
+<span class="kn">import</span> <span class="nn">numpyro</span>
+<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
+<span class="kn">import</span> <span class="nn">numpyro.distributions.constraints</span> <span class="k">as</span> <span class="nn">C</span>
+
+
+<span class="n">NUM_CATEGORIES</span> <span class="o">=</span> <span class="mi">7</span>
+
+
+<span class="k">def</span> <span class="nf">simple_model</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">pi</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
+        <span class="s1">&#39;pi&#39;</span><span class="p">,</span> 
+        <span class="n">init_value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NUM_CATEGORIES</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">NUM_CATEGORIES</span><span class="p">),</span> 
+        <span class="n">constraint</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">simplex</span><span class="p">,</span>
+    <span class="p">)</span>
+    
+    <span class="n">rho</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
+        <span class="s1">&#39;rho&#39;</span><span class="p">,</span> 
+        <span class="n">init_value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">NUM_CATEGORIES</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span> 
+        <span class="n">constraint</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">unit_interval</span><span class="p">,</span>
+    <span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">plate</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="n">p_a</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">p_a</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+
+        <span class="n">p_b_given_a</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="n">a</span><span class="p">])</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">p_b_given_a</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+
+
+<span class="n">cs349_sample</span><span class="p">(</span><span class="n">simple_model</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.14285715, 0.14285715, 0.14285715, 0.14285715, 0.14285715,
+        0.14285715, 0.14285715], dtype=float32),
+ &#39;rho&#39;: Array([0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], dtype=float32),
+ &#39;a&#39;: Array([2, 3, 0, 3, 4, 5, 0, 0, 2, 0], dtype=int32),
+ &#39;b&#39;: Array([1, 0, 1, 0, 0, 0, 0, 0, 0, 0], dtype=int32)}
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="theoretical-properties-of-the-mle">
 <h2><span class="section-number">7.4. </span>Theoretical Properties of the MLE<a class="headerlink" href="#theoretical-properties-of-the-mle" title="Permalink to this heading">#</a></h2>
