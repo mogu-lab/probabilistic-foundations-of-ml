@@ -419,7 +419,7 @@ document.write(`
 <li><p>We can develop simple <em>generative models</em> using <em>joint distributions</em>: we can specify models of the form <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span>, which allow us to sample (or generate) data. We do this by factorizing this joint probability into a product of conditional and marginal distributions, e.g. <span class="math notranslate nohighlight">\(p_{A, B}(a, b) = p_{A | B}(a | b) \cdot p_B(b)\)</span>, which we already know how to specify.</p></li>
 </ol>
 <p>Of course, the predictive and generative models you may have heard about in the news are capable of doing more than the instances we’ve covert so far—we will build up to these fancy models over the course of the semester. What’s important for now, though, is that you understand how such models can be represented using probability distributions.</p>
-<p><strong>Challenge:</strong> So what stands in our way of applying our modeling tools to real-world data? First, we’ve only instantiated our models with <em>discrete</em> distributions. Many real-world data, however, requires <em>continuous</em> distributions; that is, distributions over real numbers (e.g. blood pressure, body-mass index, time spent in REM sleep, etc.). We’ll get more into the details of continuous modeling a bit later. Our second obstacle is: we still don’t have a way of <em>automatically</em> fitting a model to data. So far, you’ve fit all models to data by hand via inspection—you looked at the data and tried to match the model to the data. With increasing model and data complexity, it becomes prohibitively difficult to fit the model to the data by hand. Today, we’ll introduce one technique for doing this: maximum likelihood estimation (MLE).</p>
+<p><strong>Challenge:</strong> So what stands in our way of applying our modeling tools to real-world data? First, we’ve only instantiated our models with <em>discrete</em> distributions. Many real-world data, however, requires <em>continuous</em> distributions; that is, distributions over real numbers (e.g. blood pressure, body-mass index, time spent in REM sleep, etc.). We’ll get more into the details of continuous modeling a bit later. Our second obstacle is: we still don’t have a way of <em>automatically</em> fitting a model to data. So far, you’ve fit all models to data by hand via inspection—you looked at the data and tried to match the model to the data. With increasing model and data complexity, it becomes prohibitively difficult to fit the model to the data by hand. Today, we’ll introduce one technique for doing this: maximum likelihood estimation (MLE). This is the first algorithm that truly allows the “machine to learn.”</p>
 <p>The idea behind MLE is to find a model under which the probability of the data is highest. The intuition behind the MLE is that a model that scores the observed data as likely could have reasonably generated the data.</p>
 <p><strong>Outline:</strong></p>
 <ul class="simple">
@@ -624,20 +624,20 @@ document.write(`
 </div></blockquote>
 <p><strong>The MLE Objective.</strong>
 Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a3714e2e-5abf-4fa4-b7dd-a359d643448b">
-<span class="eqno">(7.1)<a class="headerlink" href="#equation-a3714e2e-5abf-4fa4-b7dd-a359d643448b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-620455ed-4d67-4f8f-92d9-f304d281f15d">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-620455ed-4d67-4f8f-92d9-f304d281f15d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n, m_n)\)</span> for every <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a587cca1-b8e6-4a78-849c-3d7f88bc0121">
-<span class="eqno">(7.2)<a class="headerlink" href="#equation-a587cca1-b8e6-4a78-849c-3d7f88bc0121" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ae378f6b-86fa-4772-a104-049c2e22ae37">
+<span class="eqno">(7.2)<a class="headerlink" href="#equation-ae378f6b-86fa-4772-a104-049c2e22ae37" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
 <p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-67b6f817-6d88-416b-92c2-a34423071e16">
-<span class="eqno">(7.3)<a class="headerlink" href="#equation-67b6f817-6d88-416b-92c2-a34423071e16" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-86ba4218-a598-4ea0-a72f-8aa154ea381f">
+<span class="eqno">(7.3)<a class="headerlink" href="#equation-86ba4218-a598-4ea0-a72f-8aa154ea381f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
@@ -650,15 +650,15 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <ol class="arabic simple">
 <li><p>Logs turn products into sums: <span class="math notranslate nohighlight">\(\log X \cdot Y = \log X + \log Y\)</span>. Applying this formula to our MLE objective results in a <em>sum</em> of fractions, which is numerically stable:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-311c1c0d-ddfc-4bc8-af26-f9ed7acc7d62">
-<span class="eqno">(7.4)<a class="headerlink" href="#equation-311c1c0d-ddfc-4bc8-af26-f9ed7acc7d62" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-08a473a5-4b52-474e-848f-04f6fc3fb1dc">
+<span class="eqno">(7.4)<a class="headerlink" href="#equation-08a473a5-4b52-474e-848f-04f6fc3fb1dc" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>But by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability instead, will we get the wrong answer? Because the <span class="math notranslate nohighlight">\(\log\)</span> function is a <em>strictly increasing function</em>, our maxima will remain in the same location. That is:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-558e2d7b-a90a-4d61-92d0-13b57406a4bf">
-<span class="eqno">(7.5)<a class="headerlink" href="#equation-558e2d7b-a90a-4d61-92d0-13b57406a4bf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4439edbc-bfa1-4dd4-81ad-339a7f79f74d">
+<span class="eqno">(7.5)<a class="headerlink" href="#equation-4439edbc-bfa1-4dd4-81ad-339a7f79f74d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
@@ -678,13 +678,13 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <section id="graphically-representing-i-i-d-observations-and-model-parameters">
 <h2><span class="section-number">7.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Permalink to this heading">#</a></h2>
 <p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model representation (DGM) to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-09202ed3-cf20-4384-aa02-04590d6fdc1e">
-<span class="eqno">(7.6)<a class="headerlink" href="#equation-09202ed3-cf20-4384-aa02-04590d6fdc1e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c7893239-458f-4449-9bbe-6192e1c95b1c">
+<span class="eqno">(7.6)<a class="headerlink" href="#equation-c7893239-458f-4449-9bbe-6192e1c95b1c" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
 \end{align}\]</div>
 <p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>. This gives us the following joint distribution over the entire data:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c0ad80f2-2690-40cc-b6dd-ab899503ff07">
-<span class="eqno">(7.7)<a class="headerlink" href="#equation-c0ad80f2-2690-40cc-b6dd-ab899503ff07" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-382148bf-5092-4d3a-8eff-8eed7b91937f">
+<span class="eqno">(7.7)<a class="headerlink" href="#equation-382148bf-5092-4d3a-8eff-8eed7b91937f" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
 &amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
@@ -699,17 +699,42 @@ p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \qua
 <p><strong>A note on conditional independence:</strong> We note that in this example model, for the IHH ER model you’ve developed, and generally for the models we consider in this class, the observations are only i.i.d given the model parameters. That is, given <span class="math notranslate nohighlight">\(\theta\)</span>, we can factorize <span class="math notranslate nohighlight">\(p(\mathcal{D}; \theta)\)</span> into <span class="math notranslate nohighlight">\(\prod_{n=1}^N p(\mathcal{D}_n; \theta)\)</span>. However, if we do not “condition” on the parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, the observations do carry knowledge about one another. That is, having observed <span class="math notranslate nohighlight">\(\mathcal{D}_1\)</span> can tell me something about <span class="math notranslate nohighlight">\(\mathcal{D}_2\)</span> because it tells me something about <span class="math notranslate nohighlight">\(\theta\)</span>, which is shared across all observations. More on that later in the course.</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>Extend the graphical model for the IHH ER below to represent the entirety of the data. Additionally, include all parameters of all distributions.</p>
+<p><strong>Part 1:</strong> Extend the graphical model for the IHH ER below to represent the entirety of the data. Additionally, include all parameters of all distributions.</p>
 <a class="reference internal image-reference" href="_images/joint-probability-ihh-er-dgm.png"><img alt="_images/joint-probability-ihh-er-dgm.png" class="align-center" src="_images/joint-probability-ihh-er-dgm.png" style="width: 500px;" /></a>
+<p><strong>Part 2:</strong> TODO translate more between equations and DGMs!</p>
 </div>
 </section>
 <section id="mle-in-numpyro">
 <h2><span class="section-number">7.3. </span>MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#mle-in-numpyro" title="Permalink to this heading">#</a></h2>
+<p>We’re now ready to translate our model into <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> code that we can then use to fit to data. To do this, we will rely on three <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> primitives:</p>
 <ul class="simple">
-<li><p>Vectorization in NumPyro distributions</p></li>
-<li><p>NumPyro primitives</p></li>
-<li><p>Implement model in NumPyro</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpyro.param</span></code>, which represents model parameters</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpyro.sample</span></code>, which represents an RV</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">numpyro.plate</span></code>, which represents i.i.d sampling using the “plate” notation</p></li>
 </ul>
+<p>We’ll walk you through how to use these primitives to build the model, but we additionally recommend you get in the habit of reading the <a class="reference external" href="https://num.pyro.ai/en/stable/primitives.html" rel="noopener noreferrer" target="_blank">relevant documentation</a>.</p>
+<p><strong>Concept:</strong> In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions, which use the above primitives to sample from the joint distribution. We do this by factorizing the joint distribution and sampling from its components in some valid ordering. This will suffice in providing <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> with enough information to do the heavy lifting of the MLE.</p>
+<p><strong>Example:</strong> We’ll illustrate how to do this using an example. Consider the simple model:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fc5cdf8c-bbfa-4853-bb2b-c70b36cc49b8">
+<span class="eqno">(7.8)<a class="headerlink" href="#equation-fc5cdf8c-bbfa-4853-bb2b-c70b36cc49b8" title="Permalink to this equation">#</a></span>\[\begin{align}
+p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \rho) \cdot p_A(a_n; \pi),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_A(a_n; \pi) = \mathrm{Cat}(\pi)\)</span> is a Categorical distribution with parameter <span class="math notranslate nohighlight">\(\pi\)</span>, and <span class="math notranslate nohighlight">\(p_{B | A}(b_n | a_n; \rho) = \mathrm{Ber}(\rho)\)</span> is a Bernoulli distribution with parameter <span class="math notranslate nohighlight">\(\rho\)</span>. Let’s write the sampling algorithm for this model:</p>
+<ol class="arabic simple">
+<li><p>Given specific values of <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\rho\)</span></p></li>
+<li><p>For every <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>:</p></li>
+</ol>
+<ul class="simple">
+<li><p>We sample <span class="math notranslate nohighlight">\(a_n\)</span> from the marginal: <span class="math notranslate nohighlight">\(a_n \sim p_A(\cdot; \pi)\)</span></p></li>
+<li><p>Given the specific value of <span class="math notranslate nohighlight">\(a_n\)</span> we just sampled, we sample from the conditional: <span class="math notranslate nohighlight">\(b_n \sim p_{B | A}(\cdot | a_n; \rho)\)</span></p></li>
+</ul>
+<p>Now let’s translate this into code!</p>
+<p><strong>Code:</strong> We start by creating a function to represent our model.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Our</p>
 </section>
 <section id="theoretical-properties-of-the-mle">
 <h2><span class="section-number">7.4. </span>Theoretical Properties of the MLE<a class="headerlink" href="#theoretical-properties-of-the-mle" title="Permalink to this heading">#</a></h2>
