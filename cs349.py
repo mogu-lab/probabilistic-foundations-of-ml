@@ -1,3 +1,7 @@
+'''
+Helper functions for CS349. 
+'''
+
 import argparse
 
 import numpyro
