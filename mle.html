@@ -624,20 +624,20 @@ document.write(`
 </div></blockquote>
 <p><strong>The MLE Objective.</strong>
 Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-49c9a4c1-4e48-4caf-bf31-a3b873004e0f">
-<span class="eqno">(7.1)<a class="headerlink" href="#equation-49c9a4c1-4e48-4caf-bf31-a3b873004e0f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fff89fb9-f2c9-4cdb-a2ce-e95339d2db26">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-fff89fb9-f2c9-4cdb-a2ce-e95339d2db26" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n, m_n)\)</span> for every <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eb2333ad-917d-40f2-85f9-5b75d5e7887d">
-<span class="eqno">(7.2)<a class="headerlink" href="#equation-eb2333ad-917d-40f2-85f9-5b75d5e7887d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9ed62f3c-f9fb-436d-ba67-70b7fc60a06d">
+<span class="eqno">(7.2)<a class="headerlink" href="#equation-9ed62f3c-f9fb-436d-ba67-70b7fc60a06d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
 <p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e1af693b-1a1f-40d9-b819-f9734322803a">
-<span class="eqno">(7.3)<a class="headerlink" href="#equation-e1af693b-1a1f-40d9-b819-f9734322803a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6eca39b8-d9c0-468b-bf9f-025757da4840">
+<span class="eqno">(7.3)<a class="headerlink" href="#equation-6eca39b8-d9c0-468b-bf9f-025757da4840" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
@@ -650,15 +650,15 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <ol class="arabic simple">
 <li><p>Logs turn products into sums: <span class="math notranslate nohighlight">\(\log X \cdot Y = \log X + \log Y\)</span>. Applying this formula to our MLE objective results in a <em>sum</em> of fractions, which is numerically stable:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-71ec7dc8-a6e2-4ab2-bc48-f133c5efd3df">
-<span class="eqno">(7.4)<a class="headerlink" href="#equation-71ec7dc8-a6e2-4ab2-bc48-f133c5efd3df" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-97c4a443-77ff-4ce9-b9ef-c8d443ff5543">
+<span class="eqno">(7.4)<a class="headerlink" href="#equation-97c4a443-77ff-4ce9-b9ef-c8d443ff5543" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>But by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability instead, will we get the wrong answer? Because the <span class="math notranslate nohighlight">\(\log\)</span> function is a <em>strictly increasing function</em>, our maxima will remain in the same location. That is:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-05269a08-85fd-441d-ac10-85f78aa0d0d2">
-<span class="eqno">(7.5)<a class="headerlink" href="#equation-05269a08-85fd-441d-ac10-85f78aa0d0d2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2d6adb45-3fcd-4fd5-a310-8656b89976c0">
+<span class="eqno">(7.5)<a class="headerlink" href="#equation-2d6adb45-3fcd-4fd5-a310-8656b89976c0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
@@ -678,13 +678,13 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <section id="graphically-representing-i-i-d-observations-and-model-parameters">
 <h2><span class="section-number">7.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Permalink to this heading">#</a></h2>
 <p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model representation (DGM) to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4640bbde-3811-4d42-9699-0935f01528df">
-<span class="eqno">(7.6)<a class="headerlink" href="#equation-4640bbde-3811-4d42-9699-0935f01528df" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-116a4d8d-fbc9-4e44-ae42-313c8d5c7ee0">
+<span class="eqno">(7.6)<a class="headerlink" href="#equation-116a4d8d-fbc9-4e44-ae42-313c8d5c7ee0" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
 \end{align}\]</div>
 <p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>. This gives us the following joint distribution over the entire data:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8aa37f39-8634-43f1-bbe0-8dadfc8fe374">
-<span class="eqno">(7.7)<a class="headerlink" href="#equation-8aa37f39-8634-43f1-bbe0-8dadfc8fe374" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-057aae98-29fd-4545-bfe3-7509133a3d73">
+<span class="eqno">(7.7)<a class="headerlink" href="#equation-057aae98-29fd-4545-bfe3-7509133a3d73" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
 &amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
@@ -715,28 +715,26 @@ p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \qua
 <p>We’ll walk you through how to use these primitives to build the model, but we additionally recommend you get in the habit of reading the <a class="reference external" href="https://num.pyro.ai/en/stable/primitives.html" rel="noopener noreferrer" target="_blank">relevant documentation</a>.</p>
 <p><strong>Concept:</strong> In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions, which use the above primitives to sample from the joint distribution. We do this by factorizing the joint distribution and sampling from its components in some valid ordering. This will suffice in providing <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> with enough information to do the heavy lifting of the MLE.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Suppose we want to model the joint distribution of the day-of-the-week, <span class="math notranslate nohighlight">\(D\)</span>, and whether a patient is intorixated, <span class="math notranslate nohighlight">\(I\)</span>. We can do this via the model,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0b259ac1-d6f2-4b3a-97f8-ff9105ab054e">
-<span class="eqno">(7.8)<a class="headerlink" href="#equation-0b259ac1-d6f2-4b3a-97f8-ff9105ab054e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5d5332ed-e599-482b-972c-2bbe8b4e42f1">
+<span class="eqno">(7.8)<a class="headerlink" href="#equation-5d5332ed-e599-482b-972c-2bbe8b4e42f1" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi).
 \end{align}\]</div>
 <p>In this model,</p>
 <ul class="simple">
 <li><p><em>Marginal:</em> <span class="math notranslate nohighlight">\(p_D(\cdot; \pi)\)</span> is a distribution over the days of the week. We will therefore define it to be a Categorical distribution:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-28a6c8a4-091f-46bc-8f11-f936c9f27af5">
-<span class="eqno">(7.9)<a class="headerlink" href="#equation-28a6c8a4-091f-46bc-8f11-f936c9f27af5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5dff035d-3c6d-4128-84d8-83a2514fca46">
+<span class="eqno">(7.9)<a class="headerlink" href="#equation-5dff035d-3c6d-4128-84d8-83a2514fca46" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi).
 \end{align}\]</div>
-<p>Here, the parameter <span class="math notranslate nohighlight">\(\pi\)</span> is a 7-dimensional array describing the probability of an observation coming from each of the 7 days of the week. That is, the probability of <span class="math notranslate nohighlight">\(D = d_n\)</span> is given by the <span class="math notranslate nohighlight">\(d_n\)</span>-th entry of <span class="math notranslate nohighlight">\(\pi\)</span>: <span class="math notranslate nohighlight">\(p_{D}(d_n; \pi) = \pi_{d_n}\)</span>.</p>
 <ul class="simple">
 <li><p><em>Conditional:</em> <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d_n; \rho)\)</span> is the probability that a patient arrives at the ER with intoxication given that <span class="math notranslate nohighlight">\(D = d_n\)</span>. Since “intoxication” is a binary outcome, we will model it using a Bernoulli. However, recall that the probability of intoxication <em>changes with the day of the week</em>—on some days, we’re more likely to treat patients with intoxication. The parameter of the Bernoulli distribution therefore needs to change depending on the day of the week. We therefore define:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-9ecc3eb9-0789-4166-a56a-2896f960fdb1">
-<span class="eqno">(7.10)<a class="headerlink" href="#equation-9ecc3eb9-0789-4166-a56a-2896f960fdb1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-07cb897a-c982-4017-bb12-ef9efc42c913">
+<span class="eqno">(7.10)<a class="headerlink" href="#equation-07cb897a-c982-4017-bb12-ef9efc42c913" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 \end{align}\]</div>
-<p>By this, we mean that <span class="math notranslate nohighlight">\(\rho\)</span> is a 7-dimensional vector, where the <span class="math notranslate nohighlight">\(d_n\)</span>-th entry, denoted by <span class="math notranslate nohighlight">\(\rho_{d_n}\)</span>, is the probability of intoxication on day <span class="math notranslate nohighlight">\(d_n\)</span>.</p>
-<p><strong>Valid Parameter Values:</strong> Since each entry of <span class="math notranslate nohighlight">\(\rho\)</span> represents a Bernoulli distribution, each entry must be on between 0 and 1 (i.e. on the “unit interval”). And since <span class="math notranslate nohighlight">\(\pi\)</span> is represents a Categorical distribution, its entries must sum to 1 (a fancy name of this is that <span class="math notranslate nohighlight">\(\pi\)</span> lies on a “simplex”). We note this briefly because we will have to communicate to <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> the valid values these parameters may take on.</p>
+<p><strong>Valid Parameter Values:</strong> Since each entry of <span class="math notranslate nohighlight">\(\rho\)</span> represents a Bernoulli distribution, each entry must be on between 0 and 1 (i.e. on the “unit interval”). And since <span class="math notranslate nohighlight">\(\pi\)</span> is represents a Categorical distribution, its entries must sum to 1 (a fancy name of this is that <span class="math notranslate nohighlight">\(\pi\)</span> lies on a “simplex”). We note this briefly because we will have to communicate to <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> the valid values these parameters may take on (but don’t worry, this isn’t hard to do).</p>
 <p><strong>Generative Process:</strong> For this model, we assume the data was sampled (or generated) as follows:</p>
 <ul class="simple">
 <li><p><em>Step 1:</em> We choose an initial guess for <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\rho\)</span>. Our guess doesn’t need to be good, since <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> help us find the right values.</p></li>
@@ -759,31 +757,28 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <span class="kn">import</span> <span class="nn">numpyro.distributions.constraints</span> <span class="k">as</span> <span class="nn">C</span>
 
 
-<span class="n">K</span> <span class="o">=</span> <span class="mi">7</span> <span class="c1"># the number of categories in the distribution of A</span>
-
-
-<span class="k">def</span> <span class="nf">example_model</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">model_of_intoxication_given_day</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">pi</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
         <span class="s1">&#39;pi&#39;</span><span class="p">,</span> 
-        <span class="n">init_value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">K</span><span class="p">),</span> 
+        <span class="n">init_value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">/</span> <span class="mf">7.0</span><span class="p">,</span> 
         <span class="n">constraint</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">simplex</span><span class="p">,</span>
     <span class="p">)</span>
     
     <span class="n">rho</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
         <span class="s1">&#39;rho&#39;</span><span class="p">,</span> 
-        <span class="n">init_value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">K</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span> 
+        <span class="n">init_value</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="p">,</span> 
         <span class="n">constraint</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">unit_interval</span><span class="p">,</span>
     <span class="p">)</span>
     
     <span class="k">with</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">plate</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
-        <span class="n">p_a</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
-        <span class="n">a</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">p_a</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">p_D</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">p_D</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
 
-        <span class="n">p_b_given_a</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="n">a</span><span class="p">])</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">p_b_given_a</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">p_I_given_D</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="n">rho</span><span class="p">[</span><span class="n">d</span><span class="p">])</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="n">p_I_given_D</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
 
 
-<span class="n">cs349_sample</span><span class="p">(</span><span class="n">example_model</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">cs349_sample</span><span class="p">(</span><span class="n">model_of_intoxication_given_day</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -791,8 +786,8 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.14285715, 0.14285715, 0.14285715, 0.14285715, 0.14285715,
         0.14285715, 0.14285715], dtype=float32),
  &#39;rho&#39;: Array([0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], dtype=float32),
- &#39;a&#39;: Array([2, 3, 0, 3, 4, 5, 0, 0, 2, 0], dtype=int32),
- &#39;b&#39;: Array([1, 0, 1, 0, 0, 0, 0, 0, 0, 0], dtype=int32)}
+ &#39;d&#39;: Array([4, 2, 4, 5, 6, 4, 4, 5, 3, 1, 5, 2, 2, 2, 5, 0, 2, 0, 0, 5], dtype=int32),
+ &#39;i&#39;: Array([1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1], dtype=int32)}
 </pre></div>
 </div>
 </div>
