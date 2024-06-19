@@ -2,6 +2,7 @@ import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 import jax
 import jax.numpy as jnp
+import numpyro.handlers as H
 
 
 def plot_poisson_example():
@@ -31,3 +32,18 @@ def plot_invariance_of_argmax_under_log():
     plt.title('Argmax is invariance to $\log$')
     plt.legend(loc='lower right')
     plt.show()
+
+
+def cs349_sample(model, key, *args, **kwargs):
+    exec = H.trace(H.seed(model, key)).get_trace(*args, **kwargs)
+    
+    result = dict()
+    for k, v in exec.items():
+        if v['type'] == 'plate':
+            continue
+
+        result[k] = v['value']
+
+    return result
+
+    
