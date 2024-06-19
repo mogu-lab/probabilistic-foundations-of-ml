@@ -41,8 +41,9 @@ def cs349_mle(model, key, num_steps, *args, learning_rate=0.01, **kwargs):
     )
 
     svi_result = svi.run(key, num_steps, *args, **kwargs)
-    params = svi_result.params
-
+    print('Done.')
+    
+    params = svi_result.params    
     return argparse.Namespace(
         model_mle=H.substitute(model, data=params), 
         parameters_mle=params,
