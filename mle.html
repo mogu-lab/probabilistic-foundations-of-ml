@@ -409,6 +409,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
 <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span> 
+<span class="kn">from</span> <span class="nn">cs349</span> <span class="kn">import</span> <span class="o">*</span>
 </pre></div>
 </div>
 </div>
@@ -624,20 +625,20 @@ document.write(`
 </div></blockquote>
 <p><strong>The MLE Objective.</strong>
 Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-11d57716-6179-471b-acaa-1e369e1c6c23">
-<span class="eqno">(7.1)<a class="headerlink" href="#equation-11d57716-6179-471b-acaa-1e369e1c6c23" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e79dd4f9-cc98-490e-a097-0daaf6860c6b">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-e79dd4f9-cc98-490e-a097-0daaf6860c6b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n, m_n)\)</span> for every <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-28f75ee2-6f75-45b6-8128-26dbb4b27188">
-<span class="eqno">(7.2)<a class="headerlink" href="#equation-28f75ee2-6f75-45b6-8128-26dbb4b27188" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-91e4c34b-c4a1-4302-aa50-69766f3f85ac">
+<span class="eqno">(7.2)<a class="headerlink" href="#equation-91e4c34b-c4a1-4302-aa50-69766f3f85ac" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
 <p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c68a4619-f0ef-40af-818d-26316db11449">
-<span class="eqno">(7.3)<a class="headerlink" href="#equation-c68a4619-f0ef-40af-818d-26316db11449" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4f8dec43-0190-4792-8f6d-8a9ef97a3b90">
+<span class="eqno">(7.3)<a class="headerlink" href="#equation-4f8dec43-0190-4792-8f6d-8a9ef97a3b90" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
@@ -650,15 +651,15 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <ol class="arabic simple">
 <li><p>Logs turn products into sums: <span class="math notranslate nohighlight">\(\log X \cdot Y = \log X + \log Y\)</span>. Applying this formula to our MLE objective results in a <em>sum</em> of fractions, which is numerically stable:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-fff7a2af-2291-48cc-a7bd-11d3c732b6b1">
-<span class="eqno">(7.4)<a class="headerlink" href="#equation-fff7a2af-2291-48cc-a7bd-11d3c732b6b1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c22dfd85-f662-4678-808c-6ff808c02975">
+<span class="eqno">(7.4)<a class="headerlink" href="#equation-c22dfd85-f662-4678-808c-6ff808c02975" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>But by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability instead, will we get the wrong answer? Because the <span class="math notranslate nohighlight">\(\log\)</span> function is a <em>strictly increasing function</em>, our maxima will remain in the same location. That is:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-f871dd7d-7fab-4b17-bb45-007bc5e534fd">
-<span class="eqno">(7.5)<a class="headerlink" href="#equation-f871dd7d-7fab-4b17-bb45-007bc5e534fd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e3b52c38-054f-4dfb-a3c6-c4137f928292">
+<span class="eqno">(7.5)<a class="headerlink" href="#equation-e3b52c38-054f-4dfb-a3c6-c4137f928292" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
@@ -678,13 +679,13 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <section id="graphically-representing-i-i-d-observations-and-model-parameters">
 <h2><span class="section-number">7.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Permalink to this heading">#</a></h2>
 <p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model representation (DGM) to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3c082651-c694-40ad-ac5f-fca4a85c12cc">
-<span class="eqno">(7.6)<a class="headerlink" href="#equation-3c082651-c694-40ad-ac5f-fca4a85c12cc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fe8224af-4f4d-41d5-9a82-290059a84438">
+<span class="eqno">(7.6)<a class="headerlink" href="#equation-fe8224af-4f4d-41d5-9a82-290059a84438" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
 \end{align}\]</div>
 <p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>. This gives us the following joint distribution over the entire data:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-48d7dc2e-6f5a-4bbb-9eba-f4f125768188">
-<span class="eqno">(7.7)<a class="headerlink" href="#equation-48d7dc2e-6f5a-4bbb-9eba-f4f125768188" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4cf046a7-dcb6-49fb-b2fb-19c65a026925">
+<span class="eqno">(7.7)<a class="headerlink" href="#equation-4cf046a7-dcb6-49fb-b2fb-19c65a026925" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
 &amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
@@ -715,23 +716,23 @@ p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \qua
 <p>We’ll walk you through how to use these primitives to build the model, but we additionally recommend you get in the habit of reading the <a class="reference external" href="https://num.pyro.ai/en/stable/primitives.html" rel="noopener noreferrer" target="_blank">relevant documentation</a>.</p>
 <p><strong>Concept:</strong> In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions, which use the above primitives to sample from the joint distribution. We do this by factorizing the joint distribution and sampling from its components in some valid ordering. This will suffice in providing <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> with enough information to do the heavy lifting of the MLE.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Suppose we want to model the joint distribution of the day-of-the-week, <span class="math notranslate nohighlight">\(D\)</span>, and whether a patient is intorixated, <span class="math notranslate nohighlight">\(I\)</span>. We can do this via the model,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-64d3ac24-631e-47a0-a1cd-ef1f8f426243">
-<span class="eqno">(7.8)<a class="headerlink" href="#equation-64d3ac24-631e-47a0-a1cd-ef1f8f426243" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-08f642c2-0542-4abf-aba4-78fd21247a1e">
+<span class="eqno">(7.8)<a class="headerlink" href="#equation-08f642c2-0542-4abf-aba4-78fd21247a1e" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi).
 \end{align}\]</div>
 <p>In this model,</p>
 <ul class="simple">
 <li><p><em>Marginal:</em> <span class="math notranslate nohighlight">\(p_D(\cdot; \pi)\)</span> is a distribution over the days of the week. We will therefore define it to be a Categorical distribution:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-ddc48f37-7549-4f99-a9a7-b08576dcc6e1">
-<span class="eqno">(7.9)<a class="headerlink" href="#equation-ddc48f37-7549-4f99-a9a7-b08576dcc6e1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-11f87783-1732-480d-8f87-de58bc8662e5">
+<span class="eqno">(7.9)<a class="headerlink" href="#equation-11f87783-1732-480d-8f87-de58bc8662e5" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi).
 \end{align}\]</div>
 <ul class="simple">
 <li><p><em>Conditional:</em> <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d_n; \rho)\)</span> is the probability that a patient arrives at the ER with intoxication given that <span class="math notranslate nohighlight">\(D = d_n\)</span>. Since “intoxication” is a binary outcome, we will model it using a Bernoulli. However, recall that the probability of intoxication <em>changes with the day of the week</em>—on some days, we’re more likely to treat patients with intoxication. The parameter of the Bernoulli distribution therefore needs to change depending on the day of the week. We therefore define:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-996c7744-e834-4268-8f8e-f0fbc7d1c565">
-<span class="eqno">(7.10)<a class="headerlink" href="#equation-996c7744-e834-4268-8f8e-f0fbc7d1c565" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-41f7b404-c711-4dc9-ae74-c0cd667a985d">
+<span class="eqno">(7.10)<a class="headerlink" href="#equation-41f7b404-c711-4dc9-ae74-c0cd667a985d" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 \end{align}\]</div>
 <p><strong>Valid Parameter Values:</strong> Since each entry of <span class="math notranslate nohighlight">\(\rho\)</span> represents a Bernoulli distribution, each entry must be on between 0 and 1 (i.e. on the “unit interval”). And since <span class="math notranslate nohighlight">\(\pi\)</span> is represents a Categorical distribution, its entries must sum to 1 (a fancy name of this is that <span class="math notranslate nohighlight">\(\pi\)</span> lies on a “simplex”). We note this briefly because we will have to communicate to <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> the valid values these parameters may take on (but don’t worry, this isn’t hard to do).</p>
@@ -987,7 +988,7 @@ We start by creating a function to represent our model:</p>
 <span class="ne">ExecutableNotFound</span>: failed to execute PosixPath(&#39;dot&#39;), make sure the Graphviz executables are on your systems&#39; PATH
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;graphviz.graphs.Digraph at 0x7f65701aac80&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;graphviz.graphs.Digraph at 0x7f5550c82710&gt;
 </pre></div>
 </div>
 </div>
@@ -1012,8 +1013,8 @@ We start by creating a function to represent our model:</p>
 </div>
 </div>
 <p><strong>Performing the MLE:</strong> We will now perform the MLE using another helper function we’ve created. Recall that the MLE for this model is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dfcbaa3c-6431-4f45-81a5-39a4942d422f">
-<span class="eqno">(7.11)<a class="headerlink" href="#equation-dfcbaa3c-6431-4f45-81a5-39a4942d422f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-add1fc5b-eec9-4bce-95bc-a3003ce01de6">
+<span class="eqno">(7.11)<a class="headerlink" href="#equation-add1fc5b-eec9-4bce-95bc-a3003ce01de6" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi^\text{MLE}, \rho^\text{MLE} &amp;= \mathrm{argmax}_{\pi, \rho} \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \log \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \sum\limits_{n=1}^N \log p_{I | D}(i_n | d_n; \rho) + \log p_D(d_n; \pi)
@@ -1046,28 +1047,28 @@ We start by creating a function to represent our model:</p>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/2000 [00:00&lt;20:20,  1.64it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 13%|█▎        | 266/2000 [00:00&lt;00:03, 503.53it/s, init loss: 26390.5742, avg. loss [101-200]: 23832.8136]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 13%|█▎        | 256/2000 [00:00&lt;00:03, 484.66it/s, init loss: 26390.5742, avg. loss [101-200]: 23832.8136]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 27%|██▋       | 531/2000 [00:00&lt;00:01, 960.61it/s, init loss: 26390.5742, avg. loss [401-500]: 23345.8833]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▌       | 513/2000 [00:00&lt;00:01, 928.43it/s, init loss: 26390.5742, avg. loss [401-500]: 23345.8833]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|███▉      | 797/2000 [00:00&lt;00:00, 1356.87it/s, init loss: 26390.5742, avg. loss [601-700]: 23336.0634]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 39%|███▊      | 771/2000 [00:00&lt;00:00, 1313.41it/s, init loss: 26390.5742, avg. loss [601-700]: 23336.0634]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 53%|█████▎    | 1063/2000 [00:01&lt;00:00, 1681.55it/s, init loss: 26390.5742, avg. loss [901-1000]: 23335.5550]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 52%|█████▏    | 1030/2000 [00:01&lt;00:00, 1631.53it/s, init loss: 26390.5742, avg. loss [901-1000]: 23335.5550]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 66%|██████▋   | 1330/2000 [00:01&lt;00:00, 1941.19it/s, init loss: 26390.5742, avg. loss [1201-1300]: 23335.5538]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 64%|██████▍   | 1290/2000 [00:01&lt;00:00, 1884.83it/s, init loss: 26390.5742, avg. loss [1101-1200]: 23335.5537]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 80%|███████▉  | 1598/2000 [00:01&lt;00:00, 2142.46it/s, init loss: 26390.5742, avg. loss [1401-1500]: 23335.5538]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 77%|███████▋  | 1549/2000 [00:01&lt;00:00, 2075.53it/s, init loss: 26390.5742, avg. loss [1401-1500]: 23335.5538]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 93%|█████████▎| 1855/2000 [00:01&lt;00:00, 2181.39it/s, init loss: 26390.5742, avg. loss [1701-1800]: 23335.5539]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 90%|█████████ | 1809/2000 [00:01&lt;00:00, 2221.84it/s, init loss: 26390.5742, avg. loss [1701-1800]: 23335.5539]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 2000/2000 [00:01&lt;00:00, 1444.92it/s, init loss: 26390.5742, avg. loss [1901-2000]: 23335.5537]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 2000/2000 [00:01&lt;00:00, 1443.22it/s, init loss: 26390.5742, avg. loss [1901-2000]: 23335.5537]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
