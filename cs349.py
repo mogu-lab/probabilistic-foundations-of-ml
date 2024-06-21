@@ -26,16 +26,14 @@ def cs349_sample(model, key, *args, **kwargs):
     return result
 
 
-def cs349_mle(model, key, num_steps, *args, learning_rate=0.01, **kwargs):
+def cs349_mle(model, optimizer, key, num_steps, *args, **kwargs):
     '''
     Helper function to perform MLE on a simple numpyro model.
     The "*args, **kwargs" argument refer to all arguments your model takes in.
     '''
-    
-    def guide(*args, **kwargs):
-        pass
 
-    optimizer = numpyro.optim.Adam(step_size=learning_rate)
+    guide = numpyro.infer.autoguide.AutoDelta(model)
+        
     svi = numpyro.infer.SVI(
         model, guide, optimizer, loss=numpyro.infer.Trace_ELBO(),
     )
