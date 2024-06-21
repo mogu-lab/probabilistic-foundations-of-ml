@@ -391,8 +391,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation">5.1. Terminology and Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-the-conditional-distributions-by-hand">5.2. Learning the Conditional Distributions by Hand</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-familiar-with-distributions-in-numpyro">5.3. Getting Familiar with Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-familiar-with-distributions-in-numpyro">5.2. Getting Familiar with Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -609,8 +608,8 @@ document.write(`
 <p>As with (non-conditional) discrete probability, the statistical language—terminology and notation—we introduce here will allow us to precisely specify to a computer how to model our data. In the future, we will translate statements in this language directly into code that a computer can run.</p>
 <p><strong>Concept.</strong> Conditional probabilities allow us to ask questions of the form, “given that <span class="math notranslate nohighlight">\(A\)</span> is true, what’s the probability of <span class="math notranslate nohighlight">\(B\)</span>?”. Although simple, this idea is actually quite powerful; all <em>predictive models</em> you may have heard of (e.g. regression, classification, etc.) are formulated using <em>conditional distributions</em>. To see what we mean, let’s start with an example.</p>
 <p><strong>Example.</strong> Suppose you’re working at the IHH ER, and you want to <em>predict</em> what is the probability that the next patient comes in with <code class="docutils literal notranslate"><span class="pre">Condition</span> <span class="pre">==</span> <span class="pre">&quot;Intoxication&quot;</span></code>. Given previously collected data, you can estimate this probability by counting the number of patients for which <code class="docutils literal notranslate"><span class="pre">Condition</span> <span class="pre">==</span> <span class="pre">&quot;Intoxication&quot;</span></code> and dividing by the total number of patients:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4fe18855-adbe-4ea1-8210-f8e4bf97282f">
-<span class="eqno">(5.1)<a class="headerlink" href="#equation-4fe18855-adbe-4ea1-8210-f8e4bf97282f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-315b9143-4c19-4b20-86d4-4af0fe348153">
+<span class="eqno">(5.1)<a class="headerlink" href="#equation-315b9143-4c19-4b20-86d4-4af0fe348153" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Probability of intoxication} = \frac{\text{Number of patients with intoxication}}{\text{Total number of patients}}
 \end{align}\]</div>
 <p>We’ll call this probability the “naive predictor.” Now, let’s compute this naive predictor on our IHH ER data:</p>
@@ -632,8 +631,8 @@ document.write(`
 </div>
 <p>However, you also know that even in far reaches of the outer universe, beings work Mondays through Fridays, taking Saturdays and Sundays off. Therefore, you suspect intoxication may be more likely to occur on weekends. You decide to check whether your intuition is true here. If it’s true, will you improve your ability to predict how likely the next patient is to come with intoxication?</p>
 <p>We can modify the naive predictor above as follows to condition on the day of the week:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c46a0aa3-baea-4f0b-b3e4-65a01acc12dd">
-<span class="eqno">(5.2)<a class="headerlink" href="#equation-c46a0aa3-baea-4f0b-b3e4-65a01acc12dd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-12db13ab-3ac1-423f-aef6-7deaa48224d1">
+<span class="eqno">(5.2)<a class="headerlink" href="#equation-12db13ab-3ac1-423f-aef6-7deaa48224d1" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Probability of intoxication given day $d$} = \frac{\text{Number of patients with intoxication on day $d$}}{\text{Total number of patients on day $d$}}
 \end{align}\]</div>
 <div class="cell docutils container">
@@ -695,13 +694,13 @@ document.write(`
 <p><strong>Probability Mass Function (PMF):</strong> The PMF is, again, that of the variable to the left of the vertical line. What makes a conditional probability different from a non-conditional distribution, however, is that the parameter of the distribution is now a <em>function of the condition</em>.</p>
 <blockquote>
 <div><p>In our example, the PMF is that of a Bernoulli random variable (since <span class="math notranslate nohighlight">\(I\)</span> can only take on two values). Since it’s a <em>conditional</em> distribution, it’s parameter depends on the condition (the day <span class="math notranslate nohighlight">\(D = d\)</span>). We can write this as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-95679c29-b0c4-4eca-8ab8-4f865e716844">
-<span class="eqno">(5.3)<a class="headerlink" href="#equation-95679c29-b0c4-4eca-8ab8-4f865e716844" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-77a57230-88a4-4c92-b2c8-f410d1be775e">
+<span class="eqno">(5.3)<a class="headerlink" href="#equation-77a57230-88a4-4c92-b2c8-f410d1be775e" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - i}}_{\text{Bernoulli PMF (see Wikipedia)}},
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bd217b80-5779-4338-97d3-09999d5dc89e">
-<span class="eqno">(5.4)<a class="headerlink" href="#equation-bd217b80-5779-4338-97d3-09999d5dc89e" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
+<div class="amsmath math notranslate nohighlight" id="equation-6317938a-9cdd-4840-aab9-5db3ef4d73f2">
+<span class="eqno">(5.4)<a class="headerlink" href="#equation-6317938a-9cdd-4840-aab9-5db3ef4d73f2" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
 0.1 &amp; \text{if $d$ is weekday} \\
 0.4 &amp; \text{if $d$ is weekend} 
 \end{cases} 
@@ -720,11 +719,8 @@ p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1
 <li><p><span class="math notranslate nohighlight">\(p_{R | C}(r | c)\)</span> is the evaluation of the conditional PMF at <span class="math notranslate nohighlight">\(r\)</span>: i.e. given that <span class="math notranslate nohighlight">\(C = c\)</span>, what’s the probability that <span class="math notranslate nohighlight">\(R = r\)</span>?</p></li>
 <li><p><span class="math notranslate nohighlight">\(R | c \sim p_{R | C}(\cdot | c)\)</span> denotes that <span class="math notranslate nohighlight">\(R | c\)</span> is sampled i.i.d. from <span class="math notranslate nohighlight">\(p_{R | C}(\cdot | c)\)</span></p></li>
 </ul>
-</section>
-<section id="learning-the-conditional-distributions-by-hand">
-<h2><span class="section-number">5.2. </span>Learning the Conditional Distributions by Hand<a class="headerlink" href="#learning-the-conditional-distributions-by-hand" title="Permalink to this heading">#</a></h2>
-<div class="admonition-exercise admonition">
-<p class="admonition-title">Exercise</p>
+<div class="admonition-exercise-fit-conditional-distributions-by-hand admonition">
+<p class="admonition-title">Exercise: Fit conditional distributions by hand</p>
 <p>Let us define the following RVs:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(D\)</span>: Day-of-Week</p></li>
@@ -747,7 +743,7 @@ p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1
 <p>TODO write your answer here.</p>
 </section>
 <section id="getting-familiar-with-distributions-in-numpyro">
-<h2><span class="section-number">5.3. </span>Getting Familiar with Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#getting-familiar-with-distributions-in-numpyro" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">5.2. </span>Getting Familiar with Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#getting-familiar-with-distributions-in-numpyro" title="Permalink to this heading">#</a></h2>
 <p>Now that we’ve learned some conditional distributions by hand, we’ll introduce the framework we’ll use to implement our ML models: <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>. And specifically, we’ll introduce one of the main building blocks in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>: distributions.</p>
 <p><strong>What is <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>?</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> is a “Probabilistic Programming Language” based in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>. It provides an interface for (nearly) direct translation of the stats/math we wrote above into code that we can use to fit to data, make predictions, and more. This will allow us to focus on the conceptual ideas behind probabilistic ML.</p>
 <p><strong>Instantiating Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</strong> <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> comes with many distributions already implemented. For a complete list of all available discrete distributions, check out the <a class="reference external" href="https://num.pyro.ai/en/stable/distributions.html#discrete-distributions" rel="noopener noreferrer" target="_blank">this part of the documentation</a>. So why use <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> instead of implementing the distributions on our own? It’s easy to write subtle bugs that are hard to catch when implementing mathematical formulas in code. Also, using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>’s distributions will help us highlight the overall <em>logic</em> of the code, instead of getting bogged down by the mathematical details.</p>
@@ -763,8 +759,8 @@ p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1
 </div>
 </div>
 <p>Now, let’s instantiate the simplest discrete distribution we know, the Bernoulli distribution, to describe the naive predictor from earlier.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d362cedf-15da-4ea4-83c8-be7724ec225e">
-<span class="eqno">(5.5)<a class="headerlink" href="#equation-d362cedf-15da-4ea4-83c8-be7724ec225e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6224c158-268b-4642-8223-edae45df6e6b">
+<span class="eqno">(5.5)<a class="headerlink" href="#equation-6224c158-268b-4642-8223-edae45df6e6b" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_I(i) &amp;= \mathrm{Ber}(\rho) = \rho^i \cdot (1 - \rho)^{1 - i}
 \end{align}\]</div>
 <p>Recall that a Bernoulli distribution takes in just one parameter, <span class="math notranslate nohighlight">\(\rho \in [0, 1]\)</span>, which determines the probability of sampling <span class="math notranslate nohighlight">\(I = 1\)</span> vs. <span class="math notranslate nohighlight">\(I = 0\)</span> (or Yes vs. No). Here let’s instantiate the Bernoulli distribution with <span class="math notranslate nohighlight">\(\rho = 0.2\)</span>.</p>
@@ -879,10 +875,11 @@ Third batch drawn with key_third:   [0 0 0 1 0 1 0 1 0 0 1 0 0 0 0]
 </div>
 </div>
 <p>In the above, <code class="docutils literal notranslate"><span class="pre">p_I_given_Monday</span></code> and <code class="docutils literal notranslate"><span class="pre">p_I_given_Saturday</span></code> are just <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> Bernoulli distributions, so you can use their <code class="docutils literal notranslate"><span class="pre">log_prob</span></code> and <code class="docutils literal notranslate"><span class="pre">sample</span></code> functions just like before.</p>
-<div class="admonition-exercise admonition">
-<p class="admonition-title">Exercise</p>
-<p><strong>Part 1:</strong> Implement each one of the conditional distributions from the previous exercise in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, following the example of <code class="docutils literal notranslate"><span class="pre">p_intoxication_given_day</span></code> above.</p>
+<p>```{admonition} Exercise: Implement conditional distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>
+<strong>Part 1:</strong> Implement each one of the conditional distributions from the previous exercise in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, following the example of <code class="docutils literal notranslate"><span class="pre">p_intoxication_given_day</span></code> above.</p>
 <p><strong>Part 2:</strong> Verify that your implementation is correct by sampling from each conditional distribution and eye-balling that the samples look correct. Be sure to follow the best practices above when using a random number generator key.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
 </div>
 </section>
 </section>
@@ -955,8 +952,7 @@ Third batch drawn with key_third:   [0 0 0 1 0 1 0 1 0 0 1 0 0 0 0]
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#terminology-and-notation">5.1. Terminology and Notation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-the-conditional-distributions-by-hand">5.2. Learning the Conditional Distributions by Hand</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-familiar-with-distributions-in-numpyro">5.3. Getting Familiar with Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-familiar-with-distributions-in-numpyro">5.2. Getting Familiar with Distributions in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
   </nav></div>
 
