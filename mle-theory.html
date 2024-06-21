@@ -1,0 +1,723 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>7. Maximum Likelihood Estimation: Theory &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'mle-theory';</script>
+    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/mle-theory.html" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8. Maximum Likelihood Estimation: Practice" href="mle-practice.html" />
+    <link rel="prev" title="6. Joint Probability (Discrete)" href="probability-joint.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Probabilistic Foundations of ML
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
+<li class="toctree-l1"><a class="reference internal" href="help.html">Academic Support &amp; Office Hours</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">1. What is Probabilistic ML?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorization-basics.html">2. Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code>: An Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorization-advanced.html">3. Advanced Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code></a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Directed Graphical Models</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="probability-discrete.html">4. Probability (Discrete)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probability-conditional.html">5. Conditional Probability (Discrete)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probability-joint.html">6. Joint Probability (Discrete)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Maximum Likelihood Estimation: Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mle-practice.html">8. Maximum Likelihood Estimation: Practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">9. Continuous Probability</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Predictive Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="regression.html">10. Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="latent-variable-models.html">11. Latent Variable Models (LVMs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Inference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="inference.html">12. Inference</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/mogu-lab/cs349-fall-2024/blob/master/mle-theory.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fmogu-lab%2Fcs349-fall-2024%2Fblob%2Fmaster%2Fmle-theory.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onDeepnote"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_deepnote.svg">
+  </span>
+<span class="btn__text-container">Deepnote</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/mle-theory.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Maximum Likelihood Estimation: Theory</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-notation-and-formalism">7.1. MLE: Notation and Formalism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphically-representing-i-i-d-observations-and-model-parameters">7.2. Graphically Representing I.I.D Observations and Model Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-properties-of-the-mle">7.3. Theoretical Properties of the MLE</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="maximum-likelihood-estimation-theory">
+<h1><span class="section-number">7. </span>Maximum Likelihood Estimation: Theory<a class="headerlink" href="#maximum-likelihood-estimation-theory" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Context:</strong> At this point, our modeling toolkit is already getting quite expressive.</p>
+<ol class="arabic simple">
+<li><p>We can develop simple <em>predictive models</em> using <em>conditional distributions</em>: we can specify models of the form <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>, which allow us to predict the probability that <span class="math notranslate nohighlight">\(A = a\)</span> given that <span class="math notranslate nohighlight">\(B = b\)</span>. We do this by specifying a distribution over random variable (RV) <span class="math notranslate nohighlight">\(A\)</span>, whose parameters are a <em>function</em> of <span class="math notranslate nohighlight">\(b\)</span>.</p></li>
+<li><p>We can develop simple <em>generative models</em> using <em>joint distributions</em>: we can specify models of the form <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span>, which allow us to sample (or generate) data. We do this by factorizing this joint probability into a product of conditional and marginal distributions, e.g. <span class="math notranslate nohighlight">\(p_{A, B}(a, b) = p_{A | B}(a | b) \cdot p_B(b)\)</span>, which we already know how to specify.</p></li>
+</ol>
+<p>Of course, the predictive and generative models you may have heard about in the news are capable of doing more than the instances we’ve covert so far—we will build up to these fancy models over the course of the semester. What’s important for now, though, is that you understand how such models can be represented using probability distributions.</p>
+<p><strong>Challenge:</strong> So what stands in our way of applying our modeling tools to real-world data? First, we’ve only instantiated our models with <em>discrete</em> distributions. Many real-world data, however, requires <em>continuous</em> distributions; that is, distributions over real numbers (e.g. blood pressure, body-mass index, time spent in REM sleep, etc.). We’ll get more into the details of continuous modeling a bit later. Our second obstacle is: we still don’t have a way of <em>automatically</em> fitting a model to data. So far, you’ve fit all models to data by hand via inspection—you looked at the data and tried to match the model to the data. With increasing model and data complexity, it becomes prohibitively difficult to fit the model to the data by hand. Today, we’ll introduce one technique for doing this: maximum likelihood estimation (MLE). This is the first algorithm that truly allows the “machine to learn.”</p>
+<p>The idea behind MLE is to find a model under which the probability of the data is highest. The intuition behind the MLE is that a model that scores the observed data as likely could have reasonably generated the data.</p>
+<p><strong>Outline:</strong></p>
+<ul class="simple">
+<li><p>Formally introduce and motivate the MLE.</p></li>
+<li><p>Extend notation of directed graphical models (DGMs) to represent a full data-set instead of just one observation.</p></li>
+<li><p>Understand theoretical properties of the MLE.</p></li>
+</ul>
+<p>This will give us the framing we need in order to implement MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p>
+<section id="mle-notation-and-formalism">
+<h2><span class="section-number">7.1. </span>MLE: Notation and Formalism<a class="headerlink" href="#mle-notation-and-formalism" title="Permalink to this heading">#</a></h2>
+<p>The idea behind the MLE is to find the model parameters that maximize the probability of the data. Let’s introduce some notation to help us formalize what this means mathematically.</p>
+<p><strong>Notation for Data.</strong> Let <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> denote our <em>all</em> of our observed data (<span class="math notranslate nohighlight">\(\mathcal{D}\)</span> represents the entirety of the above table). Let <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> represent observation number <span class="math notranslate nohighlight">\(n\)</span> (i.e. row <span class="math notranslate nohighlight">\(n\)</span>) from the table. <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is a tuple of values at each of the columns: <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n, m_n)\)</span>. Recall that we define:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(D\)</span>: Day-of-Week</p></li>
+<li><p><span class="math notranslate nohighlight">\(C\)</span>: Condition</p></li>
+<li><p><span class="math notranslate nohighlight">\(H\)</span>: Hospitalized</p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span>: Antibiotics</p></li>
+<li><p><span class="math notranslate nohighlight">\(M\)</span>: Attempts-to-Disentangle</p></li>
+</ul>
+<p><strong>Notation for Parameters.</strong> For simplicity, we’ve omitted the notation for each distribution’s parameters from the notation so far. From now on, we’ll explicitly write out the parameters as arguments to the distribution by listing them after a semi-colon.</p>
+<blockquote>
+<div><p>For example, we can denote that a joint distribution over RVs <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> depends on a parameter <span class="math notranslate nohighlight">\(\theta\)</span> as follows: <span class="math notranslate nohighlight">\(p_{A, B}(a, b; \theta)\)</span>. Similarly, we can write a conditional that depends on <span class="math notranslate nohighlight">\(\theta\)</span> using <span class="math notranslate nohighlight">\(p_{A | B}(A | B; \theta)\)</span>.</p>
+<p>If different components of the distribution depend on different parameters, we can list them. For example, in a joint distribution over <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, we can have the conditional depend on <span class="math notranslate nohighlight">\(\theta\)</span> and the marginal depend on <span class="math notranslate nohighlight">\(\phi\)</span>: <span class="math notranslate nohighlight">\(p_{A, B}(a, b; \theta, \phi) = p_{A | B}(a | b; \theta) \cdot p_B(b; \phi)\)</span>.</p>
+</div></blockquote>
+<p><strong>The MLE Objective.</strong>
+Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6cb0de87-4085-44d3-a0f7-a372d2661a17">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-6cb0de87-4085-44d3-a0f7-a372d2661a17" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}; \theta),
+\end{align}\]</div>
+<p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n, m_n)\)</span> for every <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-91849181-e6a4-4c15-b469-d81147f6eb69">
+<span class="eqno">(7.2)<a class="headerlink" href="#equation-91849181-e6a4-4c15-b469-d81147f6eb69" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
+&amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
+<p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-bd438674-c288-4e6d-ac12-dd49aade8e12">
+<span class="eqno">(7.3)<a class="headerlink" href="#equation-bd438674-c288-4e6d-ac12-dd49aade8e12" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \quad  p(\mathcal{D}; \theta) \\
+&amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
+&amp;= \mathrm{argmax}_{\theta} \quad p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
+&amp;= \mathrm{argmax}_{\theta} \quad \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \\
+&amp;= \mathrm{argmax}_{\theta} \quad \prod\limits_{n=1}^N \underbrace{p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)}_{\text{We already know how to compute this!}}
+\end{align}\]</div>
+<p>We have now arrived at a formula for the joint distribution that we know how to compute—we’ve even written code to evaluate it in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p>
+<p><strong>Numerical Stability:</strong> Notice that since our joint is a discrete probability distribution, it outputs probabilities between 0 and 1: <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) \in [0, 1]\)</span>. In other words, it outputs <em>fractions</em>. In the above formula, we then multiply these fractions times one another <span class="math notranslate nohighlight">\(N\)</span> times. But what happens when you multiply fractions together many times? Answer: the results shrinks towards 0 very quickly (try it yourself!). This is a problem, because our computer can only represent small numbers up to a finite precision. For a large <span class="math notranslate nohighlight">\(N\)</span>, our computer will round down the answer to <span class="math notranslate nohighlight">\(0\)</span>, which will prevent us from performing the argmax. Because of this issue, we have to transform our original MLE objective into a problem that a computer can numerically solve.</p>
+<p>We do this by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability for two reasons:</p>
+<ol class="arabic simple">
+<li><p>Logs turn products into sums: <span class="math notranslate nohighlight">\(\log X \cdot Y = \log X + \log Y\)</span>. Applying this formula to our MLE objective results in a <em>sum</em> of fractions, which is numerically stable:</p></li>
+</ol>
+<div class="amsmath math notranslate nohighlight" id="equation-64bfada9-7f44-43d9-8b27-cfaf44c640ba">
+<span class="eqno">(7.4)<a class="headerlink" href="#equation-64bfada9-7f44-43d9-8b27-cfaf44c640ba" title="Permalink to this equation">#</a></span>\[\begin{align}
+\log \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
+\end{align}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>But by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability instead, will we get the wrong answer? Because the <span class="math notranslate nohighlight">\(\log\)</span> function is a <em>strictly increasing function</em>, our maxima will remain in the same location. That is:</p></li>
+</ol>
+<div class="amsmath math notranslate nohighlight" id="equation-1148545a-0766-488b-81c1-bbac1dc2a0c7">
+<span class="eqno">(7.5)<a class="headerlink" href="#equation-1148545a-0766-488b-81c1-bbac1dc2a0c7" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) \\
+&amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
+\end{align}\]</div>
+<p>To illustrate point (2), check out the graph below, which shows that the argmax of a function doesn’t change if a <span class="math notranslate nohighlight">\(\log\)</span> is applied to it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_invariance_of_argmax_under_log</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6d72e29de09816ffd1a9973879afeddf0d1225318c9ab5ef09cb7bfdf2d141f4.png" src="_images/6d72e29de09816ffd1a9973879afeddf0d1225318c9ab5ef09cb7bfdf2d141f4.png" />
+</div>
+</div>
+<p><strong>Optimization:</strong> So at this point, we can compute the MLE objective for specific choices of <span class="math notranslate nohighlight">\(\theta\)</span>, but we don’t know yet how to perform the argmax operation. We’ll introduce this concept a bit later in the course. For now, we’ll provide you with a function that can perform the maximization.</p>
+</section>
+<section id="graphically-representing-i-i-d-observations-and-model-parameters">
+<h2><span class="section-number">7.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Permalink to this heading">#</a></h2>
+<p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model (DGM) representation to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f1d19eac-c812-431e-95a1-a4ae47ad7459">
+<span class="eqno">(7.6)<a class="headerlink" href="#equation-f1d19eac-c812-431e-95a1-a4ae47ad7459" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
+\end{align}\]</div>
+<p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>. This gives us the following joint distribution over the entire data:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-153e514f-0af4-4604-9d86-f3663ed14bd9">
+<span class="eqno">(7.7)<a class="headerlink" href="#equation-153e514f-0af4-4604-9d86-f3663ed14bd9" title="Permalink to this equation">#</a></span>\[\begin{align}
+p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
+&amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
+&amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
+\end{align}\]</div>
+<p>How would we represent this graphically? The answer is a little messy:</p>
+<div class="canva-centered-embedding">
+<div class="canva-iframe-container">
+  <iframe loading="lazy" class="canva-iframe"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGIriW55zE&#x2F;pT0n6N3Vb4gqonaV360vkQ&#x2F;view?embed">
+  </iframe>
+</div>
+</div>
+<p>Each pair <span class="math notranslate nohighlight">\((A_n, B_n)\)</span> get its own arrow to signify the conditional dependence of <span class="math notranslate nohighlight">\(B_n\)</span> on <span class="math notranslate nohighlight">\(A_n\)</span>. And since every pair depends on the same parameter, <span class="math notranslate nohighlight">\(\theta\)</span> has an arrow pointing into every <span class="math notranslate nohighlight">\(B_n\)</span>.</p>
+<p><strong>Representing Parameters.</strong> In the above, notice that circles are only used for RVs. Since <span class="math notranslate nohighlight">\(\theta\)</span> is not an RV, it is not inside a circle—it’s represented by a dot instead.</p>
+<p><strong>Representing I.I.D Observations:</strong> For more complicated models, like the IHH ER you’ve already developed, this graphical representation becomes too difficult to read. As a result, we use the following short-hand:</p>
+<div class="canva-centered-embedding">
+<div class="canva-iframe-container">
+  <iframe loading="lazy" class="canva-iframe"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGIrp4DCB8&#x2F;jGLx4K70R3JIS_kgnlL8Dg&#x2F;view?embed">
+  </iframe>
+</div>
+</div>
+<p>In this representation, we introduce a “plate” (the rectangle surrounding <span class="math notranslate nohighlight">\(A_n\)</span> and <span class="math notranslate nohighlight">\(B_n\)</span>). The plate denotes that what’s inside should be repeated <span class="math notranslate nohighlight">\(N\)</span> times, where <span class="math notranslate nohighlight">\(N\)</span> is written in the bottom-right corner. Why is this called a plate? Do you eat off of rectangular plates at home? This shall remain a mystery to us all…</p>
+<p><strong>A note on conditional independence:</strong> We note that in this example model, for the IHH ER model you’ve developed, and generally for the models we consider in this class, the observations are only i.i.d given the model parameters. That is, given <span class="math notranslate nohighlight">\(\theta\)</span>, we can factorize <span class="math notranslate nohighlight">\(p(\mathcal{D}; \theta)\)</span> into <span class="math notranslate nohighlight">\(\prod_{n=1}^N p(\mathcal{D}_n; \theta)\)</span>. However, if we do not “condition” on the parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, the observations do carry knowledge about one another. That is, having observed <span class="math notranslate nohighlight">\(\mathcal{D}_1\)</span> can tell me something about <span class="math notranslate nohighlight">\(\mathcal{D}_2\)</span> because it tells me something about <span class="math notranslate nohighlight">\(\theta\)</span>, which is shared across all observations. More on that later in the course.</p>
+<div class="admonition-exercise-translate-between-dgms-and-joint-distributions admonition">
+<p class="admonition-title">Exercise: Translate between DGMs and joint distributions</p>
+<p><strong>Part 1:</strong> Extend the DGM for the IHH ER below to represent the entirety of the data. Additionally, include all parameters of all distributions.</p>
+<div class="canva-centered-embedding">
+<div class="canva-iframe-container">
+  <iframe loading="lazy" class="canva-iframe"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGIsbt2Mvc&#x2F;_p7bxsayZ9Qc6k9X8G25bw&#x2F;view?embed">
+  </iframe>
+</div>
+</div> 
+<p><strong>Part 2:</strong> For each of the following DGMs, write down the joint distribution of the data. We’ve specifically selected models that are commonly used in ML. At this point in the course, we have not covered enough materials to make the connection between the model and their actual use—so don’t expect to understand exactly what they mean yet!</p>
+<p>(i) Predictive Models (including regression and classification).</p>
+<div class="canva-centered-embedding">
+<div class="canva-iframe-container">
+  <iframe loading="lazy" class="canva-iframe"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGIs__Ja5w&#x2F;PVlm2FrOU1HjUyF96XXFhw&#x2F;view?embed">
+  </iframe>
+</div>
+</div> 
+<p>(ii) Gaussian Mixture Models (used for clustering).</p>
+<div class="canva-centered-embedding">
+<div class="canva-iframe-container">
+  <iframe loading="lazy" class="canva-iframe"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGIs1vP9i0&#x2F;-IWykjjF-dWy5DOBnqfudA&#x2F;view?embed">
+  </iframe>
+</div>
+</div> 
+<p>(iii) Latent Dirichlet Allocation (used for automatically extracting topics from text).</p>
+<div class="canva-centered-embedding">
+<div class="canva-iframe-container">
+  <iframe loading="lazy" class="canva-iframe"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGIs1zW89w&#x2F;AV6ehWRFRXZ4Y0xpddDcAw&#x2F;view?embed">
+  </iframe>
+</div>
+</div> 
+<p><strong>Part 3:</strong> Draw the DGM for each of the following models.</p>
+<p>(iv) Conditional Subspace Variational Autoencoder (used for generating synthetic data, like pictures of celebrity faces)</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\prod\limits_{n=1}^N p_{X | Z, W}(x_n | z_n, w_n; \theta) \cdot p_Z(z_n) \cdot p_{W | Y}(w_n | y_n) \cdot p_Y(y_n)
+\end{align*}\]</div>
+<p>(v) Hidden Markov Models (used for modeling time-series data).</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{Z_1}(z_1; \psi) \cdot p_{X_1 | Z_1}(x_1 | z_1; \theta) \cdot \prod\limits_{t=2}^T p_{Z_t | Z_{t-1}}(z_t | z_{t - 1}; \psi) \cdot p_{X_t | Z_t}(x_t | z_t; \theta)
+\end{align*}\]</div>
+<p>Note: for this DGM, you will not be able to use plate notation. Instead, please use “<span class="math notranslate nohighlight">\(\dots\)</span>” to indicate a repeating pattern.</p>
+</div>
+</section>
+<section id="theoretical-properties-of-the-mle">
+<h2><span class="section-number">7.3. </span>Theoretical Properties of the MLE<a class="headerlink" href="#theoretical-properties-of-the-mle" title="Permalink to this heading">#</a></h2>
+<p>TODO YANIV:</p>
+<ul class="simple">
+<li><p>Consistency</p></li>
+<li><p>Unbiasedness</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="probability-joint.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Joint Probability (Discrete)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="mle-practice.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Maximum Likelihood Estimation: Practice</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-notation-and-formalism">7.1. MLE: Notation and Formalism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphically-representing-i-i-d-observations-and-model-parameters">7.2. Graphically Representing I.I.D Observations and Model Parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-properties-of-the-mle">7.3. Theoretical Properties of the MLE</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <footer>
+  <div class="flex-shrink-0 container">
+    <div class="row align-items-center">
+      <div class="col-6">
+        &copy; Copyright 2024	
+      </div>      
+      <div class="col-6">
+        <img src="_static/img/wc-logo-blue.png" alt="Wellesley College Logo" class="only-light" style="width: 49%; max-width: 120px; float: right; display: block;"/>
+        <img src="_static/img/wc-logo-white.png" alt="Wellesley College Logo" class="only-dark" style="width: 49%; max-width: 120px; float: right; display: block;"/>
+      </div>
+    </div>    
+  </div>  
+</footer>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
