@@ -384,7 +384,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Bayesian ML</span>
+            <span> Bayesian Inference</span>
           </li>
         </ul>
       </td>
@@ -404,7 +404,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Bayesian ML</span>
+            <span> Bayesian Inference</span>
           </li>
         </ul>
       </td>
