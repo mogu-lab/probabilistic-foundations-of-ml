@@ -402,7 +402,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analytic-solutions-to-optimization-problems">9.1. Analytic Solutions to Optimization Problems</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-analytic-mle">9.2. Example of Analytic MLE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-of-analytically-solving-for-the-mle">9.2. An Example of Analytically Solving for the MLE</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-analytic-optimization">9.3. Challenges with Analytic Optimization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-solutions-to-optimization-problems">9.4. Numeric Solutions to Optimization Problems</a></li>
 </ul>
@@ -432,22 +432,22 @@ document.write(`
 <section id="analytic-solutions-to-optimization-problems">
 <h2><span class="section-number">9.1. </span>Analytic Solutions to Optimization Problems<a class="headerlink" href="#analytic-solutions-to-optimization-problems" title="Permalink to this heading">#</a></h2>
 </section>
-<section id="example-of-analytic-mle">
-<h2><span class="section-number">9.2. </span>Example of Analytic MLE<a class="headerlink" href="#example-of-analytic-mle" title="Permalink to this heading">#</a></h2>
+<section id="an-example-of-analytically-solving-for-the-mle">
+<h2><span class="section-number">9.2. </span>An Example of Analytically Solving for the MLE<a class="headerlink" href="#an-example-of-analytically-solving-for-the-mle" title="Permalink to this heading">#</a></h2>
 <p><strong>Model.</strong> Let’s see how this works by analytically performing the MLE on a simple example. Suppose we want to model the probability of a patient being hospitalized overnight. We can do this using a Bernoulli distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4397a311-93bf-4754-b8f3-3805e0171c8f">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-4397a311-93bf-4754-b8f3-3805e0171c8f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0beac0d9-c9c1-431e-a933-03d75fe967a5">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-0beac0d9-c9c1-431e-a933-03d75fe967a5" title="Permalink to this equation">#</a></span>\[\begin{align}
 H \sim p_H(\cdot; \rho) = \mathrm{Bern}(\rho).
 \end{align}\]</div>
 <p>Recall that the PMF of a Bernoulli RV is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-206d1031-16b8-4530-8edd-df5d0309af4a">
-<span class="eqno">(9.2)<a class="headerlink" href="#equation-206d1031-16b8-4530-8edd-df5d0309af4a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-07d5b6a6-7b29-4e11-92f3-0c24adf70464">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-07d5b6a6-7b29-4e11-92f3-0c24adf70464" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an <em>indicator variable</em>—it evaluates to 1 if the condition in parentheses is true and 0 otherwise.</p>
 <p><strong>The Joint Data Likelihood.</strong> Now, let’s write the joint data log-likelihood for our model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-62fcc5e6-20cd-4ff7-b883-5860b837508b">
-<span class="eqno">(9.3)<a class="headerlink" href="#equation-62fcc5e6-20cd-4ff7-b883-5860b837508b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-31ca4658-4ee4-4571-8ecd-8dda132e3c5e">
+<span class="eqno">(9.3)<a class="headerlink" href="#equation-31ca4658-4ee4-4571-8ecd-8dda132e3c5e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \rho) &amp;= \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \rho) \quad (\text{since observations are i.i.d}) \\
 &amp;= \log \prod\limits_{n=1}^N p_H(h_n; \rho) \\
 &amp;= \log \prod\limits_{n=1}^N \rho^{\mathbb{I}(h_n = 1)} \cdot (1 - \rho)^{\mathbb{I}(h_n = 0)} \quad (\text{using the definition of Bernoulli PMF}) \\
@@ -458,23 +458,23 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T = \sum\limits_{n=1}^N \mathbb{I}(h_n = 1)\)</span> is the total number of hospitalizations.</p>
 <p><strong>The MLE Objective.</strong> Our MLE objective is therefore:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-876e3543-1dc8-4dcc-ab1f-08f916222180">
-<span class="eqno">(9.4)<a class="headerlink" href="#equation-876e3543-1dc8-4dcc-ab1f-08f916222180" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8326b3a6-6bda-42e9-b846-e5aa1ed527c0">
+<span class="eqno">(9.4)<a class="headerlink" href="#equation-8326b3a6-6bda-42e9-b846-e5aa1ed527c0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \\
 &amp;= \mathrm{argmax}_{\rho} \left( T \cdot \log \rho - (N - T) \cdot \log (1 - \rho) \right) \\
 &amp;= \mathrm{argmin}_{\rho} \underbrace{\left( -T \cdot \log \rho + (N - T) \cdot \log (1 - \rho) \right)}_{\text{Our loss function: } \mathcal{L}(\rho)} \quad (\text{maximizing a function is equivalent to minimizing its negative})
 \end{align}\]</div>
 <p><strong>Analytic Optimization.</strong> We take the gradient of the above loss <span class="math notranslate nohighlight">\(\mathcal{L}(\rho)\)</span> with respect to <span class="math notranslate nohighlight">\(\rho\)</span>, set it to <span class="math notranslate nohighlight">\(0\)</span> and solve:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c39dedc-c17d-480f-b424-72883c2a624e">
-<span class="eqno">(9.5)<a class="headerlink" href="#equation-0c39dedc-c17d-480f-b424-72883c2a624e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ca5e2269-6972-49ce-8adf-ec3c20d3444b">
+<span class="eqno">(9.5)<a class="headerlink" href="#equation-ca5e2269-6972-49ce-8adf-ec3c20d3444b" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &amp;= \frac{d \mathcal{L}(\rho)}{d \rho} \\
 &amp;= -\frac{T}{\rho} + \frac{N - T}{1 - \rho} \quad (\text{taking the derivative of } \mathcal{L}(\rho)) \\
 &amp;= \frac{T - N \cdot \rho}{\rho \cdot (\rho - 1)} \quad (\text{bringing fractions under common denominator}) \\
 &amp;= T - N \cdot \rho \quad (\text{multiplying both sides by } \rho \cdot (\rho - 1))
 \end{align}\]</div>
 <p>Solving the above gives us the solution,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-aa6cb8c2-d73d-4e94-b311-4af246e2b443">
-<span class="eqno">(9.6)<a class="headerlink" href="#equation-aa6cb8c2-d73d-4e94-b311-4af246e2b443" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a27db190-6e32-4e99-8dc3-28b182b46e67">
+<span class="eqno">(9.6)<a class="headerlink" href="#equation-a27db190-6e32-4e99-8dc3-28b182b46e67" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho &amp;= \frac{T}{N}.
 \end{align}\]</div>
 <p>The solution is exactly the proportion of hospitalizations out of the total number of hospital visits!</p>
@@ -482,8 +482,9 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 </section>
 <section id="challenges-with-analytic-optimization">
 <h2><span class="section-number">9.3. </span>Challenges with Analytic Optimization<a class="headerlink" href="#challenges-with-analytic-optimization" title="Permalink to this heading">#</a></h2>
-<p><strong>Needs a specialized solution for every model.</strong></p>
-<p><strong>Cannot solve for the parameters for every model.</strong></p>
+<p><strong>Needs a specialized solution for every model.</strong> As you can see from the above example, performing the optimization analytically will require a new derivation for each model. However, when working with real data, we rarely know what’s the “right” model a priori. We typically start with an exploratory data analysis, try different models, evaluate them using different metrics, make hypotheses for why the models don’t fit well, revise the models to fit better, and repeat. If we had to derive a new solution for every model we wish to test, our modeling process will become quite cumbersome. Moreover, we are more prone to make errors in the derivation and write bugs in our code.</p>
+<p><strong>Cannot solve for the parameters for every model.</strong> Since the above example is for a simple Bernoulli model, an analytic solution to the MLE exists. However, for more complex problems, that may not be the case. In fact, for modern ML models, it is <em>rare</em> for there to exist an analytic solution.</p>
+<p><strong>What can we do to overcome these challenges?</strong> We can use numeric solutions to optimization problems. Numeric solutions can be conveniently implemented behind abstractions, allowing us to pair different numeric optimization algorithms with different models <em>without having to write much code</em>. This helps us write bug-free, error-free optimization code. Moreover, in practice, numerical optimization algorithms often achieve good approximate solutions for modern, complex models.</p>
 </section>
 <section id="numeric-solutions-to-optimization-problems">
 <h2><span class="section-number">9.4. </span>Numeric Solutions to Optimization Problems<a class="headerlink" href="#numeric-solutions-to-optimization-problems" title="Permalink to this heading">#</a></h2>
@@ -558,7 +559,7 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analytic-solutions-to-optimization-problems">9.1. Analytic Solutions to Optimization Problems</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-analytic-mle">9.2. Example of Analytic MLE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-of-analytically-solving-for-the-mle">9.2. An Example of Analytically Solving for the MLE</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-analytic-optimization">9.3. Challenges with Analytic Optimization</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-solutions-to-optimization-problems">9.4. Numeric Solutions to Optimization Problems</a></li>
 </ul>
