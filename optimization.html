@@ -435,19 +435,19 @@ document.write(`
 <section id="example-of-analytic-mle">
 <h2><span class="section-number">9.2. </span>Example of Analytic MLE<a class="headerlink" href="#example-of-analytic-mle" title="Permalink to this heading">#</a></h2>
 <p><strong>Model.</strong> Let’s see how this works by analytically performing the MLE on a simple example. Suppose we want to model the probability of a patient being hospitalized overnight. We can do this using a Bernoulli distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5714582e-4491-432f-9df1-fd59bb0705fc">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-5714582e-4491-432f-9df1-fd59bb0705fc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e380c57b-ef14-4ac8-975a-f24227334191">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-e380c57b-ef14-4ac8-975a-f24227334191" title="Permalink to this equation">#</a></span>\[\begin{align}
 H \sim p_H(\cdot; \rho) = \mathrm{Bern}(\rho).
 \end{align}\]</div>
-<p>Recall that the PMF of a Bernoulli is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-24ee191a-7902-4023-83b0-8a8a41acfa76">
-<span class="eqno">(9.2)<a class="headerlink" href="#equation-24ee191a-7902-4023-83b0-8a8a41acfa76" title="Permalink to this equation">#</a></span>\[\begin{align}
+<p>Recall that the PMF of a Bernoulli RV is,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-689a20d3-7b84-4c61-9197-6133831f1370">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-689a20d3-7b84-4c61-9197-6133831f1370" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an <em>indicator variable</em>—it evaluates to 1 if the condition in parentheses is true and 0 otherwise.</p>
 <p><strong>Joint Data Likelihood.</strong> Now, let’s write the joint data log-likelihood for our model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-56fdb26c-fe77-4eb5-ba76-1395bd8f4959">
-<span class="eqno">(9.3)<a class="headerlink" href="#equation-56fdb26c-fe77-4eb5-ba76-1395bd8f4959" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-80f51e2b-b503-4c8d-b9a1-f4e96fa4c26a">
+<span class="eqno">(9.3)<a class="headerlink" href="#equation-80f51e2b-b503-4c8d-b9a1-f4e96fa4c26a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \rho) &amp;= \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \rho) \quad (\text{since observations are i.i.d}) \\
 &amp;= \log \prod\limits_{n=1}^N p_H(h_n; \rho) \\
 &amp;= \log \prod\limits_{n=1}^N \rho^{\mathbb{I}(h_n = 1)} \cdot (1 - \rho)^{\mathbb{I}(h_n = 0)} \quad (\text{using the definition of Bernoulli PMF}) \\
@@ -458,22 +458,22 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T = \sum\limits_{n=1}^N \mathbb{I}(h_n = 1)\)</span> is the total number of hospitalizations.</p>
 <p><strong>MLE Objective.</strong> Our MLE objective is therefore:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-240a0214-8588-435e-b2bc-9919ab8912a4">
-<span class="eqno">(9.4)<a class="headerlink" href="#equation-240a0214-8588-435e-b2bc-9919ab8912a4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b83dcc70-02c1-49f7-a5f7-f52eac95b544">
+<span class="eqno">(9.4)<a class="headerlink" href="#equation-b83dcc70-02c1-49f7-a5f7-f52eac95b544" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \\
 &amp;= \mathrm{argmax}_{\rho} \left( T \cdot \log \rho - (N - T) \cdot \log (1 - \rho) \right) \\
 &amp;= \mathrm{argmin}_{\rho} \underbrace{\left( -T \cdot \log \rho + (N - T) \cdot \log (1 - \rho) \right)}_{\text{Our loss function: } \mathcal{L}(\rho)} \quad (\text{maximizing a function is equivalent to minimizing its negative})
 \end{align}\]</div>
 <p><strong>Analytic Optimization.</strong> We take the gradient of the above loss <span class="math notranslate nohighlight">\(\mathcal{L}(\rho)\)</span> with respect to <span class="math notranslate nohighlight">\(\rho\)</span>, set it to <span class="math notranslate nohighlight">\(0\)</span> and solve:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d63a02b1-5e6c-4a99-aa65-01e3ed9b5add">
-<span class="eqno">(9.5)<a class="headerlink" href="#equation-d63a02b1-5e6c-4a99-aa65-01e3ed9b5add" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9c27d2c2-8c16-446c-86f4-c63686bba58d">
+<span class="eqno">(9.5)<a class="headerlink" href="#equation-9c27d2c2-8c16-446c-86f4-c63686bba58d" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &amp;= \frac{d \mathcal{L}(\rho)}{d \rho} \\
-&amp;= -\frac{T}{\rho} + \frac{N - T}{1 - \rho} \\
-&amp;= \frac{T - N \cdot \rho}{\rho (\rho - 1)} \quad (\text{bringing fractions under common denominator}) \\
-&amp;= T - N \cdot \rho \quad (\text{multiply both sides by } \rho (\rho - 1)) \\
+&amp;= -\frac{T}{\rho} + \frac{N - T}{1 - \rho} \quad (\text{taking the derivative of } \mathcal{L}(\rho)) \\
+&amp;= \frac{T - N \cdot \rho}{\rho \cdot (\rho - 1)} \quad (\text{bringing fractions under common denominator}) \\
+&amp;= T - N \cdot \rho \quad (\text{multiplying both sides by } \rho \cdot (\rho - 1)) \\
 \rho &amp;= \frac{T}{N}
 \end{align}\]</div>
-<p>The solution that <span class="math notranslate nohighlight">\(\rho = \frac{T}{N}\)</span> should make intuitive sense; the probability estimated via the MLE is that observed in the data.</p>
+<p>The solution, <span class="math notranslate nohighlight">\(\rho = \frac{T}{N}\)</span>, is exactly the proportion of hospitalizations out of the total number of hospital visits!</p>
 </section>
 <section id="challenges-with-analytic-optimization">
 <h2><span class="section-number">9.3. </span>Challenges with Analytic Optimization<a class="headerlink" href="#challenges-with-analytic-optimization" title="Permalink to this heading">#</a></h2>
