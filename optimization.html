@@ -435,19 +435,19 @@ document.write(`
 <section id="example-of-analytic-mle">
 <h2><span class="section-number">9.2. </span>Example of Analytic MLE<a class="headerlink" href="#example-of-analytic-mle" title="Permalink to this heading">#</a></h2>
 <p><strong>Model.</strong> Let’s see how this works by analytically performing the MLE on a simple example. Suppose we want to model the probability of a patient being hospitalized overnight. We can do this using a Bernoulli distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0cff3a53-41c4-4400-8848-e4b463ee97ef">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-0cff3a53-41c4-4400-8848-e4b463ee97ef" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4397a311-93bf-4754-b8f3-3805e0171c8f">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-4397a311-93bf-4754-b8f3-3805e0171c8f" title="Permalink to this equation">#</a></span>\[\begin{align}
 H \sim p_H(\cdot; \rho) = \mathrm{Bern}(\rho).
 \end{align}\]</div>
 <p>Recall that the PMF of a Bernoulli RV is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f3d59e19-4109-4788-88e6-a792a42458a8">
-<span class="eqno">(9.2)<a class="headerlink" href="#equation-f3d59e19-4109-4788-88e6-a792a42458a8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-206d1031-16b8-4530-8edd-df5d0309af4a">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-206d1031-16b8-4530-8edd-df5d0309af4a" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an <em>indicator variable</em>—it evaluates to 1 if the condition in parentheses is true and 0 otherwise.</p>
-<p><strong>Joint Data Likelihood.</strong> Now, let’s write the joint data log-likelihood for our model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d292bd14-842b-47da-8cb3-b4e91a59bd4b">
-<span class="eqno">(9.3)<a class="headerlink" href="#equation-d292bd14-842b-47da-8cb3-b4e91a59bd4b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<p><strong>The Joint Data Likelihood.</strong> Now, let’s write the joint data log-likelihood for our model:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-62fcc5e6-20cd-4ff7-b883-5860b837508b">
+<span class="eqno">(9.3)<a class="headerlink" href="#equation-62fcc5e6-20cd-4ff7-b883-5860b837508b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \rho) &amp;= \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \rho) \quad (\text{since observations are i.i.d}) \\
 &amp;= \log \prod\limits_{n=1}^N p_H(h_n; \rho) \\
 &amp;= \log \prod\limits_{n=1}^N \rho^{\mathbb{I}(h_n = 1)} \cdot (1 - \rho)^{\mathbb{I}(h_n = 0)} \quad (\text{using the definition of Bernoulli PMF}) \\
@@ -457,23 +457,27 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 &amp;= T \cdot \log \rho + (N - T) \cdot \log (1 - \rho)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T = \sum\limits_{n=1}^N \mathbb{I}(h_n = 1)\)</span> is the total number of hospitalizations.</p>
-<p><strong>MLE Objective.</strong> Our MLE objective is therefore:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-39cf4ce6-3978-43bf-89a4-70c7f7afbc24">
-<span class="eqno">(9.4)<a class="headerlink" href="#equation-39cf4ce6-3978-43bf-89a4-70c7f7afbc24" title="Permalink to this equation">#</a></span>\[\begin{align}
+<p><strong>The MLE Objective.</strong> Our MLE objective is therefore:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-876e3543-1dc8-4dcc-ab1f-08f916222180">
+<span class="eqno">(9.4)<a class="headerlink" href="#equation-876e3543-1dc8-4dcc-ab1f-08f916222180" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \\
 &amp;= \mathrm{argmax}_{\rho} \left( T \cdot \log \rho - (N - T) \cdot \log (1 - \rho) \right) \\
 &amp;= \mathrm{argmin}_{\rho} \underbrace{\left( -T \cdot \log \rho + (N - T) \cdot \log (1 - \rho) \right)}_{\text{Our loss function: } \mathcal{L}(\rho)} \quad (\text{maximizing a function is equivalent to minimizing its negative})
 \end{align}\]</div>
 <p><strong>Analytic Optimization.</strong> We take the gradient of the above loss <span class="math notranslate nohighlight">\(\mathcal{L}(\rho)\)</span> with respect to <span class="math notranslate nohighlight">\(\rho\)</span>, set it to <span class="math notranslate nohighlight">\(0\)</span> and solve:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-47b7f974-d8e4-4af5-b314-3bad8b99f09e">
-<span class="eqno">(9.5)<a class="headerlink" href="#equation-47b7f974-d8e4-4af5-b314-3bad8b99f09e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0c39dedc-c17d-480f-b424-72883c2a624e">
+<span class="eqno">(9.5)<a class="headerlink" href="#equation-0c39dedc-c17d-480f-b424-72883c2a624e" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &amp;= \frac{d \mathcal{L}(\rho)}{d \rho} \\
 &amp;= -\frac{T}{\rho} + \frac{N - T}{1 - \rho} \quad (\text{taking the derivative of } \mathcal{L}(\rho)) \\
 &amp;= \frac{T - N \cdot \rho}{\rho \cdot (\rho - 1)} \quad (\text{bringing fractions under common denominator}) \\
-&amp;= T - N \cdot \rho \quad (\text{multiplying both sides by } \rho \cdot (\rho - 1)) \\
-\rho &amp;= \frac{T}{N}
+&amp;= T - N \cdot \rho \quad (\text{multiplying both sides by } \rho \cdot (\rho - 1))
 \end{align}\]</div>
-<p>The solution, <span class="math notranslate nohighlight">\(\rho = \frac{T}{N}\)</span>, is exactly the proportion of hospitalizations out of the total number of hospital visits!</p>
+<p>Solving the above gives us the solution,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-aa6cb8c2-d73d-4e94-b311-4af246e2b443">
+<span class="eqno">(9.6)<a class="headerlink" href="#equation-aa6cb8c2-d73d-4e94-b311-4af246e2b443" title="Permalink to this equation">#</a></span>\[\begin{align}
+\rho &amp;= \frac{T}{N}.
+\end{align}\]</div>
+<p>The solution is exactly the proportion of hospitalizations out of the total number of hospital visits!</p>
 <p><strong>A Note on Constraint Optimization.</strong> Oftentimes, when performing the MLE analytically, we need to constrain the parameters to lie in valid ranges. For example, <span class="math notranslate nohighlight">\(\rho\)</span> should only be allowed to take on values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. In the above derivation, it just so happens that the solution satisfies this constraint. However, for a different model, we may have to enforce such constraints explicitly. This is typically done using <a class="reference external" href="https://en.wikipedia.org/wiki/Lagrange_multiplier" rel="noopener noreferrer" target="_blank">lagrange multipliers</a>. We will not rely on this method in class, but just want to point out that it exists.</p>
 </section>
 <section id="challenges-with-analytic-optimization">
