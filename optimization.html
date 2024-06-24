@@ -429,13 +429,35 @@ document.write(`
 <p><strong>Outline:</strong></p>
 <section id="analytic-solutions-to-optimization-problems">
 <h2><span class="section-number">9.1. </span>Analytic Solutions to Optimization Problems<a class="headerlink" href="#analytic-solutions-to-optimization-problems" title="Permalink to this heading">#</a></h2>
-<p>Let’s see how this works with a simple example. Suppose we want to model the probability of a patient being hospitalized overnight. We can do this using a Bernoulli distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a9e6030-34b8-4a5a-9ec9-efeade80ce28">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-0a9e6030-34b8-4a5a-9ec9-efeade80ce28" title="Permalink to this equation">#</a></span>\[\begin{align}
-H \sim p_H(\cdot; \rho) = \mathrm{Bern}(\rho) = \rho^{\mathbb{I}(H = 1)} \cdot (1 - \rho)^{\mathbb{I}(H = 0)},
+<p><strong>Example:</strong> Let’s see how this works by analytically performing the MLE on a simple example. Suppose we want to model the probability of a patient being hospitalized overnight. We can do this using a Bernoulli distribution:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-d0957a19-5081-4457-af71-c9e124068fd5">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-d0957a19-5081-4457-af71-c9e124068fd5" title="Permalink to this equation">#</a></span>\[\begin{align}
+H \sim p_H(\cdot; \rho) = \mathrm{Bern}(\rho).
+\end{align}\]</div>
+<p>Recall that the PMF of a Bernoulli is,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f0241d02-3e0e-4ef6-adf6-cf028b03d2a9">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-f0241d02-3e0e-4ef6-adf6-cf028b03d2a9" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an <em>indicator variable</em>—it evaluates to 1 if the condition in parentheses is true and 0 otherwise.</p>
-<p>Let’s write the joint data likelihood</p>
+<p>Now, let’s write the joint data log-likelihood for our model:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-fc8fafa6-7e21-4efe-8934-1e3143cfc3d3">
+<span class="eqno">(9.3)<a class="headerlink" href="#equation-fc8fafa6-7e21-4efe-8934-1e3143cfc3d3" title="Permalink to this equation">#</a></span>\[\begin{align}
+\log p(\mathcal{D}; \rho) &amp;= \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \rho) \quad \text{since observations are i.i.d} \\
+&amp;= \log \prod\limits_{n=1}^N p_H(h_n; \rho) \\
+&amp;= \log \prod\limits_{n=1}^N \rho^{\mathbb{I}(h_n = 1)} \cdot (1 - \rho)^{\mathbb{I}(h_n = 0)} \quad \text{using the definition of Bernoulli PMF} \\
+&amp;= \sum\limits_{n=1}^N \log \rho^{\mathbb{I}(h_n = 1)} + \log (1 - \rho)^{\mathbb{I}(h_n = 0)} \quad \text{using the fact that } \log (x \cdot y) = \log x + \log y \\
+&amp;= \sum\limits_{n=1}^N \mathbb{I}(h_n = 1) \cdot \log \rho + \mathbb{I}(h_n = 0) \cdot \log (1 - \rho) \quad \text{using the fact that } \log x^y = y \cdot \log x  \\
+&amp;= \underbrace{\left( \sum\limits_{n=1}^N \mathbb{I}(h_n = 1) \right)}_{\text{Total number of times $H = 1$}} \cdot \log \rho + \underbrace{\left( \sum\limits_{n=1}^N \mathbb{I}(h_n = 0) \right)}_{\text{Total number of times $H = 0$}} \cdot \log (1 - \rho) \quad \text{moving terms that do not depend on the sums out} \\
+&amp;= T \cdot \log \rho + (N - T) \cdot \log (1 - \rho)
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(T = \sum\limits_{n=1}^N \mathbb{I}(h_n = 1)\)</span> is the total number of hospitalizations.</p>
+<p>Our MLE objective is therefore:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1faf6d58-3164-4ea1-aa7a-a37cf5df4680">
+<span class="eqno">(9.4)<a class="headerlink" href="#equation-1faf6d58-3164-4ea1-aa7a-a37cf5df4680" title="Permalink to this equation">#</a></span>\[\begin{align}
+\rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \\
+&amp;= \mathrm{argmax}_{\rho} \left( T \cdot \log \rho + (N - T) \cdot \log (1 - \rho) \right)
+\end{align}\]</div>
 </section>
 <section id="numeric-solutions-to-optimization-problems">
 <h2><span class="section-number">9.2. </span>Numeric Solutions to Optimization Problems<a class="headerlink" href="#numeric-solutions-to-optimization-problems" title="Permalink to this heading">#</a></h2>
