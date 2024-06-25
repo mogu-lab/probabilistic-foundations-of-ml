@@ -402,10 +402,9 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analytic-solutions-to-optimization-problems">9.1. Analytic Solutions to Optimization Problems</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-of-analytically-solving-for-the-mle">9.2. An Example of Analytically Solving for the MLE</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-analytic-optimization">9.3. Challenges with Analytic Optimization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-solutions-to-optimization-problems">9.4. Numeric Solutions to Optimization Problems</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-numeric-optimization">9.5. Challenges with Numeric Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-analytically-solving-for-the-mle">9.2. An Example: Analytically Solving for the MLE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-solutions-to-optimization-problems">9.3. Numeric Solutions to Optimization Problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-numeric-optimization">9.4. Challenges with Numeric Optimization</a></li>
 </ul>
             </nav>
         </div>
@@ -427,28 +426,71 @@ document.write(`
 </div>
 </div>
 </div>
-<p><strong>Context:</strong> We can perform MLE on a class of models, composed of discrete distributions.</p>
-<p><strong>Challenge:</strong></p>
+<p><strong>Context:</strong> We can use <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> to perform the MLE on a class of models, composed of discrete distributions. The MLE involves solving an optimization problem—finding the parameters that maximize the joint data likelihood. So far, we’ve let <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> take care of this optimization problem for us. But what is <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> doing under the hood?</p>
 <p><strong>Outline:</strong></p>
+<ul class="simple">
+<li><p>Introduce (exact) analytical optimization, which rely on person to do most of the work via pen-and-paper math.</p></li>
+<li><p>Introduce (approximate) numerical optimization, which rely on the machine to do the work for us, like <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p></li>
+<li><p>Discuss tradeoffs between the two.</p></li>
+</ul>
 <section id="analytic-solutions-to-optimization-problems">
 <h2><span class="section-number">9.1. </span>Analytic Solutions to Optimization Problems<a class="headerlink" href="#analytic-solutions-to-optimization-problems" title="Permalink to this heading">#</a></h2>
+<p><strong>Goal:</strong> Recall that our goal is to maximize the joint data log-likelihood:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-648ac27d-c9f5-44ae-9cec-d4632d97d0c6">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-648ac27d-c9f5-44ae-9cec-d4632d97d0c6" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta^\text{MLE} &amp;= \mathrm{argmax}_\theta \text{ } p(\mathcal{D}; \theta),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta\)</span> represents our model parameters. We will remain consistent with the convention of ML literature; we re-write the above problem as a minimization problem of our <em>negative</em> log-likelihood.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9552c6b7-a64f-4794-a773-cdb86e6005e8">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-9552c6b7-a64f-4794-a773-cdb86e6005e8" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta^\text{MLE} &amp;= \mathrm{argmin}_\theta \underbrace{-p(\mathcal{D}; \theta)}_{\text{Our loss function, } \mathcal{L}(\theta)}
+\end{align}\]</div>
+<p>We call the <span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span> our “loss function,” since our goal is now to minimize our losses.</p>
+<p><strong>Intuition:</strong> So how can we identify the minima of <span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span>? A good place to start is to determine what makes <span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span> different at its minima. Let’s get some intuition by artificially picking <span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span> and looking at its minima. Let’s pick:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathcal{L}_1(\theta) = \theta^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{L}_2(\theta) = \theta^2 + \sin(2 \cdot \pi \cdot \theta)\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_example_loss_functions</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/19e59b537ddd3444ad045c1fa7beac17cb0e21d5475251527959803b23e2b209.png" src="_images/19e59b537ddd3444ad045c1fa7beac17cb0e21d5475251527959803b23e2b209.png" />
+</div>
+</div>
+<p>Looking at the left plot above, we see that the minimum has a unique property: the loss function is <em>flat at the minimum</em>. In other words, at the minimum, the derivative of the loss function equals zero:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-dbc250f9-5fc5-441b-ae7b-e46d9edd1950">
+<span class="eqno">(9.3)<a class="headerlink" href="#equation-dbc250f9-5fc5-441b-ae7b-e46d9edd1950" title="Permalink to this equation">#</a></span>\[\begin{align}
+\frac{d \mathcal{L}(\theta)}{d \theta} = 0
+\end{align}\]</div>
+<p>Does the same hold for the right plot? Not exactly… On the right plot, at the minimum, we do have <span class="math notranslate nohighlight">\(\frac{d \mathcal{L}(\theta)}{d \theta} = 0\)</span>. But there are other points for which we also have <span class="math notranslate nohighlight">\(\frac{d \mathcal{L}(\theta)}{d \theta} = 0\)</span>.</p>
+<p><strong>Procedure:</strong> We can solve our optimization problem via four steps.</p>
+<ol class="arabic simple">
+<li><p>Compute the derivative of the loss function: <span class="math notranslate nohighlight">\(\frac{d \mathcal{L}(\theta)}{d \theta}\)</span></p></li>
+<li><p>Set the derivative of the loss function equal to <span class="math notranslate nohighlight">\(0\)</span>: <span class="math notranslate nohighlight">\(\frac{d \mathcal{L}(\theta)}{d \theta} = 0\)</span></p></li>
+<li><p>Solve the equation for <em>all possible values</em> of <span class="math notranslate nohighlight">\(\theta\)</span> analytically (i.e. on pen-and-paper).</p></li>
+<li><p>Plug each possible value of <span class="math notranslate nohighlight">\(\theta\)</span> into our loss function <span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span> and select the one(s) that minimize it.</p></li>
+</ol>
 </section>
-<section id="an-example-of-analytically-solving-for-the-mle">
-<h2><span class="section-number">9.2. </span>An Example of Analytically Solving for the MLE<a class="headerlink" href="#an-example-of-analytically-solving-for-the-mle" title="Permalink to this heading">#</a></h2>
+<section id="an-example-analytically-solving-for-the-mle">
+<h2><span class="section-number">9.2. </span>An Example: Analytically Solving for the MLE<a class="headerlink" href="#an-example-analytically-solving-for-the-mle" title="Permalink to this heading">#</a></h2>
 <p><strong>The Model.</strong> Let’s see how this works by analytically performing the MLE on a simple example. Suppose we want to model the probability of a patient being hospitalized overnight. We can do this using a Bernoulli distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5f40cc7d-e449-4e67-97aa-bebc6a766998">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-5f40cc7d-e449-4e67-97aa-bebc6a766998" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bd5c4d37-ffcd-4547-b893-38b4086ead29">
+<span class="eqno">(9.4)<a class="headerlink" href="#equation-bd5c4d37-ffcd-4547-b893-38b4086ead29" title="Permalink to this equation">#</a></span>\[\begin{align}
 H \sim p_H(\cdot; \rho) = \mathrm{Bern}(\rho).
 \end{align}\]</div>
 <p>Recall that the PMF of a Bernoulli RV is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f60fc0a7-3437-4248-ad14-d1eeab7e0a0d">
-<span class="eqno">(9.2)<a class="headerlink" href="#equation-f60fc0a7-3437-4248-ad14-d1eeab7e0a0d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-25b9fb84-4c6c-4461-ac51-97d95d0748d4">
+<span class="eqno">(9.5)<a class="headerlink" href="#equation-25b9fb84-4c6c-4461-ac51-97d95d0748d4" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an <em>indicator variable</em>—it evaluates to 1 if the condition in parentheses is true and 0 otherwise.</p>
 <p><strong>The Joint Data Likelihood.</strong> Now, let’s write the joint data log-likelihood for our model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eee7db7c-ba68-4b2c-a345-744593913373">
-<span class="eqno">(9.3)<a class="headerlink" href="#equation-eee7db7c-ba68-4b2c-a345-744593913373" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-78ae37c0-24af-4701-abbf-943c11658219">
+<span class="eqno">(9.6)<a class="headerlink" href="#equation-78ae37c0-24af-4701-abbf-943c11658219" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \rho) &amp;= \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \rho) \quad (\text{since observations are i.i.d}) \\
 &amp;= \log \prod\limits_{n=1}^N p_H(h_n; \rho) \\
 &amp;= \log \prod\limits_{n=1}^N \rho^{\mathbb{I}(h_n = 1)} \cdot (1 - \rho)^{\mathbb{I}(h_n = 0)} \quad (\text{using the definition of Bernoulli PMF}) \\
@@ -459,44 +501,45 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T = \sum\limits_{n=1}^N \mathbb{I}(h_n = 1)\)</span> is the total number of hospitalizations.</p>
 <p><strong>The MLE Objective.</strong> Our MLE objective is therefore:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-90702315-c08d-4b5f-bda2-b4cad64c606d">
-<span class="eqno">(9.4)<a class="headerlink" href="#equation-90702315-c08d-4b5f-bda2-b4cad64c606d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-be45bfa2-3fd0-4f1f-acdb-6c04a70ea3e2">
+<span class="eqno">(9.7)<a class="headerlink" href="#equation-be45bfa2-3fd0-4f1f-acdb-6c04a70ea3e2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \\
 &amp;= \mathrm{argmax}_{\rho} \left( T \cdot \log \rho - (N - T) \cdot \log (1 - \rho) \right) \\
 &amp;= \mathrm{argmin}_{\rho} \underbrace{\left( -T \cdot \log \rho + (N - T) \cdot \log (1 - \rho) \right)}_{\text{Our loss function: } \mathcal{L}(\rho)} \quad (\text{maximizing a function is equivalent to minimizing its negative})
 \end{align}\]</div>
 <p><strong>Analytic Optimization.</strong> We take the gradient of the above loss <span class="math notranslate nohighlight">\(\mathcal{L}(\rho)\)</span> with respect to <span class="math notranslate nohighlight">\(\rho\)</span>, set it to <span class="math notranslate nohighlight">\(0\)</span> and solve:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-217b280c-2a54-46a1-8ace-74a954eef43b">
-<span class="eqno">(9.5)<a class="headerlink" href="#equation-217b280c-2a54-46a1-8ace-74a954eef43b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bcc52830-989e-4a91-9337-4187a7c404fd">
+<span class="eqno">(9.8)<a class="headerlink" href="#equation-bcc52830-989e-4a91-9337-4187a7c404fd" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &amp;= \frac{d \mathcal{L}(\rho)}{d \rho} \\
 &amp;= -\frac{T}{\rho} + \frac{N - T}{1 - \rho} \quad (\text{taking the derivative of } \mathcal{L}(\rho)) \\
 &amp;= \frac{T - N \cdot \rho}{\rho \cdot (\rho - 1)} \quad (\text{bringing fractions under common denominator}) \\
 &amp;= T - N \cdot \rho \quad (\text{multiplying both sides by } \rho \cdot (\rho - 1))
 \end{align}\]</div>
 <p>Solving the above gives us the solution,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e7754264-f197-43a6-8bb8-1a4d32599caa">
-<span class="eqno">(9.6)<a class="headerlink" href="#equation-e7754264-f197-43a6-8bb8-1a4d32599caa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fd43ab31-01df-4d0f-b3d5-3517d0d1236a">
+<span class="eqno">(9.9)<a class="headerlink" href="#equation-fd43ab31-01df-4d0f-b3d5-3517d0d1236a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho &amp;= \frac{T}{N}.
 \end{align}\]</div>
 <p>The solution is exactly the proportion of hospitalizations out of the total number of hospital visits!</p>
-<p><strong>A Note on Constraint Optimization.</strong> Oftentimes, when performing the MLE analytically, we need to constrain the parameters to lie within valid ranges. For example, <span class="math notranslate nohighlight">\(\rho\)</span> should only be allowed to take on values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d37ca950-78d3-4a6a-85ea-a4e21b2838c7">
-<span class="eqno">(9.7)<a class="headerlink" href="#equation-d37ca950-78d3-4a6a-85ea-a4e21b2838c7" title="Permalink to this equation">#</a></span>\[\begin{align}
-\rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \text{  subject to  } 0 \leq \rho \leq 1 \\
+<p><strong>A Note on Constraint Optimization.</strong> Oftentimes, when performing the MLE analytically, we need to constrain the parameters to lie within valid ranges. For example, <span class="math notranslate nohighlight">\(\rho\)</span> should only be allowed to take on values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Formally, we express such a constraint as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-21b255c4-bd66-4274-a1fa-6346ea02e319">
+<span class="eqno">(9.10)<a class="headerlink" href="#equation-21b255c4-bd66-4274-a1fa-6346ea02e319" title="Permalink to this equation">#</a></span>\[\begin{align}
+\rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \quad \text{subject to} \quad 0 \leq \rho \leq 1 \\
 \end{align}\]</div>
-<p>In the our derivation, it just so happens that the solution satisfies this constraint. However, for different models, we may have to enforce such constraints explicitly. This is typically done using <a class="reference external" href="https://en.wikipedia.org/wiki/Lagrange_multiplier" rel="noopener noreferrer" target="_blank">lagrange multipliers</a>. We will not cover this method in class, but just want to point out that it exists.</p>
-</section>
-<section id="challenges-with-analytic-optimization">
-<h2><span class="section-number">9.3. </span>Challenges with Analytic Optimization<a class="headerlink" href="#challenges-with-analytic-optimization" title="Permalink to this heading">#</a></h2>
-<p><strong>Needs a specialized solution for every model.</strong> As you can see from the above example, performing the optimization analytically will require a new derivation for each model. However, when working with real data, we rarely know what’s the “right” model a priori. We typically start with an exploratory data analysis, try different models, evaluate them using different metrics, make hypotheses for why the models don’t fit well, revise the models to fit better, and repeat. If we had to derive a new solution for every model we wish to test, our modeling process will become quite cumbersome. Moreover, we are more prone to make errors in the derivation and write bugs in our code.</p>
-<p><strong>Cannot solve for the parameters for every model.</strong> Since the above example is for a simple Bernoulli model, an analytic solution to the MLE exists. However, for more complex problems, that may not be the case. In fact, for modern ML models, it is <em>rare</em> for there to exist an analytic solution.</p>
-<p><strong>What can we do to overcome these challenges?</strong> We can use numeric optimization algorithms. Numeric algorithms can be conveniently implemented behind abstractions, allowing us to pair different numeric optimization algorithms with different models <em>without having to write much code</em>. They even make it easy to incorporate constraints over the parameters into the optimization. This helps us write bug-free, error-free optimization code. Moreover, in practice, numerical optimization algorithms often achieve good approximate solutions for modern, complex models.</p>
+<p>In our derivation, it just so happens that the solution already satisfies this constraint. However, for different models, we may have to enforce such constraints explicitly. To enforce these constraints, one can use <a class="reference external" href="https://en.wikipedia.org/wiki/Lagrange_multiplier" rel="noopener noreferrer" target="_blank">lagrange multipliers</a>. We will not cover this method in here, but just want to point out that this class of methods exists.</p>
 </section>
 <section id="numeric-solutions-to-optimization-problems">
-<h2><span class="section-number">9.4. </span>Numeric Solutions to Optimization Problems<a class="headerlink" href="#numeric-solutions-to-optimization-problems" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.3. </span>Numeric Solutions to Optimization Problems<a class="headerlink" href="#numeric-solutions-to-optimization-problems" title="Permalink to this heading">#</a></h2>
+<p>As you can see from the above example, performing optimization analytically suffers from two challenges:</p>
+<ol class="arabic simple">
+<li><p><strong>Analytic optimization needs a specialized solution for every model.</strong> As you can see from the above example, performing the optimization analytically will require a new derivation for each model. However, when working with real data, we rarely know what’s the “right” model a priori. We typically start with an exploratory data analysis, try different models, evaluate them using different metrics, make hypotheses for why the models don’t fit well, revise the models to fit better, and repeat. If we had to derive a new solution for every model we wish to test, our modeling process will become quite cumbersome. Moreover, we are more prone to make errors in the derivation and write bugs in our code.</p></li>
+<li><p><strong>Analytic optimization cannot solve for the parameters of every model.</strong> Since the above example is for a simple Bernoulli model, an analytic solution to the MLE exists. However, for more complex problems, that may not be the case. In fact, for modern ML models, it is <em>rare</em> for there to exist an analytic solution.</p></li>
+</ol>
+<p><strong>What can we do to overcome these challenges?</strong> We can use numeric optimization algorithms. Numeric algorithms can be conveniently implemented behind abstractions, allowing us to pair different numeric optimization algorithms with different models <em>without having to write much code</em>. They even make it easy to incorporate constraints over the parameters into the optimization. This helps us write bug-free, error-free optimization code. Moreover, in practice, numerical optimization algorithms often achieve good approximate solutions for modern, complex models. Of course, these numerical algorithms are not without problems—we’ll look into some challenges they face in a bit.</p>
+<p><strong>Most popular numerical optimization algorithm: gradient descent.</strong></p>
 </section>
 <section id="challenges-with-numeric-optimization">
-<h2><span class="section-number">9.5. </span>Challenges with Numeric Optimization<a class="headerlink" href="#challenges-with-numeric-optimization" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.4. </span>Challenges with Numeric Optimization<a class="headerlink" href="#challenges-with-numeric-optimization" title="Permalink to this heading">#</a></h2>
 <p><strong>Local optima.</strong></p>
 <p><strong>Hyper-parameters.</strong></p>
 </section>
@@ -570,10 +613,9 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analytic-solutions-to-optimization-problems">9.1. Analytic Solutions to Optimization Problems</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-of-analytically-solving-for-the-mle">9.2. An Example of Analytically Solving for the MLE</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-analytic-optimization">9.3. Challenges with Analytic Optimization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-solutions-to-optimization-problems">9.4. Numeric Solutions to Optimization Problems</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-numeric-optimization">9.5. Challenges with Numeric Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-analytically-solving-for-the-mle">9.2. An Example: Analytically Solving for the MLE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-solutions-to-optimization-problems">9.3. Numeric Solutions to Optimization Problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-numeric-optimization">9.4. Challenges with Numeric Optimization</a></li>
 </ul>
   </nav></div>
 
