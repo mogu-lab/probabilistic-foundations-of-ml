@@ -58,7 +58,7 @@ def plot_example_loss_functions():
     theta = jnp.linspace(-2.0, 2.0, 100)
      
     axes[0].plot(theta, loss_fn_1(theta), c='blue', label=r'$\mathcal{L}_1(\theta)$')
-    axes[0].axvline(0.0, c='red', ls='--', label='Minima')
+    axes[0].axvline(0.0, c='red', ls='--', label='Minimum')
     axes[0].scatter(
         jnp.zeros(1), 
         loss_fn_1(jnp.zeros(1)), 
@@ -72,7 +72,7 @@ def plot_example_loss_functions():
         [-1.85023, -1.18827, -0.790481, -0.237935, 0.263358, 0.713534, 1.31896, 1.66132]
     )
     axes[1].plot(theta, loss_fn_2(theta), c='blue', label=r'$\mathcal{L}_2(\theta)$')
-    axes[1].axvline(-0.237935, c='red', ls='--', label='Minima')    
+    axes[1].axvline(-0.237935, c='red', ls='--', label='Minimum')    
     axes[1].scatter(
         local_optima, 
         loss_fn_2(local_optima), 
