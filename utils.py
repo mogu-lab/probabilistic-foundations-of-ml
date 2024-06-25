@@ -46,3 +46,41 @@ def plot_invariance_of_argmax_under_log():
     plt.legend(loc='lower right')
     plt.show()
 
+
+def plot_example_loss_functions():
+    def loss_fn_1(theta):
+        return theta ** 2.0
+    
+    def loss_fn_2(theta):
+        return theta ** 2.0 + jnp.sin(2.0 * jnp.pi * theta)
+    
+    fig, axes = plt.subplots(1, 2, figsize=(7, 3), sharex=True, sharey=True)
+    theta = jnp.linspace(-2.0, 2.0, 100)
+     
+    axes[0].plot(theta, loss_fn_1(theta), c='blue', label=r'$\mathcal{L}_1(\theta)$')
+    axes[0].axvline(0.0, c='red', ls='--', label='Minima')
+    axes[0].scatter(
+        jnp.zeros(1), 
+        loss_fn_1(jnp.zeros(1)), 
+        c='black', zorder=1, label=r'$\frac{d \mathcal{L}_1(\theta)}{d \theta} = 0$',
+    )
+    axes[0].set_xlabel(r'$\theta$')
+    axes[0].set_ylabel(r'$\mathcal{L}(\theta)$')
+    axes[0].legend(loc='upper right', framealpha=1.0)
+
+    local_optima = jnp.array(
+        [-1.85023, -1.18827, -0.790481, -0.237935, 0.263358, 0.713534, 1.31896, 1.66132]
+    )
+    axes[1].plot(theta, loss_fn_2(theta), c='blue', label=r'$\mathcal{L}_2(\theta)$')
+    axes[1].axvline(-0.237935, c='red', ls='--', label='Minima')    
+    axes[1].scatter(
+        local_optima, 
+        loss_fn_2(local_optima), 
+        c='black', zorder=1, label=r'$\frac{d \mathcal{L}_2(\theta)}{d \theta} = 0$',
+    )
+    axes[1].set_xlabel(r'$\theta$')
+    axes[1].legend(loc='upper right', framealpha=1.0)
+    
+    plt.tight_layout()
+    plt.show()
+
