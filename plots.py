@@ -93,7 +93,7 @@ def main():
             history_length=10,        
             figsize=(6, 4),
             annotation_loc=(0.34, 0.7),
-            name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn_lr=0.1.gif'), 
+            name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn_lr0.1.gif'), 
             fps=5,
         )
 
@@ -107,7 +107,7 @@ def main():
             history_length=20,        
             figsize=(6, 4),
             annotation_loc=(0.34, 0.7),
-            name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn_lr=0.01.gif'), 
+            name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn_lr0.01.gif'), 
             fps=5,
         )        
         
@@ -124,7 +124,7 @@ def main():
             annotation_loc=(0.34, 0.7),
             name=os.path.join(
                 OUTPUT_DIR,
-                'gradient_descent_quadratic_plus_sin_fn_lr=0.1.gif',
+                'gradient_descent_quadratic_plus_sin_fn_lr0.1.gif',
             ), 
             fps=5,
         )
@@ -141,7 +141,7 @@ def main():
             annotation_loc=(0.34, 0.7),
             name=os.path.join(
                 OUTPUT_DIR,
-                'gradient_descent_quadratic_plus_sin_fn_lr=0.01.gif',
+                'gradient_descent_quadratic_plus_sin_fn_lr0.01.gif',
             ), 
             fps=5,
         )
