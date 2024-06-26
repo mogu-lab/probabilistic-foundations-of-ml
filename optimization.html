@@ -438,13 +438,13 @@ document.write(`
 <section id="analytic-solutions-to-optimization-problems">
 <h2><span class="section-number">9.1. </span>Analytic Solutions to Optimization Problems<a class="headerlink" href="#analytic-solutions-to-optimization-problems" title="Permalink to this heading">#</a></h2>
 <p><strong>Goal:</strong> Recall that our goal is to maximize the joint data log-likelihood:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-490a79ef-6d40-48e0-bb4a-20d9acc2dcd5">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-490a79ef-6d40-48e0-bb4a-20d9acc2dcd5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-005c1551-7c6f-4215-a028-afd466af4968">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-005c1551-7c6f-4215-a028-afd466af4968" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_\theta \text{ } p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\theta\)</span> represents our model parameters. We will remain consistent with the convention of ML literature; we re-write the above problem as a minimization problem of our <em>negative</em> log-likelihood.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-634e0f19-0907-495e-a17a-1331968fadd1">
-<span class="eqno">(9.2)<a class="headerlink" href="#equation-634e0f19-0907-495e-a17a-1331968fadd1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-392fc0c6-f8c2-43f3-b0ea-6401c8b8c507">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-392fc0c6-f8c2-43f3-b0ea-6401c8b8c507" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmin}_\theta \underbrace{-p(\mathcal{D}; \theta)}_{\text{Our loss function, } \mathcal{L}(\theta)}
 \end{align}\]</div>
 <p>We call the <span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span> our “loss function,” since our goal is now to minimize our losses.</p>
@@ -460,8 +460,8 @@ document.write(`
 </div>
 </div>
 <p>Looking at the left plot above, we see that the minimum has a unique property: the loss function is <em>flat at the minimum</em>. In other words, at the minimum, the derivative of the loss function equals zero:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-df9a878d-7065-4bbf-8733-dd87ff55fee0">
-<span class="eqno">(9.3)<a class="headerlink" href="#equation-df9a878d-7065-4bbf-8733-dd87ff55fee0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5d954b71-42f1-4fc6-8889-75ae24f20a94">
+<span class="eqno">(9.3)<a class="headerlink" href="#equation-5d954b71-42f1-4fc6-8889-75ae24f20a94" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{d \mathcal{L}(\theta)}{d \theta} = 0
 \end{align}\]</div>
 <p>Does the same hold for the right plot? Not exactly… At the minimum, we do have <span class="math notranslate nohighlight">\(\frac{d \mathcal{L}(\theta)}{d \theta} = 0\)</span>. But there are other points for which we also have <span class="math notranslate nohighlight">\(\frac{d \mathcal{L}(\theta)}{d \theta} = 0\)</span>.</p>
@@ -477,19 +477,19 @@ document.write(`
 <section id="an-example-analytically-solving-for-the-mle">
 <h2><span class="section-number">9.2. </span>An Example: Analytically Solving for the MLE<a class="headerlink" href="#an-example-analytically-solving-for-the-mle" title="Permalink to this heading">#</a></h2>
 <p><strong>The Model.</strong> Let’s see how this works by analytically performing the MLE on a simple example. Suppose we want to model the probability of a patient being hospitalized overnight. We can do this using a Bernoulli distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-62f7407d-be4e-4c0d-862a-1252a2f124b4">
-<span class="eqno">(9.4)<a class="headerlink" href="#equation-62f7407d-be4e-4c0d-862a-1252a2f124b4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-43f33f7c-f7fc-4eab-be44-27b08ac029be">
+<span class="eqno">(9.4)<a class="headerlink" href="#equation-43f33f7c-f7fc-4eab-be44-27b08ac029be" title="Permalink to this equation">#</a></span>\[\begin{align}
 H \sim p_H(\cdot; \rho) = \mathrm{Bern}(\rho).
 \end{align}\]</div>
 <p>Recall that the PMF of a Bernoulli RV is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5dfc3925-b473-4a56-a587-a2cd54d3b850">
-<span class="eqno">(9.5)<a class="headerlink" href="#equation-5dfc3925-b473-4a56-a587-a2cd54d3b850" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f6d521c8-9db6-4369-b542-49a779fa57dd">
+<span class="eqno">(9.5)<a class="headerlink" href="#equation-f6d521c8-9db6-4369-b542-49a779fa57dd" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an <em>indicator variable</em>—it evaluates to 1 if the condition in parentheses is true and 0 otherwise.</p>
 <p><strong>The Joint Data Likelihood.</strong> Now, let’s write the joint data log-likelihood for our model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae1e8bd1-947e-4305-964d-8d34bd085afc">
-<span class="eqno">(9.6)<a class="headerlink" href="#equation-ae1e8bd1-947e-4305-964d-8d34bd085afc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-516e0b55-7ac6-43b5-84e6-da6293de0189">
+<span class="eqno">(9.6)<a class="headerlink" href="#equation-516e0b55-7ac6-43b5-84e6-da6293de0189" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \rho) &amp;= \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \rho) \quad (\text{since observations are i.i.d}) \\
 &amp;= \log \prod\limits_{n=1}^N p_H(h_n; \rho) \\
 &amp;= \log \prod\limits_{n=1}^N \rho^{\mathbb{I}(h_n = 1)} \cdot (1 - \rho)^{\mathbb{I}(h_n = 0)} \quad (\text{using the definition of Bernoulli PMF}) \\
@@ -500,29 +500,29 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T = \sum\limits_{n=1}^N \mathbb{I}(h_n = 1)\)</span> is the total number of hospitalizations.</p>
 <p><strong>The MLE Objective.</strong> Our MLE objective is therefore:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3afa0473-9ec6-4db4-bc94-edb8dcafc52a">
-<span class="eqno">(9.7)<a class="headerlink" href="#equation-3afa0473-9ec6-4db4-bc94-edb8dcafc52a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-be9a584b-7783-4a41-a98a-54c9995bcb29">
+<span class="eqno">(9.7)<a class="headerlink" href="#equation-be9a584b-7783-4a41-a98a-54c9995bcb29" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \\
 &amp;= \mathrm{argmax}_{\rho} \left( T \cdot \log \rho - (N - T) \cdot \log (1 - \rho) \right) \\
 &amp;= \mathrm{argmin}_{\rho} \underbrace{\left( -T \cdot \log \rho + (N - T) \cdot \log (1 - \rho) \right)}_{\text{Our loss function: } \mathcal{L}(\rho)} \quad (\text{maximizing a function is equivalent to minimizing its negative})
 \end{align}\]</div>
 <p><strong>Analytic Optimization.</strong> We take the gradient of the above loss <span class="math notranslate nohighlight">\(\mathcal{L}(\rho)\)</span> with respect to <span class="math notranslate nohighlight">\(\rho\)</span>, set it to <span class="math notranslate nohighlight">\(0\)</span> and solve:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-340fcbaa-1430-4d04-bde5-1c705f1147ac">
-<span class="eqno">(9.8)<a class="headerlink" href="#equation-340fcbaa-1430-4d04-bde5-1c705f1147ac" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a854e3a2-1f2e-4d07-a9ed-ea3986a433db">
+<span class="eqno">(9.8)<a class="headerlink" href="#equation-a854e3a2-1f2e-4d07-a9ed-ea3986a433db" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &amp;= \frac{d \mathcal{L}(\rho)}{d \rho} \\
 &amp;= -\frac{T}{\rho} + \frac{N - T}{1 - \rho} \quad (\text{taking the derivative of } \mathcal{L}(\rho)) \\
 &amp;= \frac{T - N \cdot \rho}{\rho \cdot (\rho - 1)} \quad (\text{bringing fractions under common denominator}) \\
 &amp;= T - N \cdot \rho \quad (\text{multiplying both sides by } \rho \cdot (\rho - 1))
 \end{align}\]</div>
 <p>Solving the above gives us the solution,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a59c1465-de39-47e6-ab82-2fca31771f6e">
-<span class="eqno">(9.9)<a class="headerlink" href="#equation-a59c1465-de39-47e6-ab82-2fca31771f6e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9e1d9be2-84c8-499f-b1ba-b07645dd3c99">
+<span class="eqno">(9.9)<a class="headerlink" href="#equation-9e1d9be2-84c8-499f-b1ba-b07645dd3c99" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho &amp;= \frac{T}{N}.
 \end{align}\]</div>
 <p>The solution is exactly the proportion of hospitalizations out of the total number of hospital visits!</p>
 <p><strong>A Note on Constraint Optimization.</strong> Oftentimes, when performing the MLE analytically, we need to constrain the parameters to lie within valid ranges. For example, <span class="math notranslate nohighlight">\(\rho\)</span> should only be allowed to take on values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Formally, we express such a constraint as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1147b615-4d92-4c4a-b1ad-148272c47a19">
-<span class="eqno">(9.10)<a class="headerlink" href="#equation-1147b615-4d92-4c4a-b1ad-148272c47a19" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bc1d1ba6-39ec-47ce-831c-71d748ffb5d9">
+<span class="eqno">(9.10)<a class="headerlink" href="#equation-bc1d1ba6-39ec-47ce-831c-71d748ffb5d9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \quad \text{subject to} \quad 0 \leq \rho \leq 1 \\
 \end{align}\]</div>
 <p>In our derivation, it just so happens that the solution already satisfies this constraint. However, for different models, we may have to enforce such constraints explicitly. To enforce these constraints, one can use <a class="reference external" href="https://en.wikipedia.org/wiki/Lagrange_multiplier" rel="noopener noreferrer" target="_blank">lagrange multipliers</a>. We will not cover this method in here, but just want to point out that this class of methods exists.</p>
@@ -564,27 +564,71 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 <ol class="arabic simple">
 <li><p>Compute the gradient of the loss with respect to the parameters, evaluated at the current value of the parameters:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-afe3653c-28e4-4bce-964b-5178c614ff11">
-<span class="eqno">(9.11)<a class="headerlink" href="#equation-afe3653c-28e4-4bce-964b-5178c614ff11" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fb740e13-d54a-44be-b180-67166ebcb567">
+<span class="eqno">(9.11)<a class="headerlink" href="#equation-fb740e13-d54a-44be-b180-67166ebcb567" title="Permalink to this equation">#</a></span>\[\begin{align}
     u &amp;\leftarrow \frac{d \mathcal{L}(\theta)}{d \theta} \Bigg|_{\theta = \theta^\text{current}}
   \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>Take a step in the direction of the negative gradient (steepest descent):</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-bc526d48-3cab-4eb6-bb1b-f4ecec514ec9">
-<span class="eqno">(9.12)<a class="headerlink" href="#equation-bc526d48-3cab-4eb6-bb1b-f4ecec514ec9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e8c387a7-e434-41c2-946d-bcc80d204e58">
+<span class="eqno">(9.12)<a class="headerlink" href="#equation-e8c387a7-e434-41c2-946d-bcc80d204e58" title="Permalink to this equation">#</a></span>\[\begin{align}
     \theta^\text{next} &amp;\leftarrow \theta^\text{current} - \alpha \cdot u
   \end{align}\]</div>
 <ol class="arabic simple" start="3">
 <li><p>Update the model parameters:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-c13be4c1-3530-4e71-93c5-9c0304c02a5c">
-<span class="eqno">(9.13)<a class="headerlink" href="#equation-c13be4c1-3530-4e71-93c5-9c0304c02a5c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-faeb6db5-8a1e-4280-a0e9-e188de4a3ca7">
+<span class="eqno">(9.13)<a class="headerlink" href="#equation-faeb6db5-8a1e-4280-a0e9-e188de4a3ca7" title="Permalink to this equation">#</a></span>\[\begin{align}
     \theta^\text{current} &amp;\leftarrow \theta^\text{next}
   \end{align}\]</div>
 </section>
 </div><p>In this algorithm, notice that there’s one variable we have yet to define: <span class="math notranslate nohighlight">\(\alpha\)</span>. Here, <span class="math notranslate nohighlight">\(\alpha\)</span> represents the size of the step we plan to take in the direction of the gradient. It is typically called the <em>learning rate</em>. You will have to play with this parameter to determine what value works best for minimizing your loss. According to lore, a good place to start is with <span class="math notranslate nohighlight">\(\alpha = 0.01\)</span>. Why? Who knows…</p>
-<p><strong>Simple Implementation of Gradient Descent.</strong> TODO YANIV</p>
+<p><strong>Simple Implementation of Gradient Descent.</strong> Even though <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> already comes with <a class="reference external" href="https://num.pyro.ai/en/stable/optimizers.html" rel="noopener noreferrer" target="_blank">several different gradient-based optimization algorithms</a>, let’s implement the above univariate gradient descent algorithm. While we’re at it, let’s have the algorithm keep track of how our parameters <span class="math notranslate nohighlight">\(\theta\)</span> change with each iteration to get some more intuition:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax</span>
+
+<span class="k">def</span> <span class="nf">univariate_gradient_descent</span><span class="p">(</span><span class="n">loss_fn</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">theta_init</span><span class="p">):</span>
+    <span class="c1"># Initialize theta     </span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">theta_init</span>
+
+    <span class="c1"># For each iteration of the algorithm...</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+        <span class="c1"># Use Jax to compute the gradient of the loss with respect to theta</span>
+        <span class="n">gradient_fn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">loss_fn</span><span class="p">)</span>
+
+        <span class="c1"># Evaluate the gradient at the current value of theta</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">gradient_fn</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+        <span class="c1"># Take a step in the direction of the gradient</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">u</span>
+
+    <span class="k">return</span> <span class="n">theta</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s see how it does on minimizing a quadratic loss function: <span class="math notranslate nohighlight">\(\mathcal{L}(\theta) = \theta^2\)</span>. We know the minimum of this formula should be at <span class="math notranslate nohighlight">\(\theta = 0\)</span>. Will our algorithm find it?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define our loss function</span>
+<span class="k">def</span> <span class="nf">quadratic_loss</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">theta</span> <span class="o">**</span> <span class="mf">2.0</span>
+
+<span class="c1"># Run gradient descent</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Minimum =&#39;</span><span class="p">,</span> <span class="n">univariate_gradient_descent</span><span class="p">(</span><span class="n">quadratic_loss</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Minimum = -4.0740736e-10
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you can see, gradient descent successfully found the minima, approximately—the resultant number is very close to 0.</p>
+<img alt="_images/gradient_descent_quadratic_fn.gif" src="_images/gradient_descent_quadratic_fn.gif" />
 <p><strong>Automatic Differentiation.</strong> So how does <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> know to compute gradients automatically for us? TODO YANIV</p>
 </section>
 <section id="challenges-with-numeric-optimization">
