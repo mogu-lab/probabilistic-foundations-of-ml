@@ -92,11 +92,25 @@ def main():
             tangent_length=1.0,
             history_length=10,        
             figsize=(6, 4),
-            annotation_loc=(0.05, 0.7),
-            name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn.gif'), 
+            annotation_loc=(0.34, 0.7),
+            name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn_lr=0.1.gif'), 
             fps=5,
         )
 
+        animate_gradient_descent(
+            lambda theta: theta ** 2.0,
+            start_x=-2.0, 
+            x_domain=(-2.0, 2.0, 0.01), 
+            iterations=100, 
+            lr=0.01, 
+            tangent_length=1.0,
+            history_length=20,        
+            figsize=(6, 4),
+            annotation_loc=(0.34, 0.7),
+            name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn_lr=0.01.gif'), 
+            fps=5,
+        )        
+        
     if REDO_ALL:
         animate_gradient_descent(
             lambda theta: theta ** 2.0 + jnp.sin(2.0 * jnp.pi * theta),
@@ -110,7 +124,24 @@ def main():
             annotation_loc=(0.34, 0.7),
             name=os.path.join(
                 OUTPUT_DIR,
-                'gradient_descent_quadratic_plus_sin_fn.gif',
+                'gradient_descent_quadratic_plus_sin_fn_lr=0.1.gif',
+            ), 
+            fps=5,
+        )
+
+        animate_gradient_descent(
+            lambda theta: theta ** 2.0 + jnp.sin(2.0 * jnp.pi * theta),
+            start_x=-1.85, 
+            x_domain=(-2.0, 2.0, 0.01), 
+            iterations=200, 
+            lr=0.01, 
+            tangent_length=1.0,
+            history_length=20,        
+            figsize=(6, 4),
+            annotation_loc=(0.34, 0.7),
+            name=os.path.join(
+                OUTPUT_DIR,
+                'gradient_descent_quadratic_plus_sin_fn_lr=0.01.gif',
             ), 
             fps=5,
         )
