@@ -4,6 +4,7 @@ import jax
 import jax.numpy as jnp
 
 
+
 def convert_categorical_to_int(d, categories):
     r = 0
     for idx, day in enumerate(categories):
