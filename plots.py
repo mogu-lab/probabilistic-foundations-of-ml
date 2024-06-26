@@ -7,6 +7,7 @@ import jax
 import jax.numpy as jnp
 
 
+REDO_ALL = True
 OUTPUT_DIR = 'figs'
 
 
@@ -40,7 +41,8 @@ def animate_gradient_descent(
 
     init = plt.scatter(
         [start_x], [fn(start_x)],
-        c='black', marker='*', zorder=3.0, label=r'Initial $\theta$',
+        c='black', marker='*', s=200.0, zorder=3.0,
+        label=r'$\theta^{\mathrm{initial}}$',
     )
 
     for frame in range(iterations):
@@ -54,54 +56,65 @@ def animate_gradient_descent(
             history.append(plt.scatter(
                 trajectory[-num_points + h + 1], fn(trajectory[-num_points + h + 1]), 
                 color='r', zorder=2.5, alpha=(h + 1.0) / float(num_points),
-                **(dict(label=r'Current $\theta$') if plot_cur_legend else {}),
+                **(dict(label=r'$\theta^{\mathrm{current}}$') if plot_cur_legend else {}),
             ))
 
         slope = grad_fn(trajectory[-1])
-        y_intercept = fn_at_y - slope * trajectory[-1]
-        tx = jnp.arange(trajectory[-1] - tangent_length, trajectory[-1] + tangent_length, 2) # X coordinates of tangent line
-        ty = slope * tx + y_intercept # Y coordinates of tangent line
-        tangent = plt.plot(tx, ty, 'r--')    
-
         trajectory.append(trajectory[-1] - lr * slope)
         step = abs(trajectory[-1] - trajectory[-2])
 
         # Plot text info
         bbox_args = dict(boxstyle='round', fc='0.8')
-        #arrow_args = dict(arrowstyle = '->', color = 'b', linewidth = 1)
         text = f'Iteration: {frame}\nPoint: ({trajectory[-2]:.2f}, {fn_at_y:.2f})\nSlope: {slope:.2f}\nStep: {step:.4f}'
         text = ax.annotate(text, xy=(trajectory[-2], fn_at_y), xytext=annotation_loc, textcoords='axes fraction', bbox=bbox_args, fontsize=12)
 
-        plt.title('Animation of Gradient Descent')    
+        plt.title(f'Animation of Gradient Descent: Learning Rate = {lr}')
         plt.legend()
+
+        images.append([f[0], init, text] + history)
         
         # Stopping algorithm if desired precision have been met
         if precision is not None and step <= precision:
-            text2 = plt.text(0.7, 0.1, 'Local minimum found', fontsize=12, transform=ax.transAxes)
-            images.append([f[0], init, tangent[0], text, text2] + history)
             break
-
-        images.append([f[0], init, tangent[0], text] + history)
 
     anim = ArtistAnimation(fig, images) 
     anim.save(name, writer='imagemagic', fps=fps)
 
 
-def main():    
-    animate_gradient_descent(
-        lambda theta: theta ** 2.0,
-        start_x=-2.0, 
-        x_domain=(-2.0, 2.0, 0.01), 
-        iterations=50, 
-        lr=0.1, 
-        tangent_length=1.0,
-        history_length=5,        
-        figsize=(5, 4),
-        annotation_loc=(0.05, 0.7),
-        name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn.gif'), 
-        fps=5,
-    )
+def main():
+    if REDO_ALL:
+        animate_gradient_descent(
+            lambda theta: theta ** 2.0,
+            start_x=-2.0, 
+            x_domain=(-2.0, 2.0, 0.01), 
+            iterations=50, 
+            lr=0.1, 
+            tangent_length=1.0,
+            history_length=10,        
+            figsize=(6, 4),
+            annotation_loc=(0.05, 0.7),
+            name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn.gif'), 
+            fps=5,
+        )
 
+    if REDO_ALL:
+        animate_gradient_descent(
+            lambda theta: theta ** 2.0 + jnp.sin(2.0 * jnp.pi * theta),
+            start_x=-1.85, 
+            x_domain=(-2.0, 2.0, 0.01), 
+            iterations=100, 
+            lr=0.1, 
+            tangent_length=1.0,
+            history_length=10,        
+            figsize=(6, 4),
+            annotation_loc=(0.34, 0.7),
+            name=os.path.join(
+                OUTPUT_DIR,
+                'gradient_descent_quadratic_plus_sin_fn.gif',
+            ), 
+            fps=5,
+        )
+        
     
 if __name__ == '__main__':
     main()
