@@ -149,7 +149,8 @@ def all_gradient_descent_plots():
     
     
 def main():
-    all_gradient_descent_plots()
+    #all_gradient_descent_plots()
+    pass
     
     
 if __name__ == '__main__':
