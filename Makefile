@@ -2,7 +2,7 @@ build:
 	python render_schedule.py > schedule.md && jupyter-book build --all .
 
 plots:
-	python plots.py
+	python static_plots.py
 
 clean:
 	rm -rf _build && rm -rf __pycache__
