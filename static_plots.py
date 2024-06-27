@@ -158,7 +158,7 @@ def plot_poisson_example():
         plt.scatter(S, prob, label=r'$\lambda = {}$'.format(lamb))
 
     plt.xlabel(r'$n$')
-    plt.ylabel(r'$p_N(n)$')
+    plt.ylabel(r'$p_N(n; \lambda)$')
     plt.title(r'PMF of Poisson Distributions for Different $\lambda$s')
     plt.legend()
     plt.tight_layout()
