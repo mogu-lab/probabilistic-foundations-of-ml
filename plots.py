@@ -1,4 +1,5 @@
 import os
+import math
 
 import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
@@ -7,7 +8,7 @@ import jax
 import jax.numpy as jnp
 
 
-OUTPUT_DIR = 'figs'
+OUTPUT_DIR = '_static/figs'
 
 
 def animate_gradient_descent(
@@ -55,7 +56,9 @@ def animate_gradient_descent(
             history.append(plt.scatter(
                 trajectory[-num_points + h + 1],
                 fn(trajectory[-num_points + h + 1]), 
-                color='r', zorder=2.5, alpha=(h + 1.0) / float(num_points),
+                color='r',
+                zorder=2.5,
+                alpha=math.pow((h + 1.0) / float(num_points), 2.0),
                 **(dict(label=r'$\theta^{\mathrm{current}}$') if plot_cur_legend else {}),
             ))
 
@@ -89,7 +92,7 @@ def all_gradient_descent_plots():
         iterations=50, 
         lr=0.1, 
         tangent_length=1.0,
-        history_length=10,        
+        history_length=20,        
         figsize=(6, 4),
         annotation_loc=(0.34, 0.7),
         name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn_lr0p1.gif'), 
@@ -117,7 +120,7 @@ def all_gradient_descent_plots():
         iterations=100, 
         lr=0.1, 
         tangent_length=1.0,
-        history_length=10,        
+        history_length=20,        
         figsize=(6, 4),
         annotation_loc=(0.34, 0.7),
         name=os.path.join(
