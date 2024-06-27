@@ -437,23 +437,23 @@ document.write(`
 <h2><span class="section-number">8.1. </span>The Data Generating Process<a class="headerlink" href="#the-data-generating-process" title="Permalink to this heading">#</a></h2>
 <p>In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions. In these functions, we describe the model’s “generative process”—or, a procedure we use to sample the observed data. You just learned how to represent a whole data set using a model (using the plate notation above). We will therefore walk through a specific example that we will then code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Suppose we want to model the joint distribution of the day-of-the-week, <span class="math notranslate nohighlight">\(D\)</span>, and whether a patient is intorixated, <span class="math notranslate nohighlight">\(I\)</span>. We can do this via the model,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c24ae521-84d8-4ab0-a28c-a2a79059fc4c">
-<span class="eqno">(8.1)<a class="headerlink" href="#equation-c24ae521-84d8-4ab0-a28c-a2a79059fc4c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b519d646-6bd8-4d65-9b52-bc20f0c34f14">
+<span class="eqno">(8.1)<a class="headerlink" href="#equation-b519d646-6bd8-4d65-9b52-bc20f0c34f14" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi).
 \end{align}\]</div>
 <p>In this model,</p>
 <ul class="simple">
 <li><p><em>Marginal:</em> <span class="math notranslate nohighlight">\(p_D(\cdot; \pi)\)</span> is a distribution over the days of the week. We will therefore define it to be a Categorical distribution:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-30fe5aa7-9395-448b-8879-2852f8cf071e">
-<span class="eqno">(8.2)<a class="headerlink" href="#equation-30fe5aa7-9395-448b-8879-2852f8cf071e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-04f30a3d-3942-491f-ad01-e9a190b99018">
+<span class="eqno">(8.2)<a class="headerlink" href="#equation-04f30a3d-3942-491f-ad01-e9a190b99018" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi).
 \end{align}\]</div>
 <ul class="simple">
 <li><p><em>Conditional:</em> <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d_n; \rho)\)</span> is the probability that a patient arrives at the ER with intoxication given that <span class="math notranslate nohighlight">\(D = d_n\)</span>. Since “intoxication” is a binary outcome, we will model it using a Bernoulli. However, recall that the probability of intoxication <em>changes with the day of the week</em>—on some days, we’re more likely to treat patients with intoxication. The parameter of the Bernoulli distribution therefore needs to change depending on the day of the week. We therefore define:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-06b7956d-e7a0-4589-a35a-3debbc204801">
-<span class="eqno">(8.3)<a class="headerlink" href="#equation-06b7956d-e7a0-4589-a35a-3debbc204801" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bbcab4d3-6c94-4eaf-bd7a-c6b3210c5900">
+<span class="eqno">(8.3)<a class="headerlink" href="#equation-bbcab4d3-6c94-4eaf-bd7a-c6b3210c5900" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 \end{align}\]</div>
 <p><strong>Valid Parameter Values:</strong> Since each entry of <span class="math notranslate nohighlight">\(\rho\)</span> represents a Bernoulli distribution, each entry must be on between 0 and 1 (i.e. on the “unit interval”). And since <span class="math notranslate nohighlight">\(\pi\)</span> is represents a Categorical distribution, its entries must sum to 1 (a fancy name of this is that <span class="math notranslate nohighlight">\(\pi\)</span> lies on a “simplex”). We note this briefly because we will have to communicate to <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> the valid values these parameters may take on (but don’t worry, this isn’t hard to do).</p>
@@ -590,8 +590,8 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <p><strong>Performing the MLE:</strong> We will now perform the MLE using another helper function we’ve created. Recall that the MLE for this model is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2148354-5a11-44a0-be87-b0831ae015e1">
-<span class="eqno">(8.4)<a class="headerlink" href="#equation-e2148354-5a11-44a0-be87-b0831ae015e1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8b581a27-9429-42b9-9df5-346a27f780e7">
+<span class="eqno">(8.4)<a class="headerlink" href="#equation-8b581a27-9429-42b9-9df5-346a27f780e7" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi^\text{MLE}, \rho^\text{MLE} &amp;= \mathrm{argmax}_{\pi, \rho} \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \log \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \sum\limits_{n=1}^N \log p_{I | D}(i_n | d_n; \rho) + \log p_D(d_n; \pi)
@@ -784,13 +784,13 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <span class="c1"># Number of data points</span>
 <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 
-<span class="c1"># Number of steps we want the optimizer to take when maximizing the likelihood of the data</span>
-<span class="n">NUM_STEPS</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="c1"># Number of iterations we want the optimizer to take when maximizing the likelihood of the data</span>
+<span class="n">NUM_ITERATIONS</span> <span class="o">=</span> <span class="mi">1000</span>
 
-<span class="c1"># Pick size of update to the model&#39;s parameter during optimization</span>
+<span class="c1"># Pick the size of update to the model&#39;s parameter during optimization</span>
 <span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">0.01</span>
 
-<span class="c1"># Define an optimizer</span>
+<span class="c1"># Define an optimizer; here we chose the &quot;Adam&quot; algorithm</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">step_size</span><span class="o">=</span><span class="n">LEARNING_RATE</span><span class="p">)</span>
 
 <span class="c1"># Pick a random generator seed for the optimizer</span>
@@ -801,7 +801,7 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
     <span class="n">model_of_intoxication_given_day</span><span class="p">,</span> 
     <span class="n">optimizer</span><span class="p">,</span> 
     <span class="n">key_optimizer</span><span class="p">,</span>
-    <span class="n">NUM_STEPS</span><span class="p">,</span>
+    <span class="n">NUM_ITERATIONS</span><span class="p">,</span>
     <span class="n">N</span><span class="p">,</span> 
     <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> 
     <span class="n">i</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
@@ -813,19 +813,19 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1000 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:51,  1.88it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;09:14,  1.80it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▌       | 256/1000 [00:00&lt;00:01, 541.30it/s, init loss: 26390.5742, avg. loss [201-250]: 23521.5979]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▌       | 255/1000 [00:00&lt;00:01, 520.93it/s, init loss: 26390.5742, avg. loss [201-250]: 23521.5979]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 52%|█████▏    | 520/1000 [00:00&lt;00:00, 1027.79it/s, init loss: 26390.5742, avg. loss [451-500]: 23342.4140]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 51%|█████     | 512/1000 [00:00&lt;00:00, 984.12it/s, init loss: 26390.5742, avg. loss [451-500]: 23342.4140]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 79%|███████▊  | 786/1000 [00:00&lt;00:00, 1432.83it/s, init loss: 26390.5742, avg. loss [701-750]: 23335.6850]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 77%|███████▋  | 771/1000 [00:00&lt;00:00, 1375.06it/s, init loss: 26390.5742, avg. loss [701-750]: 23335.6850]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:00&lt;00:00, 1094.19it/s, init loss: 26390.5742, avg. loss [951-1000]: 23335.5536]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:00&lt;00:00, 1059.35it/s, init loss: 26390.5742, avg. loss [951-1000]: 23335.5536]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -836,10 +836,11 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 </div>
+<p>In the above chunk of code, you may have noticed some lines having to do with an “optimizer.” Here, the optimizer is an iterative algorithm that will help maximize the MLE for us. We will explain how it works in a later chapter.</p>
 <p><strong>Visualizing the Convergence of the MLE:</strong> We can plot the model’s log-likelihood with each iteration of the optimizer to see whether (1) the log-likelihood is increasing, as it should, and (2) whether the optimization converged (i.e. do we think there’s no more room to improve).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">NUM_STEPS</span><span class="p">),</span> <span class="n">result</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">NUM_ITERATIONS</span><span class="p">),</span> <span class="n">result</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Optimization Step&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Log Likelihood&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Convergence of MLE&#39;</span><span class="p">)</span>
