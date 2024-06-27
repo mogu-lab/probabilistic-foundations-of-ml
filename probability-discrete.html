@@ -191,7 +191,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Predictive Models</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">10. Marginal, Conditional, and Joint Probability (Continuous)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">10. Probability (Continuous)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="regression-linear.html">11. Regression (Linear)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classification-linear.html">12. Classification (Linear)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="regression-and-classification-nonlinear.html">13. Regression and Classification (Non-Linear)</a></li>
@@ -440,8 +440,8 @@ document.write(`
 </ol>
 <section id="terminology-and-notation">
 <h2><span class="section-number">4.1. </span>Terminology and Notation<a class="headerlink" href="#terminology-and-notation" title="Permalink to this heading">#</a></h2>
-<p>As in the spirit of all Computer Science classes, if we want the help of a computer to solve a problem, we need a <em>language</em> to precisely specify what we want it to do. Today, we will introduce the language—terminology and notation—from statistics. In the future, we will translate statements in this language directly into code that a computer can run.</p>
-<p>The terminology that we introduce here is slightly different from ones that you may have seen in a statistics class. The reason for this is that we’re honing in on the minimal subset of terminology we need to describe a probabilistic ML model.</p>
+<p>As in the spirit of all Computer Science classes, if we want the help of a computer to solve a problem, we need a <em>language</em> to precisely specify what we want it to do. In the same way that programming languages allow us to communicate to the computer a procedure we’d like it to execute, here, we will introduce the language—terminology and notation—from probability. In the future, we will translate statements in this language directly into code that a computer can run.</p>
+<p>The terminology that we introduce here is slightly different from ones that you may have seen in a probability class. The reason for this is that we’re honing in on the minimal subset of terminology we need to describe a probabilistic ML model.</p>
 <p><strong>Random Variable (RV):</strong> A variable whose possible values are outcomes of a random phenomenon.</p>
 <blockquote>
 <div><p>Example: Let <span class="math notranslate nohighlight">\(N\)</span> be an RV describing the number of beings that come into the ER on a given day.</p>
@@ -452,15 +452,15 @@ document.write(`
 </div></blockquote>
 <p><strong>Sample Space or Support:</strong> The set of all possible values that an RV can take on. For discrete probability, this set must be “countable” (though this is not important for now).</p>
 <blockquote>
-<div><p>Example: The sample space for <span class="math notranslate nohighlight">\(N\)</span> is the set <span class="math notranslate nohighlight">\(S = [0, \infty)\)</span>, since we can have any number from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> (theoretically speaking) of beings come to the ER.</p>
+<div><p>Example: The sample space for <span class="math notranslate nohighlight">\(N\)</span> is the set <span class="math notranslate nohighlight">\(S = [0, 1, 2, \cdots, \infty)\)</span>, since we can have any integer from <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span> (theoretically speaking) of beings come to the ER.</p>
 </div></blockquote>
-<p><strong>Probability Mass Function (PMF):</strong> A function mapping the outcome of an RV to the probability with which it occurs. We can write the PMF as a mapping from the sample space to a number on the unit interval: <span class="math notranslate nohighlight">\(p: S \rightarrow [0, 1]\)</span>.</p>
+<p><strong>Probability Mass Function (PMF):</strong> A function mapping the outcome of an RV to the probability, or frequency with which it occurs. We can write the PMF as a mapping from the sample space to a number on the unit interval: <span class="math notranslate nohighlight">\(p: S \rightarrow [0, 1]\)</span>.</p>
 <blockquote>
 <div><p>Example: Let <span class="math notranslate nohighlight">\(p_N(\cdot)\)</span> denote the PMF of <span class="math notranslate nohighlight">\(N\)</span>, where the dot represents an argument we have not specified. We denote the probability that <span class="math notranslate nohighlight">\(N\)</span> takes on a specific value <span class="math notranslate nohighlight">\(n\)</span> as follows: <span class="math notranslate nohighlight">\(p_N(n)\)</span>. If we were told that <span class="math notranslate nohighlight">\(p_N(5) = 0.1\)</span>, this means that the probability that exactly 5 beings came to the ER is 0.1 (or 10%).</p>
 </div></blockquote>
 <p>PMFs have one notable property: the probability of all outcomes in the sample space must sum to 1.</p>
 <blockquote>
-<div><p>Example: Continuing with the above example, we have that <span class="math notranslate nohighlight">\(\sum\limits_{n \in [0, \infty)} p_N(n) = 1\)</span>.</p>
+<div><p>Example: Continuing with the above example, we have that <span class="math notranslate nohighlight">\(\sum\limits_{n \in S} p_N(n) = 1\)</span>.</p>
 </div></blockquote>
 <p><strong>Parameter:</strong> A parameter is a variable that controls the shape of the PMF.</p>
 <blockquote>
@@ -483,8 +483,8 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(p_R(r)\)</span> is the evaluation of the PMF at <span class="math notranslate nohighlight">\(r\)</span>: i.e. what’s the probability that <span class="math notranslate nohighlight">\(R\)</span> equals the specific value <span class="math notranslate nohighlight">\(r\)</span>?</p></li>
 <li><p><span class="math notranslate nohighlight">\(R \sim p_R(\cdot)\)</span> denotes that <span class="math notranslate nohighlight">\(R\)</span> is sampled i.i.d from <span class="math notranslate nohighlight">\(p_R(\cdot)\)</span>.</p></li>
 </ul>
-<div class="admonition-exercise-gaining-comfortable-with-commonly-used-discrete-distributions admonition">
-<p class="admonition-title">Exercise: Gaining comfortable with commonly-used discrete distributions</p>
+<div class="admonition-exercise-gaining-comfort-with-commonly-used-discrete-distributions admonition">
+<p class="admonition-title">Exercise: Gaining comfort with commonly-used discrete distributions</p>
 <p>Browse the Wikipedia pages for the following distributions:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Bernoulli_distribution" rel="noopener noreferrer" target="_blank">Bernoulli</a></p></li>
