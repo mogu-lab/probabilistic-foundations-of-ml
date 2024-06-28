@@ -132,7 +132,7 @@ def model_discrete_IHH_ER(N, data=None):
         chex.assert_shape(attempts, (N,))
 
 
-def generate_ihh_er_data_discrete():
+def generate_IHH_ER_data_discrete():
     N = 10000
     with H.seed(rng_seed=0):
         exec_trace = H.trace(model_discrete_IHH_ER).get_trace(N)
@@ -198,7 +198,7 @@ def model_discete_continuous_IHH_CTR(N, c=None, a=None):
         a = numpyro.sample('a', p_A, obs=a)
 
 
-def generate_ihh_ctr_data_discrete_continuous():
+def generate_IHH_CTR_data_discrete_continuous():
     N = 5000
     with H.seed(rng_seed=0):
         exec_trace = H.trace(model_discete_continuous_IHH_CTR).get_trace(N)
@@ -216,8 +216,8 @@ def generate_ihh_ctr_data_discrete_continuous():
 
 
 def main():
-    generate_ihh_er_data_discrete()
-    generate_ihh_ctr_data_discrete_continuous()
+    generate_IHH_ER_data_discrete()
+    generate_IHH_CTR_data_discrete_continuous()
     
         
 if __name__ == '__main__':
