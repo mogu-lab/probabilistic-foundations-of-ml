@@ -493,47 +493,15 @@ document.write(`
 <img alt="_images/a0caf0c4fda52d08ba44ecffe137e161389bb7be64287606211451b3a83c9739.png" src="_images/a0caf0c4fda52d08ba44ecffe137e161389bb7be64287606211451b3a83c9739.png" />
 </div>
 </div>
-<p><strong>Probability Density Function (PDF):</strong> We will now introduce the PDF—the “continuous RV version of the PMF”—using the CDF. To do this, we will introduce just one more fact about the CDF, that will allow us to compute the probability of a RV lying <em>between</em> two values. Suppose we have a continuous RV, <span class="math notranslate nohighlight">\(R\)</span> with CDF <span class="math notranslate nohighlight">\(F_R(\cdot)\)</span>, then the probability that <span class="math notranslate nohighlight">\(l &lt; R \leq u\)</span> is given by <span class="math notranslate nohighlight">\(F_R(u) - F_R(l)\)</span>.</p>
+<p><strong>Probability Density Function (PDF):</strong> We will now introduce the PDF—the “continuous RV version of the PMF”—using the CDF. To do this, we will introduce just one more fact about the CDF. This fact will allow us to compute the probability of an RV lying <em>between</em> two values: suppose we have a continuous RV, <span class="math notranslate nohighlight">\(R\)</span> with CDF <span class="math notranslate nohighlight">\(F_R(\cdot)\)</span>, then the probability that <span class="math notranslate nohighlight">\(l &lt; R \leq u\)</span> is given by <span class="math notranslate nohighlight">\(F_R(u) - F_R(l)\)</span>.</p>
 <blockquote>
-<div><p>Example: Suppose we want to know the probability that a patient’s height is between <span class="math notranslate nohighlight">\(40\)</span> and <span class="math notranslate nohighlight">\(60\)</span> inches. Let’s start by computing the probability that the patient’s height is less than <span class="math notranslate nohighlight">\(60\)</span> inches—but this also includes patients whose height is also less than <span class="math notranslate nohighlight">\(40\)</span> inches (which we want to exclude from the computation). To do this, we just have to subtract the probability that their height is less than <span class="math notranslate nohighlight">\(40\)</span> inches. This gives us <span class="math notranslate nohighlight">\(F_H(60) - F_H(40)\)</span>.</p>
+<div><p>Example: Suppose we want to know the probability that a patient’s height is between <span class="math notranslate nohighlight">\(40\)</span> and <span class="math notranslate nohighlight">\(60\)</span> inches. Let’s start by computing the probability that the patient’s height is less than <span class="math notranslate nohighlight">\(60\)</span> inches—but this also includes patients whose height is also less than <span class="math notranslate nohighlight">\(40\)</span> inches (which we want to exclude). To do this, we can subtract the probability that their height is less than <span class="math notranslate nohighlight">\(40\)</span> inches. This gives us <span class="math notranslate nohighlight">\(F_H(60) - F_H(40)\)</span>.</p>
 </div></blockquote>
-<p>Recall that the PMF tries to tell us the probability of a random variable equaling a certain value (e.g. the probabilty that <span class="math notranslate nohighlight">\(R = r\)</span>). Since we can’t compute this directly, let’s set up the problem differently; specifically, let’s compute the probability that <span class="math notranslate nohighlight">\(R\)</span> lies <em>close to</em> <span class="math notranslate nohighlight">\(r\)</span>. We can do this by computing the probability that <span class="math notranslate nohighlight">\(r - \epsilon &lt; R \leq r + \epsilon\)</span>, where <span class="math notranslate nohighlight">\(\epsilon\)</span> is some very-small number. Using the CDF, we can compute this using:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5f239874-4d3d-4b0e-a896-c341a2519752">
-<span class="eqno">(10.1)<a class="headerlink" href="#equation-5f239874-4d3d-4b0e-a896-c341a2519752" title="Permalink to this equation">#</a></span>\[\begin{align}
-F_R(r + \epsilon) - F_R(r - \epsilon).
-\end{align}\]</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.random</span> <span class="k">as</span> <span class="nn">jrandom</span>
-
-<span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">p_H</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="n">heights</span> <span class="o">=</span> <span class="n">p_H</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="mi">1000</span><span class="p">,))</span>
-
-<span class="n">num_plots</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">num_plots</span><span class="p">,</span> <span class="n">num_plots</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">heights</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> bins&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="n">num_plots</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;=</span> <span class="n">num_plots</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_plots</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Height&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Binned Heights of Patients at the IHH ER&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/740d5f8307c45335887038d7d7e51b00c792354cb00d69d358d81dff1931490d.png" src="_images/740d5f8307c45335887038d7d7e51b00c792354cb00d69d358d81dff1931490d.png" />
-</div>
-</div>
-<p>Now, let’s take the limit as <span class="math notranslate nohighlight">\(\epsilon \rightarrow 0\)</span> to hone in on the probability that <span class="math notranslate nohighlight">\(R = r\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5c277d56-451e-4f8c-93e9-2ebfd73eabcb">
-<span class="eqno">(10.2)<a class="headerlink" href="#equation-5c277d56-451e-4f8c-93e9-2ebfd73eabcb" title="Permalink to this equation">#</a></span>\[\begin{align}
-p_R(r) &amp;= \underbrace{\lim\limits_{\epsilon \rightarrow 0} \frac{F_R(r + \epsilon) - F_R(r - \epsilon)}{\epsilon}}_{\text{definition of derivative from calculus}} = \frac{d F_R(r)}{d r}.
+<p>Using our new fact, let’s set up the problem differently. Instead of trying to directly compute the probability of <span class="math notranslate nohighlight">\(R = r\)</span> (which is always 0), let’s compute the probability that <span class="math notranslate nohighlight">\(R\)</span> is <em>super close to</em> <span class="math notranslate nohighlight">\(r\)</span>. We can do this by making up a variable, <span class="math notranslate nohighlight">\(\epsilon\)</span>, that is very small, and computing how the CDF changes from <span class="math notranslate nohighlight">\(F_R(r - \epsilon)\)</span> to <span class="math notranslate nohighlight">\(F_R(r)\)</span>. In other words, we want the instantaneous rate-of-change from <span class="math notranslate nohighlight">\(F_R(r - \epsilon)\)</span> to <span class="math notranslate nohighlight">\(F_R(r)\)</span>, since this rate-of-chance can be thought of as “the inclusion of <span class="math notranslate nohighlight">\(r\)</span>”.</p>
+<p>Now, the instantaneous rate-of-change is also known as the derivative. Thus, we define the PDF as the derivative of the CDF:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6de340e2-3708-4ea9-a9d4-d78f7e920405">
+<span class="eqno">(10.1)<a class="headerlink" href="#equation-6de340e2-3708-4ea9-a9d4-d78f7e920405" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_R(r) &amp;= \frac{d F_R(r)}{d r}.
 \end{align}\]</div>
 <p><strong>Properties of PDFs:</strong> Let <span class="math notranslate nohighlight">\(R\)</span> be a continuous RV with PDF <span class="math notranslate nohighlight">\(p_R(\cdot)\)</span>, defined on the sample-space <span class="math notranslate nohighlight">\(S\)</span>.</p>
 <ol class="arabic">
