@@ -442,30 +442,13 @@ document.write(`
 <blockquote>
 <div><p>Example: Suppose we are modeling the probability of intoxication as a Bernoulli RV, <span class="math notranslate nohighlight">\(I\)</span>. If we say that the probability of intoxication (or <span class="math notranslate nohighlight">\(I=1\)</span>) is <span class="math notranslate nohighlight">\(0.5\)</span> (meaning <span class="math notranslate nohighlight">\(p_I(1) = 0.5\)</span>), meaning half of our patients will have intoxication. Such a statement about the PMF of a discrete distribution can be immediately translated into intuition about frequency. On the other hand, suppose we have a continuous RV, <span class="math notranslate nohighlight">\(H\)</span>, modeling the height of patients. How can we describe the probability that a patient is 50 inches tall (i.e. what is <span class="math notranslate nohighlight">\(p_H(50)\)</span>?). Let’s try to get some intuition. Of the patients in the data, maybe we have one that’s <span class="math notranslate nohighlight">\(50.1\)</span> inches tall, another that is <span class="math notranslate nohighlight">\(49.9\)</span>, or maybe one that’s <span class="math notranslate nohighlight">\(49.999991\)</span> inches tall—but what are the chances we will observe a patient that is <em>exactly</em> (not approximately) <span class="math notranslate nohighlight">\(50\)</span> inches tall? The answer is: zero. This is because of the arbitrary precision we have on continuous values. So if we can’t describe continuous distributions using PMFs, how else can we describe them? As you will see next, we will have to use a more circuitous route.</p>
 </div></blockquote>
-<p>Let’s demonstrate this empirically, with a simple experiment. We will sample 10,000 values from a standard Uniform distribution, samples all values on the range <span class="math notranslate nohighlight">\([0, 1]\)</span> with equal probability. We will then count the number of samples that exactly equal <span class="math notranslate nohighlight">\(0.5\)</span>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.random</span> <span class="k">as</span> <span class="nn">jrandom</span>
-<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
-
-<span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span>
-
-<span class="c1"># Create a random number generator key</span>
-<span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="c1"># Draw N from a Uniform distribution</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Uniform</span><span class="p">()</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span><span class="p">,))</span>
-
-<span class="n">num_samples_equaling_0_point_5</span> <span class="o">=</span> <span class="p">(</span><span class="n">samples</span> <span class="o">==</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> of </span><span class="si">{}</span><span class="s1"> samples equal 0.5&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_samples_equaling_0_point_5</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 of 10000 samples equal 0.5
-</pre></div>
-</div>
-</div>
+<div class="admonition-exercise-why-continuous-distributions-do-not-have-pmfs admonition">
+<p class="admonition-title">Exercise: Why continuous distributions do not have PMFs</p>
+<p>Demonstrate empirically that continuous distributions do not have valid PMFs via the following procedure:</p>
+<ol class="arabic simple">
+<li><p>Sample 10,000 values from a Uniform distribution on the range <span class="math notranslate nohighlight">\([0, 1]\)</span> (using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>). This will draw samples on the range <span class="math notranslate nohighlight">\([0, 1]\)</span> with equal probability.</p></li>
+<li><p>Count the number of samples that exactly equal <span class="math notranslate nohighlight">\(0.5\)</span>. How</p></li>
+</ol>
 </div>
 <p><strong>Cumulative Density Function (CDF):</strong> As we showed, we can’t use the frequency of a continuous RV as its probability. But we <em>can</em> ask a different question: what’s the probability that a continuous RV is smaller than or equal to some value. This is called the CDF, which we will denote using <span class="math notranslate nohighlight">\(F\)</span>. What’s interesting about the CDF is that it abides by our intuition of probability as frequencies; we can empirically estimate the CDF by counting all samples for which the variable is <span class="math notranslate nohighlight">\(\leq\)</span> our value of interest. Next, we will use the CDF to define the “continuous RV version” of the PMF. Before moving on, however, let’s illustrate this by continuing with our example of IHH ER patient height.</p>
 <blockquote>
@@ -480,14 +463,16 @@ document.write(`
 </li>
 <li><p><em>The CDF is bounded by <span class="math notranslate nohighlight">\(0\)</span> below and by <span class="math notranslate nohighlight">\(1\)</span> above.</em> Let <span class="math notranslate nohighlight">\(L\)</span> and <span class="math notranslate nohighlight">\(U\)</span> be the smallest and largest values in the sample space, respectively. Then, <span class="math notranslate nohighlight">\(\lim\limits_{r \rightarrow L} F_R(r) = 0\)</span>, and <span class="math notranslate nohighlight">\(\lim\limits_{r \rightarrow U} F_R(r) = 1\)</span>.</p>
 <blockquote>
-<div><p>Example: In our running example, <span class="math notranslate nohighlight">\(L = 0\)</span> (people must have a positive height) and <span class="math notranslate nohighlight">\(U = \infty\)</span> (they can be arbitrarily tall). We denote <span class="math notranslate nohighlight">\(\lim\limits_{h \rightarrow 0} F_H(h)\)</span> is the probability that a patient’s height is <span class="math notranslate nohighlight">\(\leq 0\)</span>. Since a patient can’t be 0 inches or less, this limit evaluates to <span class="math notranslate nohighlight">\(0\)</span>. Similarly, <span class="math notranslate nohighlight">\(\lim\limits_{h \rightarrow \infty} F_H(h)\)</span> denotes the probability that a patient’s height is smaller than infinity. Since this is always true, this limit evaluates to <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<div><p>Example: In our running example, <span class="math notranslate nohighlight">\(L = 0\)</span> (people must have a positive height) and <span class="math notranslate nohighlight">\(U = \infty\)</span> (they can be arbitrarily tall). We denote <span class="math notranslate nohighlight">\(\lim\limits_{h \rightarrow 0} F_H(h)\)</span> as the probability that a patient’s height is <span class="math notranslate nohighlight">\(\leq 0\)</span>. Since a patient can’t be 0 inches or less, this limit evaluates to <span class="math notranslate nohighlight">\(0\)</span>. Similarly, <span class="math notranslate nohighlight">\(\lim\limits_{h \rightarrow \infty} F_H(h)\)</span> denotes the probability that a patient’s height is smaller than infinity. Since this is always true, this limit evaluates to <span class="math notranslate nohighlight">\(1\)</span>.</p>
 </div></blockquote>
 </li>
 </ol>
-<p>We will now plot the CDF of some different continuous RVs. Can you check that both properties are satisfied?</p>
+<p>We will now plot the CDF of some different continuous RVs (a uniform distribution and a normal distribution, denoted by <span class="math notranslate nohighlight">\(\mathcal{U}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{N}\)</span>, respectively). Can you check that both properties are satisfied?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">D</span><span class="o">.</span><span class="n">Uniform</span><span class="p">()</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;CDF of $\mathcal</span><span class="si">{U}</span><span class="s1">[0, 1]$&#39;</span><span class="p">)</span>
@@ -506,7 +491,20 @@ document.write(`
 <img alt="_images/a0caf0c4fda52d08ba44ecffe137e161389bb7be64287606211451b3a83c9739.png" src="_images/a0caf0c4fda52d08ba44ecffe137e161389bb7be64287606211451b3a83c9739.png" />
 </div>
 </div>
-<p><strong>Probability Density Function (PDF):</strong> We will now introduce the PDF—the “continuous RV version of the PMF”—using the CDF.</p>
+<p><strong>Probability Density Function (PDF):</strong> We will now introduce the PDF—the “continuous RV version of the PMF”—using the CDF. To do this, we will introduce just one more fact about the CDF, that will allow us to compute the probability of a RV lying <em>between</em> two values. Suppose we have a continuous RV, <span class="math notranslate nohighlight">\(R\)</span> with CDF <span class="math notranslate nohighlight">\(F_R(\cdot)\)</span>, then the probability that <span class="math notranslate nohighlight">\(l &lt; R \leq u\)</span> is given by <span class="math notranslate nohighlight">\(F_R(u) - F_R(l)\)</span>.</p>
+<blockquote>
+<div><p>Example: Suppose we want to know the probability that a patient’s height is between <span class="math notranslate nohighlight">\(40\)</span> and <span class="math notranslate nohighlight">\(60\)</span> inches. Let’s start by computing the probability that the patient’s height is less than <span class="math notranslate nohighlight">\(60\)</span> inches—but this also includes patients whose height is also less than <span class="math notranslate nohighlight">\(40\)</span> inches (which we want to exclude from the computation). To do this, we just have to subtract the probability that their height is less than <span class="math notranslate nohighlight">\(40\)</span> inches. This gives us <span class="math notranslate nohighlight">\(F_H(60) - F_H(40)\)</span>.</p>
+</div></blockquote>
+<p>Recall that the PMF tries to tell us the probability of a random variable equaling a certain value (e.g. the probabilty that <span class="math notranslate nohighlight">\(R = r\)</span>. Since we can’t do this directly, let’s set up the problem differently; specifically, let’s compute the probability that <span class="math notranslate nohighlight">\(R\)</span> lies <em>close to</em> <span class="math notranslate nohighlight">\(r\)</span>. We can do this by computing the probability that <span class="math notranslate nohighlight">\(r - \epsilon &lt; R \leq r + \epsilon\)</span>, where <span class="math notranslate nohighlight">\(\epsilon\)</span> is some very-small number. Using the CDF, we can compute this using:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-7e7b092c-82c6-4c25-8c62-caa75fe1f00f">
+<span class="eqno">(10.1)<a class="headerlink" href="#equation-7e7b092c-82c6-4c25-8c62-caa75fe1f00f" title="Permalink to this equation">#</a></span>\[\begin{align}
+\frac{F_R(r + \epsilon) - F_R(r - \epsilon)}{\epsilon}.
+\end{align}\]</div>
+<p>Now, let’s take the limit as <span class="math notranslate nohighlight">\(\epsilon \rightarrow 0\)</span> to hone in on the probability that <span class="math notranslate nohighlight">\(R = r\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-58e4abae-293e-47dc-9fa4-2e0cdc38ad62">
+<span class="eqno">(10.2)<a class="headerlink" href="#equation-58e4abae-293e-47dc-9fa4-2e0cdc38ad62" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_R(r) &amp;= \underbrace{\lim\limits_{\epsilon \rightarrow 0} \frac{F_R(r + \epsilon) - F_R(r - \epsilon)}{\epsilon}}_{\text{definition of derivative}} = \frac{d F_R(r)}{d r}.
+\end{align}\]</div>
 <div class="admonition-exercise-gaining-comfort-with-commonly-used-continuous-distributions admonition">
 <p class="admonition-title">Exercise: Gaining comfort with commonly-used continuous distributions</p>
 <p>Browse the Wikipedia pages for the following distributions:</p>
