@@ -403,6 +403,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differences-between-continuous-and-discrete-probability">10.1. Differences Between Continuous and Discrete Probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-discrete-continuous-models">10.2. MLE for Discrete-Continuous Models</a></li>
 </ul>
             </nav>
         </div>
@@ -470,7 +471,8 @@ document.write(`
 <p>We will now plot the CDF of some different continuous RVs (a uniform distribution and a normal distribution, denoted by <span class="math notranslate nohighlight">\(\mathcal{U}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{N}\)</span>, respectively). Can you check that both properties are satisfied?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpyro</span>
+<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
 
@@ -496,13 +498,13 @@ document.write(`
 <div><p>Example: Suppose we want to know the probability that a patient’s height is between <span class="math notranslate nohighlight">\(40\)</span> and <span class="math notranslate nohighlight">\(60\)</span> inches. Let’s start by computing the probability that the patient’s height is less than <span class="math notranslate nohighlight">\(60\)</span> inches—but this also includes patients whose height is also less than <span class="math notranslate nohighlight">\(40\)</span> inches (which we want to exclude from the computation). To do this, we just have to subtract the probability that their height is less than <span class="math notranslate nohighlight">\(40\)</span> inches. This gives us <span class="math notranslate nohighlight">\(F_H(60) - F_H(40)\)</span>.</p>
 </div></blockquote>
 <p>Recall that the PMF tries to tell us the probability of a random variable equaling a certain value (e.g. the probabilty that <span class="math notranslate nohighlight">\(R = r\)</span>. Since we can’t do this directly, let’s set up the problem differently; specifically, let’s compute the probability that <span class="math notranslate nohighlight">\(R\)</span> lies <em>close to</em> <span class="math notranslate nohighlight">\(r\)</span>. We can do this by computing the probability that <span class="math notranslate nohighlight">\(r - \epsilon &lt; R \leq r + \epsilon\)</span>, where <span class="math notranslate nohighlight">\(\epsilon\)</span> is some very-small number. Using the CDF, we can compute this using:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e7b092c-82c6-4c25-8c62-caa75fe1f00f">
-<span class="eqno">(10.1)<a class="headerlink" href="#equation-7e7b092c-82c6-4c25-8c62-caa75fe1f00f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-61465cef-f46c-493f-9115-4a57a87e1a73">
+<span class="eqno">(10.1)<a class="headerlink" href="#equation-61465cef-f46c-493f-9115-4a57a87e1a73" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{F_R(r + \epsilon) - F_R(r - \epsilon)}{\epsilon}.
 \end{align}\]</div>
 <p>Now, let’s take the limit as <span class="math notranslate nohighlight">\(\epsilon \rightarrow 0\)</span> to hone in on the probability that <span class="math notranslate nohighlight">\(R = r\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-58e4abae-293e-47dc-9fa4-2e0cdc38ad62">
-<span class="eqno">(10.2)<a class="headerlink" href="#equation-58e4abae-293e-47dc-9fa4-2e0cdc38ad62" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5c2e97d3-35d6-41ce-8202-c2d3429e945c">
+<span class="eqno">(10.2)<a class="headerlink" href="#equation-5c2e97d3-35d6-41ce-8202-c2d3429e945c" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_R(r) &amp;= \underbrace{\lim\limits_{\epsilon \rightarrow 0} \frac{F_R(r + \epsilon) - F_R(r - \epsilon)}{\epsilon}}_{\text{definition of derivative}} = \frac{d F_R(r)}{d r}.
 \end{align}\]</div>
 <div class="admonition-exercise-gaining-comfort-with-commonly-used-continuous-distributions admonition">
@@ -515,13 +517,159 @@ p_R(r) &amp;= \underbrace{\lim\limits_{\epsilon \rightarrow 0} \frac{F_R(r + \ep
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Truncated_normal_distribution" rel="noopener noreferrer" target="_blank">Truncated Normal</a></p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Laplace_distribution" rel="noopener noreferrer" target="_blank">Laplace</a></p></li>
 </ul>
-<p>Then, answer the following questions:</p>
+<p><strong>Part 1:</strong> For each of the distributions above, plot its PDF. Play with the parameters of each distribution—how does each affect the shape of the distribution? Summarize what you learn.</p>
+<p><strong>Part 2:</strong> Answer the following questions:</p>
 <ol class="arabic simple">
 <li><p>You’re modeling the distribution of heights in the US. Which of the above distributions would you choose and why?</p></li>
 <li><p>You have a large collection of antique coins. Unlike modern-day coins, your coins don’t have a 50% probability of landing heads. You’re interested in modeling the distribution of the probability of them landing heads. That is, each coin has a different probability of landing heads—you want to model the distribution of these probabilities. Which of the above distributions would you choose and why?</p></li>
 <li><p>You’ve been given a prototype of a new sensor that determines the location of the nearest intergalactic being. The sensor is, on average, correct, but is typically a little off (sometimes it overshoots and sometimes it undershoots the location). Which of the above distributions would you use to describe the error and why?</p></li>
 </ol>
 <p><em>Hint: On each Wikipedia page, there’s a panel on the right side that summarizes the properties of the distribution (e.g. its support, PDF, example plots, etc.)—all of the information you need is there.</em></p>
+</div>
+</section>
+<section id="mle-for-discrete-continuous-models">
+<h2><span class="section-number">10.2. </span>MLE for Discrete-Continuous Models<a class="headerlink" href="#mle-for-discrete-continuous-models" title="Permalink to this heading">#</a></h2>
+<p>You’ve recently been contacted by researchers at the IHH’s Center for Telekinesis Research (CTR). The researchers at the IHH’s CTR study the propensity of intergalactic beings for telekinesis—the ability of moving physical objects with their mind (how cool!). At the moment, they are interested in understanding how different physiological conditions affect a being’s telekinetic abilities (measured as a real number, with larger numbers indicating heightened telekinetic abilities). They have collected the following data sets and would like your help in analyzing it. Let’s load it and have a look!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import a bunch of libraries we&#39;ll be using below</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpyro</span>
+<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
+
+<span class="c1"># Load the data into a pandas dataframe</span>
+<span class="n">csv_fname</span> <span class="o">=</span> <span class="s1">&#39;data/IHH-CTR.csv&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_fname</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;Patient ID&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print a random sample of patients, just to see what&#39;s in the data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Condition</th>
+      <th>Telekinetic-Ability</th>
+    </tr>
+    <tr>
+      <th>Patient ID</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>398</th>
+      <td>Allergic Reaction</td>
+      <td>0.510423</td>
+    </tr>
+    <tr>
+      <th>3833</th>
+      <td>Allergic Reaction</td>
+      <td>0.479960</td>
+    </tr>
+    <tr>
+      <th>4836</th>
+      <td>Intoxication</td>
+      <td>2.043218</td>
+    </tr>
+    <tr>
+      <th>4572</th>
+      <td>Allergic Reaction</td>
+      <td>-0.443333</td>
+    </tr>
+    <tr>
+      <th>636</th>
+      <td>Intoxication</td>
+      <td>1.423190</td>
+    </tr>
+    <tr>
+      <th>2545</th>
+      <td>Intoxication</td>
+      <td>1.392568</td>
+    </tr>
+    <tr>
+      <th>1161</th>
+      <td>Intoxication</td>
+      <td>2.110151</td>
+    </tr>
+    <tr>
+      <th>2230</th>
+      <td>Intoxication</td>
+      <td>2.102866</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>Intoxication</td>
+      <td>1.865081</td>
+    </tr>
+    <tr>
+      <th>2530</th>
+      <td>Allergic Reaction</td>
+      <td>0.401414</td>
+    </tr>
+    <tr>
+      <th>4070</th>
+      <td>Intoxication</td>
+      <td>2.271342</td>
+    </tr>
+    <tr>
+      <th>1261</th>
+      <td>Allergic Reaction</td>
+      <td>-0.455159</td>
+    </tr>
+    <tr>
+      <th>4682</th>
+      <td>Entangled Antennas</td>
+      <td>-1.713834</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>Intoxication</td>
+      <td>2.000120</td>
+    </tr>
+    <tr>
+      <th>906</th>
+      <td>Intoxication</td>
+      <td>1.693633</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="admonition-exercise-modeling-data-from-the-ihh-s-ctr admonition">
+<p class="admonition-title">Exercise: Modeling Data from the IHH’s CTR</p>
+<p>Let <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(A\)</span> denote the RVs representing “Condition” and “Telekinetic-Ability,” respectively. Your goal is to learn a generative model (i.e. a joint distribution) of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(C\)</span>.</p>
+<p><strong>Part 1:</strong> Visualize the marginals, <span class="math notranslate nohighlight">\(p_C(\cdot)\)</span> and <span class="math notranslate nohighlight">\(p_A(\cdot)\)</span>, as well as the conditional <span class="math notranslate nohighlight">\(p_{A | C}(\cdot | c)\)</span> for every value of <span class="math notranslate nohighlight">\(c\)</span>.</p>
+<p><strong>Part 2:</strong> Based on the visualizations, which of the following factorizations of the joint would you prefer to use?</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+p_{A, C}(a, c) &amp;= p_{A | C}(a | c) \cdot p_C(c) \quad \text{Option 1}
+p_{A, C}(a, c) &amp;= p_{C | A}(c | a) \cdot p_A(a) \quad \text{Option 2}
+\end{align*}\]</div>
+<p>Explain your choice. Then, select specific distributions you’d like to use for each component of the joint.</p>
+<p><em>Hint: Think of which of the distributions already covered in the course would you use for each component of the joint distribution.</em></p>
+<p><strong>Part 3:</strong> Draw a directed graphical model for the joint data likelihood. Write down the log of the joint data likelihood (the joint probability of all <span class="math notranslate nohighlight">\(N\)</span> observations). Both should explicitly depict the parameters of the model that you’d like to learn.</p>
+<p><strong>Part 4:</strong> Implement your model in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>. Perform the MLE on your model.</p>
+<p><strong>Part 5:</strong> Verify your model learned the data distribution well by plotting each component of your joint distribution against the empirical distribution of the data.</p>
 </div>
 </section>
 </section>
@@ -594,6 +742,7 @@ p_R(r) &amp;= \underbrace{\lim\limits_{\epsilon \rightarrow 0} \frac{F_R(r + \ep
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differences-between-continuous-and-discrete-probability">10.1. Differences Between Continuous and Discrete Probability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-discrete-continuous-models">10.2. MLE for Discrete-Continuous Models</a></li>
 </ul>
   </nav></div>
 
