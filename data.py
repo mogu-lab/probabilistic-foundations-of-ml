@@ -10,6 +10,14 @@ import numpyro.handlers as H
 import chex
 
 
+def jax_int_array_to_str_list(a, idx_to_s):
+    return [idx_to_s[i] for i in a.tolist()]
+
+
+#########################################################################
+# IHH ER Discrete Data
+#########################################################################
+
 IDX_TO_DAY_OF_WEEK = [
     'Monday',
     'Tuesday',
@@ -124,11 +132,7 @@ def model_discrete_IHH_ER(N, data=None):
         chex.assert_shape(attempts, (N,))
 
 
-def jax_int_array_to_str_list(a, idx_to_s):
-    return [idx_to_s[i] for i in a.tolist()]
-
-        
-def main():
+def generate_ihh_er_data_discrete():
     N = 10000
     with H.seed(rng_seed=0):
         exec_trace = H.trace(model_discrete_IHH_ER).get_trace(N)
@@ -158,6 +162,63 @@ def main():
     df.index.name = 'Patient ID'
     df.to_csv('data/IHH-ER.csv')
 
+
+#########################################################################
+# IHH Telekinesis Center Discrete-Continuous Data
+#########################################################################
+
+
+IDX_TO_UNDERLYING_CONDITION = ['Entangled Antennas', 'Allergic Reaction', 'Intoxication']
+
+
+def model_discete_continuous_IHH_CTR(N, c=None, a=None):
+    pi = numpyro.param(
+        'pi',
+        jnp.array([0.2, 0.3, 0.5]),
+        constraint=C.simplex,
+    )
+
+    means = numpyro.param(
+        'pi',
+        jnp.array([-2.0, 0.0, 2.0]),
+        constraint=C.real,
+    )
+
+    std_devs = numpyro.param(
+        'pi',
+        jnp.array([0.2, 0.6, 0.4]),
+        constraint=C.positive,
+    )
+    
+    with numpyro.plate('data', N):
+        p_C = D.Categorical(pi)
+        c = numpyro.sample('c', p_C, obs=c)
+
+        p_A = D.Normal(means[c], std_devs[c])
+        a = numpyro.sample('a', p_A, obs=a)
+
+
+def generate_ihh_ctr_data_discrete_continuous():
+    N = 5000
+    with H.seed(rng_seed=0):
+        exec_trace = H.trace(model_discete_continuous_IHH_CTR).get_trace(N)
+
+    df = pd.DataFrame({
+        'Condition': jax_int_array_to_str_list(
+            exec_trace['c']['value'],
+            IDX_TO_UNDERLYING_CONDITION,
+        ),
+        'Telekinetic-Ability': exec_trace['a']['value'],
+    })
+
+    df.index.name = 'Patient ID'
+    df.to_csv('data/IHH-CTR.csv')
+
+
+def main():
+    generate_ihh_er_data_discrete()
+    generate_ihh_ctr_data_discrete_continuous()
+    
         
 if __name__ == '__main__':
     main()
