@@ -18,11 +18,11 @@ pip install ipdb jupyterlab tqdm ipywidgets
 3. Paste the following in markdown with the extracted URL:
 ```
 <div class="canva-centered-embedding">
-<div class="canva-iframe-container">
-  <iframe loading="lazy" class="canva-iframe"
-    src="URL">
-  </iframe>
-</div>
+  <div class="canva-iframe-container">
+    <iframe loading="lazy" class="canva-iframe"
+      src="URL">
+    </iframe>
+  </div>
 </div>
 ```
 
