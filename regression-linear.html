@@ -418,13 +418,13 @@ document.write(`
 <h1><span class="section-number">11. </span>Regression (Linear)<a class="headerlink" href="#regression-linear" title="Permalink to this heading">#</a></h1>
 <p><strong>Context:</strong> At this point, you have the building blocks for developing many commonly-used ML models. Using these building blocks, we will develop a commonly used ML model—regression. A regression model is a <em>predictive</em> model (i.e. a conditional distribution), in which the variable we’re interested in predicting is <em>continuous</em>.</p>
 <p><strong>Challenge:</strong> Recall that in a conditional distribution, the parameters of the distribution depend on what we’re conditioning. For example, when predicting the probability of intorixaction, <span class="math notranslate nohighlight">\(I\)</span>, given the day of the week, <span class="math notranslate nohighlight">\(D\)</span>, we can use a model like,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-06a5bbc6-420a-49ed-b99b-eaaf1f1233cc">
-<span class="eqno">(11.1)<a class="headerlink" href="#equation-06a5bbc6-420a-49ed-b99b-eaaf1f1233cc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-39534fce-d7c0-426c-8d42-aea07916f871">
+<span class="eqno">(11.1)<a class="headerlink" href="#equation-39534fce-d7c0-426c-8d42-aea07916f871" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - i}}_{\text{Bernoulli PMF (see Wikipedia)}},
 \end{align}\]</div>
 <p>where the parameter, <span class="math notranslate nohighlight">\(\rho(d)\)</span>, is a function of the condition (i.e. the day <span class="math notranslate nohighlight">\(d\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-38da6ae7-939a-4ed1-9c2f-b9debf39b5d1">
-<span class="eqno">(11.2)<a class="headerlink" href="#equation-38da6ae7-939a-4ed1-9c2f-b9debf39b5d1" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
+<div class="amsmath math notranslate nohighlight" id="equation-c97694f0-39b1-4d5b-a807-4303ef351e47">
+<span class="eqno">(11.2)<a class="headerlink" href="#equation-c97694f0-39b1-4d5b-a807-4303ef351e47" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
 0.1 &amp; \text{if $d$ is weekday} \\
 0.4 &amp; \text{if $d$ is weekend}
 \end{cases} 
@@ -438,10 +438,18 @@ p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1
 </ul>
 <section id="model">
 <h2><span class="section-number">11.1. </span>Model<a class="headerlink" href="#model" title="Permalink to this heading">#</a></h2>
-<p>The generative process for a regression model is as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-33abe4f9-2211-4ae2-8f79-04f514dc8a18">
-<span class="eqno">(11.3)<a class="headerlink" href="#equation-33abe4f9-2211-4ae2-8f79-04f514dc8a18" title="Permalink to this equation">#</a></span>\[\begin{align}
-y_n | x_n &amp;\sim \mathcal{N}\left( f(x_n; W), \sigma^2 \right)
+<p>A regression model has the following graphical model:</p>
+<div class="canva-centered-embedding">
+  <div class="canva-iframe-container">
+    <iframe loading="lazy" class="canva-iframe"
+      src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGJv58NH1k&#x2F;-MhOv0aEL8dP0kRgjrIN6Q&#x2F;view?embed">
+    </iframe>
+  </div>
+</div>
+<p>In this model, our goal is to predict <span class="math notranslate nohighlight">\(y\)</span> from <span class="math notranslate nohighlight">\(x\)</span> (i.e. learn a conditional distribution <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>). Furthermore, the relationship between <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(x\)</span> is going to depend on two parameters, <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>. Let’s instantiate the regression model by writing its generative process:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0f827794-3285-4b18-ad14-ed636106c8db">
+<span class="eqno">(11.3)<a class="headerlink" href="#equation-0f827794-3285-4b18-ad14-ed636106c8db" title="Permalink to this equation">#</a></span>\[\begin{align}
+y_n | x_n &amp;\sim \mathcal{N}\left( \mu(x_n; W), \sigma^2 \right)
 \end{align}\]</div>
 </section>
 </section>
