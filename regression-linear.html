@@ -402,7 +402,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model">11.1. Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predictive-models">11.1. Predictive Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-model">11.2. The Regression Model</a></li>
 </ul>
             </nav>
         </div>
@@ -418,13 +419,13 @@ document.write(`
 <h1><span class="section-number">11. </span>Regression (Linear)<a class="headerlink" href="#regression-linear" title="Permalink to this heading">#</a></h1>
 <p><strong>Context:</strong> At this point, you have the building blocks for developing many commonly-used ML models. Using these building blocks, we will develop a commonly used ML model—regression. A regression model is a <em>predictive</em> model (i.e. a conditional distribution), in which the variable we’re interested in predicting is <em>continuous</em>.</p>
 <p><strong>Challenge:</strong> Recall that in a conditional distribution, the parameters of the distribution depend on what we’re conditioning. For example, when predicting the probability of intorixaction, <span class="math notranslate nohighlight">\(I\)</span>, given the day of the week, <span class="math notranslate nohighlight">\(D\)</span>, we can use a model like,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-39534fce-d7c0-426c-8d42-aea07916f871">
-<span class="eqno">(11.1)<a class="headerlink" href="#equation-39534fce-d7c0-426c-8d42-aea07916f871" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c48f3ae4-94d6-4ec4-9ee5-9b62a9486d6b">
+<span class="eqno">(11.1)<a class="headerlink" href="#equation-c48f3ae4-94d6-4ec4-9ee5-9b62a9486d6b" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - i}}_{\text{Bernoulli PMF (see Wikipedia)}},
 \end{align}\]</div>
 <p>where the parameter, <span class="math notranslate nohighlight">\(\rho(d)\)</span>, is a function of the condition (i.e. the day <span class="math notranslate nohighlight">\(d\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c97694f0-39b1-4d5b-a807-4303ef351e47">
-<span class="eqno">(11.2)<a class="headerlink" href="#equation-c97694f0-39b1-4d5b-a807-4303ef351e47" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
+<div class="amsmath math notranslate nohighlight" id="equation-415ef083-0f92-469e-bf65-e4c807ca5244">
+<span class="eqno">(11.2)<a class="headerlink" href="#equation-415ef083-0f92-469e-bf65-e4c807ca5244" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
 0.1 &amp; \text{if $d$ is weekday} \\
 0.4 &amp; \text{if $d$ is weekend}
 \end{cases} 
@@ -436,21 +437,58 @@ p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1
 <li><p>Implement the model in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></p></li>
 <li><p>Understand how to quantify model performance</p></li>
 </ul>
-<section id="model">
-<h2><span class="section-number">11.1. </span>Model<a class="headerlink" href="#model" title="Permalink to this heading">#</a></h2>
-<p>A regression model has the following graphical model:</p>
+<section id="predictive-models">
+<h2><span class="section-number">11.1. </span>Predictive Models<a class="headerlink" href="#predictive-models" title="Permalink to this heading">#</a></h2>
+<p>Since regression models are a specific type of predictive model, let’s first describe what a predictive model is using the toolkit we’ve developed so far. Specifically, we’ll describe a predictive model using the directed graphical model and its corresponding generative process. Then, we will write down its joint data distribution and MLE objective.</p>
+<p><strong>Directed Graphical Model.</strong> Suppose we have a data set of observations of two RVs, <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>. Our goal is to learn to predict <span class="math notranslate nohighlight">\(Y\)</span> from <span class="math notranslate nohighlight">\(X\)</span> (i.e. learn a conditional distribution <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>). A predictive model has the following graphical representation:</p>
 <div class="canva-centered-embedding">
   <div class="canva-iframe-container">
     <iframe loading="lazy" class="canva-iframe"
       src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGJv58NH1k&#x2F;-MhOv0aEL8dP0kRgjrIN6Q&#x2F;view?embed">
     </iframe>
   </div>
-</div>
-<p>In this model, our goal is to predict <span class="math notranslate nohighlight">\(y\)</span> from <span class="math notranslate nohighlight">\(x\)</span> (i.e. learn a conditional distribution <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>). Furthermore, the relationship between <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(x\)</span> is going to depend on two parameters, <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>. Let’s instantiate the regression model by writing its generative process:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0f827794-3285-4b18-ad14-ed636106c8db">
-<span class="eqno">(11.3)<a class="headerlink" href="#equation-0f827794-3285-4b18-ad14-ed636106c8db" title="Permalink to this equation">#</a></span>\[\begin{align}
-y_n | x_n &amp;\sim \mathcal{N}\left( \mu(x_n; W), \sigma^2 \right)
+</div><p><strong>Generative Process.</strong> A predictive model has the following corresponding generative process: for <span class="math notranslate nohighlight">\(n \in [1, N]\)</span>,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a96a21e5-6599-4f1b-8c8b-f4d7cc6201b1">
+<span class="eqno">(11.3)<a class="headerlink" href="#equation-a96a21e5-6599-4f1b-8c8b-f4d7cc6201b1" title="Permalink to this equation">#</a></span>\[\begin{align}
+x_n &amp;\sim p_X(x_n) \\
+y_n | x_n &amp;\sim p_{Y | X}(\cdot | x_n; \theta) 
 \end{align}\]</div>
+<p><strong>Joint Data Log-Likelihood.</strong> For the above model, we have the following joint data log-likelihood:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-54077872-1e60-402d-a8c5-816a7d9f156e">
+<span class="eqno">(11.4)<a class="headerlink" href="#equation-54077872-1e60-402d-a8c5-816a7d9f156e" title="Permalink to this equation">#</a></span>\[\begin{align}
+\log p(\mathcal{D}; \theta) &amp;= \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad (\text{i.i.d observations}) \\
+&amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta) \quad (\text{since } \log(a \cdot b) = \log a + \log b) \\
+&amp;= \sum\limits_{n=1}^N \log p_{X, Y}(x_n, y_n; \theta) \quad (\text{since } \mathcal{D}_n = (x_n, y_n)) \\
+&amp;= \sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta) + \log p_X(x_n) \quad (\text{using our factorization of the joint}) 
+\end{align}\]</div>
+<p><strong>MLE Objective.</strong> Our goal is to maximize the probability of the joint data log-likelihood with respect to parameters <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0cad9390-9a15-4eb9-be3a-fac06d6fc584">
+<span class="eqno">(11.5)<a class="headerlink" href="#equation-0cad9390-9a15-4eb9-be3a-fac06d6fc584" title="Permalink to this equation">#</a></span>\[\begin{align}
+\mathrm{argmax}_\theta \log p(\mathcal{D}; \theta) &amp;= \mathrm{argmax}_\theta \sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta) + \log p_X(x_n) \quad (\text{substituting in our joint data log-likelihood}) \\
+&amp;= \mathrm{argmin}_\theta -\sum\limits_{n=1}^N \left( \log p_{Y | X}(y_n | x_n; \theta) + \log p_X(x_n) \right) \quad (\text{taking an argmax is like taking an argmin of the negative}) \\
+&amp;= \mathrm{argmin}_\theta -\sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta) - \underbrace{\sum\limits_{n=1}^N \log p_X(x_n)}_{\text{does not depend on } \theta} \quad (\text{we split out the sum into two parts}) \\
+&amp;= \mathrm{argmin}_\theta -\sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta) \quad (\text{term that does not depend on $\theta$ doesn't affect argmin}) 
+\end{align}\]</div>
+<p>This gives us the following objective (or loss function):</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0cb188fe-ac0a-4300-ac2b-ec4ec10389e7">
+<span class="eqno">(11.6)<a class="headerlink" href="#equation-0cb188fe-ac0a-4300-ac2b-ec4ec10389e7" title="Permalink to this equation">#</a></span>\[\begin{align}
+\mathcal{L}(\theta) = -\sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta)
+\end{align}\]</div>
+</section>
+<section id="the-regression-model">
+<h2><span class="section-number">11.2. </span>The Regression Model<a class="headerlink" href="#the-regression-model" title="Permalink to this heading">#</a></h2>
+<div class="amsmath math notranslate nohighlight" id="equation-744e31aa-cd08-4eb2-92b8-c5c245d2ae5c">
+<span class="eqno">(11.7)<a class="headerlink" href="#equation-744e31aa-cd08-4eb2-92b8-c5c245d2ae5c" title="Permalink to this equation">#</a></span>\[\begin{align}
+x_n &amp;\sim p_X(x_n) \\
+y_n | x_n &amp;\sim p_{Y | X}(\cdot | x_n; W, \sigma) = \mathcal{N}\left( \mu(x_n; W), \sigma^2 \right),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span> is a function parameterized by <span class="math notranslate nohighlight">\(W\)</span>. By this, we mean that the shape of the function is determined by the choice of <span class="math notranslate nohighlight">\(W\)</span>.</p>
+<p>Putting this all together, our generative process says:</p>
+<ol class="arabic simple">
+<li><p>Take an input, <span class="math notranslate nohighlight">\(x_n\)</span>, from our data.</p></li>
+<li><p>Feed it through our function <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span> to predict what <span class="math notranslate nohighlight">\(y_n\)</span> will be, on average.</p></li>
+<li><p>Finally, add some Gaussian noise to the result. This Gaussian noise represents the error in our measurement.</p></li>
+</ol>
 </section>
 </section>
 
@@ -521,7 +559,8 @@ y_n | x_n &amp;\sim \mathcal{N}\left( \mu(x_n; W), \sigma^2 \right)
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model">11.1. Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predictive-models">11.1. Predictive Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-regression-model">11.2. The Regression Model</a></li>
 </ul>
   </nav></div>
 
