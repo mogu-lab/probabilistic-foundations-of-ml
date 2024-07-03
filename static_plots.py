@@ -238,13 +238,40 @@ def plot_example_regression():
     key_left, key_right = jrandom.split(key, 2)
     
     p_epsilon = D.Normal(0.0, 0.6)
-    
-    fig, axes = plt.subplots(1, 2, figsize=(7, 3), sharex=True, sharey=True)
     x = jnp.linspace(-2.0, 2.0, 100)
+    y1 = f1(x) + p_epsilon.sample(key_left, x.shape)
+    y2 = f2(x) + p_epsilon.sample(key_right, x.shape)
+
+    # Plot data
+    fig, axes = plt.subplots(1, 2, figsize=(7, 3), sharex=True, sharey=True)
+
+    axes[0].scatter(
+        x, y1, 
+        color='red', alpha=0.5, 
+    )
+
+    axes[0].set_title('Regression Data #1')
+    axes[0].set_xlabel('$x$')
+    axes[0].set_ylabel('$y$')    
+    
+    axes[1].scatter(
+        x, y2, 
+        color='red', alpha=0.5,
+    )
+
+    axes[1].set_title('Regression Data #2')
+    axes[1].set_xlabel('$x$')
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'example_regression_data.png'))
+    plt.close()    
+
+    # Plot regression 
+    fig, axes = plt.subplots(1, 2, figsize=(7, 3), sharex=True, sharey=True)
 
     axes[0].plot(x, f1(x), color='blue', label=r'$\mu(\cdot; W)$')
     axes[0].scatter(
-        x, f1(x) + p_epsilon.sample(key_left, x.shape), label=r'Observation Error',
+        x, y1, label=r'Observation Error',
         color='red', alpha=0.5, 
     )
 
@@ -254,7 +281,7 @@ def plot_example_regression():
     
     axes[1].plot(x, f2(x), color='blue', label=r'$\mu(\cdot; W)$')
     axes[1].scatter(
-        x, f2(x) + p_epsilon.sample(key_right, x.shape), label=r'Observation Error',
+        x, y2, label=r'Observation Error',
         color='red', alpha=0.5,
     )
 
