@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 from matplotlib.animation import ArtistAnimation
 import jax
 import jax.numpy as jnp
+import jax.random as jrandom
+import numpyro.distributions as D
 
 
 OUTPUT_DIR = '_static/figs'
@@ -224,12 +226,57 @@ def plot_example_loss_functions():
     plt.close()
 
 
+
+def plot_example_regression():
+    def f1(x):
+        return 2.0 * x
+    
+    def f2(x):
+        return (5.0 * x ** 4.0) / 6.0 - (10.0 * x ** 2.0) / 3.0 + x / 2.0 + 2.0
+    
+    key = jrandom.PRNGKey(seed=0)
+    key_left, key_right = jrandom.split(key, 2)
+    
+    p_epsilon = D.Normal(0.0, 0.6)
+    
+    fig, axes = plt.subplots(1, 2, figsize=(7, 3), sharex=True, sharey=True)
+    x = jnp.linspace(-2.0, 2.0, 100)
+
+    axes[0].plot(x, f1(x), color='blue', label=r'$\mu(\cdot; W)$')
+    axes[0].scatter(
+        x, f1(x) + p_epsilon.sample(key_left, x.shape), label=r'Observation Error',
+        color='red', alpha=0.5, 
+    )
+
+    axes[0].set_title('Linear Regression')
+    axes[0].set_xlabel('$x$')
+    axes[0].set_ylabel('$y$')    
+    
+    axes[1].plot(x, f2(x), color='blue', label=r'$\mu(\cdot; W)$')
+    axes[1].scatter(
+        x, f2(x) + p_epsilon.sample(key_right, x.shape), label=r'Observation Error',
+        color='red', alpha=0.5,
+    )
+
+    axes[1].set_title('Polynomial Regression')    
+    axes[1].set_xlabel('$x$')
+
+    for ax in axes:
+        leg = ax.legend()
+        for lh in leg.legendHandles: 
+            lh.set_alpha(1.0)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'example_regression.png'))
+    plt.close()
+    
     
 def main():
     #plot_poisson_example()    
     #plot_invariance_of_argmax_under_log()    
     #plot_example_loss_functions()
     #all_gradient_descent_plots()
+    #plot_example_regression()
     pass
 
     
