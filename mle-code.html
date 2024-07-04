@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>8. Maximum Likelihood: Practice &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
+    <title>8. Maximum Likelihood: Code &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
   
   
   
@@ -68,8 +68,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'mle-practice';</script>
-    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/mle-practice.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'mle-code';</script>
+    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/mle-code.html" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -186,7 +186,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Frequentist Learning</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mle-theory.html">7. Maximum Likelihood: Theory</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Maximum Likelihood: Practice</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Maximum Likelihood: Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">9. Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">10. Probability (Continuous)</a></li>
 </ul>
@@ -261,7 +261,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/mogu-lab/cs349-fall-2024/blob/master/mle-practice.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/mogu-lab/cs349-fall-2024/blob/master/mle-code.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -279,7 +279,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fmogu-lab%2Fcs349-fall-2024%2Fblob%2Fmaster%2Fmle-practice.ipynb" target="_blank"
+      <li><a href="https://deepnote.com/launch?url=https%3A%2F%2Fgithub.com%2Fmogu-lab%2Fcs349-fall-2024%2Fblob%2Fmaster%2Fmle-code.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onDeepnote"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -310,7 +310,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/mle-practice.ipynb" target="_blank"
+      <li><a href="_sources/mle-code.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -392,7 +392,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Maximum Likelihood: Practice</h1>
+    <h1>Maximum Likelihood: Code</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -415,8 +415,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="maximum-likelihood-practice">
-<h1><span class="section-number">8. </span>Maximum Likelihood: Practice<a class="headerlink" href="#maximum-likelihood-practice" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="maximum-likelihood-code">
+<h1><span class="section-number">8. </span>Maximum Likelihood: Code<a class="headerlink" href="#maximum-likelihood-code" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
@@ -437,23 +437,23 @@ document.write(`
 <h2><span class="section-number">8.1. </span>The Data Generating Process<a class="headerlink" href="#the-data-generating-process" title="Permalink to this heading">#</a></h2>
 <p>In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions. In these functions, we describe the model’s “generative process”—or, a procedure we use to sample the observed data. You just learned how to represent a whole data set using a model (using the plate notation above). We will therefore walk through a specific example that we will then code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Suppose we want to model the joint distribution of the day-of-the-week, <span class="math notranslate nohighlight">\(D\)</span>, and whether a patient is intorixated, <span class="math notranslate nohighlight">\(I\)</span>. We can do this via the model,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9dbb4455-6cb5-400a-b59f-4d75b7aa21ce">
-<span class="eqno">(8.1)<a class="headerlink" href="#equation-9dbb4455-6cb5-400a-b59f-4d75b7aa21ce" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a615775d-2daf-4261-94b4-591f2af6d8a5">
+<span class="eqno">(8.1)<a class="headerlink" href="#equation-a615775d-2daf-4261-94b4-591f2af6d8a5" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi).
 \end{align}\]</div>
 <p>In this model,</p>
 <ul class="simple">
 <li><p><em>Marginal:</em> <span class="math notranslate nohighlight">\(p_D(\cdot; \pi)\)</span> is a distribution over the days of the week. We will therefore define it to be a Categorical distribution:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-748cc3c4-aeb3-4d1f-a8bb-c34f23bfa4fe">
-<span class="eqno">(8.2)<a class="headerlink" href="#equation-748cc3c4-aeb3-4d1f-a8bb-c34f23bfa4fe" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-404f1968-6b27-4cc4-a6fa-dd571fd5f940">
+<span class="eqno">(8.2)<a class="headerlink" href="#equation-404f1968-6b27-4cc4-a6fa-dd571fd5f940" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi).
 \end{align}\]</div>
 <ul class="simple">
 <li><p><em>Conditional:</em> <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d_n; \rho)\)</span> is the probability that a patient arrives at the ER with intoxication given that <span class="math notranslate nohighlight">\(D = d_n\)</span>. Since “intoxication” is a binary outcome, we will model it using a Bernoulli. However, recall that the probability of intoxication <em>changes with the day of the week</em>—on some days, we’re more likely to treat patients with intoxication. The parameter of the Bernoulli distribution therefore needs to change depending on the day of the week. We therefore define:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-13008051-7f8f-43ae-849e-d2fdec112f2e">
-<span class="eqno">(8.3)<a class="headerlink" href="#equation-13008051-7f8f-43ae-849e-d2fdec112f2e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5bd84338-ea31-4acc-bd93-4f7d457f6bcd">
+<span class="eqno">(8.3)<a class="headerlink" href="#equation-5bd84338-ea31-4acc-bd93-4f7d457f6bcd" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 \end{align}\]</div>
 <p><strong>Valid Parameter Values:</strong> Since each entry of <span class="math notranslate nohighlight">\(\rho\)</span> represents a Bernoulli distribution, each entry must be on between 0 and 1 (i.e. on the “unit interval”). And since <span class="math notranslate nohighlight">\(\pi\)</span> is represents a Categorical distribution, its entries must sum to 1 (a fancy name of this is that <span class="math notranslate nohighlight">\(\pi\)</span> lies on a “simplex”). We note this briefly because we will have to communicate to <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> the valid values these parameters may take on (but don’t worry, this isn’t hard to do).</p>
@@ -575,23 +575,23 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># Number of samples to generate</span>
 <span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Random generator key to use</span>
 
-<span class="n">cs349_sample</span><span class="p">(</span><span class="n">model_of_intoxication_given_day</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">cs349_sample_generative_process</span><span class="p">(</span><span class="n">model_of_intoxication_given_day</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.14285715, 0.14285715, 0.14285715, 0.14285715, 0.14285715,
-        0.14285715, 0.14285715], dtype=float32),
- &#39;rho&#39;: Array([0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5], dtype=float32),
- &#39;d&#39;: Array([4, 2, 4, 5, 6, 4, 4, 5, 3, 1, 5, 2, 2, 2, 5, 0, 2, 0, 0, 5], dtype=int32),
- &#39;i&#39;: Array([1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1], dtype=int32)}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;d&#39;: Array([[6, 2, 1, 3, 5, 2, 1, 5, 3, 6, 1, 3, 4, 1, 6, 5, 6, 6, 6, 4]],      dtype=int32),
+ &#39;i&#39;: Array([[1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1]],      dtype=int32),
+ &#39;pi&#39;: Array([[0.14285715, 0.14285715, 0.14285715, 0.14285715, 0.14285715,
+         0.14285715, 0.14285715]], dtype=float32),
+ &#39;rho&#39;: Array([[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]], dtype=float32)}
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Performing the MLE:</strong> We will now perform the MLE using another helper function we’ve created. Recall that the MLE for this model is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52f9387d-cb19-4cd0-92ab-068a570c0f31">
-<span class="eqno">(8.4)<a class="headerlink" href="#equation-52f9387d-cb19-4cd0-92ab-068a570c0f31" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f10a7bc3-46d3-44f7-b713-c52ded3c9ab1">
+<span class="eqno">(8.4)<a class="headerlink" href="#equation-f10a7bc3-46d3-44f7-b713-c52ded3c9ab1" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi^\text{MLE}, \rho^\text{MLE} &amp;= \mathrm{argmax}_{\pi, \rho} \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \log \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \sum\limits_{n=1}^N \log p_{I | D}(i_n | d_n; \rho) + \log p_D(d_n; \pi)
@@ -813,19 +813,19 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1000 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:46,  1.90it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:44,  1.90it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▌       | 261/1000 [00:00&lt;00:01, 555.95it/s, init loss: 26390.5742, avg. loss [201-250]: 23521.5979]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▋       | 265/1000 [00:00&lt;00:01, 566.10it/s, init loss: 26390.5742, avg. loss [201-250]: 23521.5979]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 52%|█████▎    | 525/1000 [00:00&lt;00:00, 1042.04it/s, init loss: 26390.5742, avg. loss [451-500]: 23342.4140]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 53%|█████▎    | 531/1000 [00:00&lt;00:00, 1056.09it/s, init loss: 26390.5742, avg. loss [451-500]: 23342.4140]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 79%|███████▉  | 789/1000 [00:00&lt;00:00, 1440.67it/s, init loss: 26390.5742, avg. loss [701-750]: 23335.6850]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 80%|████████  | 801/1000 [00:00&lt;00:00, 1467.63it/s, init loss: 26390.5742, avg. loss [751-800]: 23335.6070]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:00&lt;00:00, 1094.67it/s, init loss: 26390.5742, avg. loss [951-1000]: 23335.5536]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:00&lt;00:00, 1112.49it/s, init loss: 26390.5742, avg. loss [951-1000]: 23335.5536]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -944,17 +944,17 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># Number of samples to generate</span>
 <span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Random generator key to use</span>
 
-<span class="n">cs349_sample</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">model_mle</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">cs349_sample_generative_process</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">model_mle</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.19870001, 0.1529    , 0.13990001, 0.1419    , 0.136     ,
-        0.113     , 0.11760001], dtype=float32),
- &#39;rho&#39;: Array([0.09473917, 0.09301588, 0.09448019, 0.10785804, 0.10519359,
-        0.40796468, 0.41496596], dtype=float32),
- &#39;d&#39;: Array([4, 2, 3, 4, 6, 4, 4, 5, 3, 1, 5, 1, 2, 1, 4, 0, 2, 0, 0, 4], dtype=int32),
- &#39;i&#39;: Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1], dtype=int32)}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;d&#39;: Array([[6, 1, 0, 2, 5, 1, 1, 5, 3, 6, 1, 3, 3, 1, 6, 4, 6, 6, 6, 4]],      dtype=int32),
+ &#39;i&#39;: Array([[1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0]],      dtype=int32),
+ &#39;pi&#39;: Array([[0.19870001, 0.1529    , 0.13990001, 0.1419    , 0.136     ,
+         0.113     , 0.11760001]], dtype=float32),
+ &#39;rho&#39;: Array([[0.09473917, 0.09301588, 0.09448019, 0.10785804, 0.10519359,
+         0.40796468, 0.41496596]], dtype=float32)}
 </pre></div>
 </div>
 </div>

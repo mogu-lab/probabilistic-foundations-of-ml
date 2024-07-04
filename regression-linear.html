@@ -186,7 +186,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Frequentist Learning</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mle-theory.html">7. Maximum Likelihood: Theory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mle-practice.html">8. Maximum Likelihood: Practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mle-code.html">8. Maximum Likelihood: Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">9. Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">10. Probability (Continuous)</a></li>
 </ul>
@@ -418,22 +418,30 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="regression-linear">
 <h1><span class="section-number">11. </span>Regression (Linear)<a class="headerlink" href="#regression-linear" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span> 
+</pre></div>
+</div>
+</div>
+</div>
 <p><strong>Context:</strong> At this point, you have the building blocks for developing many commonly-used ML models. Using these building blocks, we will develop a commonly used ML model—regression. A regression model is a <em>predictive</em> model (i.e. a conditional distribution), in which the variable we’re interested in predicting is <em>continuous</em>.</p>
 <p><strong>Challenge:</strong> Recall that in a conditional distribution, the parameters of the distribution depend on what we’re conditioning. For example, when predicting the probability of intorixaction, <span class="math notranslate nohighlight">\(I\)</span>, given the day of the week, <span class="math notranslate nohighlight">\(D\)</span>, we can use a model like,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-06910057-c969-4471-9fe8-9be5533e4437">
-<span class="eqno">(11.1)<a class="headerlink" href="#equation-06910057-c969-4471-9fe8-9be5533e4437" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f0f74316-575d-4eaf-9991-c9789aaf2062">
+<span class="eqno">(11.1)<a class="headerlink" href="#equation-f0f74316-575d-4eaf-9991-c9789aaf2062" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - i}}_{\text{Bernoulli PMF (see Wikipedia)}},
 \end{align}\]</div>
 <p>where the parameter, <span class="math notranslate nohighlight">\(\rho(d)\)</span>, is a function of the condition (i.e. the day <span class="math notranslate nohighlight">\(d\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c210750b-4181-48dd-a316-c29f1e4e8ced">
-<span class="eqno">(11.2)<a class="headerlink" href="#equation-c210750b-4181-48dd-a316-c29f1e4e8ced" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
+<div class="amsmath math notranslate nohighlight" id="equation-178fe1b1-028d-4fef-a72b-500e27d1ff35">
+<span class="eqno">(11.2)<a class="headerlink" href="#equation-178fe1b1-028d-4fef-a72b-500e27d1ff35" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
 0.1 &amp; \text{if $d$ is weekday} \\
 0.4 &amp; \text{if $d$ is weekend}
 \end{cases} 
 \end{align}\]</div>
 <p>As in this model, in all models we’ve considered so far, the parameters depend on the condition using if-else expressions (e.g. if <span class="math notranslate nohighlight">\(d\)</span> is a weekday, then <span class="math notranslate nohighlight">\(\rho = 0.1\)</span>, else <span class="math notranslate nohighlight">\(\rho = 0.4\)</span>). Unfortunately, as models become more complex, this approach for specifying a model becomes unwieldy. For example, if instead of conditioning on something simple, like the day, we instead conditioned on something complicated, like medical image—<span class="math notranslate nohighlight">\(1000 \times 1000\)</span> pixels in size—how would we write the appropriate if-else expression? Out of a total of 1-million pixels in the image, which ones are important to even include in the if-else expression? The classes of predictive models we will introduce now—regression and (later) classification—precisely allow us to circumvent this issue. How? By making the parameter a more interesting function of the condition. Continuing with the above example, we can define, <span class="math notranslate nohighlight">\(\rho(d)\)</span> as a linear function of <span class="math notranslate nohighlight">\(d\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-193f041e-57bb-4fb4-940b-a9b518407651">
-<span class="eqno">(11.3)<a class="headerlink" href="#equation-193f041e-57bb-4fb4-940b-a9b518407651" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bd701cd1-9c79-427c-9ce9-bf94e0f833d7">
+<span class="eqno">(11.3)<a class="headerlink" href="#equation-bd701cd1-9c79-427c-9ce9-bf94e0f833d7" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(d) &amp;= \mathrm{intercept} + \mathrm{slope} \cdot d.
 \end{align}\]</div>
 <p>We can similarly make <span class="math notranslate nohighlight">\(\rho(d)\)</span> a quadratic, or sinusoidal, or polynomial function of <span class="math notranslate nohighlight">\(d\)</span>—there are endless possibilities. Of course, in this example, <span class="math notranslate nohighlight">\(d\)</span> can be one of two values, so making <span class="math notranslate nohighlight">\(\rho(d)\)</span> some function of <span class="math notranslate nohighlight">\(d\)</span> is not helpful—but when <span class="math notranslate nohighlight">\(d\)</span> is more complicated, like an image, this trick will be incredibly helpful. We will start with simple, linear functions, and build up to more complex functions (using neural networks).</p>
@@ -496,78 +504,78 @@ p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1
   <tbody>
     <tr>
       <th>90</th>
-      <td>60.408516</td>
-      <td>0.110578</td>
+      <td>0.604085</td>
+      <td>0.079067</td>
     </tr>
     <tr>
       <th>254</th>
-      <td>61.364480</td>
-      <td>0.049644</td>
+      <td>0.613645</td>
+      <td>0.029835</td>
     </tr>
     <tr>
       <th>283</th>
-      <td>82.921200</td>
-      <td>0.263387</td>
+      <td>0.829212</td>
+      <td>0.240791</td>
     </tr>
     <tr>
       <th>445</th>
-      <td>98.112000</td>
-      <td>0.356437</td>
+      <td>0.981120</td>
+      <td>0.361027</td>
     </tr>
     <tr>
       <th>461</th>
-      <td>68.832900</td>
-      <td>0.097479</td>
+      <td>0.688329</td>
+      <td>0.072750</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>79.685270</td>
-      <td>0.081543</td>
+      <td>0.796853</td>
+      <td>0.066299</td>
     </tr>
     <tr>
       <th>316</th>
-      <td>83.954630</td>
-      <td>0.453322</td>
+      <td>0.839546</td>
+      <td>0.444510</td>
     </tr>
     <tr>
       <th>489</th>
-      <td>92.942245</td>
-      <td>0.383801</td>
+      <td>0.929422</td>
+      <td>0.368031</td>
     </tr>
     <tr>
       <th>159</th>
-      <td>89.381280</td>
-      <td>0.566650</td>
+      <td>0.893813</td>
+      <td>0.522464</td>
     </tr>
     <tr>
       <th>153</th>
-      <td>83.248314</td>
-      <td>0.503184</td>
+      <td>0.832483</td>
+      <td>0.475658</td>
     </tr>
     <tr>
       <th>241</th>
-      <td>67.676000</td>
-      <td>0.112365</td>
+      <td>0.676760</td>
+      <td>0.071873</td>
     </tr>
     <tr>
       <th>250</th>
-      <td>71.112100</td>
-      <td>0.024594</td>
+      <td>0.711121</td>
+      <td>0.021624</td>
     </tr>
     <tr>
       <th>390</th>
-      <td>68.307490</td>
-      <td>0.298422</td>
+      <td>0.683075</td>
+      <td>0.276542</td>
     </tr>
     <tr>
       <th>289</th>
-      <td>47.269604</td>
-      <td>-0.057742</td>
+      <td>0.472696</td>
+      <td>-0.053246</td>
     </tr>
     <tr>
       <th>171</th>
-      <td>70.365660</td>
-      <td>0.131039</td>
+      <td>0.703657</td>
+      <td>0.128212</td>
     </tr>
   </tbody>
 </table>
@@ -588,7 +596,7 @@ p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/be5013a479c50b7a2599f42499022f5900022bf62d7e68ff24d943ace1b28a1f.png" src="_images/be5013a479c50b7a2599f42499022f5900022bf62d7e68ff24d943ace1b28a1f.png" />
+<img alt="_images/500bcac8522b923317955c0a75ad0ce0829e497d44e872cd6bcef9e7f6582234.png" src="_images/500bcac8522b923317955c0a75ad0ce0829e497d44e872cd6bcef9e7f6582234.png" />
 </div>
 </div>
 <section id="predictive-models">
@@ -610,15 +618,15 @@ p_{I | D}(i | d) = \mathrm{Ber}(\rho(d)) = \underbrace{\rho(d)^{i} \cdot \left(1
     </iframe>
   </div>
 </div><p><strong>Generative Process.</strong> Our graphical model can be directly translated into the following generative process: for <span class="math notranslate nohighlight">\(n = 1, \dots, N\)</span>,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4795b8f-c9b7-48d2-9df9-b344dde76408">
-<span class="eqno">(11.4)<a class="headerlink" href="#equation-d4795b8f-c9b7-48d2-9df9-b344dde76408" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dd112017-1b71-45ee-b80a-dfdc63378835">
+<span class="eqno">(11.4)<a class="headerlink" href="#equation-dd112017-1b71-45ee-b80a-dfdc63378835" title="Permalink to this equation">#</a></span>\[\begin{align}
 x_n &amp;\sim p_X(x_n) \\
 y_n | x_n &amp;\sim p_{Y | X}(\cdot | x_n; \theta) 
 \end{align}\]</div>
 <p>Notice that we’ve chosen our marginal over the inputs, <span class="math notranslate nohighlight">\(p_X(x_n)\)</span>, to <em>not depend</em> on any parameters. This is because we <em>just</em> care about learning how to predict <span class="math notranslate nohighlight">\(Y\)</span> from <span class="math notranslate nohighlight">\(X\)</span>. That is, we assume our use-case will be that we are <em>given</em> specific <span class="math notranslate nohighlight">\(x\)</span>’s for which we want to make predictions—we therefore don’t need to sample them from <span class="math notranslate nohighlight">\(p_X(\cdot)\)</span> (or learn <span class="math notranslate nohighlight">\(p_X(\cdot)\)</span>). As you will see in the derivation of our objective function, <span class="math notranslate nohighlight">\(p_X(x_n)\)</span> will not impact our MLE in any way.</p>
 <p><strong>Joint Data Log-Likelihood.</strong> For the above model, we have the following joint data log-likelihood:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c963ccec-a31f-4df8-a035-8baac736c195">
-<span class="eqno">(11.5)<a class="headerlink" href="#equation-c963ccec-a31f-4df8-a035-8baac736c195" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9c9802d-387e-44ef-9db1-0a394226fc17">
+<span class="eqno">(11.5)<a class="headerlink" href="#equation-f9c9802d-387e-44ef-9db1-0a394226fc17" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \theta) &amp;= \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad (\text{i.i.d observations}) \\
 &amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta) \quad (\text{since } \log(a \cdot b) = \log a + \log b) \\
 &amp;= \sum\limits_{n=1}^N \log p_{X, Y}(x_n, y_n; \theta) \quad (\text{since } \mathcal{D}_n = (x_n, y_n)) \\
@@ -626,16 +634,16 @@ y_n | x_n &amp;\sim p_{Y | X}(\cdot | x_n; \theta)
 &amp;= \sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta) + \log p_X(x_n) \quad (\text{since } \log(a \cdot b) = \log a + \log b) 
 \end{align}\]</div>
 <p><strong>MLE Objective.</strong> Our goal is to maximize the probability of the joint data log-likelihood with respect to parameters <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4f9dd8fd-0028-4ae0-94f1-cfb64b4c58c6">
-<span class="eqno">(11.6)<a class="headerlink" href="#equation-4f9dd8fd-0028-4ae0-94f1-cfb64b4c58c6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5d3fa0b4-2319-48c1-8358-a7571a87f92d">
+<span class="eqno">(11.6)<a class="headerlink" href="#equation-5d3fa0b4-2319-48c1-8358-a7571a87f92d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \mathrm{argmax}_\theta \log p(\mathcal{D}; \theta) &amp;= \mathrm{argmax}_\theta \sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta) + \log p_X(x_n) \quad (\text{substituting in our joint data log-likelihood}) \\
 &amp;= \mathrm{argmin}_\theta -\sum\limits_{n=1}^N \left( \log p_{Y | X}(y_n | x_n; \theta) + \log p_X(x_n) \right) \quad (\text{taking an argmax is like taking an argmin of the negative}) \\
 &amp;= \mathrm{argmin}_\theta -\sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta) - \underbrace{\sum\limits_{n=1}^N \log p_X(x_n)}_{\text{does not depend on } \theta} \quad (\text{we split out the sum into two parts}) \\
 &amp;= \mathrm{argmin}_\theta -\sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta) \quad (\text{term that doesn't depend on $\theta$ doesn't affect argmin}) 
 \end{align}\]</div>
 <p>This gives us the following objective (or loss function):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-541fc9ec-5d32-425c-a2df-a4433ad95428">
-<span class="eqno">(11.7)<a class="headerlink" href="#equation-541fc9ec-5d32-425c-a2df-a4433ad95428" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-535721cc-053f-4c56-a491-69a6f2026985">
+<span class="eqno">(11.7)<a class="headerlink" href="#equation-535721cc-053f-4c56-a491-69a6f2026985" title="Permalink to this equation">#</a></span>\[\begin{align}
 \mathcal{L}(\theta) = -\sum\limits_{n=1}^N \log p_{Y | X}(y_n | x_n; \theta)
 \end{align}\]</div>
 <p>Now that we have our objective, the only thing missing now is a specific choice of <span class="math notranslate nohighlight">\(p_{Y | X}(y_n | x_n; \theta)\)</span>; given a specific value of glow, <span class="math notranslate nohighlight">\(x_n\)</span>, what’s the distribution of telekinetic ability, <span class="math notranslate nohighlight">\(y_n\)</span>? We will next select <span class="math notranslate nohighlight">\(p_{Y | X}(y_n | x_n; \theta)\)</span> to give us a regression model. Later, we will do the same for other models (e.g. classification).</p>
@@ -648,8 +656,8 @@ y_n | x_n &amp;\sim p_{Y | X}(\cdot | x_n; \theta)
 <li><p>Around this trend, there is some “noise”—no point exactly fits the trend.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows on two made-up data sets:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8ef5cc40-a469-4185-a514-0499921476e2">
-<span class="eqno">(11.8)<a class="headerlink" href="#equation-8ef5cc40-a469-4185-a514-0499921476e2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-00c5facb-9716-46ac-a432-004e46cf504a">
+<span class="eqno">(11.8)<a class="headerlink" href="#equation-00c5facb-9716-46ac-a432-004e46cf504a" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\theta = \{ W, \sigma \}\)</span>, and where <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span> is a function parameterized by <span class="math notranslate nohighlight">\(W\)</span> (which controls its shape). Putting this all together, our generative process says:</p>
@@ -666,32 +674,35 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </figcaption>
 </figure>
 <p>Here, the blue line, representing <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span> captures the “trend” of the data. The data (in red) surrounds the trend; it lies around it due to the observation error (or noise). In the “linear” regression plot, <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> is a line, where <span class="math notranslate nohighlight">\(W = \{ a, b \}\)</span> is the slope and intercept of a line:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-514959b1-6cc2-457c-b8be-17a57477ee41">
-<span class="eqno">(11.9)<a class="headerlink" href="#equation-514959b1-6cc2-457c-b8be-17a57477ee41" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-82128e14-706f-4a24-b0f3-eddd3cc90f2c">
+<span class="eqno">(11.9)<a class="headerlink" href="#equation-82128e14-706f-4a24-b0f3-eddd3cc90f2c" title="Permalink to this equation">#</a></span>\[\begin{align}
 a \cdot x_n + b.
 \end{align}\]</div>
 <p>In the “polynomial” regression plot, <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> is a polynomial function of <span class="math notranslate nohighlight">\(x_n\)</span>, where <span class="math notranslate nohighlight">\(W = \{ a, b, c, d, e \}\)</span> captures the coefficients of the polynomial:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8eaf2a73-990a-4fb5-ac01-2d3d62867dea">
-<span class="eqno">(11.10)<a class="headerlink" href="#equation-8eaf2a73-990a-4fb5-ac01-2d3d62867dea" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8c1f0ab6-a11e-433c-a689-35120b5ff87f">
+<span class="eqno">(11.10)<a class="headerlink" href="#equation-8c1f0ab6-a11e-433c-a689-35120b5ff87f" title="Permalink to this equation">#</a></span>\[\begin{align}
 a \cdot x_n^4 + b \cdot x_n^3 + c \cdot x_n^2 + d \cdot x_n + e.
 \end{align}\]</div>
-<div class="admonition-exercise-implement-regression admonition">
-<p class="admonition-title">Exercise: Implement regression!</p>
+<div class="admonition-exercise-implement-linear-regression admonition">
+<p class="admonition-title">Exercise: Implement Linear Regression</p>
 <p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement a linear regression model. Your model should only include the conditional distribution of telekinetic ability given glow; it should <em>not</em> include the marginal distribution of glow. Your model should therefore have the following signature:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_linear_regression</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">glow</span><span class="p">,</span> <span class="n">ability</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
 <p>Notice that here, we expect <code class="docutils literal notranslate"><span class="pre">glow</span></code> to <em>always</em> be passed in. This is because we’re not looking to learn the distribution of <code class="docutils literal notranslate"><span class="pre">glow</span></code>—we’re always going to be given it.</p>
-<p><strong>Part 2:</strong> Fit the model to the data using the MLE. Visualize the trend of the model.</p>
-<p><strong>Part 3:</strong> How well does your model fit the data? For what patients will it perform well, and for which patients will it perform badly?</p>
-<p><strong>Part 4:</strong> Implement polynomial regression. Your model will now take one additional argument—the degree of the polynomial (a polynomial in which the highest term is <span class="math notranslate nohighlight">\(x^4\)</span> is of degree <span class="math notranslate nohighlight">\(4\)</span>). Please use the function signature below.</p>
+<p><strong>Part 2:</strong> Fit the model to the data using the MLE. Plot the loss and verify that your optimization converged. In your plot you may want to zoom in on the last iterations of optimizations to verify it indeed converged.</p>
+<p><strong>Part 3:</strong> Visualize your model fit by plotting samples from your model against the real data. How well does your model fit the data? For what patients will it perform well, and for which patients will it perform badly?</p>
+</div>
+<div class="admonition-exercise-implement-polynomial-regression admonition">
+<p class="admonition-title">Exercise: Implement Polynomial Regression</p>
+<p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, Implement polynomial regression. Your model will now take one additional argument—the degree of the polynomial (a polynomial in which the highest term is <span class="math notranslate nohighlight">\(x^4\)</span> is of degree <span class="math notranslate nohighlight">\(4\)</span>). Please use the function signature below.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_polynomial_regression</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">glow</span><span class="p">,</span> <span class="n">ability</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
-<p><strong>Part 5:</strong> Fit the model to the data using the MLE with <code class="docutils literal notranslate"><span class="pre">degree=2</span></code>, <code class="docutils literal notranslate"><span class="pre">4</span></code> and <code class="docutils literal notranslate"><span class="pre">8</span></code>. Visualize the trend of each of the fitted models.</p>
-<p><strong>Part 6:</strong> How well does each model fit the data? Which model would you ultimately recommend to the researchers at the IHH? Why?</p>
+<p><strong>Part 2:</strong> Fit the model to the data using the MLE with <code class="docutils literal notranslate"><span class="pre">degree=2</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code> and <code class="docutils literal notranslate"><span class="pre">8</span></code>. For each, plot the loss and verify that your optimization converged.</p>
+<p><strong>Part 3:</strong> How well does each model fit the data? Which model would you ultimately recommend to the researchers at the IHH? Why? Your answer should look at how the model <em>interpolates</em>, meaning the trend it learns for the points in your data, and also how it <em>extrapolates</em>, meaning the trend it learns away from your data (e.g. in the extreme values of the inputs).</p>
 </div>
 </section>
 <section id="correlation-vs-causation">

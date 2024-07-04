@@ -73,7 +73,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="8. Maximum Likelihood: Practice" href="mle-practice.html" />
+    <link rel="next" title="8. Maximum Likelihood: Code" href="mle-code.html" />
     <link rel="prev" title="6. Joint Probability (Discrete)" href="probability-joint.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -186,7 +186,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Frequentist Learning</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Maximum Likelihood: Theory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mle-practice.html">8. Maximum Likelihood: Practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mle-code.html">8. Maximum Likelihood: Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">9. Optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability-continuous.html">10. Probability (Continuous)</a></li>
 </ul>
@@ -459,20 +459,20 @@ document.write(`
 </div></blockquote>
 <p><strong>The MLE Objective.</strong>
 Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data; we will call it the <em>joint data likelihood</em>, since it is the <em>joint</em> distribution of all observations. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-af3a55ac-b949-4b2e-9ab4-7e42a894b94a">
-<span class="eqno">(7.1)<a class="headerlink" href="#equation-af3a55ac-b949-4b2e-9ab4-7e42a894b94a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-75415d53-6218-4e09-af82-72cfb456db33">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-75415d53-6218-4e09-af82-72cfb456db33" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n, m_n)\)</span> for every <span class="math notranslate nohighlight">\(n = 1, \dots, N\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9d36fb4f-0a19-483e-a826-23f98b029a69">
-<span class="eqno">(7.2)<a class="headerlink" href="#equation-9d36fb4f-0a19-483e-a826-23f98b029a69" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f7920f40-5c5d-469d-9923-542a7dc294fa">
+<span class="eqno">(7.2)<a class="headerlink" href="#equation-f7920f40-5c5d-469d-9923-542a7dc294fa" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ }  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
 <p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-814be26e-9e1e-4f42-9cbd-966649952456">
-<span class="eqno">(7.3)<a class="headerlink" href="#equation-814be26e-9e1e-4f42-9cbd-966649952456" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d444fa8e-f870-463b-9c23-819f9637c890">
+<span class="eqno">(7.3)<a class="headerlink" href="#equation-d444fa8e-f870-463b-9c23-819f9637c890" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
@@ -485,15 +485,15 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <ol class="arabic simple">
 <li><p>Logs turn products into sums: <span class="math notranslate nohighlight">\(\log (x \cdot y) = \log x + \log y\)</span>. Applying this formula to our MLE objective results in a <em>sum</em> of fractions, which is numerically stable:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-44d66899-7a15-4a72-8e09-17f51fc7947c">
-<span class="eqno">(7.4)<a class="headerlink" href="#equation-44d66899-7a15-4a72-8e09-17f51fc7947c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c6a2d75e-a96a-4aee-8b8e-a33704b006c9">
+<span class="eqno">(7.4)<a class="headerlink" href="#equation-c6a2d75e-a96a-4aee-8b8e-a33704b006c9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>But by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability instead, will we get the wrong answer? Because the <span class="math notranslate nohighlight">\(\log\)</span> function is a <em>strictly increasing function</em>, our maxima will remain in the same location. That is:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-dba097f5-5597-4999-a06a-5f3bd2a68640">
-<span class="eqno">(7.5)<a class="headerlink" href="#equation-dba097f5-5597-4999-a06a-5f3bd2a68640" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5d23dae2-59b8-4ef9-8098-598bdeaba383">
+<span class="eqno">(7.5)<a class="headerlink" href="#equation-5d23dae2-59b8-4ef9-8098-598bdeaba383" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
@@ -509,13 +509,13 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <section id="graphically-representing-i-i-d-observations-and-model-parameters">
 <h2><span class="section-number">7.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Permalink to this heading">#</a></h2>
 <p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model (DGM) representation to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fefd5b99-2546-4840-b2e5-3d23c3560629">
-<span class="eqno">(7.6)<a class="headerlink" href="#equation-fefd5b99-2546-4840-b2e5-3d23c3560629" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8ba396e9-b801-49d8-a3c6-92b2a06dfc87">
+<span class="eqno">(7.6)<a class="headerlink" href="#equation-8ba396e9-b801-49d8-a3c6-92b2a06dfc87" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
 \end{align}\]</div>
 <p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in 1, \dots, N\)</span>. This gives us the following joint data likelihood:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c37df78b-61c8-4c38-a321-813d383bc593">
-<span class="eqno">(7.7)<a class="headerlink" href="#equation-c37df78b-61c8-4c38-a321-813d383bc593" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-26a193cb-de9e-4e2c-9f6f-3ee383d3e27a">
+<span class="eqno">(7.7)<a class="headerlink" href="#equation-26a193cb-de9e-4e2c-9f6f-3ee383d3e27a" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
 &amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
@@ -655,11 +655,11 @@ p_{Z_1}(z_1; \psi) \cdot p_{X_1 | Z_1}(x_1 | z_1; \theta) \cdot \prod\limits_{t=
       </div>
     </a>
     <a class="right-next"
-       href="mle-practice.html"
+       href="mle-code.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">8. </span>Maximum Likelihood: Practice</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Maximum Likelihood: Code</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
