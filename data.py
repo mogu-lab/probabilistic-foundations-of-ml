@@ -224,13 +224,13 @@ def generate_IHH_CTR_data_discrete_continuous():
 def model_age_glow_regression_IHH_CGLF(N, age, glow=None, ability=None):
     glow_coefficients = numpyro.param(
         'glow_coefficients',
-        jnp.array([100.0, -1.0]),
+        jnp.array([1.0, -0.01]),
         constraint=C.real,
     )
 
     glow_std_dev = numpyro.param(
         'glow_std_dev',
-        jnp.array(5.0),
+        jnp.array(0.05),
         constraint=C.positive,
     )
 
@@ -242,7 +242,7 @@ def model_age_glow_regression_IHH_CGLF(N, age, glow=None, ability=None):
 
     ability_std_dev = numpyro.param(
         'ability_std_dev',
-        jnp.array(0.05),
+        jnp.array(0.03),
         constraint=C.positive,
     )
     
@@ -251,14 +251,14 @@ def model_age_glow_regression_IHH_CGLF(N, age, glow=None, ability=None):
             glow_coefficients[0] + age * glow_coefficients[1],
             glow_std_dev,
         )
-        numpyro.sample('glow', p_glow, obs=glow)
+        glow = numpyro.sample('glow', p_glow, obs=glow)
 
         p_ability = D.Normal(
             jnp.polyval(ability_coefficients, age),
             ability_std_dev,
         )
-        numpyro.sample('ability', p_ability, obs=ability)
-
+        ability = numpyro.sample('ability', p_ability, obs=ability)
+        
 
 def generate_IHH_CGLF_data_age_glow_regression():
     N = 500
