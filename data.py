@@ -280,8 +280,9 @@ def generate_IHH_CGLF_data_age_glow_regression():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv('data/IHH-CGLF-Glow.csv')
-        
+    df.to_csv('data/IHH-CTR-CGLF-augmented.csv')
+
+    df.drop(columns=['Age']).to_csv('data/IHH-CTR-CGLF.csv')
 
 
 def main():
