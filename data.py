@@ -164,7 +164,7 @@ def generate_IHH_ER_data_discrete():
 
 
 #########################################################################
-# IHH Telekinesis Center Discrete-Continuous Data
+# IHH Telekinesis Center: Discrete-Continuous Data
 #########################################################################
 
 
@@ -213,6 +213,35 @@ def generate_IHH_CTR_data_discrete_continuous():
 
     df.index.name = 'Patient ID'
     df.to_csv('data/IHH-CTR.csv')
+
+
+#########################################################################
+# IHH Telekinesis Center: Regression Data
+#########################################################################
+
+
+def model_regression_IHH_CTR(N, x=None, y=None):
+    coefficients = numpyro.param(
+        'coefficients',
+        jnp.array([0.2, 0.3, 0.5]),
+        constraint=C.real,
+    )
+
+    std_dev = numpyro.param(
+        'std_dev',
+        jnp.array(0.2),
+        constraint=C.positive,
+    )
+    
+    with numpyro.plate('data', N):
+        p_C = D.Categorical(pi)
+        c = numpyro.sample('c', p_C, obs=c)
+
+        p_A = D.Normal(means[c], std_devs[c])
+        a = numpyro.sample('a', p_A, obs=a)
+
+
+
 
 
 def main():
