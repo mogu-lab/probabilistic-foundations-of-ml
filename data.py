@@ -1,8 +1,10 @@
+import argparse
 from collections import defaultdict
 
 import pandas as pd
 import jax
 import jax.numpy as jnp
+import jax.nn as jnn
 import jax.random as jrandom
 import numpyro
 import numpyro.distributions as D
@@ -221,46 +223,72 @@ def generate_IHH_CTR_data_discrete_continuous():
 #########################################################################
 
 
-def model_age_glow_regression_IHH_CGLF(N, age, glow=None, ability=None):
+ABILITY_COEFFS = jnp.array([
+    -1.0 / 3840000000.0,
+    1.0 / 12000000.0,
+    -97.0 / 9600000.0,
+    139.0 / 240000.0,
+    -19.0 / 1200.0,
+    1.0 / 6.0,
+    -0.1,
+])
+ABILITY_STD_DEV = jnp.array(0.03)
+
+GLOW_COEFFS = jnp.array([1.0, -0.01])
+GLOW_STD_DEV = jnp.array(0.05)
+
+
+def model_IHH_CGLF_parameters():
     glow_coefficients = numpyro.param(
         'glow_coefficients',
-        jnp.array([1.0, -0.01]),
+        GLOW_COEFFS,
         constraint=C.real,
     )
 
     glow_std_dev = numpyro.param(
         'glow_std_dev',
-        jnp.array(0.05),
+        GLOW_STD_DEV,
         constraint=C.positive,
     )
 
     ability_coefficients = numpyro.param(
         'ability_coefficients',
-        jnp.array([-1.0 / 3840000000.0, 1.0 / 12000000.0,  -97 / 9600000.0, 139.0 / 240000.0, -19.0 / 1200.0, 1.0 / 6.0, 0.0]),
+        ABILITY_COEFFS,
         constraint=C.real,        
     )
 
     ability_std_dev = numpyro.param(
         'ability_std_dev',
-        jnp.array(0.03),
+        ABILITY_STD_DEV,
         constraint=C.positive,
     )
+
+    return argparse.Namespace(
+        glow_coefficients=glow_coefficients,
+        glow_std_dev=glow_std_dev,
+        ability_coefficients=ability_coefficients,
+        ability_std_dev=ability_std_dev,
+    )
+
+
+def model_regression_IHH_CGLF(N, age, glow=None, ability=None):
+    parameters = model_IHH_CGLF_parameters()
     
     with numpyro.plate('data', N):        
         p_glow = D.Normal(
-            glow_coefficients[0] + age * glow_coefficients[1],
-            glow_std_dev,
+            parameters.glow_coefficients[0] + age * parameters.glow_coefficients[1],
+            parameters.glow_std_dev,
         )
         glow = numpyro.sample('glow', p_glow, obs=glow)
 
         p_ability = D.Normal(
-            jnp.polyval(ability_coefficients, age),
-            ability_std_dev,
+            jnp.polyval(parameters.ability_coefficients, age),
+            parameters.ability_std_dev,
         )
         ability = numpyro.sample('ability', p_ability, obs=ability)
         
 
-def generate_IHH_CGLF_data_age_glow_regression():
+def generate_IHH_CGLF_data_regression():
     N = 500
 
     age = 20.0 * (1.0 + jax.random.truncated_normal(
@@ -271,7 +299,7 @@ def generate_IHH_CGLF_data_age_glow_regression():
     ))
     
     with H.seed(rng_seed=1):
-        exec_trace = H.trace(model_age_glow_regression_IHH_CGLF).get_trace(N, age)
+        exec_trace = H.trace(model_regression_IHH_CGLF).get_trace(N, age)
 
     df = pd.DataFrame({
         'Age': age,
@@ -280,15 +308,71 @@ def generate_IHH_CGLF_data_age_glow_regression():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv('data/IHH-CTR-CGLF-augmented.csv')
+    df.to_csv('data/IHH-CTR-CGLF-regression-augmented.csv')
 
-    df.drop(columns=['Age']).to_csv('data/IHH-CTR-CGLF.csv')
+    df.drop(columns=['Age']).to_csv('data/IHH-CTR-CGLF-regression.csv')
 
 
+#########################################################################
+# IHH Center for Glow and Life Flow: Regression Data
+#########################################################################
+
+
+def model_classification_IHH_CGLF(N, age, dose, glow=None, ability=None, control=None):
+    parameters = model_IHH_CGLF_parameters()
+    
+    with numpyro.plate('data', N):        
+        p_glow = D.Normal(
+            parameters.glow_coefficients[0] + age * parameters.glow_coefficients[1],
+            parameters.glow_std_dev,
+        )
+        glow = numpyro.sample('glow', p_glow, obs=glow)
+
+        p_ability = D.Normal(
+            jnp.polyval(parameters.ability_coefficients, age),
+            parameters.ability_std_dev,
+        )
+        ability = numpyro.sample('ability', p_ability, obs=ability)
+
+        p_control = D.Bernoulli(jnn.sigmoid(30.0 * ability + 5.0 * dose))
+        control = numpyro.sample('control', p_control, obs=control)
+        
+
+def generate_IHH_CGLF_data_classification():
+    key = jrandom.PRNGKey(seed=0)
+    key_age, key_dose, key_rest = jrandom.split(key, 3)
+    N = 2000
+
+    age = 20.0 * (1.0 + jax.random.truncated_normal(
+        key_age,
+        -1.0,
+        4.0,
+        shape=(N,),
+    ))
+
+    dose = D.Uniform().sample(key_dose, (N,))
+    
+    with H.seed(rng_seed=key_rest):
+        exec_trace = H.trace(model_classification_IHH_CGLF).get_trace(N, age, dose)
+
+    df = pd.DataFrame({
+        'Age': age,
+        'Dose': dose,
+        #'Glow': exec_trace['glow']['value'],
+        #'Telekinetic-Ability': exec_trace['ability']['value'],
+        'Telekinetic-Control': exec_trace['control']['value'],
+    })
+
+    df.index.name = 'Patient ID'
+    df.to_csv('data/IHH-CTR-CGLF-classification.csv')
+
+
+    
 def main():
-    generate_IHH_ER_data_discrete()
-    generate_IHH_CTR_data_discrete_continuous()
-    generate_IHH_CGLF_data_age_glow_regression()
+    #generate_IHH_ER_data_discrete()
+    #generate_IHH_CTR_data_discrete_continuous()
+    #generate_IHH_CGLF_data_regression()
+    generate_IHH_CGLF_data_classification()
     
         
 if __name__ == '__main__':
