@@ -4,6 +4,7 @@ import math
 import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 from matplotlib.animation import ArtistAnimation
+from mpl_toolkits.mplot3d import axes3d
 import jax
 import jax.numpy as jnp
 import jax.random as jrandom
@@ -228,6 +229,8 @@ def plot_example_loss_functions():
 
 
 def plot_example_regression():
+    N = 100
+    
     def f1(x):
         return 2.0 * x
     
@@ -238,7 +241,7 @@ def plot_example_regression():
     key_left, key_right = jrandom.split(key, 2)
     
     p_epsilon = D.Normal(0.0, 0.6)
-    x = jnp.linspace(-2.0, 2.0, 100)
+    x = jnp.linspace(-2.0, 2.0, N)
     y1 = f1(x) + p_epsilon.sample(key_left, x.shape)
     y2 = f2(x) + p_epsilon.sample(key_right, x.shape)
 
@@ -290,12 +293,43 @@ def plot_example_regression():
 
     for ax in axes:
         leg = ax.legend()
-        for lh in leg.legendHandles: 
+        for lh in leg.legend_handles: 
             lh.set_alpha(1.0)
 
     plt.tight_layout()
     plt.savefig(os.path.join(OUTPUT_DIR, 'example_regression.png'))
     plt.close()
+
+    # Plot density
+    fig, axes = plt.subplots(
+        1, 2, figsize=(7, 3),
+        sharex=True, sharey=True, subplot_kw=dict(projection='3d'),
+    )
+    
+    x_grid, y_grid = jnp.meshgrid(
+        jnp.linspace(-2.0, 2.0, 200),
+        jnp.linspace(-5.0, 5.0, 200),
+    )
+    
+    z_grid = jnp.exp(p_epsilon.log_prob(f1(x_grid) - y_grid))
+    s = axes[0].plot_surface(
+        x_grid, y_grid, z_grid,
+        cmap='viridis',
+    )
+    
+    z_grid = jnp.exp(p_epsilon.log_prob(f2(x_grid) - y_grid))
+    s = axes[1].plot_surface(
+        x_grid, y_grid, z_grid,
+        cmap='viridis',
+    )
+
+    for ax in axes:
+        ax.view_init(azim=45, elev=45)
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'example_regression_density.png'))
+    plt.close()
+
     
     
 def main():
