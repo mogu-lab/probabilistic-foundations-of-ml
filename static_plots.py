@@ -245,30 +245,6 @@ def plot_example_regression():
     y1 = f1(x) + p_epsilon.sample(key_left, x.shape)
     y2 = f2(x) + p_epsilon.sample(key_right, x.shape)
 
-    # Plot data
-    fig, axes = plt.subplots(1, 2, figsize=(7, 3), sharex=True, sharey=True)
-
-    axes[0].scatter(
-        x, y1, 
-        color='red', alpha=0.5, 
-    )
-
-    axes[0].set_title('Regression Data #1')
-    axes[0].set_xlabel('$x$')
-    axes[0].set_ylabel('$y$')    
-    
-    axes[1].scatter(
-        x, y2, 
-        color='red', alpha=0.5,
-    )
-
-    axes[1].set_title('Regression Data #2')
-    axes[1].set_xlabel('$x$')
-
-    plt.tight_layout()
-    plt.savefig(os.path.join(OUTPUT_DIR, 'example_regression_data.png'))
-    plt.close()    
-
     # Plot regression 
     fig, axes = plt.subplots(1, 2, figsize=(7, 3), sharex=True, sharey=True)
 
@@ -301,6 +277,7 @@ def plot_example_regression():
     plt.close()
 
     # Plot density
+    '''
     fig, axes = plt.subplots(
         1, 2, figsize=(7, 3),
         sharex=True, sharey=True, subplot_kw=dict(projection='3d'),
@@ -329,7 +306,7 @@ def plot_example_regression():
     plt.tight_layout()
     plt.savefig(os.path.join(OUTPUT_DIR, 'example_regression_density.png'))
     plt.close()
-
+    '''
     
     
 def main():
