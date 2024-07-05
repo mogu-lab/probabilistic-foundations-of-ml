@@ -670,13 +670,13 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-468d3966-4bec-4c87-8827-24f47c5592dc">
-<span class="eqno">(12.1)<a class="headerlink" href="#equation-468d3966-4bec-4c87-8827-24f47c5592dc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2878e4ac-2d5c-4f19-a7ed-6922368e23b3">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-2878e4ac-2d5c-4f19-a7ed-6922368e23b3" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-10e23aaf-a205-4613-974a-5cb3049edea7">
-<span class="eqno">(12.2)<a class="headerlink" href="#equation-10e23aaf-a205-4613-974a-5cb3049edea7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c0fc5fe6-cd39-4437-955f-a358b7a844b5">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-c0fc5fe6-cd39-4437-955f-a358b7a844b5" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
@@ -715,8 +715,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <ul>
 <li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noopener noreferrer" target="_blank">here</a>).</p></li>
 <li><p>Age spans a larger range than dose: age spans a range of roughly 0 to 100, whereas dose spans a range of roughly 0 to 1. Because of this disparity, gradient descent may find your optimization tricky. A learning rate that’s appropriate for updating the coefficients of age may be too large for the dose and vice versa. Because of this, we recommend using the following functional form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-43b2fe15-6c5b-4295-bee1-ee26771507b6">
-<span class="eqno">(12.3)<a class="headerlink" href="#equation-43b2fe15-6c5b-4295-bee1-ee26771507b6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d9e7dc33-b9ad-40b9-9f91-fa4770cbc17f">
+<span class="eqno">(12.3)<a class="headerlink" href="#equation-d9e7dc33-b9ad-40b9-9f91-fa4770cbc17f" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_d, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}{100} + \theta_d \cdot d_n + \theta_i,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a_n\)</span> is age with slope <span class="math notranslate nohighlight">\(\theta_a\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span> is dose with slope <span class="math notranslate nohighlight">\(\theta_d\)</span>, and <span class="math notranslate nohighlight">\(\theta_i\)</span> is the intercept. Notice that we divide <span class="math notranslate nohighlight">\(a_n\)</span> by <span class="math notranslate nohighlight">\(100\)</span> to account for this difference in range.</p>
@@ -728,6 +728,16 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <li><p>How well does your model fit the data?</p></li>
 <li><p>For what patients will it perform well, and for which patients will it perform badly?</p></li>
 <li><p>For which patients is your model most uncertain about regarding the effect of the medication?</p></li>
+</ul>
+<p>Tip: for visualizing your model, we’ve created a helper function for you, which you can use via:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot_classifier_of_control_vs_age_and_dose</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">model_mle</span><span class="p">,</span> <span class="s1">&#39;control&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code> is a pandas DataFrame storing all of the IHH data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> is what’s returned by <code class="docutils literal notranslate"><span class="pre">cs349_mle</span></code>, and <code class="docutils literal notranslate"><span class="pre">result.model_mle</span></code> is your <em>fitted</em> model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'control'</span></code> is the string you gave <code class="docutils literal notranslate"><span class="pre">numpyro.sample</span></code> in your model when sampling the control. (If you didn’t name it “control,” pass in the appropriate string).</p></li>
 </ul>
 </div>
 <div class="admonition-exercise-implement-non-linear-classification admonition">
@@ -762,10 +772,6 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <p class="admonition-title">Exercise: Specifying a Predictive Model</p>
 <p>Suppose you want to model <code class="docutils literal notranslate"><span class="pre">Glow</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">Control-After</span></code> given <code class="docutils literal notranslate"><span class="pre">Age</span></code> <em>and</em> <code class="docutils literal notranslate"><span class="pre">Dose</span></code>. Following the above two steps, what conditional distribution would you select and why? No coding is necessary here—just write down the generative process for your model.</p>
 </div>
-<p><strong>TODOs:</strong></p>
-<ul class="simple">
-<li><p>Function for plotting classification boundaries</p></li>
-</ul>
 </section>
 </section>
 
