@@ -379,7 +379,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -395,6 +397,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classification-model">12.1. The Classification Model</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -420,6 +430,7 @@ document.write(`
 <ul class="simple">
 <li><p>Instantiate classification models</p></li>
 <li><p>Implement classification models in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></p></li>
+<li><p>Interpret a classifier fit on IHH data</p></li>
 </ul>
 <p><strong>Data:</strong> You’re continuing your collaboration with your colleagues at the IHH’s Center for Telekinesis Research. This time, the researchers are interested in developing a tool that can help patients make informed treatment decisions. Specifically, there is a large segment of your patient population that suffers from a lack of telekinetic control; that is, their telekinetic abilities tend to do something unexpected—when trying to move a bookshelf to the right, it moves forward, when trying to lift a mug, the mug lifts but spills on the floor, etc. Fortunately, there’s a new medication that was just developed that’s designed to help patients regain control of their telekinetic abilities. The problem with the medication is that it has some negative side effects (nausea, headaches), so it’s important that patients getting the medication can weigh the risks against the benefits. Your colleagues therefore asked you to build a predictive model to determine what the effects of the medication will be. This predictive model will be given to clinicians so they can communicate with patients how likely they are to recover their telekinetic control.</p>
 <p>You just got sent the data and are eager to take a peak. Your colleagues are most excited about understanding the relationship between age, the dosage of medication, and telekinetic control. As you see below, the data includes two columns relating to control. <code class="docutils literal notranslate"><span class="pre">Control-Before</span></code> represents whether the patients had telekinetic control before receiving the medication, and <code class="docutils literal notranslate"><span class="pre">Control-After</span></code> represents the effect of the medication.</p>
@@ -648,6 +659,64 @@ document.write(`
 <img alt="_images/4e21fd4f632201cd40651ba5ac1095b483fb7565009d00a019d17a47acb2fd96.png" src="_images/4e21fd4f632201cd40651ba5ac1095b483fb7565009d00a019d17a47acb2fd96.png" />
 </div>
 </div>
+<p>Looking at the above plot, it seems like the medication has a positive affect—may of patients that seeked to regain their telekinetic control were able to regain it (i.e. many of the orange points became blue). Of course, the medication didn’t help everyone. This is precisely why it is important to understand <em>who</em> the medication will help, and with <em>what</em> probability.</p>
+<section id="the-classification-model">
+<h2><span class="section-number">12.1. </span>The Classification Model<a class="headerlink" href="#the-classification-model" title="Permalink to this heading">#</a></h2>
+<p><strong>The Model.</strong> Looking at our objective function, <span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span>, the only thing we need to define is <span class="math notranslate nohighlight">\(p_{Y | X}(y_n | x_n; \theta)\)</span>. Looking at the plot above, we see that <span class="math notranslate nohighlight">\(p_{Y | X}(y_n | x_n; \theta)\)</span>, should have the following form: for every point, <span class="math notranslate nohighlight">\(x_n\)</span>, it should assign a probability of being “in control.” Therefore, our model should have two parts:</p>
+<ol class="arabic simple">
+<li><p>Some way of mapping <span class="math notranslate nohighlight">\(x_n\)</span> to a probability between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> (where <span class="math notranslate nohighlight">\(1\)</span> indicates “in control”).</p></li>
+<li><p>Some way of sampling from this distribution.</p></li>
+</ol>
+<p>To capture both components, we define our model as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-18b8652b-cb8a-4dc1-9179-80414741cd9c">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-18b8652b-cb8a-4dc1-9179-80414741cd9c" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
+\end{align}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-83a990a5-1ae5-4094-978f-781e58d313fc">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-83a990a5-1ae5-4094-978f-781e58d313fc" title="Permalink to this equation">#</a></span>\[\begin{align}
+\rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
+\end{align}\]</div>
+<p>What does all of this mean? It means that our generative process is as follows:</p>
+<ol class="arabic simple">
+<li><p>We’re given an input, <span class="math notranslate nohighlight">\(x_n\)</span>, from our data.</p></li>
+<li><p>We feed it through our function <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>, which outputs the probability of telekinetic control. Here, <span class="math notranslate nohighlight">\(\theta\)</span> controls the shape of this function. Because <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span> needs to output a probability, we need to ensure its output stays between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. We do this as follows: we define a function <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> that outputs real values, and then transform the output of this function into the range <span class="math notranslate nohighlight">\([0, 1]\)</span> using the sigmoid function. Checkout its <a class="reference external" href="https://en.wikipedia.org/wiki/Sigmoid_function" rel="noopener noreferrer" target="_blank">Wikipedia page</a> to see what it looks like.</p></li>
+<li><p>Finally, we sample from a Bernoulli with the probability given by <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>. This models the “noise” in the outcome; even for patients for which the medication is likely to work, the outcome is not guaranteed due to some unknown factors.</p></li>
+</ol>
+<p><strong>Expressivity.</strong> Let’s see what this looks like.</p>
+<p>TODO diagrams.</p>
+<p>As with linear vs. polynomial regression, the choice of <span class="math notranslate nohighlight">\(f(\cdot, \theta)\)</span> determines the expressivity of the model.</p>
+<div class="admonition-exercise-implement-linear-classification admonition">
+<p class="admonition-title">Exercise: Implement Linear Classification</p>
+<p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement a linear classification model. Your model should only include the conditional distribution of outputs (telekinetic control) given the inputs (age <em>and</em> dose); it should <em>not</em> include the marginal distribution of age and dose. Your model should therefore have the following signature:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_linear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">pass</span> <span class="c1"># TODO implement</span>
+</pre></div>
+</div>
+<p>Notice that here, we expect <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">dose</span></code> to <em>always</em> be passed in. This is because we’re not looking to learn the distribution of these variables—we’re always going to be given it.</p>
+<p><strong>Part 2:</strong> Fit the model to the data using the MLE. Plot the loss and verify that your optimization converged. In your plot you may want to zoom in on the last iterations of optimizations to verify it indeed converged.</p>
+<p><strong>Part 3:</strong> Visualize your model fit by plotting samples from your model against the real data.</p>
+<ul class="simple">
+<li><p>How well does your model fit the data?</p></li>
+<li><p>For what patients will it perform well, and for which patients will it perform badly?</p></li>
+<li><p>For which patients are you most uncertain about the effect of medication?</p></li>
+</ul>
+</div>
+<div class="admonition-exercise-implement-polynomial-classification admonition">
+<p class="admonition-title">Exercise: Implement Polynomial Classification</p>
+<p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement polynomial classification. Your model will now take one additional argument—the degree of the polynomial (a polynomial in which the highest term is <span class="math notranslate nohighlight">\(x^4\)</span> is of degree <span class="math notranslate nohighlight">\(4\)</span>). Please use the function signature below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_polynomial_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">pass</span> <span class="c1"># TODO implement</span>
+</pre></div>
+</div>
+<p><strong>Part 2:</strong> Fit the model to the data using the MLE with <code class="docutils literal notranslate"><span class="pre">degree=2</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code> and <code class="docutils literal notranslate"><span class="pre">8</span></code>. For each, plot the loss and verify that your optimization converged.</p>
+<p><strong>Part 3:</strong> Answer the following questions.</p>
+<ul class="simple">
+<li><p>How well does each model fit the data?</p></li>
+<li><p>Which model would you ultimately recommend to the researchers at the IHH? Why? Your answer should look at how the model <em>interpolates</em>, meaning the trend it learns for the points in your data, and also how it <em>extrapolates</em>, meaning the trend it learns away from your data (e.g. in the extreme values of the inputs).</p></li>
+</ul>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -708,6 +777,20 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classification-model">12.1. The Classification Model</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
