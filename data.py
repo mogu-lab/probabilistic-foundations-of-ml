@@ -318,7 +318,15 @@ def generate_IHH_CGLF_data_regression():
 #########################################################################
 
 
-def model_classification_IHH_CGLF(N, age, dose, glow=None, ability=None, control=None):
+def model_classification_IHH_CGLF(
+        N,
+        age,
+        dose,
+        glow=None,
+        ability=None,
+        control_before=None,
+        control_after=None,
+):
     parameters = model_IHH_CGLF_parameters()
     
     with numpyro.plate('data', N):        
@@ -334,8 +342,11 @@ def model_classification_IHH_CGLF(N, age, dose, glow=None, ability=None, control
         )
         ability = numpyro.sample('ability', p_ability, obs=ability)
 
-        p_control = D.Bernoulli(jnn.sigmoid(30.0 * ability + 5.0 * dose))
-        control = numpyro.sample('control', p_control, obs=control)
+        p_control_before = D.Bernoulli(jnn.sigmoid(30.0 * ability))
+        numpyro.sample('control-before', p_control_before, obs=control_before)
+
+        p_control_after = D.Bernoulli(jnn.sigmoid(30.0 * ability + 10.0 * dose))
+        numpyro.sample('control-after', p_control_after, obs=control_after)
         
 
 def generate_IHH_CGLF_data_classification():
@@ -358,9 +369,10 @@ def generate_IHH_CGLF_data_classification():
     df = pd.DataFrame({
         'Age': age,
         'Dose': dose,
-        #'Glow': exec_trace['glow']['value'],
-        #'Telekinetic-Ability': exec_trace['ability']['value'],
-        'Telekinetic-Control': exec_trace['control']['value'],
+        'Glow': exec_trace['glow']['value'],
+        'Telekinetic-Ability': exec_trace['ability']['value'],
+        'Control-Before': exec_trace['control-before']['value'],
+        'Control-After': exec_trace['control-after']['value'],
     })
 
     df.index.name = 'Patient ID'
