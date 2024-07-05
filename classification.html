@@ -670,13 +670,13 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fd26f111-2b68-4706-bc0f-391fb6a0cc2c">
-<span class="eqno">(12.1)<a class="headerlink" href="#equation-fd26f111-2b68-4706-bc0f-391fb6a0cc2c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-795a4a06-c18e-4fb0-b154-94a6388de48f">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-795a4a06-c18e-4fb0-b154-94a6388de48f" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cab864bb-ee01-41db-8838-cc7cf1c51ba3">
-<span class="eqno">(12.2)<a class="headerlink" href="#equation-cab864bb-ee01-41db-8838-cc7cf1c51ba3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-06455374-b654-4364-b540-7e23d0e8086b">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-06455374-b654-4364-b540-7e23d0e8086b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
@@ -715,8 +715,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <ul>
 <li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noopener noreferrer" target="_blank">here</a>).</p></li>
 <li><p>Age spans a larger range than dose: age spans a range of roughly 0 to 100, whereas dose spans a range of roughly 0 to 1. Because of this disparity, gradient descent may find your optimization tricky. A learning rate that’s appropriate for updating the coefficients of age may be too large for the dose and vice versa. Because of this, we recommend using the following functional form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6a07fb3b-dc69-4cdd-83fc-f0c047bd85a3">
-<span class="eqno">(12.3)<a class="headerlink" href="#equation-6a07fb3b-dc69-4cdd-83fc-f0c047bd85a3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-811fe9e6-20a4-4b64-a88c-905cdeabf77e">
+<span class="eqno">(12.3)<a class="headerlink" href="#equation-811fe9e6-20a4-4b64-a88c-905cdeabf77e" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_d, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}{100} + \theta_d \cdot d_n + \theta_i,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a_n\)</span> is age with slope <span class="math notranslate nohighlight">\(\theta_a\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span> is dose with slope <span class="math notranslate nohighlight">\(\theta_d\)</span>, and <span class="math notranslate nohighlight">\(\theta_i\)</span> is the intercept. Notice that we divide <span class="math notranslate nohighlight">\(a_n\)</span> by <span class="math notranslate nohighlight">\(100\)</span> to account for this difference in range.</p>
@@ -753,6 +753,15 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 </section>
 <section id="generalized-predictive-models">
 <h2><span class="section-number">12.3. </span>Generalized Predictive Models<a class="headerlink" href="#generalized-predictive-models" title="Permalink to this heading">#</a></h2>
+<p>Hopefully at this point, you’re getting a feel for how to create predictive models to solve a variety of problem. Although we’ve only touched on regression (for real-valued data) and classification (for categorical data), using the tools you now have, you can make up your <em>own</em> predictive models to specifically solve problems you care about. The key is in specifying the conditional, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, which requires you to answer two questions:</p>
+<ol class="arabic simple">
+<li><p>What type of distribution is appropriate for modeling <span class="math notranslate nohighlight">\(Y\)</span>? For example, if <span class="math notranslate nohighlight">\(Y\)</span> is a real number between <span class="math notranslate nohighlight">\([0, 1]\)</span>, maybe you should use a <a class="reference external" href="https://en.wikipedia.org/wiki/Beta_distribution" rel="noopener noreferrer" target="_blank">Beta distribution</a> or a <a class="reference external" href="https://en.wikipedia.org/wiki/Kumaraswamy_distribution" rel="noopener noreferrer" target="_blank">Kumaraswamy distribution</a>? Even though we haven’t covered this distributions in this course, by checking their Wikipedia pages, you can see what shapes they have, and how their shape depends on their parameters. This can help you determine if they are appropriate.</p></li>
+<li><p>How should the parameters of the distribution from (1) depend on <span class="math notranslate nohighlight">\(X\)</span>? Should it be a linear function? a polynomial function? a neural network function?</p></li>
+</ol>
+<div class="admonition-exercise-specifying-a-predictive-model admonition">
+<p class="admonition-title">Exercise: Specifying a Predictive Model</p>
+<p>TODO</p>
+</div>
 <p><strong>TODOs:</strong></p>
 <ul class="simple">
 <li><p>Function for plotting classification boundaries</p></li>
