@@ -403,7 +403,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classification-model">12.1. The Classification Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-classifier-in-numpyro">12.2. Implementing a Classifier in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-classification-models-in-numpyro">12.2. Implementing Classification Models in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-predictive-models">12.3. Generalized Predictive Models</a></li>
 </ul>
             </nav>
@@ -670,13 +670,13 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-34ccfe80-9a51-48e8-a190-52220c3c435a">
-<span class="eqno">(12.1)<a class="headerlink" href="#equation-34ccfe80-9a51-48e8-a190-52220c3c435a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8870a326-9e57-4b33-811e-eda8d1556982">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-8870a326-9e57-4b33-811e-eda8d1556982" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f891289f-f87d-4f11-8add-1007889776d5">
-<span class="eqno">(12.2)<a class="headerlink" href="#equation-f891289f-f87d-4f11-8add-1007889776d5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-41b41908-ac0b-4885-a4ab-28124faf511b">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-41b41908-ac0b-4885-a4ab-28124faf511b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
@@ -702,8 +702,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 </ol>
 </div>
 </section>
-<section id="implementing-a-classifier-in-numpyro">
-<h2><span class="section-number">12.2. </span>Implementing a Classifier in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#implementing-a-classifier-in-numpyro" title="Permalink to this heading">#</a></h2>
+<section id="implementing-classification-models-in-numpyro">
+<h2><span class="section-number">12.2. </span>Implementing Classification Models in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#implementing-classification-models-in-numpyro" title="Permalink to this heading">#</a></h2>
 <div class="admonition-exercise-implement-linear-classification admonition">
 <p class="admonition-title">Exercise: Implement Linear Classification</p>
 <p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement a linear classification model. Your model should only include the conditional distribution of outputs (telekinetic control <em>after</em> medication) given the inputs (age <em>and</em> dose); it should <em>not</em> include the marginal distribution of age and dose. Your model should therefore have the following signature:</p>
@@ -716,8 +716,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <ul>
 <li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noopener noreferrer" target="_blank">here</a>).</p></li>
 <li><p>Age spans a larger range than dose: age spans a range of roughly 0 to 100, whereas dose spans a range of roughly 0 to 1. Because of this disparity, gradient descent may find your optimization tricky. A learning rate that’s appropriate for updating the coefficients of age may be too large for the dose and vice versa. Because of this, we recommend using the following functional form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-17bfef08-4f8f-44c9-b2ef-6306d24b9ef9">
-<span class="eqno">(12.3)<a class="headerlink" href="#equation-17bfef08-4f8f-44c9-b2ef-6306d24b9ef9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-36834b0c-8703-46b5-ad1b-9ced87f030c5">
+<span class="eqno">(12.3)<a class="headerlink" href="#equation-36834b0c-8703-46b5-ad1b-9ced87f030c5" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_d, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}{100} + \theta_d \cdot d_n + \theta_i,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a_n\)</span> is age with slope <span class="math notranslate nohighlight">\(\theta_a\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span> is dose with slope <span class="math notranslate nohighlight">\(\theta_d\)</span>, and <span class="math notranslate nohighlight">\(\theta_i\)</span> is the intercept. Notice that we divide <span class="math notranslate nohighlight">\(a_n\)</span> by <span class="math notranslate nohighlight">\(100\)</span> to account for this difference in range.</p>
@@ -829,7 +829,7 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classification-model">12.1. The Classification Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-a-classifier-in-numpyro">12.2. Implementing a Classifier in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-classification-models-in-numpyro">12.2. Implementing Classification Models in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-predictive-models">12.3. Generalized Predictive Models</a></li>
 </ul>
   </nav></div>
