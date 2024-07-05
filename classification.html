@@ -670,13 +670,13 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8870a326-9e57-4b33-811e-eda8d1556982">
-<span class="eqno">(12.1)<a class="headerlink" href="#equation-8870a326-9e57-4b33-811e-eda8d1556982" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fd26f111-2b68-4706-bc0f-391fb6a0cc2c">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-fd26f111-2b68-4706-bc0f-391fb6a0cc2c" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-41b41908-ac0b-4885-a4ab-28124faf511b">
-<span class="eqno">(12.2)<a class="headerlink" href="#equation-41b41908-ac0b-4885-a4ab-28124faf511b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cab864bb-ee01-41db-8838-cc7cf1c51ba3">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-cab864bb-ee01-41db-8838-cc7cf1c51ba3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
@@ -685,14 +685,13 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <li><p>We feed it through our function <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>, which outputs the probability of telekinetic control. Here, <span class="math notranslate nohighlight">\(\theta\)</span> controls the shape of this function. Because <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span> needs to output a probability, we need to ensure its output stays between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. We do this as follows: we define a function <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> that outputs real values, and then transform the output of this function into the range <span class="math notranslate nohighlight">\([0, 1]\)</span> using the sigmoid function. Check out its <a class="reference external" href="https://en.wikipedia.org/wiki/Sigmoid_function" rel="noopener noreferrer" target="_blank">Wikipedia page</a> to see what it looks like.</p></li>
 <li><p>Finally, we sample from a Bernoulli with the probability given by <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>. This models the “noise” in the outcome; even for patients for which the medication is likely to work, the outcome is not guaranteed due to some unknown factors.</p></li>
 </ol>
-<p><strong>Expressivity.</strong> Let’s see what a classifier looks like.</p>
+<p><strong>Expressivity.</strong> Let’s see what a classifier looks like. In the figure below, our goal is to learn a model that, given a 2-dimensional point, <span class="math notranslate nohighlight">\(x_n = (x_n^{(1)}, x_n^{(2)})\)</span>, will tell us if the point is cyan or red. The grayscale shades in the plot represent the probability of being classified as cyan, denoted by <span class="math notranslate nohighlight">\(\rho(x_n; \theta)\)</span> in the model above. As with linear vs. polynomial regression, the choice of <span class="math notranslate nohighlight">\(f(\cdot, \theta)\)</span> determines the expressivity of the model. This model shows the behavior of several different classifiers.</p>
 <figure class="align-center" id="fig-classification-example">
 <img alt="_images/example_classification.png" src="_images/example_classification.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 12.1 </span><span class="caption-text">Examples of classifiers with different choices of <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span>. Each row represents a different data set, and each column represents a different model. The grayscale colors represent the probability, <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>.</span><a class="headerlink" href="#fig-classification-example" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As with linear vs. polynomial regression, the choice of <span class="math notranslate nohighlight">\(f(\cdot, \theta)\)</span> determines the expressivity of the model.</p>
 <div class="admonition-exercise-implement-linear-classification admonition">
 <p class="admonition-title">Exercise: Implement Linear Classification</p>
 <p>Look at the above plot and answer these questions:</p>
@@ -716,8 +715,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <ul>
 <li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noopener noreferrer" target="_blank">here</a>).</p></li>
 <li><p>Age spans a larger range than dose: age spans a range of roughly 0 to 100, whereas dose spans a range of roughly 0 to 1. Because of this disparity, gradient descent may find your optimization tricky. A learning rate that’s appropriate for updating the coefficients of age may be too large for the dose and vice versa. Because of this, we recommend using the following functional form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-36834b0c-8703-46b5-ad1b-9ced87f030c5">
-<span class="eqno">(12.3)<a class="headerlink" href="#equation-36834b0c-8703-46b5-ad1b-9ced87f030c5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6a07fb3b-dc69-4cdd-83fc-f0c047bd85a3">
+<span class="eqno">(12.3)<a class="headerlink" href="#equation-6a07fb3b-dc69-4cdd-83fc-f0c047bd85a3" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_d, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}{100} + \theta_d \cdot d_n + \theta_i,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a_n\)</span> is age with slope <span class="math notranslate nohighlight">\(\theta_a\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span> is dose with slope <span class="math notranslate nohighlight">\(\theta_d\)</span>, and <span class="math notranslate nohighlight">\(\theta_i\)</span> is the intercept. Notice that we divide <span class="math notranslate nohighlight">\(a_n\)</span> by <span class="math notranslate nohighlight">\(100\)</span> to account for this difference in range.</p>
