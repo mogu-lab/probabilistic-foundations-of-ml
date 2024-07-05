@@ -668,19 +668,19 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-18b8652b-cb8a-4dc1-9179-80414741cd9c">
-<span class="eqno">(12.1)<a class="headerlink" href="#equation-18b8652b-cb8a-4dc1-9179-80414741cd9c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-63c19b54-4d39-4f7f-8de6-9b178012e99a">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-63c19b54-4d39-4f7f-8de6-9b178012e99a" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83a990a5-1ae5-4094-978f-781e58d313fc">
-<span class="eqno">(12.2)<a class="headerlink" href="#equation-83a990a5-1ae5-4094-978f-781e58d313fc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-17d69f28-fbd7-4756-9cab-73348bdc538f">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-17d69f28-fbd7-4756-9cab-73348bdc538f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
 <ol class="arabic simple">
 <li><p>We’re given an input, <span class="math notranslate nohighlight">\(x_n\)</span>, from our data.</p></li>
-<li><p>We feed it through our function <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>, which outputs the probability of telekinetic control. Here, <span class="math notranslate nohighlight">\(\theta\)</span> controls the shape of this function. Because <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span> needs to output a probability, we need to ensure its output stays between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. We do this as follows: we define a function <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> that outputs real values, and then transform the output of this function into the range <span class="math notranslate nohighlight">\([0, 1]\)</span> using the sigmoid function. Checkout its <a class="reference external" href="https://en.wikipedia.org/wiki/Sigmoid_function" rel="noopener noreferrer" target="_blank">Wikipedia page</a> to see what it looks like.</p></li>
+<li><p>We feed it through our function <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>, which outputs the probability of telekinetic control. Here, <span class="math notranslate nohighlight">\(\theta\)</span> controls the shape of this function. Because <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span> needs to output a probability, we need to ensure its output stays between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. We do this as follows: we define a function <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> that outputs real values, and then transform the output of this function into the range <span class="math notranslate nohighlight">\([0, 1]\)</span> using the sigmoid function. Check out its <a class="reference external" href="https://en.wikipedia.org/wiki/Sigmoid_function" rel="noopener noreferrer" target="_blank">Wikipedia page</a> to see what it looks like.</p></li>
 <li><p>Finally, we sample from a Bernoulli with the probability given by <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>. This models the “noise” in the outcome; even for patients for which the medication is likely to work, the outcome is not guaranteed due to some unknown factors.</p></li>
 </ol>
 <p><strong>Expressivity.</strong> Let’s see what this looks like.</p>
@@ -702,18 +702,18 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <li><p>For which patients are you most uncertain about the effect of medication?</p></li>
 </ul>
 </div>
-<div class="admonition-exercise-implement-polynomial-classification admonition">
-<p class="admonition-title">Exercise: Implement Polynomial Classification</p>
-<p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement polynomial classification. Your model will now take one additional argument—the degree of the polynomial (a polynomial in which the highest term is <span class="math notranslate nohighlight">\(x^4\)</span> is of degree <span class="math notranslate nohighlight">\(4\)</span>). Please use the function signature below.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_polynomial_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="admonition-exercise-implement-non-linear-classification admonition">
+<p class="admonition-title">Exercise: Implement Non-Linear Classification</p>
+<p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement a non-linear classifier—a classifier in which <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> is not linear. Your choice of <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> should improve the classifier relative to the linear classifier from the previous exercise. Please use the function signature below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_nonlinear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
-<p><strong>Part 2:</strong> Fit the model to the data using the MLE with <code class="docutils literal notranslate"><span class="pre">degree=2</span></code>, <code class="docutils literal notranslate"><span class="pre">5</span></code> and <code class="docutils literal notranslate"><span class="pre">8</span></code>. For each, plot the loss and verify that your optimization converged.</p>
+<p><strong>Part 2:</strong> Fit the model to the data using the MLE. Plot the loss and verify that your optimization converged.</p>
 <p><strong>Part 3:</strong> Answer the following questions.</p>
 <ul class="simple">
-<li><p>How well does each model fit the data?</p></li>
-<li><p>Which model would you ultimately recommend to the researchers at the IHH? Why? Your answer should look at how the model <em>interpolates</em>, meaning the trend it learns for the points in your data, and also how it <em>extrapolates</em>, meaning the trend it learns away from your data (e.g. in the extreme values of the inputs).</p></li>
+<li><p>How well does your model fit the data?</p></li>
+<li><p>TODO</p></li>
 </ul>
 </div>
 </section>
