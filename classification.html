@@ -668,13 +668,13 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-30fd0cdd-0fef-4ab0-84b1-c2a16f71b8e4">
-<span class="eqno">(12.1)<a class="headerlink" href="#equation-30fd0cdd-0fef-4ab0-84b1-c2a16f71b8e4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5688b5b7-5e2a-43f9-98a2-3e5afa061971">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-5688b5b7-5e2a-43f9-98a2-3e5afa061971" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a490e2c9-0d60-4002-ab21-ca62a44e79a9">
-<span class="eqno">(12.2)<a class="headerlink" href="#equation-a490e2c9-0d60-4002-ab21-ca62a44e79a9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7ccee954-53de-47e7-a533-fe18f560a49c">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-7ccee954-53de-47e7-a533-fe18f560a49c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
@@ -693,7 +693,17 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
-<p>Notice that here, we expect <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">dose</span></code> to <em>always</em> be passed in. This is because we’re not looking to learn the distribution of these variables—we’re always going to be given it.</p>
+<p>Notice that here, we expect <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">dose</span></code> to <em>always</em> be passed in. This is because we’re not looking to learn the distribution of these variables—we’re always going to be given them.</p>
+<p>Tips:</p>
+<ul class="simple">
+<li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noopener noreferrer" target="_blank">here</a>).</p></li>
+<li><p>Age spans a larger range than dose: age spans a range of roughly 0 to 100, whereas dose spans a range of roughly 0 to 1. Because of this disparity, gradient descent may find your optimization tricky. A learning rate that’s appropriate for updating the coefficients of age may be too large for the dose and vice versa. Because of this, we recommend using the following functional form:</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-62e157a1-6a28-4146-a491-8b1fb401eac3">
+<span class="eqno">(12.3)<a class="headerlink" href="#equation-62e157a1-6a28-4146-a491-8b1fb401eac3" title="Permalink to this equation">#</a></span>\[\begin{align}
+f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_b, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}_{100} + \theta_d \cdot d_n + \theta_i,
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_n\)</span> is age with slope <span class="math notranslate nohighlight">\(\theta_a\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span> is dose with slope <span class="math notranslate nohighlight">\(\theta_d\)</span>, and <span class="math notranslate nohighlight">\(\theta_i\)</span> is the intercept. Notice that we divide <span class="math notranslate nohighlight">\(a_n\)</span> by <span class="math notranslate nohighlight">\(100\)</span> to account for this difference in scaling.</p>
 <p><strong>Part 2:</strong> Fit the model to the data using the MLE. Plot the loss and verify that your optimization converged. In your plot you may want to zoom in on the last iterations of optimizations to verify it indeed converged.</p>
 <p><strong>Part 3:</strong> Visualize your model fit by plotting samples from your model against the real data.</p>
 <ul class="simple">
@@ -709,8 +719,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <li><p>Make use of <em>at least</em> one parameter that will be learned from the data.</p></li>
 <li><p>Should fit the data better than the linear classifier from the previous exercise.</p></li>
 </ul>
-<p>Please use the function signature below.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_nonlinear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<p>Please use the function signature below and follow the same tips.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_nonlinear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
@@ -722,6 +732,11 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <li><p>For which patients is your model most uncertain about regarding the effect of the medication?</p></li>
 </ul>
 </div>
+<p><strong>TODOs:</strong></p>
+<ul class="simple">
+<li><p>Example plots of linear and non-linear classifiers</p></li>
+<li><p>Function for plotting classification boundaries</p></li>
+</ul>
 </section>
 </section>
 
