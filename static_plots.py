@@ -5,10 +5,20 @@ import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 from matplotlib.animation import ArtistAnimation
 from mpl_toolkits.mplot3d import axes3d
+from matplotlib.colors import ListedColormap
+from mpl_toolkits.axes_grid1 import ImageGrid
 import jax
 import jax.numpy as jnp
 import jax.random as jrandom
 import numpyro.distributions as D
+import numpy as np
+from sklearn.datasets import make_circles, make_classification, make_moons
+from sklearn.inspection import DecisionBoundaryDisplay
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 
 
 OUTPUT_DIR = '_static/figs'
@@ -307,7 +317,125 @@ def plot_example_regression():
     plt.savefig(os.path.join(OUTPUT_DIR, 'example_regression_density.png'))
     plt.close()
     '''
+
+def plot_example_classification():
+    # Code source: Gaël Varoquaux
+    #              Andreas Müller
+    # Modified for documentation by Jaques Grobler
+    # License: BSD 3 clause
+    # Adapted from:
+    # https://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html
+
+    degree = 4
+    names = [
+        "Linear",
+        "Polynomial (Degree={})".format(degree),
+        "Neural Network",
+    ]
+
+    classifiers = [
+        LogisticRegression(max_iter=2000, random_state=42),
+        make_pipeline(
+            PolynomialFeatures(degree=degree),
+            LogisticRegression(max_iter=2000, random_state=42),
+        ),
+        MLPClassifier(hidden_layer_sizes=(100,), max_iter=2000, random_state=42),
+    ]
+
+    X, y = make_classification(
+        n_features=2, n_redundant=0, n_informative=2,
+        random_state=1, n_clusters_per_class=1,
+    )
+    rng = np.random.RandomState(2)
+    X += 2 * rng.uniform(size=X.shape)
+    linearly_separable = (X, y)
     
+    datasets = [
+        make_moons(noise=0.3, random_state=0),
+        make_circles(noise=0.2, factor=0.5, random_state=1),
+        linearly_separable,
+    ]
+
+    fig = plt.figure(figsize=(3.0 * len(names), 9.0))
+    grid = ImageGrid(
+        fig, 111, 
+        nrows_ncols=(len(datasets), len(names)),
+        axes_pad=0.1,
+        aspect=False,
+        cbar_mode='single',
+        cbar_location='bottom',
+        label_mode='L',
+        cbar_pad=0.3,
+    )
+
+    eps = 0.3
+    plot_cbar = True
+    
+    # iterate over datasets
+    for ds_cnt, ds in enumerate(datasets):
+        # preprocess dataset, split into training and test part
+        X, y = ds
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.4, random_state=42,
+        )
+        
+        x_min, x_max = X[:, 0].min() - eps, X[:, 0].max() + eps
+        y_min, y_max = X[:, 1].min() - eps, X[:, 1].max() + eps
+        
+        # just plot the dataset first
+        cm = plt.cm.binary
+        cm_bright = ListedColormap(["red", "cyan"])
+        ax = grid.axes_row[ds_cnt][0]
+        
+        # iterate over classifiers
+        for col, (name, clf) in enumerate(zip(names, classifiers)):
+            ax = grid.axes_row[ds_cnt][col]
+            
+            clf = make_pipeline(StandardScaler(), clf)
+            clf.fit(X_train, y_train)
+            score = clf.score(X_test, y_test)
+            dbd = DecisionBoundaryDisplay.from_estimator(
+                clf, X, cmap=cm, alpha=0.8, ax=ax, eps=5.0,
+                response_method='predict_proba',
+                xlabel=r'$X^{(0)}$', ylabel=r'$X^{(1)}$',
+                levels=np.linspace(0.0, 1.0, 11),
+            )
+
+            if plot_cbar and 'Neural' in name:
+                cbar = grid.cbar_axes[0].colorbar(
+                    dbd.surface_,
+                    ticks=jnp.linspace(0.0, 1.0, 11, endpoint=True),
+                )
+                
+                cbar.ax.set_xlabel('Probability')
+                
+                plot_cbar = False
+            
+            # Plot the data
+            ax.scatter(X[:, 0], X[:, 1], c=y, cmap=cm_bright, alpha=0.5)
+            
+            ax.set_xlim(x_min, x_max)
+            ax.set_ylim(y_min, y_max)
+            ax.set_xticks(())
+            ax.set_yticks(())
+            if ds_cnt == 0:
+                ax.set_title(name)
+
+            '''
+            # Plot accuracy
+            ax.text(
+                x_max - 0.3,
+                y_min + 0.3,
+                ("%.2f" % score).lstrip("0"),
+                size=15,
+                horizontalalignment="right",
+            )
+            '''
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'example_classification.png'))
+    plt.close()
+
     
 def main():
     #plot_poisson_example()    
@@ -315,6 +443,7 @@ def main():
     #plot_example_loss_functions()
     #all_gradient_descent_plots()
     #plot_example_regression()
+    #plot_example_classification()
     pass
 
     
