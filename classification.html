@@ -668,13 +668,13 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-561357a8-3d29-4b9b-9fd2-0135175d52d0">
-<span class="eqno">(12.1)<a class="headerlink" href="#equation-561357a8-3d29-4b9b-9fd2-0135175d52d0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-30fd0cdd-0fef-4ab0-84b1-c2a16f71b8e4">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-30fd0cdd-0fef-4ab0-84b1-c2a16f71b8e4" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-efc95e43-6c34-46f1-b258-407235aec4b5">
-<span class="eqno">(12.2)<a class="headerlink" href="#equation-efc95e43-6c34-46f1-b258-407235aec4b5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a490e2c9-0d60-4002-ab21-ca62a44e79a9">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-a490e2c9-0d60-4002-ab21-ca62a44e79a9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
@@ -688,7 +688,7 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <p>As with linear vs. polynomial regression, the choice of <span class="math notranslate nohighlight">\(f(\cdot, \theta)\)</span> determines the expressivity of the model.</p>
 <div class="admonition-exercise-implement-linear-classification admonition">
 <p class="admonition-title">Exercise: Implement Linear Classification</p>
-<p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement a linear classification model. Your model should only include the conditional distribution of outputs (telekinetic control) given the inputs (age <em>and</em> dose); it should <em>not</em> include the marginal distribution of age and dose. Your model should therefore have the following signature:</p>
+<p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement a linear classification model. Your model should only include the conditional distribution of outputs (telekinetic control <em>after</em> medication) given the inputs (age <em>and</em> dose); it should <em>not</em> include the marginal distribution of age and dose. Your model should therefore have the following signature:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_linear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
@@ -704,7 +704,12 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 </div>
 <div class="admonition-exercise-implement-non-linear-classification admonition">
 <p class="admonition-title">Exercise: Implement Non-Linear Classification</p>
-<p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement a non-linear classifier—a classifier in which <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> is not linear. Your choice of <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> should improve the classifier relative to the linear classifier from the previous exercise. Please use the function signature below.</p>
+<p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement a non-linear classifier—a classifier in which <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> is not linear. Your choice of <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> should:</p>
+<ul class="simple">
+<li><p>Make use of <em>at least</em> one parameter that will be learned from the data.</p></li>
+<li><p>Should fit the data better than the linear classifier from the previous exercise.</p></li>
+</ul>
+<p>Please use the function signature below.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_nonlinear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
