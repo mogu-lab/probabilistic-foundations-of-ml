@@ -19,10 +19,12 @@ def download_directory_from_github(user_name, repo_name, path, skip_downloaded=T
     directory_info = requests.get(url)
     
     for file_info in directory_info.json():
+        print(f'\tLoading {file_info["path"]}...')        
+        
         if os.path.exists(file_info['path']) and skip_downloaded:
+            print('\tAlready downloaded.')
             continue
 
-        print(f'\tLoading {file_info["path"]}...')        
         r = requests.get(file_info['download_url'])
         open(file_info['path'] , 'wb').write(r.content)
 
@@ -33,11 +35,12 @@ def download_files_from_github(user_name, repo_name, paths, skip_downloaded=True
     '''
     
     for path in paths:
-        if os.path.exists(path) and skip_downloaded:
-            continue
-
         print(f'\tLoading {path}...')        
         
+        if os.path.exists(path) and skip_downloaded:
+            print('\tAlready downloaded.')
+            continue
+
         url = f'https://api.github.com/repos/{user_name}/{repo_name}/contents/{path}'
         file_info = requests.get(url).json()
             
