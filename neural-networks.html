@@ -353,7 +353,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shortcomings-of-polynomials">13.1. Shortcomings of Polynomials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressivity-via-function-composition">13.2. Expressivity via Function Composition</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-linear-transforms">13.3. Multivariate Linear Transforms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
@@ -371,9 +371,17 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="neural-networks">
 <h1><span class="section-number">13. </span>Neural Networks<a class="headerlink" href="#neural-networks" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-920df269-b87e-40f7-8e39-175705cb78a6">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-920df269-b87e-40f7-8e39-175705cb78a6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a34f0ed2-9143-4e72-92cf-b0bb0be8a435">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-a34f0ed2-9143-4e72-92cf-b0bb0be8a435" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -386,14 +394,31 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 <li><p>Introduce neural networks, implement them in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> and fit them to IHH data</p></li>
 <li><p>Connect the math behind neural networks to the pictures used to represent them in popular media</p></li>
 </ul>
-<section id="shortcomings-of-polynomials">
-<h2><span class="section-number">13.1. </span>Shortcomings of Polynomials<a class="headerlink" href="#shortcomings-of-polynomials" title="Permalink to this heading">#</a></h2>
+<section id="the-shortcomings-of-polynomials">
+<h2><span class="section-number">13.1. </span>The Shortcomings of Polynomials<a class="headerlink" href="#the-shortcomings-of-polynomials" title="Permalink to this heading">#</a></h2>
+<p><strong>The Universality of Polynomials.</strong> In both chapters about regression and classification, we observed the benefits of using non-linear functions for data with non-linear trends. In regression, we’ve focused on polynomials as our primary tool for creating non-linear functions, and for our low-dimensional data, they seemed to work great! So you may be wondering, why not apply them to high-dimensional data as well? In fact, polynomials boast a very powerful property: they are <em>universal function approximators</em>. By this, we mean that for any continuous function on some bounded interval <span class="math notranslate nohighlight">\([a, b]\)</span>, we can find a polynomial that approximates it arbitrarily well (this is known as the <a class="reference external" href="https://en.wikipedia.org/wiki/Stone%E2%80%93Weierstrass_theorem" rel="noopener noreferrer" target="_blank">Stone–Weierstrass theorem</a>). This means that for <em>any</em> data set that consists of continuous trends, <em>theoretically speaking</em>, polynomials can capture it. This is a huge deal! So let’s see how polynomials measure up against a linear regression and neural network regression:</p>
+<figure class="align-center" id="fig-regression-inductive-bias-closeup">
+<img alt="_images/example_regression_inductive_bias_percent_ood_0.png" src="_images/example_regression_inductive_bias_percent_ood_0.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 13.1 </span><span class="caption-text">Examples of linear, polynomial, and neural network regression on IHH data.</span><a class="headerlink" href="#fig-regression-inductive-bias-closeup" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As you can see, polynomial regression seems to capture the trend in these regression data sets super well. But <em>practically speaking</em>, polynomials actually come with several challenges.</p>
+<p><strong>Challenge 1: Numerical Instability.</strong> Polynomials are numerically unstable. Imagine you want to use a degree-20 polynomial in your regression model. This means that, in fitting your model, you will have to evaluate <span class="math notranslate nohighlight">\(x^20\)</span>. When <span class="math notranslate nohighlight">\(x = 0.1\)</span> and when <span class="math notranslate nohighlight">\(x = 10.0\)</span>, you’re asking your computer to represent numbers like <span class="math notranslate nohighlight">\(0.000000000000000000001\)</span> and <span class="math notranslate nohighlight">\(1000000000000000000000\)</span>. Because your computer only has finite precision, very small numbers are at risk of being rounded down to <span class="math notranslate nohighlight">\(0\)</span> and very large numbers may overflow.</p>
+<p><strong>Challenge 2: Inductive Bias.</strong> Oftentimes, we’re less interested in seeing what our model does on data we’ve already observed. Instead, we want to know what it might do for a <em>new</em> data point. For example, suppose we’re asked to develop a model to predict telekinetic ability and glow from age (using data from the regression chapter). We aren’t interested in seeing the model’s predictions on patients included in our data set—we’ve already observed how telekinetic ability and glow correlate with age. We’re interested in the model’s predictions for <em>new</em> patients. For example, what happens if we get an input that we’ve never seen before? For example, a patient that’s much older or younger than the rest of the patients in the data? We call the trend of the model away from the data its “inductive bias.” Different models that fit the data equally well may actually have different inductive biases. Let’s illustrate what we mean visually. The plot below shows the very same three models plotted above; however, this time the plots are zoomed out so you can see each model’s behavior away from the data.</p>
+<figure class="align-center" id="fig-regression-inductive-bias">
+<img alt="_images/example_regression_inductive_bias_percent_ood_30.png" src="_images/example_regression_inductive_bias_percent_ood_30.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 13.2 </span><span class="caption-text">A zoomed-out plot of the same linear, polynomial, and neural network regressor as in the figure above.</span><a class="headerlink" href="#fig-regression-inductive-bias" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="expressivity-via-function-composition">
 <h2><span class="section-number">13.2. </span>Expressivity via Function Composition<a class="headerlink" href="#expressivity-via-function-composition" title="Permalink to this heading">#</a></h2>
 </section>
 <section id="multivariate-linear-transforms">
 <h2><span class="section-number">13.3. </span>Multivariate Linear Transforms<a class="headerlink" href="#multivariate-linear-transforms" title="Permalink to this heading">#</a></h2>
+<p>Suppose we’re developing a regression model for high-dimensional data and need to pick which <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span> to use. Let our input data be <span class="math notranslate nohighlight">\(D\)</span> dimensional, meaning that our inputs are an array (or vector): <span class="math notranslate nohighlight">\(x_n = [ x_n^{(1)}, x_n^{(2)}, \dots, x_n^{(D)} ]\)</span>. We use the superscript to denote the dimension of the data.</p>
 </section>
 <section id="id1">
 <h2><span class="section-number">13.4. </span>Neural Networks<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
@@ -470,7 +495,7 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shortcomings-of-polynomials">13.1. Shortcomings of Polynomials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressivity-via-function-composition">13.2. Expressivity via Function Composition</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-linear-transforms">13.3. Multivariate Linear Transforms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
