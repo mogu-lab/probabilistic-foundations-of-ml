@@ -435,17 +435,21 @@ def plot_example_classification():
 
 
 def inductive_bias_of_polynomial_regression(percent_ood):
-    degree = 5
     names = [
-        "Linear",
-        "Polynomial (Degree={})".format(degree),
+        #"Linear",
+        "Polynomial (Degree=5)",
+        "Polynomial (Degree=6)",
         "Neural Network",
     ]
 
     classifiers = [
-        LinearRegression(),
+        #LinearRegression(),
         make_pipeline(
-            PolynomialFeatures(degree=degree),
+            PolynomialFeatures(degree=5),
+            LinearRegression(),
+        ),
+        make_pipeline(
+            PolynomialFeatures(degree=6),
             LinearRegression(),
         ),
         MLPRegressor(
@@ -512,8 +516,10 @@ def inductive_bias_of_polynomial_regression(percent_ood):
             if row == 0:                
                 axes[row, col].set_title(name)                
 
+            if col == 0:
+                axes[row, col].set_ylabel(axis_names[row][1])
+                
             axes[row, col].set_xlabel(axis_names[row][0])
-            axes[row, col].set_ylabel(axis_names[row][1])
             axes[row, col].legend()
 
     plt.tight_layout()
@@ -532,8 +538,8 @@ def main():
     #all_gradient_descent_plots()
     #plot_example_regression()
     #plot_example_classification()
-    #inductive_bias_of_polynomial_regression(percent_ood=0)
-    #inductive_bias_of_polynomial_regression(percent_ood=30)
+    inductive_bias_of_polynomial_regression(percent_ood=0)
+    inductive_bias_of_polynomial_regression(percent_ood=30)
     pass
 
     
