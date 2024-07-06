@@ -354,7 +354,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressivity-via-function-composition">13.2. Expressivity via Function Composition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressivity-from-small-building-blocks">13.2. Expressivity from Small Building Blocks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-linear-transforms">13.3. Multivariate Linear Transforms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-pictures-to-the-math">13.5. Connecting the Pictures to the Math</a></li>
@@ -380,8 +380,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a34f0ed2-9143-4e72-92cf-b0bb0be8a435">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-a34f0ed2-9143-4e72-92cf-b0bb0be8a435" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3a98e6fd-a59b-4103-8ad6-43c7a2a68089">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-3a98e6fd-a59b-4103-8ad6-43c7a2a68089" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -403,18 +403,22 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 <p><span class="caption-number">Fig. 13.1 </span><span class="caption-text">Examples of linear, polynomial, and neural network regression on IHH data.</span><a class="headerlink" href="#fig-regression-inductive-bias-closeup" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As you can see, polynomial regression seems to capture the trend in these regression data sets super well. But <em>practically speaking</em>, polynomials actually come with several challenges.</p>
+<p>As you can see, polynomial regression seems to capture the trend in these regression data sets super well—much better than linear regression and equally well as the neural network regression. But <em>practically speaking</em>, polynomials actually come with several challenges that make them inappropriate in many contexts.</p>
 <p><strong>Challenge 1: Numerical Instability.</strong> Polynomials are numerically unstable. Imagine you want to use a degree-20 polynomial in your regression model. This means that, in fitting your model, you will have to evaluate <span class="math notranslate nohighlight">\(x^20\)</span>. When <span class="math notranslate nohighlight">\(x = 0.1\)</span> and when <span class="math notranslate nohighlight">\(x = 10.0\)</span>, you’re asking your computer to represent numbers like <span class="math notranslate nohighlight">\(0.000000000000000000001\)</span> and <span class="math notranslate nohighlight">\(1000000000000000000000\)</span>. Because your computer only has finite precision, very small numbers are at risk of being rounded down to <span class="math notranslate nohighlight">\(0\)</span> and very large numbers may overflow.</p>
-<p><strong>Challenge 2: Inductive Bias.</strong> Oftentimes, we’re less interested in seeing what our model does on data we’ve already observed. Instead, we want to know what it might do for a <em>new</em> data point. For example, suppose we’re asked to develop a model to predict telekinetic ability and glow from age (using data from the regression chapter). We aren’t interested in seeing the model’s predictions on patients included in our data set—we’ve already observed how telekinetic ability and glow correlate with age. We’re interested in the model’s predictions for <em>new</em> patients. For example, what happens if we get an input that we’ve never seen before? For example, a patient that’s much older or younger than the rest of the patients in the data? We call the trend of the model away from the data its “inductive bias.” Different models that fit the data equally well may actually have different inductive biases. Let’s illustrate what we mean visually. The plot below shows the very same three models plotted above; however, this time the plots are zoomed out so you can see each model’s behavior away from the data.</p>
+<p><strong>Challenge 2: Inductive Bias.</strong> Oftentimes, we’re less interested in seeing what our model does on data we’ve already observed. Instead, we want to know what it might do for a <em>new</em> data point. For example, suppose we’re asked to develop a model to predict telekinetic ability and glow from age (like we did in the regression chapter). We aren’t interested in seeing the model’s predictions on patients included in our data set—we’ve already observed how these patients’ age, telekinetic ability, and glow. We’re interested in the model’s predictions for <em>new</em> patients. For example, what happens if we get an input that we’ve never seen before, like a patient that’s much older or younger than the rest of the patients in the data.</p>
+<p>We call the trend of the model away from the data its “inductive bias.” Different models that fit the data equally well may actually have different inductive biases. Let’s illustrate what we mean visually. The plot below shows the very same three models plotted above; however, this time the plots are zoomed out so you can see each model’s behavior away from the data. As you can see, each model’s inductive bias is different.</p>
 <figure class="align-center" id="fig-regression-inductive-bias">
 <img alt="_images/example_regression_inductive_bias_percent_ood_30.png" src="_images/example_regression_inductive_bias_percent_ood_30.png" />
 <figcaption>
 <p><span class="caption-number">Fig. 13.2 </span><span class="caption-text">A zoomed-out plot of the same linear, polynomial, and neural network regressor as in the figure above.</span><a class="headerlink" href="#fig-regression-inductive-bias" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
+<p>What’s interesting in the above plot is that the polynomial regression’s inductive bias tends towards positive or negative infinity very quickly. Looking at the math, this makes sense: a 5th-degree polynomial will include terms like <span class="math notranslate nohighlight">\(\text{age}^5\)</span>, which grow quickly with age.</p>
+<p>While this may be the desired behavior for some data sets, for our data sets, it’s inappropriate. For example, look at the middle plot, in which polynomial regression predicts telekinetic ability from age. Even though we’ve generally seen that as age increases, telekinetic ability decreases, this plot suggests the opposite. After age 100, the patient’s telekinetic ability <em>skyrockets</em>; in fact, it increases so quickly it’s larger than the ability of all other patients.</p>
+<p><strong>Conclusion:</strong> When picking a function-class to work with (like the class of polynomials), it’s important to consider numerical stability (as well as ease of optimization). Without these properties, it doesn’t matter how expressive your function is, you’ll never be able to practically use it. Second, it’s important to think about the function class’s inductive bias, i.e. to think about how it will generalize in regions of the space where data is scarce.</p>
 </section>
-<section id="expressivity-via-function-composition">
-<h2><span class="section-number">13.2. </span>Expressivity via Function Composition<a class="headerlink" href="#expressivity-via-function-composition" title="Permalink to this heading">#</a></h2>
+<section id="expressivity-from-small-building-blocks">
+<h2><span class="section-number">13.2. </span>Expressivity from Small Building Blocks<a class="headerlink" href="#expressivity-from-small-building-blocks" title="Permalink to this heading">#</a></h2>
 </section>
 <section id="multivariate-linear-transforms">
 <h2><span class="section-number">13.3. </span>Multivariate Linear Transforms<a class="headerlink" href="#multivariate-linear-transforms" title="Permalink to this heading">#</a></h2>
@@ -496,7 +500,7 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressivity-via-function-composition">13.2. Expressivity via Function Composition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressivity-from-small-building-blocks">13.2. Expressivity from Small Building Blocks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-linear-transforms">13.3. Multivariate Linear Transforms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-pictures-to-the-math">13.5. Connecting the Pictures to the Math</a></li>
