@@ -12,11 +12,12 @@ import jax.numpy as jnp
 import jax.random as jrandom
 import numpyro.distributions as D
 import numpy as np
+import pandas as pd
 from sklearn.datasets import make_circles, make_classification, make_moons
 from sklearn.inspection import DecisionBoundaryDisplay
 from sklearn.model_selection import train_test_split
-from sklearn.neural_network import MLPClassifier
-from sklearn.linear_model import LogisticRegression
+from sklearn.neural_network import MLPClassifier, MLPRegressor
+from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 
@@ -365,7 +366,7 @@ def plot_example_classification():
         cbar_mode='single',
         cbar_location='bottom',
         label_mode='L',
-        cbar_pad=0.3,
+        cbar_pad=0.5,
     )
 
     eps = 0.3
@@ -382,10 +383,8 @@ def plot_example_classification():
         x_min, x_max = X[:, 0].min() - eps, X[:, 0].max() + eps
         y_min, y_max = X[:, 1].min() - eps, X[:, 1].max() + eps
         
-        # just plot the dataset first
         cm = plt.cm.binary
         cm_bright = ListedColormap(["red", "cyan"])
-        ax = grid.axes_row[ds_cnt][0]
         
         # iterate over classifiers
         for col, (name, clf) in enumerate(zip(names, classifiers)):
@@ -416,8 +415,6 @@ def plot_example_classification():
             
             ax.set_xlim(x_min, x_max)
             ax.set_ylim(y_min, y_max)
-            ax.set_xticks(())
-            ax.set_yticks(())
             if ds_cnt == 0:
                 ax.set_title(name)
 
@@ -436,6 +433,97 @@ def plot_example_classification():
     plt.savefig(os.path.join(OUTPUT_DIR, 'example_classification.png'))
     plt.close()
 
+
+def inductive_bias_of_polynomial_regression(percent_ood):
+    degree = 5
+    names = [
+        "Linear",
+        "Polynomial (Degree={})".format(degree),
+        "Neural Network",
+    ]
+
+    classifiers = [
+        LinearRegression(),
+        make_pipeline(
+            PolynomialFeatures(degree=degree),
+            LinearRegression(),
+        ),
+        MLPRegressor(
+            hidden_layer_sizes=(50,),
+            max_iter=10000,
+            learning_rate='adaptive',
+            learning_rate_init=0.01,
+            random_state=42,
+            n_iter_no_change=100,
+        ),
+    ]
+
+    df = pd.read_csv(
+        'data/IHH-CTR-CGLF-regression-augmented.csv',
+        index_col='Patient ID',
+    )
+    
+    datasets = [
+        (df['Age'].values[..., None], df['Glow'].values),
+        (df['Age'].values[..., None], df['Telekinetic-Ability'].values),
+        (df['Glow'].values[..., None], df['Telekinetic-Ability'].values),
+    ]
+
+    axis_names = [
+        ('Age', 'Glow'),
+        ('Age', 'Telekinetic-Ability'),
+        ('Glow', 'Telekinetic-Ability'),
+    ]
+
+    fig, axes = plt.subplots(
+        len(datasets), len(names),
+        figsize=(3.0 * len(names), 2.5 * len(datasets)),
+    )
+    
+    # iterate over datasets
+    for row, ds in enumerate(datasets):
+        # preprocess dataset, split into training and test part
+        X, y = ds
+
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.4, random_state=42,
+        )
+
+        eps = (percent_ood / 100.0) * (X.max() - X.min())
+        x_min = X.min() #- eps # since these vars cannot be < 0
+        x_max = X.max() + eps
+        x_test = jnp.linspace(x_min, x_max, 100)[..., None]
+        
+        # iterate over classifiers
+        for col, (name, clf) in enumerate(zip(names, classifiers)):
+            if col > 0:
+                axes[row, col].sharex(axes[row, 0])
+                axes[row, col].sharey(axes[row, 0])
+                
+            clf = make_pipeline(StandardScaler(), clf)
+            clf.fit(X_train, y_train)
+            
+            # Plot the data
+            axes[row, col].scatter(X, y, c='red', alpha=0.5, label='Data')
+            axes[row, col].plot(x_test, clf.predict(x_test), label=r'Trend: $\mu(\cdot; W)$')
+            
+            axes[row, col].set_xlim(x_min, x_max)
+
+            if row == 0:                
+                axes[row, col].set_title(name)                
+
+            axes[row, col].set_xlabel(axis_names[row][0])
+            axes[row, col].set_ylabel(axis_names[row][1])
+            axes[row, col].legend()
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(
+        OUTPUT_DIR,
+        'example_regression_inductive_bias_percent_ood_{}.png'.format(percent_ood),
+    ))
+    plt.close()
+
+    
     
 def main():
     #plot_poisson_example()    
@@ -444,6 +532,8 @@ def main():
     #all_gradient_descent_plots()
     #plot_example_regression()
     #plot_example_classification()
+    #inductive_bias_of_polynomial_regression(percent_ood=0)
+    #inductive_bias_of_polynomial_regression(percent_ood=30)
     pass
 
     
