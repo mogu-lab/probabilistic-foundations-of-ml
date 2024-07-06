@@ -354,7 +354,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressivity-from-small-building-blocks">13.2. Expressivity from Small Building Blocks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressive-functions-from-simple-building-blocks">13.2. Expressive Functions from Simple Building Blocks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-linear-transforms">13.3. Multivariate Linear Transforms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-pictures-to-the-math">13.5. Connecting the Pictures to the Math</a></li>
@@ -380,8 +380,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-74f77c0b-6594-45bf-adc5-2a05c91489fa">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-74f77c0b-6594-45bf-adc5-2a05c91489fa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d19d4996-4044-4e3e-ac75-143e6207de97">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-d19d4996-4044-4e3e-ac75-143e6207de97" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -417,8 +417,139 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 <p>While this may be the desired behavior for some data sets, for our data sets, it’s inappropriate. For example, look at the left-middle plot, in which the 5th-degree polynomial regression predicts telekinetic ability from age. Even though we’ve generally seen that as age increases, telekinetic ability decreases, this plot suggests the opposite. After age 100, the patient’s telekinetic ability <em>skyrockets</em>; in fact, it increases so quickly it’s larger than the ability of all other patients.</p>
 <p><strong>Conclusion:</strong> When picking a function-class to work with (like the class of polynomials), it’s important to consider numerical stability (as well as ease of optimization). Without these properties, it doesn’t matter how expressive your function is, since you’ll never be able to practically fit it to data. Second, it’s important to think about the function class’s inductive bias, or in other words, to think about how it will generalize in regions of the space where data is scarce.</p>
 </section>
-<section id="expressivity-from-small-building-blocks">
-<h2><span class="section-number">13.2. </span>Expressivity from Small Building Blocks<a class="headerlink" href="#expressivity-from-small-building-blocks" title="Permalink to this heading">#</a></h2>
+<section id="expressive-functions-from-simple-building-blocks">
+<h2><span class="section-number">13.2. </span>Expressive Functions from Simple Building Blocks<a class="headerlink" href="#expressive-functions-from-simple-building-blocks" title="Permalink to this heading">#</a></h2>
+<p><strong>Idea.</strong> Instead of using polynomials, let’s see if we can build an expressive function-class, <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span>, from small building blocks. Each block will be simple and numerically stable. And when combined, will give us an expressive function, capable of adapting to any trend we observe in the data. This is the mechanism underlying neural networks.</p>
+<p>Let’s import some libraries so we can plot as we go.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">jax.random</span> <span class="k">as</span> <span class="nn">jrandom</span>
+<span class="kn">import</span> <span class="nn">jax.nn</span> <span class="k">as</span> <span class="nn">jnn</span>
+<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>A Simple Block.</strong> For the simple block, let’s use a sigmoid. A sigmoid looks like a smoothed-out step function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">15.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;A Sigmoid Function&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b1bc71888fca882eb7756c392ba0f514bfbb5b08c9c4266948b41cf178fd4d5e.png" src="_images/b1bc71888fca882eb7756c392ba0f514bfbb5b08c9c4266948b41cf178fd4d5e.png" />
+</div>
+</div>
+<p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6f5aff24-21c4-474a-9dfa-e32862fd8c71">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-6f5aff24-21c4-474a-9dfa-e32862fd8c71" title="Permalink to this equation">#</a></span>\[\begin{align}
+\underbrace{u(x; w, b)}_{\text{building block}} &amp;= \mathrm{sigmoid}(\underbrace{w \cdot x + b}_{\text{scale and shift $x$}})
+\end{align}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose some scales and shifts</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="n">shift</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]</span>
+
+<span class="c1"># Plot!</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">15.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">shift</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$w = </span><span class="si">{}</span><span class="s1">, b = </span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Building Blocks with Different Parameters&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/677fb0f765b4485f253544815c07f9df7fad3a13551d18daec9588964df15c0e.png" src="_images/677fb0f765b4485f253544815c07f9df7fad3a13551d18daec9588964df15c0e.png" />
+</div>
+</div>
+<p><strong>Combining Building Blocks via Addition.</strong> While on their own, each building block can’t really model anything interesting—it can’t model anything that’s not a sigmoid. However, by adding these building blocks with different parameters, we can start making more interesting-looking functions:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-71406d2f-8fce-4f2a-9f73-cbb57bb948cb">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-71406d2f-8fce-4f2a-9f73-cbb57bb948cb" title="Permalink to this equation">#</a></span>\[\begin{align}
+h(x; w_1, \dots, w_L, b_1, \dots, b_L) &amp;= \sum\limits_{i=1}^L u(x; w_i, b_i) \\
+&amp;= \sum\limits_{i=1}^L \text{sigmoid}(w_i \cdot x + b_i)
+\end{align}\]</div>
+<p>Let’s see what function we get by adding the three building blocks above:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">shift</span><span class="p">):</span>  
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">jnn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># Plot!</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sum of the Building Blocks Above&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f11998671c2ab2091514a710479008c48683f25c32a994f0c602d50d437e7b95.png" src="_images/f11998671c2ab2091514a710479008c48683f25c32a994f0c602d50d437e7b95.png" />
+</div>
+</div>
+<p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. So what do you think will happen if we add <em>a bunch</em> of these together? Let’s design a little experiment to see:</p>
+<ol class="arabic simple">
+<li><p>Let’s plot functions composed of <span class="math notranslate nohighlight">\(L = 10\)</span> building blocks.</p></li>
+<li><p>To make our lives easier, let’s draw <span class="math notranslate nohighlight">\(w_i\)</span> and <span class="math notranslate nohighlight">\(b_i\)</span> from some distribution (so we don’t have to pick those values by hand). Here, we’ll go with a Normal distribution.</p></li>
+<li><p>We’ll repeat the process <span class="math notranslate nohighlight">\(N\)</span> times to get a sense for the types of functions we can represent.</p></li>
+</ol>
+<p>Let’s see what happens:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Number of building blocks to add</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># Number of functions to plot</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Create one random key per function</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">key_per_function</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">key_per_function</span><span class="p">:</span>
+    <span class="n">key_slope</span><span class="p">,</span> <span class="n">key_intercept</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Generate the parameters of the block from a Normal distribution</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_slope</span><span class="p">,</span> <span class="p">(</span><span class="n">L</span><span class="p">,))</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_intercept</span><span class="p">,</span> <span class="p">(</span><span class="n">L</span><span class="p">,))</span>
+
+    <span class="c1"># Use some &quot;broadcasting&quot; magic to efficiently sum the building blocks</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">jnn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Plot!</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Functions Generated by Adding Simple Blocks&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b95e1934311923efe151d68df2f3a5dafa46b9a9b66c7c3ccc13f408b9b8db58.png" src="_images/b95e1934311923efe151d68df2f3a5dafa46b9a9b66c7c3ccc13f408b9b8db58.png" />
+</div>
+</div>
+<p>Now we’re getting some wiggly functions! You can imagine that if we were to learn the parameters <span class="math notranslate nohighlight">\(h\)</span> from the data, we’d be able to fit many different functions.</p>
 </section>
 <section id="multivariate-linear-transforms">
 <h2><span class="section-number">13.3. </span>Multivariate Linear Transforms<a class="headerlink" href="#multivariate-linear-transforms" title="Permalink to this heading">#</a></h2>
@@ -500,7 +631,7 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressivity-from-small-building-blocks">13.2. Expressivity from Small Building Blocks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressive-functions-from-simple-building-blocks">13.2. Expressive Functions from Simple Building Blocks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-linear-transforms">13.3. Multivariate Linear Transforms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-pictures-to-the-math">13.5. Connecting the Pictures to the Math</a></li>
