@@ -380,8 +380,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d19d4996-4044-4e3e-ac75-143e6207de97">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-d19d4996-4044-4e3e-ac75-143e6207de97" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7ddd8778-89b1-4828-8be0-33029264716c">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-7ddd8778-89b1-4828-8be0-33029264716c" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -449,11 +449,11 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6f5aff24-21c4-474a-9dfa-e32862fd8c71">
-<span class="eqno">(13.2)<a class="headerlink" href="#equation-6f5aff24-21c4-474a-9dfa-e32862fd8c71" title="Permalink to this equation">#</a></span>\[\begin{align}
-\underbrace{u(x; w, b)}_{\text{building block}} &amp;= \mathrm{sigmoid}(\underbrace{w \cdot x + b}_{\text{scale and shift $x$}})
+<div class="amsmath math notranslate nohighlight" id="equation-83ac1764-a242-4a14-8f40-b3bc6462b32d">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-83ac1764-a242-4a14-8f40-b3bc6462b32d" title="Permalink to this equation">#</a></span>\[\begin{align}
+\underbrace{u(x; w_i, b_i)}_{\text{building block}} &amp;= \mathrm{sigmoid}(\underbrace{w_i \cdot x + b_i}_{\text{scale and shift $x$}})
 \end{align}\]</div>
-<p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
+<p>Here, <span class="math notranslate nohighlight">\(b_i\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w_i\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w_i\)</span> and <span class="math notranslate nohighlight">\(b_i\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose some scales and shifts</span>
@@ -465,7 +465,7 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">15.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">shift</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$w = </span><span class="si">{}</span><span class="s1">, b = </span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">jnn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$w_i = </span><span class="si">{}</span><span class="s1">, b_i = </span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
     
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Building Blocks with Different Parameters&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -474,16 +474,17 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/677fb0f765b4485f253544815c07f9df7fad3a13551d18daec9588964df15c0e.png" src="_images/677fb0f765b4485f253544815c07f9df7fad3a13551d18daec9588964df15c0e.png" />
+<img alt="_images/77516d292d7773e3140a31d1cb68f5f300fe67cd7ab3c8b2961a79756421be60.png" src="_images/77516d292d7773e3140a31d1cb68f5f300fe67cd7ab3c8b2961a79756421be60.png" />
 </div>
 </div>
 <p><strong>Combining Building Blocks via Addition.</strong> While on their own, each building block can’t really model anything interesting—it can’t model anything that’s not a sigmoid. However, by adding these building blocks with different parameters, we can start making more interesting-looking functions:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-71406d2f-8fce-4f2a-9f73-cbb57bb948cb">
-<span class="eqno">(13.3)<a class="headerlink" href="#equation-71406d2f-8fce-4f2a-9f73-cbb57bb948cb" title="Permalink to this equation">#</a></span>\[\begin{align}
-h(x; w_1, \dots, w_L, b_1, \dots, b_L) &amp;= \sum\limits_{i=1}^L u(x; w_i, b_i) \\
-&amp;= \sum\limits_{i=1}^L \text{sigmoid}(w_i \cdot x + b_i)
+<div class="amsmath math notranslate nohighlight" id="equation-83a4a86f-64b2-44e7-aa7c-3c4528c21aa1">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-83a4a86f-64b2-44e7-aa7c-3c4528c21aa1" title="Permalink to this equation">#</a></span>\[\begin{align}
+h(x; W, b) &amp;= \sum\limits_{i=1}^L u(x; w_i, b_i) \\
+&amp;= \sum\limits_{i=1}^L \text{sigmoid}(w_i \cdot x + b_i),
 \end{align}\]</div>
-<p>Let’s see what function we get by adding the three building blocks above:</p>
+<p>where <span class="math notranslate nohighlight">\(W = \{ w_1, \dots, w_L \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots, b_L \}\)</span>.
+Let’s see what function we get by adding the three building blocks above:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -549,7 +550,8 @@ h(x; w_1, \dots, w_L, b_1, \dots, b_L) &amp;= \sum\limits_{i=1}^L u(x; w_i, b_i)
 <img alt="_images/b95e1934311923efe151d68df2f3a5dafa46b9a9b66c7c3ccc13f408b9b8db58.png" src="_images/b95e1934311923efe151d68df2f3a5dafa46b9a9b66c7c3ccc13f408b9b8db58.png" />
 </div>
 </div>
-<p>Now we’re getting some wiggly functions! You can imagine that if we were to learn the parameters <span class="math notranslate nohighlight">\(h\)</span> from the data, we’d be able to fit many different functions.</p>
+<p>Now we’re getting wiggly! You can imagine that if we were to learn the parameters <span class="math notranslate nohighlight">\(h(\cdot; W, b)\)</span> from the data, we’d be able to fit many different functions. Moreover, notice that unlikely polynomials, there’s nothing about <span class="math notranslate nohighlight">\(h(\cdot; W, b)\)</span> that is numerically unstable.</p>
+<p><strong>Combining Building Blocks via Composition.</strong></p>
 </section>
 <section id="multivariate-linear-transforms">
 <h2><span class="section-number">13.3. </span>Multivariate Linear Transforms<a class="headerlink" href="#multivariate-linear-transforms" title="Permalink to this heading">#</a></h2>
