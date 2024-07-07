@@ -378,8 +378,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c7e4f280-3855-44e3-941b-2e0af99a73e2">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-c7e4f280-3855-44e3-941b-2e0af99a73e2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ea9e1c5f-a4e2-455b-887a-aeb77c55cba9">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-ea9e1c5f-a4e2-455b-887a-aeb77c55cba9" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -450,8 +450,8 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fc769ecb-5295-4dd0-854c-0bc0dbf54397">
-<span class="eqno">(13.2)<a class="headerlink" href="#equation-fc769ecb-5295-4dd0-854c-0bc0dbf54397" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-71178e84-ec95-44a4-810b-cbf23334e37e">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-71178e84-ec95-44a4-810b-cbf23334e37e" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale and shift}} )
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
@@ -482,8 +482,8 @@ u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal
 </div>
 </div>
 <p>Of course, the above example is only for a 1-dimensional input. Ideally, our function class will work for higher-dimensional inputs. We can incorporate this into our simple block as follows. We define <span class="math notranslate nohighlight">\(D\)</span> to be the dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, and we sum over the scaled and shifted inputs as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-896776db-fbbb-4694-ad27-9868d21f1319">
-<span class="eqno">(13.3)<a class="headerlink" href="#equation-896776db-fbbb-4694-ad27-9868d21f1319" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1dabdd22-9350-4b1a-ae80-01257f14855a">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-1dabdd22-9350-4b1a-ae80-01257f14855a" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale and shift}} \right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^{(d)}\)</span> denotes the <span class="math notranslate nohighlight">\(d\)</span>-th dimension of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(w = \{ w_1, \dots w_d \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots b_d \}\)</span> have a different scale and shift for every dimension.</p>
@@ -513,13 +513,13 @@ u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cd
 </div>
 <p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. Now, let’s formally decide how to combine neurons into a function.</p>
 <p>Recall that a sigmoid always outputs a value in <span class="math notranslate nohighlight">\([0, 1]\)</span>. Because of this, <span class="math notranslate nohighlight">\(u(\cdot; w, b)\)</span> will also only output values in <span class="math notranslate nohighlight">\([0, 1]\)</span>. To represent functions outside of this limited range, we will apply a scale and shift like before, and then sum over a group of <span class="math notranslate nohighlight">\(H\)</span> of these neurons:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-619e4b07-127b-4f05-bc09-bbcf4291f3e4">
-<span class="eqno">(13.4)<a class="headerlink" href="#equation-619e4b07-127b-4f05-bc09-bbcf4291f3e4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-46b740d5-637f-4dea-a513-7b3b5a459998">
+<span class="eqno">(13.4)<a class="headerlink" href="#equation-46b740d5-637f-4dea-a513-7b3b5a459998" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift}}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-14538da8-ef8f-4222-ad37-80a9cf02a5e3">
-<span class="eqno">(13.5)<a class="headerlink" href="#equation-14538da8-ef8f-4222-ad37-80a9cf02a5e3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a3774926-a291-4596-9a81-e85d5a02ee17">
+<span class="eqno">(13.5)<a class="headerlink" href="#equation-a3774926-a291-4596-9a81-e85d5a02ee17" title="Permalink to this equation">#</a></span>\[\begin{align}
 W &amp;= \{ w_1^\text{in}, \dots, w_H^\text{in}, w_1^\text{out}, \dots, w_H^\text{out} \} \\
 b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\text{out} \}
 \end{align}\]</div>
@@ -600,20 +600,27 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
 <p>You may have noticed that in our neural network math so far, there’s a pattern that keeps popping up. We keep summing over things that we’ve scaled and shifted. You can see this in the definition of a single neuron, <span class="math notranslate nohighlight">\(u(x; w, b)\)</span>, in the definition of a simple neural network, <span class="math notranslate nohighlight">\(f(x; W, b)\)</span>, as well as in the process of creating deeper networks. We can represent this operation using <em>matrix multiplication</em>. Let’s first introduce what a matrix is.</p>
 <p><strong>What’s a Matrix?</strong> For our purposes, you can think of a matrix as a 2-dimensional array. Here are some examples of matrices:</p>
 <figure class="align-center" id="matrices">
-<a class="reference internal image-reference" href="_images/matrices.jpg"><img alt="_images/matrices.jpg" src="_images/matrices.jpg" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="_images/matrices.jpg"><img alt="_images/matrices.jpg" src="_images/matrices.jpg" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 13.4 </span><span class="caption-text">Two matrices. Figure taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#matrices" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 13.4 </span><span class="caption-text">Two matrices, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#matrices" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p>We say that the left-matrix is a 2-by-4 matrix, since it has 2 rows and 4 columns. Similarly, the right-matrix is a 4-by-2 matrix.</p>
-<p><strong>Matrix Multiplication.</strong></p>
+<p>We say that the matrix <span class="math notranslate nohighlight">\(A\)</span> (on the left) is a 2-by-4 matrix, since it has 2 rows and 4 columns. Similarly, the matrix <span class="math notranslate nohighlight">\(B\)</span> (on the right) is a 4-by-2 matrix.</p>
+<p><strong>Matrix Multiplication.</strong> To multiply two matrices, we take each row of the first matrix and each column of the second and proceed as follows:</p>
 <figure class="align-center" id="id2">
-<a class="reference internal image-reference" href="_images/matrix-multiplication.jpg"><img alt="_images/matrix-multiplication.jpg" src="_images/matrix-multiplication.jpg" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="_images/matrix-multiplication.jpg"><img alt="_images/matrix-multiplication.jpg" src="_images/matrix-multiplication.jpg" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 13.5 </span><span class="caption-text">Matrix multiplication. Figure taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 13.5 </span><span class="caption-text">Matrix multiplication, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
-<p><strong>Somes of Shifted and Scaled Numbers via Matrix Multiplication.</strong></p>
+<p>As you can see from the figure above, the number of columns in <span class="math notranslate nohighlight">\(A\)</span> must match the number of columns in <span class="math notranslate nohighlight">\(B\)</span>. Moreover, each element <span class="math notranslate nohighlight">\(c_{i, j}\)</span> in matrix <span class="math notranslate nohighlight">\(C\)</span> represents the following sum:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e3c69823-fffa-4d93-9535-45fe7d0be2bb">
+<span class="eqno">(13.6)<a class="headerlink" href="#equation-e3c69823-fffa-4d93-9535-45fe7d0be2bb" title="Permalink to this equation">#</a></span>\[\begin{align}
+c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k}
+\end{align}\]</div>
+<p>Next, we’ll make the connection between matrices and neural networks.</p>
+<p>So why is matrix multiplication defined this way? That’s beyond the scope of this course. We care about matrices because considerable <a class="reference external" href="https://en.wikipedia.org/wiki/Computational_complexity_of_matrix_multiplication" rel="noopener noreferrer" target="_blank">research and engineering</a> has gone into allowing your computer to multiply matrices fast. By relying on this prior work, we can implement our neural networks easily and efficiently.</p>
+<p><strong>Sums of Shifted and Scaled Numbers via Matrix Multiplication.</strong></p>
 <p><strong>Neural Networks using Matrices.</strong></p>
 <p><strong>Implement a neural network.</strong></p>
 <ul class="simple">
