@@ -378,8 +378,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-67eb80a8-eed2-4906-b93a-e35f02a2ebe0">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-67eb80a8-eed2-4906-b93a-e35f02a2ebe0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2a706547-80f0-45c7-92a0-2ae81f25e833">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-2a706547-80f0-45c7-92a0-2ae81f25e833" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -450,8 +450,8 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5c0b5e0c-6094-41e3-b64d-6cad9496a136">
-<span class="eqno">(13.2)<a class="headerlink" href="#equation-5c0b5e0c-6094-41e3-b64d-6cad9496a136" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fcf27966-84ef-49f1-8a45-0d32a49bad41">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-fcf27966-84ef-49f1-8a45-0d32a49bad41" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale \&amp; shift}} )
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
@@ -482,8 +482,8 @@ u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal
 </div>
 </div>
 <p>Of course, the above example is only for a 1-dimensional input. Ideally, our function class will work for higher-dimensional inputs. We can incorporate this into our simple block as follows. We define <span class="math notranslate nohighlight">\(D\)</span> to be the dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, and we sum over the scaled and shifted inputs as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-604d73c3-cc44-45c5-847f-392592e5a9ff">
-<span class="eqno">(13.3)<a class="headerlink" href="#equation-604d73c3-cc44-45c5-847f-392592e5a9ff" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dcc72cb2-ae70-4978-af2b-00e7d2aa5791">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-dcc72cb2-ae70-4978-af2b-00e7d2aa5791" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale \&amp; shift}} \right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^{(d)}\)</span> denotes the <span class="math notranslate nohighlight">\(d\)</span>-th dimension of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(w = \{ w_1, \dots w_d \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots b_d \}\)</span> have a different scale and shift for every dimension.</p>
@@ -513,13 +513,13 @@ u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cd
 </div>
 <p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. Now, let’s formally decide how to combine neurons into a function.</p>
 <p>Recall that a sigmoid always outputs a value in <span class="math notranslate nohighlight">\([0, 1]\)</span>. Because of this, <span class="math notranslate nohighlight">\(u(\cdot; w, b)\)</span> will also only output values in <span class="math notranslate nohighlight">\([0, 1]\)</span>. To represent functions outside of this limited range, we will apply a scale and shift like before, and then sum over a group of <span class="math notranslate nohighlight">\(H\)</span> of these neurons:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4e81faa2-6e27-43b6-b26c-5b9ab4f8f06c">
-<span class="eqno">(13.4)<a class="headerlink" href="#equation-4e81faa2-6e27-43b6-b26c-5b9ab4f8f06c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2db4011a-cc88-47c6-abfc-c374ba763b8c">
+<span class="eqno">(13.4)<a class="headerlink" href="#equation-2db4011a-cc88-47c6-abfc-c374ba763b8c" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift neuron}}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-59f9c179-0e4f-4f18-a31a-7f90e39f18d0">
-<span class="eqno">(13.5)<a class="headerlink" href="#equation-59f9c179-0e4f-4f18-a31a-7f90e39f18d0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ae213d3d-706f-415c-aa70-8d8205abf971">
+<span class="eqno">(13.5)<a class="headerlink" href="#equation-ae213d3d-706f-415c-aa70-8d8205abf971" title="Permalink to this equation">#</a></span>\[\begin{align}
 W &amp;= \{ w_1^\text{in}, \dots, w_H^\text{in}, w_1^\text{out}, \dots, w_H^\text{out} \} \\
 b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\text{out} \}
 \end{align}\]</div>
@@ -551,10 +551,10 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
     <span class="n">key_W_in</span><span class="p">,</span> <span class="n">key_W_out</span><span class="p">,</span> <span class="n">key_b_in</span><span class="p">,</span> <span class="n">key_b_out</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 
     <span class="c1"># Generate the parameters of the block from a Normal distribution</span>
-    <span class="n">W_in</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_W_in</span><span class="p">,</span> <span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="n">b_in</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_b_in</span><span class="p">,</span> <span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">W_in</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_W_in</span><span class="p">,</span> <span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">b_in</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_b_in</span><span class="p">,</span> <span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
-    <span class="n">W_out</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_W_out</span><span class="p">,</span> <span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">W_out</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_W_out</span><span class="p">,</span> <span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="n">b_out</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key_b_out</span><span class="p">,</span> <span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
     <span class="c1"># Use some &quot;broadcasting&quot; magic to efficiently sum the building blocks</span>
@@ -571,11 +571,11 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f89e8f9a866ff2543bed073c8cd3da98b3df95bc11e1ca565c0c95b1e3f00946.png" src="_images/f89e8f9a866ff2543bed073c8cd3da98b3df95bc11e1ca565c0c95b1e3f00946.png" />
+<img alt="_images/23387203247cc948fc3a5dc23f40791659216d7e47f57f8dc514813516405882.png" src="_images/23387203247cc948fc3a5dc23f40791659216d7e47f57f8dc514813516405882.png" />
 </div>
 </div>
 <p>Now we’re getting wiggly! Given how many different functions <span class="math notranslate nohighlight">\(f(\cdot; W, b)\)</span> can represent, you can imagine that by learning the parameters, <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span>, from data, we can capture the data trends accurately. Moreover, notice that, unlike polynomials, there’s nothing about <span class="math notranslate nohighlight">\(f(\cdot; W, b)\)</span> that is numerically unstable. Each neuron is a sigmoid, so its range is between <span class="math notranslate nohighlight">\([0, 1]\)</span>; therefore, summing up the sigmoids together to get <span class="math notranslate nohighlight">\(f(\cdot; W, b)\)</span> doesn’t blow up like a polynomial.</p>
-<p>The function we arrived at, <span class="math notranslate nohighlight">\(f(\cdot; W, b)\)</span>, is called a <em>neural network</em> (of “width” <span class="math notranslate nohighlight">\(H\)</span>). We can plug it into our regression or classification models and learn the parameters, <span class="math notranslate nohighlight">\(\theta = \{ W, b \}\)</span>, via MLE.</p>
+<p>The function we arrived at, <span class="math notranslate nohighlight">\(f(\cdot; W, b)\)</span>, is called a <em>neural network</em> (of “width” <span class="math notranslate nohighlight">\(H\)</span>. We can plug it into our regression or classification models and learn the parameters, <span class="math notranslate nohighlight">\(\theta = \{ W, b \}\)</span>, via MLE.</p>
 <p><strong>Combining Building Blocks via Composition.</strong> We can make the neural network we’ve created so far <em>even more expressive</em> using function composition, meaning we apply a function to the output of another function. Composing neural networks means:</p>
 <ol class="arabic simple">
 <li><p>Taking a collection of neural networks, <span class="math notranslate nohighlight">\(f_1, \dots, f_L\)</span>, each with different parameters.</p></li>
