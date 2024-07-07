@@ -355,9 +355,8 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressive-functions-from-simple-building-blocks">13.2. Expressive Functions from Simple Building Blocks</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-linear-transforms">13.3. Multivariate Linear Transforms</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-pictures-to-the-math">13.5. Connecting the Pictures to the Math</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.3. Neural Networks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-pictures-to-the-math">13.4. Connecting the Pictures to the Math</a></li>
 </ul>
             </nav>
         </div>
@@ -380,8 +379,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-deed4140-0375-4d41-ab69-cbfe4e21d3a5">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-deed4140-0375-4d41-ab69-cbfe4e21d3a5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8d1705ce-b7dc-488c-aeab-951deb4dd520">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-8d1705ce-b7dc-488c-aeab-951deb4dd520" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -452,8 +451,8 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d580b8ba-eed7-457a-b281-8aad813ace0d">
-<span class="eqno">(13.2)<a class="headerlink" href="#equation-d580b8ba-eed7-457a-b281-8aad813ace0d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d88f85e6-ecc6-437c-a85b-e0d39d82fb6f">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-d88f85e6-ecc6-437c-a85b-e0d39d82fb6f" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale \&amp; shift}} )
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
@@ -484,8 +483,8 @@ u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal
 </div>
 </div>
 <p>Of course, the above example is only for a 1-dimensional input. Ideally, our function class will work for higher-dimensional inputs. We can incorporate this into our simple block as follows. We define <span class="math notranslate nohighlight">\(D\)</span> to be the dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, and we sum over the scaled and shifted inputs as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c43f3cdc-5560-464d-8e9f-9b66e38dd7c2">
-<span class="eqno">(13.3)<a class="headerlink" href="#equation-c43f3cdc-5560-464d-8e9f-9b66e38dd7c2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1d108d21-420f-4999-9c89-8650b59485f1">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-1d108d21-420f-4999-9c89-8650b59485f1" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale \&amp; shift}} \right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^{(d)}\)</span> denotes the <span class="math notranslate nohighlight">\(d\)</span>-th dimension of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(w = \{ w_1, \dots w_d \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots b_d \}\)</span> have a different scale and shift for every dimension.</p>
@@ -515,13 +514,13 @@ u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cd
 </div>
 <p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. Now, let’s formally decide how to combine neurons into a function.</p>
 <p>Recall that a sigmoid always outputs a value in <span class="math notranslate nohighlight">\([0, 1]\)</span>. Because of this, <span class="math notranslate nohighlight">\(u(\cdot; w, b)\)</span> will also only output values in <span class="math notranslate nohighlight">\([0, 1]\)</span>. To represent functions outside of this limited range, we will apply a scale and shift like before, and then sum over a group of <span class="math notranslate nohighlight">\(H\)</span> of these neurons:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c6f89a3d-3456-4373-9196-cc523d7ee1da">
-<span class="eqno">(13.4)<a class="headerlink" href="#equation-c6f89a3d-3456-4373-9196-cc523d7ee1da" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b91c7fc3-ca36-4084-8b9c-e371bbfc5293">
+<span class="eqno">(13.4)<a class="headerlink" href="#equation-b91c7fc3-ca36-4084-8b9c-e371bbfc5293" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift neuron}}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-306e22ce-1f1a-4cc9-b8eb-eccc40e0f4d1">
-<span class="eqno">(13.5)<a class="headerlink" href="#equation-306e22ce-1f1a-4cc9-b8eb-eccc40e0f4d1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-10f1ace1-256e-4cf0-b475-140a1a52b50d">
+<span class="eqno">(13.5)<a class="headerlink" href="#equation-10f1ace1-256e-4cf0-b475-140a1a52b50d" title="Permalink to this equation">#</a></span>\[\begin{align}
 W &amp;= \{ w_1^\text{in}, \dots, w_H^\text{in}, w_1^\text{out}, \dots, w_H^\text{out} \} \\
 b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\text{out} \}
 \end{align}\]</div>
@@ -585,16 +584,20 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
 <li><p>We will now treat every <span class="math notranslate nohighlight">\(I\)</span> as our new input, which we will feed into another collection of neural networks, repeating the process.</p></li>
 </ol>
 <p>Every repetition of this process adds another “layer” to the neural network, making it “deeper.” We won’t notate all of this with math, because it gets cumbersome unless we introduce some additional notation (this is what we’ll do next). You can imagine though, the deeper the network, the more expressive it will be.</p>
-</section>
-<section id="multivariate-linear-transforms">
-<h2><span class="section-number">13.3. </span>Multivariate Linear Transforms<a class="headerlink" href="#multivariate-linear-transforms" title="Permalink to this heading">#</a></h2>
-<p>Suppose we’re developing a regression model for high-dimensional data and need to pick which <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span> to use. Let our input data be <span class="math notranslate nohighlight">\(D\)</span> dimensional, meaning that our inputs are an array (or vector): <span class="math notranslate nohighlight">\(x_n = [ x_n^{(1)}, x_n^{(2)}, \dots, x_n^{(D)} ]\)</span>. We use the superscript to denote the dimension of the data.</p>
+<p><strong>Choice of Activation.</strong> Here, we chose to use a sigmoid in our neuron. There are many functions we could have used instead, each giving us different neural networks with different inductive biases. These functions are generally called “activation functions.” The name comes from the inspiration from neuroscience, leading to neural networks:</p>
+<figure class="align-center" id="neuron">
+<a class="reference internal image-reference" href="https://mriquestions.com/uploads/3/4/5/7/34572113/perceptron-with-neuron_1.png"><img alt="https://mriquestions.com/uploads/3/4/5/7/34572113/perceptron-with-neuron_1.png" src="https://mriquestions.com/uploads/3/4/5/7/34572113/perceptron-with-neuron_1.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 13.3 </span><span class="caption-text">Inspiration behind the “neuron” in a neural network. Figure from <a class="reference external" href="https://s.mriquestions.com/what-is-a-neural-network.html" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#neuron" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Each neuron takes signals from its inputs (by summing over the scaled and shifted inputs). The sum is then passed on to the activation function, which only activates if the sum is sufficiently large. Looking at the shape of the sigmoid activation function, for example, you can see exactly the input value for which the sigmoid would output a non-zero value. You can learn more about the connection between artificial and real neurons <a class="reference external" href="https://s.mriquestions.com/what-is-a-neural-network.html" rel="noopener noreferrer" target="_blank">here</a>.</p>
 </section>
 <section id="id1">
-<h2><span class="section-number">13.4. </span>Neural Networks<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">13.3. </span>Neural Networks<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 </section>
 <section id="connecting-the-pictures-to-the-math">
-<h2><span class="section-number">13.5. </span>Connecting the Pictures to the Math<a class="headerlink" href="#connecting-the-pictures-to-the-math" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">13.4. </span>Connecting the Pictures to the Math<a class="headerlink" href="#connecting-the-pictures-to-the-math" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -667,9 +670,8 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressive-functions-from-simple-building-blocks">13.2. Expressive Functions from Simple Building Blocks</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-linear-transforms">13.3. Multivariate Linear Transforms</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-pictures-to-the-math">13.5. Connecting the Pictures to the Math</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.3. Neural Networks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-the-pictures-to-the-math">13.4. Connecting the Pictures to the Math</a></li>
 </ul>
   </nav></div>
 
