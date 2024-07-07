@@ -378,8 +378,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e6251ff0-ce66-47c7-ae77-db27fe03da5b">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-e6251ff0-ce66-47c7-ae77-db27fe03da5b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-53fd53cb-3d2e-41b0-bb35-a9b5178fd53a">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-53fd53cb-3d2e-41b0-bb35-a9b5178fd53a" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -450,8 +450,8 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f9955fb7-474e-420f-9a39-d3d3d8a958c6">
-<span class="eqno">(13.2)<a class="headerlink" href="#equation-f9955fb7-474e-420f-9a39-d3d3d8a958c6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ffdb7030-65bb-4b37-ae64-61c29bb0f75c">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-ffdb7030-65bb-4b37-ae64-61c29bb0f75c" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale \&amp; shift}} )
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
@@ -482,8 +482,8 @@ u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal
 </div>
 </div>
 <p>Of course, the above example is only for a 1-dimensional input. Ideally, our function class will work for higher-dimensional inputs. We can incorporate this into our simple block as follows. We define <span class="math notranslate nohighlight">\(D\)</span> to be the dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, and we sum over the scaled and shifted inputs as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec4becc6-42ee-4b8d-885e-4085effe5507">
-<span class="eqno">(13.3)<a class="headerlink" href="#equation-ec4becc6-42ee-4b8d-885e-4085effe5507" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7a7b3e11-659a-45a3-84aa-1138f0f4e002">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-7a7b3e11-659a-45a3-84aa-1138f0f4e002" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale \&amp; shift}} \right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^{(d)}\)</span> denotes the <span class="math notranslate nohighlight">\(d\)</span>-th dimension of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(w = \{ w_1, \dots w_d \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots b_d \}\)</span> have a different scale and shift for every dimension.</p>
@@ -513,13 +513,13 @@ u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cd
 </div>
 <p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. Now, let’s formally decide how to combine neurons into a function.</p>
 <p>Recall that a sigmoid always outputs a value in <span class="math notranslate nohighlight">\([0, 1]\)</span>. Because of this, <span class="math notranslate nohighlight">\(u(\cdot; w, b)\)</span> will also only output values in <span class="math notranslate nohighlight">\([0, 1]\)</span>. To represent functions outside of this limited range, we will apply a scale and shift like before, and then sum over a group of <span class="math notranslate nohighlight">\(H\)</span> of these neurons:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-34653cd1-59ff-4606-91e7-5b33bb102e64">
-<span class="eqno">(13.4)<a class="headerlink" href="#equation-34653cd1-59ff-4606-91e7-5b33bb102e64" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-21a98a73-e605-4873-81eb-fcf8edff1af4">
+<span class="eqno">(13.4)<a class="headerlink" href="#equation-21a98a73-e605-4873-81eb-fcf8edff1af4" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift neuron}}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-08b620fa-2073-4a5d-8f2e-92fdb55cd61e">
-<span class="eqno">(13.5)<a class="headerlink" href="#equation-08b620fa-2073-4a5d-8f2e-92fdb55cd61e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b28fd188-1b88-4633-b7c6-d6a200736331">
+<span class="eqno">(13.5)<a class="headerlink" href="#equation-b28fd188-1b88-4633-b7c6-d6a200736331" title="Permalink to this equation">#</a></span>\[\begin{align}
 W &amp;= \{ w_1^\text{in}, \dots, w_H^\text{in}, w_1^\text{out}, \dots, w_H^\text{out} \} \\
 b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\text{out} \}
 \end{align}\]</div>
@@ -586,9 +586,9 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
 <p><strong>Choice of Activation.</strong> Here, we chose to use a sigmoid in our neuron. There are many functions we could have used instead, each giving us different neural networks with different inductive biases. These functions are generally called “activation functions.” <a class="reference external" href="https://en.wikipedia.org/wiki/Activation_function" rel="noopener noreferrer" target="_blank">Wikipedia</a> organized a table of them, and many of them are already implemented in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> (see <a class="reference external" href="https://jax.readthedocs.io/en/latest/jax.nn.html#activation-functions" rel="noopener noreferrer" target="_blank">here</a>).</p>
 <p>The name “activation function” comes from the inspiration from neuroscience that led to neural networks.</p>
 <figure class="align-center" id="neuron">
-<a class="reference internal image-reference" href="https://mriquestions.com/uploads/3/4/5/7/34572113/perceptron-with-neuron_1.png"><img alt="https://mriquestions.com/uploads/3/4/5/7/34572113/perceptron-with-neuron_1.png" src="https://mriquestions.com/uploads/3/4/5/7/34572113/perceptron-with-neuron_1.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="https://www.researchgate.net/profile/Xianlin-Wang/publication/351372032/figure/fig4/AS:1020744041525248&#64;1620375752492/Comparison-between-biological-neuron-and-artificial-neuron-40.png"><img alt="https://www.researchgate.net/profile/Xianlin-Wang/publication/351372032/figure/fig4/AS:1020744041525248&#64;1620375752492/Comparison-between-biological-neuron-and-artificial-neuron-40.png" src="https://www.researchgate.net/profile/Xianlin-Wang/publication/351372032/figure/fig4/AS:1020744041525248&#64;1620375752492/Comparison-between-biological-neuron-and-artificial-neuron-40.png" style="width: 500px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 13.3 </span><span class="caption-text">Inspiration behind the “neuron” in a neural network. Figure taken from <a class="reference external" href="https://s.mriquestions.com/what-is-a-neural-network.html" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#neuron" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 13.3 </span><span class="caption-text">Inspiration behind the “neuron” in a neural network. Figure taken from <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/S2352012421003179" rel="noopener noreferrer" target="_blank">this paper</a>.</span><a class="headerlink" href="#neuron" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>As you can see from the figure, each neuron takes signals from its inputs (by summing over the scaled and shifted inputs). The sum is then passed on to the activation function, which only “activates” (or sends a non-zero value) if the sum is sufficiently large. Looking at the shape of the sigmoid activation function, for example, you can see exactly the input value for which the sigmoid would output a non-zero value. You can learn more about the connection between artificial and biological neurons <a class="reference external" href="https://s.mriquestions.com/what-is-a-neural-network.html" rel="noopener noreferrer" target="_blank">here</a>.</p>
