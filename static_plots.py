@@ -538,8 +538,8 @@ def main():
     #all_gradient_descent_plots()
     #plot_example_regression()
     #plot_example_classification()
-    inductive_bias_of_polynomial_regression(percent_ood=0)
-    inductive_bias_of_polynomial_regression(percent_ood=30)
+    #inductive_bias_of_polynomial_regression(percent_ood=0)
+    #inductive_bias_of_polynomial_regression(percent_ood=30)
     pass
 
     
