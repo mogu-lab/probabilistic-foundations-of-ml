@@ -378,8 +378,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2a706547-80f0-45c7-92a0-2ae81f25e833">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-2a706547-80f0-45c7-92a0-2ae81f25e833" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-408eb10d-cde0-4ee8-a48e-b4dde4fe0379">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-408eb10d-cde0-4ee8-a48e-b4dde4fe0379" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -450,9 +450,9 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fcf27966-84ef-49f1-8a45-0d32a49bad41">
-<span class="eqno">(13.2)<a class="headerlink" href="#equation-fcf27966-84ef-49f1-8a45-0d32a49bad41" title="Permalink to this equation">#</a></span>\[\begin{align}
-u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale \&amp; shift}} )
+<div class="amsmath math notranslate nohighlight" id="equation-deb4e12d-48b5-4b70-8b37-b917ba511690">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-deb4e12d-48b5-4b70-8b37-b917ba511690" title="Permalink to this equation">#</a></span>\[\begin{align}
+u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale and shift}} )
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
 <div class="cell docutils container">
@@ -482,9 +482,9 @@ u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal
 </div>
 </div>
 <p>Of course, the above example is only for a 1-dimensional input. Ideally, our function class will work for higher-dimensional inputs. We can incorporate this into our simple block as follows. We define <span class="math notranslate nohighlight">\(D\)</span> to be the dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, and we sum over the scaled and shifted inputs as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dcc72cb2-ae70-4978-af2b-00e7d2aa5791">
-<span class="eqno">(13.3)<a class="headerlink" href="#equation-dcc72cb2-ae70-4978-af2b-00e7d2aa5791" title="Permalink to this equation">#</a></span>\[\begin{align}
-u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale \&amp; shift}} \right)
+<div class="amsmath math notranslate nohighlight" id="equation-9353cac8-4f49-474e-bebf-3e6ab98e9d0f">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-9353cac8-4f49-474e-bebf-3e6ab98e9d0f" title="Permalink to this equation">#</a></span>\[\begin{align}
+u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale and shift}} \right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^{(d)}\)</span> denotes the <span class="math notranslate nohighlight">\(d\)</span>-th dimension of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(w = \{ w_1, \dots w_d \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots b_d \}\)</span> have a different scale and shift for every dimension.</p>
 <p>This unassuming building block, <span class="math notranslate nohighlight">\(u(x; w, b)\)</span>, is actually called a <em>neuron</em>. We will next start combining these neurons to form a full neural network.</p>
@@ -513,13 +513,13 @@ u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cd
 </div>
 <p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. Now, let’s formally decide how to combine neurons into a function.</p>
 <p>Recall that a sigmoid always outputs a value in <span class="math notranslate nohighlight">\([0, 1]\)</span>. Because of this, <span class="math notranslate nohighlight">\(u(\cdot; w, b)\)</span> will also only output values in <span class="math notranslate nohighlight">\([0, 1]\)</span>. To represent functions outside of this limited range, we will apply a scale and shift like before, and then sum over a group of <span class="math notranslate nohighlight">\(H\)</span> of these neurons:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2db4011a-cc88-47c6-abfc-c374ba763b8c">
-<span class="eqno">(13.4)<a class="headerlink" href="#equation-2db4011a-cc88-47c6-abfc-c374ba763b8c" title="Permalink to this equation">#</a></span>\[\begin{align}
-f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift neuron}}
+<div class="amsmath math notranslate nohighlight" id="equation-1c8bb984-57d2-4387-8241-85398c6f0be2">
+<span class="eqno">(13.4)<a class="headerlink" href="#equation-1c8bb984-57d2-4387-8241-85398c6f0be2" title="Permalink to this equation">#</a></span>\[\begin{align}
+f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift}}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae213d3d-706f-415c-aa70-8d8205abf971">
-<span class="eqno">(13.5)<a class="headerlink" href="#equation-ae213d3d-706f-415c-aa70-8d8205abf971" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c723ec26-dee5-4a64-aef4-aa689f6c77de">
+<span class="eqno">(13.5)<a class="headerlink" href="#equation-c723ec26-dee5-4a64-aef4-aa689f6c77de" title="Permalink to this equation">#</a></span>\[\begin{align}
 W &amp;= \{ w_1^\text{in}, \dots, w_H^\text{in}, w_1^\text{out}, \dots, w_H^\text{out} \} \\
 b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\text{out} \}
 \end{align}\]</div>
