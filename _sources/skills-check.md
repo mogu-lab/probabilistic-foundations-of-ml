@@ -1,6 +1,6 @@
 # Skills Check
 
-This course assumes knowledge of the topics and skills below. Although you may not have experience with every single one of these, we expect that by satisfying the prerequisites, you can self-learn whatever you're missing prior to the start of the course. Please take a moment to review the topics below.
+This course assumes knowledge of the topics and skills listed below. Although you may not have experience with every single one of these, we expect that by satisfying the prerequisites, you can self-learn whatever you're missing prior to the start of the course. Please take a moment to review the topics below.
 
 
 ## Coding
@@ -9,15 +9,14 @@ This course assumes knowledge of the topics and skills below. Although you may n
 * Going through an online Python tutorial. For example, from this [interactive Python tutorial](https://www.learnpython.org/), review all sections under "Learn the Basics" and "Data Science Tutorials." From the "Advanced Tutorials," review "List Comprehensions" and "Lambda functions."
 * After completing the tutorial, select one or two assignments from CS230 and translate them into Python.
 
-**Integrated Development Environments (IDE).** We will be using [DeepNote](https://deepnote.com/) for all assignments in the course. DeepNote is an interactive Python environment that makes it easy to write code in small pieces, and to visualize and inspect them. Further, it let's you interleave your code with notes and math. If you're familiar with Jupyter notebooks, they are just a cloud version of a Jupyter notebook. If this is new to you, no problem! To get you started, we recommend:
-* Making an account on the DeepNote website, creating a "notebook" and playing around.
+**Coding Environment.** We will be using [DeepNote](https://deepnote.com/) for all assignments in the course. DeepNote is an interactive Python environment that makes it easy to write code in small pieces, and to visualize and inspect them. Further, it let's you interleave your code with notes and math. If you're familiar with Jupyter notebooks, they are just a cloud version of a Jupyter notebook. If this is new to you, no problem! To get you started, we recommend:
+* Making an account on the [DeepNote](https://deepnote.com/) website using your Wellesley email and exploring.
 * Watching/reading some online tutorials, like [this one](https://www.youtube.com/watch?v=EW4lKlUnLGU). 
 
 
 **Libraries.** We will regularly use two Python libraries throughout the course: `pandas`, used for reading in `.csv` data files and manipulating them, and `matplotlib`, used for visualizations.
 * To learn `pandas`, you can find lots of tutorials online. For example you may find the first two lessons from [this tutorial](https://www.kaggle.com/learn/pandas) helpful.
-* Similarly, [this tutorial](https://www.w3schools.com/python/matplotlib_getting_started.asp) will walk you through how to use `matplotlib.
-
+* Similarly, [this tutorial](https://www.w3schools.com/python/matplotlib_getting_started.asp) will walk you through how to use `matplotlib`.
 
 
 
