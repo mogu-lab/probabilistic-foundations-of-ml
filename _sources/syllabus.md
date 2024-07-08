@@ -23,14 +23,13 @@ Our goal is that at the end of this course, you will be able to:
 
 We're here because we care about your experiences as students and as individuals. So what does that mean? It means that...
 
-**We want you to find meaning in the course, and we want you succeed.** TODO.
+**We want you to find meaning in the course, and we want you succeed.** As in the liberal arts tradition, in addition to providing you with practical skills, we want this course to offer you new lenses with which to engage with the world. We want this course to be personally meaningful to you, to shape the way you think and engage with societal issues you see around you. 
 
 **We want you to come to our office hours.** We want to get to know you all, both in the context of the class and as individuals; we want to know what you find most challenging and what you find most rewarding in the class and in the CS program. Come chat with us!
 
 **We want to see you _even more_ when you're struggling, lost, or down.** You may be surprised to know that as course staff, we still _vividly_ remember our struggle learning the material covered by this course. We recognize that there are "good" types of struggle---struggle that builds you up and helps you grow---as well as "bad" types of struggle---struggle that doesn't leads you to question your self-worth, and that makes you want to give up. When things get hard, the worst thing you can do is isolate yourself, and the best thing you can do is to come talk to us. _Together, we can find ways to productively deal with both the good and the bad._
 
 **We have high expectations for you to be thoughtful and engaged.** We expect you to be thoughtful in your engagement with the course materials and in your interaction with your peers. Substantial amounts of research have shown that [Computer Science programs can create cultures of isolation and impostorism](https://courses.cs.washington.edu/courses/cse590e/02sp/defensive_20climate.pdf), in which students feel judged for common struggles many experience, instead of coming together to support one another. We ask you to be thoughtful in how you validate your peer's identities and create a safe and supportive space for everyone.
-
 
 
 

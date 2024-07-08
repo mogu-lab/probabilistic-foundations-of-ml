@@ -1,11 +1,11 @@
 # Skills Check
 
-This course assumes knowledge of the topics and skills listed below. Although you may not have experience with every single one of these, we expect that by satisfying the prerequisites, you can self-learn whatever you're missing prior to the start of the course. Please take a moment to review the topics below.
+This course assumes knowledge of the topics and skills listed below. Although you may not have experience with every single one of these, we expect that by satisfying the prerequisites, you can self-learn whatever you're missing prior to the start of the course. **Please make time to go through all of the topics and tutorials below.**
 
 
 ## Coding
 
-**Programming Language.** The course is taught entirely in Python. To get the most out of the course, it's important you don't feel bogged down by too many syntax errors and the like so that you can focus on the concepts we introduce. If you do not feel comfortable with Python, that's no problem. Please do take the time before the start of the course to *study and practice* it. For review, we recommend:
+**Programming Language.** The course is taught entirely in Python. To get the most out of the course, it's important you don't feel bogged down by too many syntax errors and the like so that you can focus on the concepts we introduce. If you do not have prior experience with Python, that's no problem. *Please do take the time before the start of the course to study and practice it.* For review, we recommend:
 * Going through an online Python tutorial. For example, from this [interactive Python tutorial](https://www.learnpython.org/), review all sections under "Learn the Basics" and "Data Science Tutorials." From the "Advanced Tutorials," review "List Comprehensions" and "Lambda functions."
 * After completing the tutorial, select one or two assignments from CS230 and translate them into Python.
 
