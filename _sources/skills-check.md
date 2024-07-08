@@ -14,7 +14,7 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 * Making an account on the [DeepNote](https://deepnote.com/) website using your Wellesley email and exploring.
 * Watching/reading some online tutorials, like [this one](https://www.youtube.com/watch?v=EW4lKlUnLGU).
 * Finally try making cells that run code and ones for writing text and math. Follow [this guide](https://gtribello.github.io/mathNET/assets/notebook-writing.html) for formatting text and for writing mathematical notation---we will use this heavily in the course!
-  * The language used for formatting is called "markdown". You can find a markdown cheatsheet [here](https://www.markdownguide.org/cheat-sheet/).
+  * The language used for formatting is called "markdown." You can find a markdown cheatsheet [here](https://www.markdownguide.org/cheat-sheet/).
   * The language used for typesetting mathematical notation is called LaTeX (pronounced "la-tek"). If you ever forget what's the syntax for a certain math symbol, you can draw it in [this tool](https://detexify.kirelabs.org/classify.html) and it will tell you.
 
 
@@ -29,7 +29,7 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 **Notation.** We will be using the notation for sums and products heavily throughout the course:
 \begin{align*}
 \sum\limits_{n=1}^N f(x_n) &= f(x_1) + f(x_2) + \dots + f(x_N) \\
-\prod\limits_{n=1}^N f(x_n) &= f(x_1) \cdot f(x_2) \dots f(x_N) 
+\prod\limits_{n=1}^N f(x_n) &= f(x_1) \cdot f(x_2) \cdots f(x_N) 
 \end{align*}
 
 **Rules of Logarithms.** We will rely on the following:
