@@ -41,11 +41,5 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 **Univariate Calculus.** Derivatives, integrals, and limits (all in 1-dimension) will appear in some of the derivations. We will not ask you to do these by hand, but we expect you to know what they mean, conceptually and intuitively. To review these concepts, we recommend:
 * TODO
 
-
-
-
-## Probability and Statistics 
-
-Although the course introduces a *probabilistic* paradigm of ML, we do not assume *any* prior knowledge of probability and statistics. All necessary topics from these subjects will be introduced as needed in the course.
-
+**Probability and Statistics.** Although the course introduces a *probabilistic* paradigm of ML, we do not assume *any* prior knowledge of probability and statistics. All necessary topics from these subjects will be introduced as needed in the course.
 
