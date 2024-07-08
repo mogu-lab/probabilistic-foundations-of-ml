@@ -9,9 +9,13 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 * Going through an online Python tutorial. For example, from this [interactive Python tutorial](https://www.learnpython.org/), review all sections under "Learn the Basics" and "Data Science Tutorials." From the "Advanced Tutorials," review "List Comprehensions" and "Lambda functions."
 * After completing the tutorial, select one or two assignments from CS230 and translate them into Python.
 
+
 **Coding Environment.** We will be using [DeepNote](https://deepnote.com/) for all assignments in the course. DeepNote is an interactive Python environment that makes it easy to write code in small pieces, and to visualize and inspect them. Further, it let's you interleave your code with notes and math. If you're familiar with Jupyter notebooks, they are just a cloud version of a Jupyter notebook. If this is new to you, no problem! To get you started, we recommend:
 * Making an account on the [DeepNote](https://deepnote.com/) website using your Wellesley email and exploring.
-* Watching/reading some online tutorials, like [this one](https://www.youtube.com/watch?v=EW4lKlUnLGU). Then making cells that run code and ones with markdown formatting. You can find a markdown cheatsheet [here](https://www.markdownguide.org/cheat-sheet/). 
+* Watching/reading some online tutorials, like [this one](https://www.youtube.com/watch?v=EW4lKlUnLGU).
+* Finally try making cells that run code and ones for writing text and math. Follow [this guide](https://gtribello.github.io/mathNET/assets/notebook-writing.html) for formatting text and for writing mathematical notation---we will use this heavily in the course!
+  * You can find a formatting cheatsheet [here](https://www.markdownguide.org/cheat-sheet/).
+  * If you ever forget what's the syntax for a certain math symbol, check [this tool](https://detexify.kirelabs.org/classify.html) out!
 
 
 **Libraries.** We will regularly use two Python libraries throughout the course: `pandas`, used for reading in `.csv` data files and manipulating them, and `matplotlib`, used for visualizations.
@@ -37,11 +41,6 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 **Univariate Calculus.** Derivatives, integrals, and limits (all in 1-dimension) will appear in some of the derivations. We will not ask you to be able to do these by hand, but we expect you to know what they mean, conceptually and intuitively. To review these concepts, we recommend:
 * TODO
 
-
-
-## LaTeX
-
-TODO
 
 
 
