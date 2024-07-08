@@ -11,7 +11,7 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 
 **Coding Environment.** We will be using [DeepNote](https://deepnote.com/) for all assignments in the course. DeepNote is an interactive Python environment that makes it easy to write code in small pieces, and to visualize and inspect them. Further, it let's you interleave your code with notes and math. If you're familiar with Jupyter notebooks, they are just a cloud version of a Jupyter notebook. If this is new to you, no problem! To get you started, we recommend:
 * Making an account on the [DeepNote](https://deepnote.com/) website using your Wellesley email and exploring.
-* Watching/reading some online tutorials, like [this one](https://www.youtube.com/watch?v=EW4lKlUnLGU). 
+* Watching/reading some online tutorials, like [this one](https://www.youtube.com/watch?v=EW4lKlUnLGU). Then making cells that run code and ones with markdown formatting. You can find a markdown cheatsheet [here](https://www.markdownguide.org/cheat-sheet/). 
 
 
 **Libraries.** We will regularly use two Python libraries throughout the course: `pandas`, used for reading in `.csv` data files and manipulating them, and `matplotlib`, used for visualizations.
@@ -22,15 +22,26 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 
 ## Math
 
-TODO:
-* sums and products
-* logs
-* derivatives (univariate)
-* integrals (univariate)
-* limits
+**Notation.** We will be using the notation for sums and products heavily throughout the course:
+\begin{align*}
+\sum\limits_{n=1}^N f(x_n) &= f(x_1) + f(x_2) + \dots + f(x_N) \\
+\prod\limits_{n=1}^N f(x_n) &= f(x_1) \cdot f(x_2) \cdot \dots \cdot f(x_N) 
+\end{align*}
+
+**Rules of Logarithms.** We will rely on the following:
+\begin{align*}
+\log (x \cdot y) &= \log x + \log y \\
+\log x^y &= y \cdot \log x
+\end{align*}
+
+**Univariate Calculus.** Derivatives, integrals, and limits (all in 1-dimension) will appear in some of the derivations. We will not ask you to be able to do these by hand, but we expect you to know what they mean, conceptually and intuitively. To review these concepts, we recommend:
+* TODO
+
 
 
 ## LaTeX
+
+TODO
 
 
 
