@@ -35,7 +35,8 @@ We're here because we care about your experiences as students and as individuals
 * **Math, statistics, and computer science can all be intimidating, and they shouldn't be.** In fact, in recent years [math anxiety](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6345718/) (which is a real phenomenon!) has gained attention as a phenomenon that needs to be understood and addressed in STEM education. It is important for us to challenge exclusionary definitions of what science is and who can practice it to create a supportive space for learning. None of these subjects require inborn abilities to succeed.
 * **Math, statistics, and computer science were invented by humans and are therefore shaped by human values.** We encourage you to question all course content, its history, its implicit values, its benefit to society, and more. We will create dedicated time and space for doing exactly this.
 * **We tend to remember things we experience.** We believe people learn best by hands on practice, and by trial and error. We have therefore designed the class to be interactive. Further, we believe that knowledge is best learned with peers in societally meaningful contexts; we therefore incorporate lots of opportunities to engage with your peers in the class and to think about the techniques we introduce in a real-like context.
-* **All math and theory we introduce is be practically useful.** 
+* **All math and theory we introduce will be practically useful.** We designed the course so it is always clear *why* math/theory is introduced, and how it is practically relevant. 
+* **We want to know about your experience in the course.** We always strive to improve the course for future generations of students. We therefore value your feedback. 
 
 
 ## How to Succeed in CS 349?
