@@ -381,8 +381,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-05e178e4-5b62-4c5f-ad0d-790f95db0ea7">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-05e178e4-5b62-4c5f-ad0d-790f95db0ea7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b806761d-c88a-49a6-a144-a4247e68bbe3">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-b806761d-c88a-49a6-a144-a4247e68bbe3" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -453,8 +453,8 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4515aed3-17cd-4d5c-b260-70eb51b7afee">
-<span class="eqno">(13.2)<a class="headerlink" href="#equation-4515aed3-17cd-4d5c-b260-70eb51b7afee" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ecb19f3d-5060-44ca-bfa2-489cf14b9532">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-ecb19f3d-5060-44ca-bfa2-489cf14b9532" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale and shift}} )
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
@@ -485,8 +485,8 @@ u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal
 </div>
 </div>
 <p>Of course, the above example is only for a 1-dimensional input. Ideally, our function class will work for higher-dimensional inputs. We can incorporate this into our simple block as follows. We define <span class="math notranslate nohighlight">\(D_x\)</span> to be the dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, and we sum over the scaled and shifted inputs as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec3fd77e-fb32-4d7f-89ad-cfc6a81497ef">
-<span class="eqno">(13.3)<a class="headerlink" href="#equation-ec3fd77e-fb32-4d7f-89ad-cfc6a81497ef" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6af248b9-4305-456b-ba46-5fa471035714">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-6af248b9-4305-456b-ba46-5fa471035714" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale and shift}} \right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^{(d)}\)</span> denotes the <span class="math notranslate nohighlight">\(d\)</span>-th dimension of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(w = \{ w_1, \dots w_d \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots b_d \}\)</span> have a different scale and shift for every dimension.</p>
@@ -516,13 +516,13 @@ u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cd
 </div>
 <p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. Now, let’s formally decide how to combine neurons into a function.</p>
 <p>Recall that a sigmoid always outputs a value in <span class="math notranslate nohighlight">\([0, 1]\)</span>. Because of this, <span class="math notranslate nohighlight">\(u(\cdot; w, b)\)</span> will also only output values in <span class="math notranslate nohighlight">\([0, 1]\)</span>. To represent functions outside of this limited range, we will apply a scale and shift like before, and then sum over a group of <span class="math notranslate nohighlight">\(H\)</span> of these neurons:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c5d1f8da-a7e5-43b4-b03b-3899e8e1643b">
-<span class="eqno">(13.4)<a class="headerlink" href="#equation-c5d1f8da-a7e5-43b4-b03b-3899e8e1643b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1ae33cea-28f4-4ec2-9ed8-7680c21cc185">
+<span class="eqno">(13.4)<a class="headerlink" href="#equation-1ae33cea-28f4-4ec2-9ed8-7680c21cc185" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift}}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2cf890af-af2b-436e-a343-1ece421ba766">
-<span class="eqno">(13.5)<a class="headerlink" href="#equation-2cf890af-af2b-436e-a343-1ece421ba766" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-da50c6e7-0894-43d7-a8ff-bac90aeecfe7">
+<span class="eqno">(13.5)<a class="headerlink" href="#equation-da50c6e7-0894-43d7-a8ff-bac90aeecfe7" title="Permalink to this equation">#</a></span>\[\begin{align}
 W &amp;= \{ w_1^\text{in}, \dots, w_H^\text{in}, w_1^\text{out}, \dots, w_H^\text{out} \} \\
 b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\text{out} \}
 \end{align}\]</div>
@@ -616,8 +616,8 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
 </figcaption>
 </figure>
 <p>As you can see from the figure above, the number of columns in <span class="math notranslate nohighlight">\(A\)</span> must match the number of columns in <span class="math notranslate nohighlight">\(B\)</span>. Moreover, each element <span class="math notranslate nohighlight">\(c_{i, j}\)</span> in matrix <span class="math notranslate nohighlight">\(C\)</span> represents the following <em>sum of products</em>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-919ef3bc-cb30-49cf-a281-75d8b40351dd">
-<span class="eqno">(13.6)<a class="headerlink" href="#equation-919ef3bc-cb30-49cf-a281-75d8b40351dd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4b2ad107-3eba-443a-908e-a1d5c62c1a17">
+<span class="eqno">(13.6)<a class="headerlink" href="#equation-4b2ad107-3eba-443a-908e-a1d5c62c1a17" title="Permalink to this equation">#</a></span>\[\begin{align}
 c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(j\)</span> indexes into each element in the row of <span class="math notranslate nohighlight">\(A\)</span> <em>and</em> the corresponding element in the column of <span class="math notranslate nohighlight">\(B\)</span>. Next, we’ll make the connection between matrices and neural networks.</p>
@@ -632,16 +632,16 @@ c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 <li><p><em>Shifting the inputs.</em> We shift each of the values from the previous steps. This can be done by adding an array/vector, <span class="math notranslate nohighlight">\(b_0\)</span> of dimension <span class="math notranslate nohighlight">\(H\)</span> to the result from the previous step: <span class="math notranslate nohighlight">\(x \cdot W_0 + b_0\)</span>. These are our scaled and shifted inputs.</p></li>
 <li><p><em>Applying the activation.</em> We apply an activation function to the result from the previous step. We can use a sigmoid like before, or any other activation function we choose. For generality, we’ll call it <span class="math notranslate nohighlight">\(g(\cdot)\)</span>. This gives us <span class="math notranslate nohighlight">\(H\)</span> different neurons: <span class="math notranslate nohighlight">\(g(x \cdot W_0 + b_0)\)</span>.</p></li>
 <li><p><em>Scaling and shifting the outputs.</em> Recall that we get expressivity by adding scaled and shifted neurons together. To do this, we’ll introduce <span class="math notranslate nohighlight">\(W_1\)</span> and <span class="math notranslate nohighlight">\(b_1\)</span>, for scaling and shifting, respectively. <span class="math notranslate nohighlight">\(W_1\)</span> has dimensions <span class="math notranslate nohighlight">\(H \times D_y\)</span> and <span class="math notranslate nohighlight">\(b_1\)</span> has dimensions <span class="math notranslate nohighlight">\(D_y\)</span>. Altogether, this gives us the following formula:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6af1f74e-2010-421e-804b-84ed5e2a58f1">
-<span class="eqno">(13.7)<a class="headerlink" href="#equation-6af1f74e-2010-421e-804b-84ed5e2a58f1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-05976b28-3c21-44eb-a9d6-333df7b43ac9">
+<span class="eqno">(13.7)<a class="headerlink" href="#equation-05976b28-3c21-44eb-a9d6-333df7b43ac9" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(x; \underbrace{W_0, W_1, b_0, b_1}_{\text{parameters, } \theta}) = g(x \cdot W_0 + b_0) \cdot W_1 + b_1.
     \end{align}\]</div>
 <p>The number of neurons, <span class="math notranslate nohighlight">\(H\)</span>, is called the <em>hidden dimension</em> of the neural network.</p>
 </li>
 </ol>
 <p><strong>Deeper Networks.</strong> We can extend the above network by adding as many additional layers as you like:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4458bd86-0a8c-414a-8362-9592480269bf">
-<span class="eqno">(13.8)<a class="headerlink" href="#equation-4458bd86-0a8c-414a-8362-9592480269bf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fc4e84d6-f789-49cd-bbb4-0f78bd2b4966">
+<span class="eqno">(13.8)<a class="headerlink" href="#equation-fc4e84d6-f789-49cd-bbb4-0f78bd2b4966" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{2-layers:} &amp;\quad g( \underbrace{g(x \cdot W_0 + b_0) \cdot W_1 + b_1}_{\text{1-layer neural network}} ) \cdot W_2 + b_2 \\
     \text{3-layers:} &amp;\quad g( \underbrace{g( g(x \cdot W_0 + b_0) \cdot W_1 + b_1) \cdot W_2 + b_2)}_{\text{2-layer neural network}} \cdot W_3 + b_3 \\
     \text{4-layers:} &amp;\quad g( \underbrace{g( g( g(x \cdot W_0 + b_0) \cdot W_1 + b_1) \cdot W_2 + b_2) \cdot W_3 + b_3}_{\text{3-layer neural network}} ) \cdot W_4 + b_4 \\
@@ -696,9 +696,9 @@ c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 <ul class="simple">
 <li><p>The paper, <em><a class="reference external" href="https://arxiv.org/pdf/1712.09913" rel="noopener noreferrer" target="_blank">Visualizing the Loss Landscape of Neural Nets</a></em>, introduces a new way of visualizing high dimensional loss functions of neural networks, and explores how neural network architecture (or “type”) makes optimization easier or harder. This paper also led to further inspiration for more <a class="reference external" href="https://losslandscape.com/gallery/" rel="noopener noreferrer" target="_blank">artistic visualizations</a> of loss landscapes.</p></li>
 <li><p>Conventional wisdom says that it’s important to find the <em>global optima</em> for good model performance. As many papers have already shown, numerical optimizers that often get stuck in a variety of local optima actually benefit model performance. The paper <em><a class="reference external" href="https://arxiv.org/pdf/2211.15853" rel="noopener noreferrer" target="_blank">Disentangling the Mechanisms Behind Implicit Regularization in SGD</a></em> attempts to understand why.</p></li>
-<li><p>Conventional wisdom also says that when neural networks become significantly larger than what’s needed to make good predictions on the data, they overfit and become difficult to optimize. The paper, <em><a class="reference external" href="https://arxiv.org/pdf/1912.02292" rel="noopener noreferrer" target="_blank">Deep Double Descent: Where Bigger Models and More Data Hurt</a></em>, shows that, in opposition to this conventional wisdom, larger models actually perform better. This phenomenon is called “double descent”—model performance initially gets worse as the neural network becomes larger, but past a certain neural network size, it improves again.</p></li>
+<li><p>Conventional wisdom also says that when neural networks become significantly larger than what’s needed to make good predictions on the data, they overfit and become difficult to optimize. The paper, <em><a class="reference external" href="https://arxiv.org/pdf/1912.02292" rel="noopener noreferrer" target="_blank">Deep Double Descent: Where Bigger Models and More Data Hurt</a></em>, shows that, in contrast to this conventional wisdom, larger models actually perform better. This phenomenon is called “double descent”—model performance initially gets worse as the neural network becomes larger, but past a certain neural network size, it improves again.</p></li>
 </ul>
-<p><strong>Interpretability.</strong> For fun, check out this <a class="reference external" href="https://playground.tensorflow.org/#activation=sigmoid&amp;batchSize=10&amp;dataset=circle&amp;regDataset=reg-plane&amp;learningRate=0.03&amp;regularizationRate=0&amp;noise=0&amp;networkShape=8,8&amp;seed=0.63137&amp;showTestData=false&amp;discretize=false&amp;percTrainData=50&amp;x=true&amp;y=true&amp;xTimesY=false&amp;xSquared=false&amp;ySquared=false&amp;cosX=false&amp;sinX=false&amp;cosY=false&amp;sinY=false&amp;collectStats=false&amp;problem=classification&amp;initZero=false&amp;hideText=false" rel="noopener noreferrer" target="_blank">in-browser neural network training visualization</a>. You can play with different neural network sizes, activation functions, etc. The visualizer will then show you the output of <em>every neuron</em> in the neural network. As you increase the size of your neural network, can you make sense of what each individual neuron is doing? It’s very difficult to understand neural networks by looking at their parameters… But when ML models touch human lives, we often need to understand the “reasoning” behind an ML model’s prediction. Understanding the model’s reasoning is important for several reasons:</p>
+<p><strong>Interpretability.</strong> As models become more complicated, it also harder to intuit about their inner workings. Check out <a class="reference external" href="https://playground.tensorflow.org/#activation=sigmoid&amp;batchSize=10&amp;dataset=circle&amp;regDataset=reg-plane&amp;learningRate=0.03&amp;regularizationRate=0&amp;noise=0&amp;networkShape=8,8&amp;seed=0.63137&amp;showTestData=false&amp;discretize=false&amp;percTrainData=50&amp;x=true&amp;y=true&amp;xTimesY=false&amp;xSquared=false&amp;ySquared=false&amp;cosX=false&amp;sinX=false&amp;cosY=false&amp;sinY=false&amp;collectStats=false&amp;problem=classification&amp;initZero=false&amp;hideText=false" rel="noopener noreferrer" target="_blank">this in-browser neural network training visualization</a>. You can play with different neural network sizes, activation functions, etc. The visualizer will then show you the output of <em>every neuron</em> in the neural network. As you increase the size of your neural network, can you make sense of what each individual neuron is doing? It’s very difficult to understand neural networks by looking at their parameters… But when ML models touch human lives, we often need to understand the “reasoning” behind an ML model’s prediction. Understanding the model’s reasoning is important for several reasons:</p>
 <ol class="arabic simple">
 <li><p><em>Models can be incorrect and discriminatory.</em> We need to be able to verify the model’s output before making decisions on it. For example, in many medical imaging contexts, ML models can learn to <a class="reference external" href="https://www.nature.com/articles/s41591-024-03113-4" rel="noopener noreferrer" target="_blank">make predictions based on the demographic proxies hidden in the image, rather than based on the physiological content of an image</a>.</p></li>
 <li><p><em>Models don’t understand context.</em> Sometimes, we need to synthesize a model’s output with additional information about our decision-making context. For example, what if a model prescribes penicillin to a patient who’s allergic it?</p></li>
