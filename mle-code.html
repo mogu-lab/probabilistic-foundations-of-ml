@@ -389,23 +389,23 @@ document.write(`
 <h2><span class="section-number">8.1. </span>The Data Generating Process<a class="headerlink" href="#the-data-generating-process" title="Permalink to this heading">#</a></h2>
 <p>In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions. In these functions, we describe the model’s “generative process”—or, a procedure we use to sample the observed data. You just learned how to represent a whole data set using a model (using the plate notation above). We will therefore walk through a specific example that we will then code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Suppose we want to model the joint distribution of the day-of-the-week, <span class="math notranslate nohighlight">\(D\)</span>, and whether a patient is intorixated, <span class="math notranslate nohighlight">\(I\)</span>. We can do this via the model,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0c07a242-187f-4b60-af28-53cb7123b676">
-<span class="eqno">(8.1)<a class="headerlink" href="#equation-0c07a242-187f-4b60-af28-53cb7123b676" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9dd93a5b-8fd0-4314-9ebd-9712188f34b6">
+<span class="eqno">(8.1)<a class="headerlink" href="#equation-9dd93a5b-8fd0-4314-9ebd-9712188f34b6" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi).
 \end{align}\]</div>
 <p>In this model,</p>
 <ul class="simple">
 <li><p><em>Marginal:</em> <span class="math notranslate nohighlight">\(p_D(\cdot; \pi)\)</span> is a distribution over the days of the week. We will therefore define it to be a Categorical distribution:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-afe7cc11-a37c-49e6-a6f5-545440506be3">
-<span class="eqno">(8.2)<a class="headerlink" href="#equation-afe7cc11-a37c-49e6-a6f5-545440506be3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7b6e67ef-8b81-408d-a85d-92f33f89d43d">
+<span class="eqno">(8.2)<a class="headerlink" href="#equation-7b6e67ef-8b81-408d-a85d-92f33f89d43d" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi).
 \end{align}\]</div>
 <ul class="simple">
 <li><p><em>Conditional:</em> <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d_n; \rho)\)</span> is the probability that a patient arrives at the ER with intoxication given that <span class="math notranslate nohighlight">\(D = d_n\)</span>. Since “intoxication” is a binary outcome, we will model it using a Bernoulli. However, recall that the probability of intoxication <em>changes with the day of the week</em>—on some days, we’re more likely to treat patients with intoxication. The parameter of the Bernoulli distribution therefore needs to change depending on the day of the week. We therefore define:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-e096e1d8-50ec-4d3b-b21e-e0e881c5e372">
-<span class="eqno">(8.3)<a class="headerlink" href="#equation-e096e1d8-50ec-4d3b-b21e-e0e881c5e372" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-09e09b8e-6be1-4b2f-9836-3c95825e2a2f">
+<span class="eqno">(8.3)<a class="headerlink" href="#equation-09e09b8e-6be1-4b2f-9836-3c95825e2a2f" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 \end{align}\]</div>
 <p><strong>Valid Parameter Values:</strong> Since each entry of <span class="math notranslate nohighlight">\(\rho\)</span> represents a Bernoulli distribution, each entry must be on between 0 and 1 (i.e. on the “unit interval”). And since <span class="math notranslate nohighlight">\(\pi\)</span> is represents a Categorical distribution, its entries must sum to 1 (a fancy name of this is that <span class="math notranslate nohighlight">\(\pi\)</span> lies on a “simplex”). We note this briefly because we will have to communicate to <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> the valid values these parameters may take on (but don’t worry, this isn’t hard to do).</p>
@@ -542,8 +542,8 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <p><strong>Performing the MLE:</strong> We will now perform the MLE using another helper function we’ve created. Recall that the MLE for this model is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5000aad2-0342-424d-a139-0ef3698cca3c">
-<span class="eqno">(8.4)<a class="headerlink" href="#equation-5000aad2-0342-424d-a139-0ef3698cca3c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7764b59a-8c6e-45c5-b950-d3cffd599fe8">
+<span class="eqno">(8.4)<a class="headerlink" href="#equation-7764b59a-8c6e-45c5-b950-d3cffd599fe8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi^\text{MLE}, \rho^\text{MLE} &amp;= \mathrm{argmax}_{\pi, \rho} \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \log \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \sum\limits_{n=1}^N \log p_{I | D}(i_n | d_n; \rho) + \log p_D(d_n; \pi)
@@ -765,19 +765,19 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1000 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:49,  1.89it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:54,  1.87it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 25%|██▌       | 254/1000 [00:00&lt;00:01, 538.17it/s, init loss: 26390.5742, avg. loss [201-250]: 23521.5979]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▋       | 263/1000 [00:00&lt;00:01, 553.19it/s, init loss: 26390.5742, avg. loss [201-250]: 23521.5979]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 51%|█████     | 511/1000 [00:00&lt;00:00, 1009.95it/s, init loss: 26390.5742, avg. loss [451-500]: 23342.4140]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 53%|█████▎    | 528/1000 [00:00&lt;00:00, 1037.57it/s, init loss: 26390.5742, avg. loss [451-500]: 23342.4140]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 77%|███████▋  | 768/1000 [00:00&lt;00:00, 1397.86it/s, init loss: 26390.5742, avg. loss [701-750]: 23335.6850]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 79%|███████▉  | 793/1000 [00:00&lt;00:00, 1436.93it/s, init loss: 26390.5742, avg. loss [701-750]: 23335.6850]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:00&lt;00:00, 1085.50it/s, init loss: 26390.5742, avg. loss [951-1000]: 23335.5536]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:00&lt;00:00, 1093.32it/s, init loss: 26390.5742, avg. loss [951-1000]: 23335.5536]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
