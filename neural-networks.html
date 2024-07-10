@@ -381,8 +381,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1f1a42af-edee-442c-b27a-c4509dbff6d3">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-1f1a42af-edee-442c-b27a-c4509dbff6d3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-24603cee-4ca5-455a-aaec-d05a81ede745">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-24603cee-4ca5-455a-aaec-d05a81ede745" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -453,8 +453,8 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2183bb80-0e86-4d8d-adbc-9831cd9f0fc5">
-<span class="eqno">(13.2)<a class="headerlink" href="#equation-2183bb80-0e86-4d8d-adbc-9831cd9f0fc5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-18d252cc-4643-49f1-9f6f-9b9d4ac93b91">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-18d252cc-4643-49f1-9f6f-9b9d4ac93b91" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale and shift}} )
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
@@ -485,8 +485,8 @@ u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal
 </div>
 </div>
 <p>Of course, the above example is only for a 1-dimensional input. Ideally, our function class will work for higher-dimensional inputs. We can incorporate this into our simple block as follows. We define <span class="math notranslate nohighlight">\(D_x\)</span> to be the dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, and we sum over the scaled and shifted inputs as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57f49d8f-9a88-4e1e-9b37-751c81c5b4f2">
-<span class="eqno">(13.3)<a class="headerlink" href="#equation-57f49d8f-9a88-4e1e-9b37-751c81c5b4f2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9dc1c591-4077-4256-ae07-51852e6455ab">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-9dc1c591-4077-4256-ae07-51852e6455ab" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale and shift}} \right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^{(d)}\)</span> denotes the <span class="math notranslate nohighlight">\(d\)</span>-th dimension of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(w = \{ w_1, \dots w_d \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots b_d \}\)</span> have a different scale and shift for every dimension.</p>
@@ -516,13 +516,13 @@ u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cd
 </div>
 <p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. Now, let’s formally decide how to combine neurons into a function.</p>
 <p>Recall that a sigmoid always outputs a value in <span class="math notranslate nohighlight">\([0, 1]\)</span>. Because of this, <span class="math notranslate nohighlight">\(u(\cdot; w, b)\)</span> will also only output values in <span class="math notranslate nohighlight">\([0, 1]\)</span>. To represent functions outside of this limited range, we will apply a scale and shift like before, and then sum over a group of <span class="math notranslate nohighlight">\(H\)</span> of these neurons:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e8bb839-818d-463d-bfad-eb088e32b235">
-<span class="eqno">(13.4)<a class="headerlink" href="#equation-5e8bb839-818d-463d-bfad-eb088e32b235" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-46f29e16-073f-4d21-8d15-acd2bec08d26">
+<span class="eqno">(13.4)<a class="headerlink" href="#equation-46f29e16-073f-4d21-8d15-acd2bec08d26" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift}}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9f9ca1c3-8c38-47a0-83c3-e5d35ff998d3">
-<span class="eqno">(13.5)<a class="headerlink" href="#equation-9f9ca1c3-8c38-47a0-83c3-e5d35ff998d3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-acb5e908-1c75-4d41-aebf-2092aa6e7f4e">
+<span class="eqno">(13.5)<a class="headerlink" href="#equation-acb5e908-1c75-4d41-aebf-2092aa6e7f4e" title="Permalink to this equation">#</a></span>\[\begin{align}
 W &amp;= \{ w_1^\text{in}, \dots, w_H^\text{in}, w_1^\text{out}, \dots, w_H^\text{out} \} \\
 b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\text{out} \}
 \end{align}\]</div>
@@ -616,8 +616,8 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
 </figcaption>
 </figure>
 <p>As you can see from the figure above, the number of columns in <span class="math notranslate nohighlight">\(A\)</span> must match the number of columns in <span class="math notranslate nohighlight">\(B\)</span>. Moreover, each element <span class="math notranslate nohighlight">\(c_{i, j}\)</span> in matrix <span class="math notranslate nohighlight">\(C\)</span> represents the following <em>sum of products</em>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7cf8b263-1123-40d1-861b-09be4392a051">
-<span class="eqno">(13.6)<a class="headerlink" href="#equation-7cf8b263-1123-40d1-861b-09be4392a051" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-39c4289c-ed31-4ffc-9d3a-6f6c1dd42414">
+<span class="eqno">(13.6)<a class="headerlink" href="#equation-39c4289c-ed31-4ffc-9d3a-6f6c1dd42414" title="Permalink to this equation">#</a></span>\[\begin{align}
 c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(j\)</span> indexes into each element in the row of <span class="math notranslate nohighlight">\(A\)</span> <em>and</em> the corresponding element in the column of <span class="math notranslate nohighlight">\(B\)</span>. Next, we’ll make the connection between matrices and neural networks.</p>
@@ -632,16 +632,16 @@ c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 <li><p><em>Shifting the inputs.</em> We shift each of the values from the previous steps. This can be done by adding an array/vector, <span class="math notranslate nohighlight">\(b_0\)</span> of dimension <span class="math notranslate nohighlight">\(H\)</span> to the result from the previous step: <span class="math notranslate nohighlight">\(x \cdot W_0 + b_0\)</span>. These are our scaled and shifted inputs.</p></li>
 <li><p><em>Applying the activation.</em> We apply an activation function to the result from the previous step. We can use a sigmoid like before, or any other activation function we choose. For generality, we’ll call it <span class="math notranslate nohighlight">\(g(\cdot)\)</span>. This gives us <span class="math notranslate nohighlight">\(H\)</span> different neurons: <span class="math notranslate nohighlight">\(g(x \cdot W_0 + b_0)\)</span>.</p></li>
 <li><p><em>Scaling and shifting the outputs.</em> Recall that we get expressivity by adding scaled and shifted neurons together. To do this, we’ll introduce <span class="math notranslate nohighlight">\(W_1\)</span> and <span class="math notranslate nohighlight">\(b_1\)</span>, for scaling and shifting, respectively. <span class="math notranslate nohighlight">\(W_1\)</span> has dimensions <span class="math notranslate nohighlight">\(H \times D_y\)</span> and <span class="math notranslate nohighlight">\(b_1\)</span> has dimensions <span class="math notranslate nohighlight">\(D_y\)</span>. Altogether, this gives us the following formula:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-027566d1-84da-416a-923b-254747055bfa">
-<span class="eqno">(13.7)<a class="headerlink" href="#equation-027566d1-84da-416a-923b-254747055bfa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7516a647-cf05-4bf3-ac88-f97d09c7e471">
+<span class="eqno">(13.7)<a class="headerlink" href="#equation-7516a647-cf05-4bf3-ac88-f97d09c7e471" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(x; \underbrace{W_0, W_1, b_0, b_1}_{\text{parameters, } \theta}) = g(x \cdot W_0 + b_0) \cdot W_1 + b_1.
     \end{align}\]</div>
 <p>The number of neurons, <span class="math notranslate nohighlight">\(H\)</span>, is called the <em>hidden dimension</em> of the neural network.</p>
 </li>
 </ol>
 <p><strong>Deeper Networks.</strong> We can extend the above network by adding as many additional layers as you like:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf2122ae-a70c-44dc-930d-96361ff97ac8">
-<span class="eqno">(13.8)<a class="headerlink" href="#equation-bf2122ae-a70c-44dc-930d-96361ff97ac8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d5eef7e8-5338-4d5d-9912-6cdffc007c9a">
+<span class="eqno">(13.8)<a class="headerlink" href="#equation-d5eef7e8-5338-4d5d-9912-6cdffc007c9a" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{2-layers:} &amp;\quad g( \underbrace{g(x \cdot W_0 + b_0) \cdot W_1 + b_1}_{\text{1-layer neural network}} ) \cdot W_2 + b_2 \\
     \text{3-layers:} &amp;\quad g( \underbrace{g( g(x \cdot W_0 + b_0) \cdot W_1 + b_1) \cdot W_2 + b_2)}_{\text{2-layer neural network}} \cdot W_3 + b_3 \\
     \text{4-layers:} &amp;\quad g( \underbrace{g( g( g(x \cdot W_0 + b_0) \cdot W_1 + b_1) \cdot W_2 + b_2) \cdot W_3 + b_3}_{\text{3-layer neural network}} ) \cdot W_4 + b_4 \\
@@ -701,16 +701,16 @@ c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 <p><strong>Interpretability.</strong> When ML models touch human lives, we often need to understand the “reasoning” behind an ML model’s prediction. Understanding the model’s reasoning is important for several reasons:</p>
 <ol class="arabic simple">
 <li><p><em>Models can be incorrect and discriminatory.</em> We need to be able to verify the model’s output before making decisions on it. For example, in many medical imaging contexts, ML models can learn to <a class="reference external" href="https://www.nature.com/articles/s41591-024-03113-4" rel="noopener noreferrer" target="_blank">make predictions based on the demographic proxies hidden in the image, rather than based on the physiological content of an image</a>.</p></li>
-<li><p><em>Models don’t understand context.</em> Sometimes, we need to synthesize a model’s output with additional information about our decision-making context.</p></li>
+<li><p><em>Models don’t understand context.</em> Sometimes, we need to synthesize a model’s output with additional information about our decision-making context. For example, what if a model prescribes penicillin to a patient who’s allergic it?</p></li>
 <li><p><em>Humans need a mechanism for recourse under AI systems.</em> For example, if an AI system decides whether you qualify for a loan from the bank, wouldn’t you like to know what you can do to alter the AI’s decision?</p></li>
-<li><p><em>When something goes wrong with an automated system, who takes responsibility?</em> For legal reasons, it’s often argued that a model should only make <em>recommendations</em> to a human user, who will make the final decision. In this way, the human can be held responsible for any negative outcomes.</p></li>
+<li><p><em>When something goes wrong with an automated system, who takes responsibility?</em> For legal reasons, it’s often argued that a model should only make <em>recommendations</em> to a human user, who will make the final decision. In this way, the human can be held responsible for any negative outcomes (do you think this is reasonable?).</p></li>
 </ol>
 <p>To address all of the above challenges, “interpretable ML” or “explainable AI” has emerged as an exciting field of research. Since interpretability is a human-facing property of ML systems, this field draws on both ML and human-computer interaction (HCI)—you may enjoy the paper, <em><a class="reference external" href="https://arxiv.org/pdf/1702.08608" rel="noopener noreferrer" target="_blank">Towards A Rigorous Science of Interpretable Machine Learning</a></em>. Of course, interpretable ML has its own challenges (this is why it is an active area of research!)</p>
 <ul class="simple">
 <li><p>Explanations of ML models can be misleading. In the paper, <em><a class="reference external" href="https://www.nature.com/articles/s41398-021-01224-x" rel="noopener noreferrer" target="_blank">How machine-learning recommendations influence clinician treatment selections: the example of antidepressant selection</a></em>, the authors found that clinicians interacting with incorrect recommendations paired with simple explanations experienced a significant reduction in treatment selection accuracy.</p></li>
 <li><p>Explanations of ML models can be manipulative. In the paper, <em><a class="reference external" href="https://arxiv.org/pdf/1901.07694" rel="noopener noreferrer" target="_blank">Explaining Models: An Empirical Study of How Explanations
 Impact Fairness Judgment</a></em>, the authors show that the type of explanation shapes our judgement of fairness.</p></li>
-<li><p>Explanations can fail when integrated into the broader sociotechnical system. For example, in the paper, <a class="reference external" href="https://arxiv.org/pdf/2205.05424" rel="noopener noreferrer" target="_blank">“If it didn’t happen, why would I change my decision?”: How Judges Respond to Counterfactual Explanations for the Public Safety Assessment</a>, explanations of an AI system were entirely ignored by human users.</p></li>
+<li><p>Explanations can fail when integrated into the broader sociotechnical system. For example, in the paper, <em><a class="reference external" href="https://arxiv.org/pdf/2205.05424" rel="noopener noreferrer" target="_blank">“If it didn’t happen, why would I change my decision?”: How Judges Respond to Counterfactual Explanations for the Public Safety Assessment</a></em>, explanations of an AI system were entirely ignored by human users.</p></li>
 </ul>
 <p><strong>The Guise of Objectivity.</strong> Because neural networks are so expressive, as a society, we’ve crafted a narrative about their objectivity—that they are able to recover objective truths in a purely data-driven fashion, no human-assumptions necessary. However, <em>this is not theoretically or practically possible</em>. All models make assumptions that have significant downstream consequences. Some models, like neural networks, however, are complicated enough to better <em>hide</em> their underlying assumptions. This means we have to be extra careful when reasoning about them. As an example, the paper <em><a class="reference external" href="https://arxiv.org/pdf/1806.07572" rel="noopener noreferrer" target="_blank">Neural Tangent Kernel: Convergence and Generalization in Neural Networks</a></em> shows that, under mild conditions, neural networks trained with gradient descent actually behave like a type of regression, known as <a class="reference external" href="https://en.wikipedia.org/wiki/Kernel_regression#:~:text=In%20statistics%2C%20kernel%20regression%20is,variable%20relative%20to%20a%20variable" rel="noopener noreferrer" target="_blank">kernel regression</a>. And kernel regression makes some of the assumptions behind regression easier to understand than the assumptions underlying a neural network.</p>
 </section>
