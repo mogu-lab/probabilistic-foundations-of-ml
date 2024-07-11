@@ -83,8 +83,12 @@ Since a large part of this course requires students to work in groups, in alignm
 
 ## Grades
 
-TODO
+Course grades are computed by weighing course components as follows:
+* Assignment work: $45\%$
+* Final project: $40\%$
+* In-class participation and exercises: $15\%$
 
+Course grade percentages are converted to letters via the table below:
 
 | **Percentage** | **Letter Grade** |
 |---|---|
@@ -92,6 +96,18 @@ TODO
 | $\geq 90.0\%$ | A- |
 | $\geq 86.6\%$ | B+ |
 | $\geq 83.3\%$ | B |
+| $\geq 80.0\%$ | B- |
+| $\geq 76.6\%$ | C+ |
+| $\geq 73.3\%$ | C |
+| $\geq 70.0\%$ | C- |
+| $\geq 60.0\%$ | D |
+| $< 60.0\%$ | F |
+
+
+In case the average grade in the class is lower than expected, we may raise everyone's grades. We will *never* lower the grades.
+
+Recall that the minimum grade to earn credit under credit/no credit grading is C. The minimum grade to pass and earn credit under normal letter grading is D.
+
 
 
 
