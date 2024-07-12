@@ -66,6 +66,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'evaluation-metrics';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/evaluation-metrics.html" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
@@ -380,7 +382,7 @@ document.write(`
 </div>
 <p><strong>Context:</strong> At this point, we have a general framework for developing probabilistic models, as well as one way of fitting them to data, MLE. We’ve then instantiated this framework to develop two types of predictive models—regression and classification. We further learned how to build in expressivity using tools from deep learning—namely, neural networks—into these models. Are we finally ready to apply these models to real-life tasks?</p>
 <p>Unfortunately, there’s one key piece we’re still missing: so far, we’ve only used 1- and 2-dimensional input data and 1-dimensional output data. While in principle, we already have the tools to implement predictive models for higher dimensional data, we don’t yet have the tools to <em>evaluate</em> them. We’ve purposefully worked with lower dimensional data because it is easy to visualize, and therefore easy to qualitatively evaluate. But as data becomes higher dimensional, it’s much more difficult to get intuition using visualizations. As a result, we will have to rely on <em>metrics</em>.</p>
-<p><strong>Challenge:</strong> There are many ways of measuring model performance. Which metrics should we use? What are the pros and cons of each metric? We will answer these questions here.</p>
+<p><strong>Challenge:</strong> There are many ways of measuring model performance. Which metrics should we use? What are the pros and cons of each metric? We will answer these questions here. Even though our motivation for developing evaluation metrics is our inability to visualize high-dimensional data, we will in fact focus on low-dimensional data, again. This is because we need to gain intuition about each metric we introduce.</p>
 <p><strong>Outline:</strong></p>
 <ul class="simple">
 <li><p>What’s underfitting/overfitting? How do we prevent it?</p></li>
@@ -389,19 +391,38 @@ document.write(`
 <li><p>Introduce metrics specific to classification</p></li>
 <li><p>Discuss broader challenges with model evaluation</p></li>
 </ul>
-<p><strong>Data:</strong></p>
+<p><strong>Data:</strong> TODO</p>
 <ul class="simple">
 <li><p>Introduce motivating high-dimensional regression and classification data and tasks.</p></li>
-<li><p>Provide them students with several choices of fitted models for each task to evaluate.</p></li>
+<li><p>Provide students with several choices of fitted models for each task to evaluate.</p></li>
 </ul>
 <section id="preventing-over-and-under-fitting">
 <h2><span class="section-number">14.1. </span>Preventing Over- and Under-fitting<a class="headerlink" href="#preventing-over-and-under-fitting" title="Permalink to this heading">#</a></h2>
-<p>TODO:</p>
+<p><strong>Decomposition into Sigal vs. Noise.</strong> In probabilistic models, we often term one part of the model the “trend” or the “signal,” and we term the rest “noise” or “observation error.” For example, recall that in regression, our trend is captured by a function of the inputs, <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span>, around which we assume a Gaussian observation error. Similarly, in the classification model we introduced, our trend is captured by a function of the inputs, <span class="math notranslate nohighlight">\(\rho(\cdot; W)\)</span>, which computes the probability of belonging to class 1 (as opposed to class 0). We then sample from a Bernoulli distribution with that probability—this represents the “noise” or “observation error.” When fitting a probabilistic model, we’re always at risk of learning models that mix up what’s signal vs. what’s noise. This can happen in two ways:</p>
 <ul class="simple">
-<li><p>Explain both concepts, show visuals for regression and classification</p></li>
-<li><p>Introduce the idea of validation and test set</p></li>
-<li><p>Raise question: but which metric to use?</p></li>
+<li><p><strong>Overfitting:</strong> When the “signal” part of the model memorizes the “noise” part, and as a result, interpolates poorly. By <em>interpolation</em>, we mean, how well the model fits data points <em>near</em> our training data.</p></li>
+<li><p><strong>Underfitting:</strong> When a model doesn’t capture enough of the “signal” in the data (assuming it’s noise), and as a result, interpolates poorly.</p></li>
 </ul>
+<p>Let’s illustrate what this looks like in both regression and classification, starting with regression:</p>
+<p>TODO regression figure and explanation</p>
+<p>TODO classification figure and explanation</p>
+<p><strong>Preventing Inappropriate Decomposition into Signal vs. Noise.</strong> How can we tell if a model overfit or underfit? Well, looking at the definition above, we said a model over/under-fitts if it <em>interpolates</em> poorly. This means that, to determine if a model over/under-fit, we should check its fit <em>on data it has not seen yet</em>—specifically, on data that’s similar to our training data.</p>
+<p>But where can we get such extra data points? Oftentimes, it’s hard to collect additional data. For example, at the IHH, data collection is expensive; it’s funded by large government grants and requires approval of an <a class="reference external" href="https://en.wikipedia.org/wiki/Institutional_review_board" rel="noopener noreferrer" target="_blank">Institutional Review Board (IRB)</a> to ensure data collection and analysis is ethical. As a result, we often cannot collect additional data. Instead, however, we can <em>split our data into parts</em>—one part for training and one part for testing the model’s interpolation. Specifically, after fitting the model on the training data, we compare the model’s fit on the training data with that of the test data:</p>
+<ul class="simple">
+<li><p>If the fit on the training data is better than that on the test data, we <em>overfit</em>.</p></li>
+<li><p>If the fit on neither the training data or the test data is good, we <em>underfit.</em></p></li>
+<li><p>If the fit on both the training and test data is comparably good, we fit just right!</p></li>
+</ul>
+<p>Let’s illustrate this with a visualization:</p>
+<p>TODO figure for regression</p>
+<p>TODO figure for classification</p>
+<p><strong>Model Selection Using a Validation Set.</strong> In practice, we often aren’t just interested in the fitted model—we also want to report some <em>metric</em> to quantify how well it fits. To accomodate this need, we split the data into three parts: a training set, a validation set, and a test set.</p>
+<ul class="simple">
+<li><p>We fit the model to the <em>training</em> data.</p></li>
+<li><p>We use the <em>validation</em> set to determine over/under-fitting (by comparing the fit on the validation vs. training data, as described above).</p></li>
+<li><p>Finally, we report the model’s performance on the <em>test</em> set.</p></li>
+</ul>
+<p><strong>But which metric should we use?</strong> That’s a million-dollar question… We will next present several common metrics for evaluating model performance numerically. As you will see, model performance is multi-faceted—there’s more to consider than just how well the model fits. For example, is the model fair? and will the model be understandable to a human? So how can we design a metric that can simultaneously answer all of these questions and present us with a ranking of models from best to worse? The answer is: we can’t. We will have to use multiple metrics to evaluate our models. At times, these metrics will present us with contradictory information, and we will have to reason through it and determine what to do.</p>
 </section>
 <section id="log-likelihood">
 <h2><span class="section-number">14.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Permalink to this heading">#</a></h2>
