@@ -429,13 +429,13 @@ document.write(`
 <h2><span class="section-number">14.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Permalink to this heading">#</a></h2>
 <p><strong>A General Purpose Metric.</strong> Since so far, we fit our models by finding parameters that maximize the data log-likelihood (MLE). Can we also use log-likelihood as an evaluation metric? If we trust this metric for <em>fitting</em> our model, surely we should trust it for <em>evaluation</em> as well. And what’s nice about log-likelihood is that, unlike some of the other metrics we’ll introduce next, it’s not model-specific. We can evaluate the log-likelihood of <em>any</em> probabilistic model.</p>
 <p><strong>Log-Likelihood as an Evaluation Metric.</strong> Recall that the data log-likelihood is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f5ad21f9-5586-47ef-9755-86cb315f5428">
-<span class="eqno">(14.1)<a class="headerlink" href="#equation-f5ad21f9-5586-47ef-9755-86cb315f5428" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-231f9957-e599-45da-abad-9e7513adacf3">
+<span class="eqno">(14.1)<a class="headerlink" href="#equation-231f9957-e599-45da-abad-9e7513adacf3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \theta) &amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is our entire data set of <span class="math notranslate nohighlight">\(N\)</span> observations, each <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is an observation, and <span class="math notranslate nohighlight">\(\theta\)</span> is the model parameters. However, notice that in this definition, the data log-likelihood grows as <span class="math notranslate nohighlight">\(N\)</span> increases due to the sum. This means that, if our train, validation and test sets each have a different number of points, we cannot compare their log-likelihoods directly. To fix this problem, we instead compute the <em>average</em> log-likelihood (this is just the above equation divided by <span class="math notranslate nohighlight">\(N\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e5125d2c-383b-4054-bc65-1040c8037bbf">
-<span class="eqno">(14.2)<a class="headerlink" href="#equation-e5125d2c-383b-4054-bc65-1040c8037bbf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a1bf422c-2939-46a3-9cfe-6f6265c4f234">
+<span class="eqno">(14.2)<a class="headerlink" href="#equation-a1bf422c-2939-46a3-9cfe-6f6265c4f234" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Avg. Log-Likelihood} = \frac{1}{N} \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta).
 \end{align}\]</div>
 <div class="admonition-exercise-getting-intuition-for-log-likelihood admonition">
@@ -452,25 +452,26 @@ document.write(`
 <section id="metrics-for-regression">
 <h2><span class="section-number">14.3. </span>Metrics for Regression<a class="headerlink" href="#metrics-for-regression" title="Permalink to this heading">#</a></h2>
 <p><strong>Mean Squared Error (MSE).</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, MSE, specific to regression. This metric can be used together with log-likelihood to paint a clearer picture of model fit. This is, of course, not the only evaluation metric for regression, but it’s a common one, so we’ll focus on it here. For 1-dimensional output data, the MSE is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c745d003-a63b-4a6f-b751-a7b408719c36">
-<span class="eqno">(14.3)<a class="headerlink" href="#equation-c745d003-a63b-4a6f-b751-a7b408719c36" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f888f7a0-950c-4990-900b-c73cae54182e">
+<span class="eqno">(14.3)<a class="headerlink" href="#equation-f888f7a0-950c-4990-900b-c73cae54182e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{MSE} &amp;= \frac{1}{N} \sum\limits_{n=1}^N (\underbrace{y_n - \widehat{y}_n}_{\text{error}})^2,
 \end{align}\]</div>
-<p>where <span class="math notranslate nohighlight">\(y_n\)</span> is an observation and <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> the model’s prediction. As the name suggests, we compute the error between our model’s prediction and the observation, square it, and average.</p>
-<p>But for a probabilistic model, what is the model’s “prediction”? In a probabilistic regression model, we fit a <em>distribution</em> of outputs given inputs, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, to the data. And a distribution is <em>not</em> a single prediction. Because of this, we have to summarize the conditional distribution using a single value. Here, we will use the mean (which also happens to be the mode—or the point for which the distribution is largest). We can compute it as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cbc14976-0fcf-4c0a-853d-b1a803473339">
-<span class="eqno">(14.4)<a class="headerlink" href="#equation-cbc14976-0fcf-4c0a-853d-b1a803473339" title="Permalink to this equation">#</a></span>\[\begin{align}
-y_{n, s} &amp;\sim p_{Y | X}(\cdot | x_n) \quad \text{for } s = 1, \dots, S \quad (\text{draw $S$ samples from the probabilistic model}) \\
-\widehat{y}_n &amp;= \frac{1}{S} \sum_{s=1}^S y_{n, s} \quad (\text{average them})
+<p>where <span class="math notranslate nohighlight">\(y_n\)</span> is an observation and <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> the model’s prediction. As the name suggests, we compute the error between our model’s prediction and the observation, square it, and average. The MSE can be thought of as a measure of “spread” (or, in statistical lingo, the <em>variance</em>) of the data around the model’s prediction. Hopefully, in contrast to log-likelihood, it’s a little easier to understand, since we may have domain knowledge of what error, <span class="math notranslate nohighlight">\(y_n - \widehat{y}_n\)</span>, is considered high/low.</p>
+<p>But for a probabilistic model, what is the model’s “prediction”? In a probabilistic regression model, we have a <em>distribution</em> of outputs given inputs, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, and a distribution is <em>not</em> a single prediction. Because of this, we have to summarize the conditional distribution using a single value. Here, we will use the mean (which also happens to be the mode—or the most likely value of <span class="math notranslate nohighlight">\(y\)</span>). For our regression model, the mean of the distribion is the “trend,” so</p>
+<div class="amsmath math notranslate nohighlight" id="equation-299adb5a-115b-49ff-a2d9-c7b1961d02ce">
+<span class="eqno">(14.4)<a class="headerlink" href="#equation-299adb5a-115b-49ff-a2d9-c7b1961d02ce" title="Permalink to this equation">#</a></span>\[\begin{align}
+\hat{y}_n &amp;= \mu(x_n; W^\text{MLE}).
 \end{align}\]</div>
-<p>TODO:</p>
+<div class="admonition-exercise-implement-and-use-mse admonition">
+<p class="admonition-title">Exercise: Implement and Use MSE</p>
+<p><strong>TODO:</strong></p>
 <ul class="simple">
-<li><p>Introduce MSE, R^2</p></li>
-<li><p>Pros: easy to interpret</p></li>
-<li><p>Cons: no uncertainty (doesn’t tell us if observation error variance is correct)</p></li>
-<li><p>Exercise: ask students to compute MSE and log-likelihood and decide which model they prefer</p></li>
-<li><p>Exercise: add additional sensitive feature to data—ask them to break down metrics on sensitive variable. Which model do they pick now?</p></li>
+<li><p>Load in the list of models</p></li>
+<li><p>For each one, compute the MSE on the train, validation and test</p></li>
+<li><p>Compare against log-likelihood—where does it agree? where does it disagree? When it disagrees, why (hint, look at the magnitude of the noise).</p></li>
+<li><p>Exercise: add an additional sensitive feature to data—ask them to break down metrics on sensitive variable. Which model do they pick now?</p></li>
 </ul>
+</div>
 </section>
 <section id="metrics-for-classification">
 <h2><span class="section-number">14.4. </span>Metrics for Classification<a class="headerlink" href="#metrics-for-classification" title="Permalink to this heading">#</a></h2>
