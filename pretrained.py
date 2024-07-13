@@ -27,43 +27,39 @@ VIZ_DIR = '_static/figs'
 
 
 def generate_regression_eval_metrics_data():
-    key = jrandom.PRNGKey(seed=0)
-    key_x, key_z, key_eps = jrandom.split(key, 3)
+    def helper(N, seed, set_name):
+        key = jrandom.PRNGKey(seed=seed)
+        key_x, key_z, key_eps = jrandom.split(key, 3)
+        
+        x = (1.5 + jax.random.truncated_normal(
+            key_x,
+            -1.5,
+            3.0,
+            shape=(N,),
+        )) / 4.5
+        
+        z = jax.random.bernoulli(key_z, p=0.15, shape=(N,))
+        
+        mu = jnp.where(
+            z,
+            jnp.polyval(5.0 * jnp.array([-1.0, 1.0, 0.0, 0.04]), x),
+            jnp.polyval(5.0 * jnp.array([-1.0, 0.7, 0.3, 0.04]), x),
+        )
+        
+        eps = jax.random.normal(key_eps, shape=mu.shape) * 0.1
+        y = mu + eps
+        
+        df = pd.DataFrame({
+            'Magnitude': x,
+            'Resistance': y,
+        })
+        
+        df.index.name = 'Patient ID'
+        df.to_csv(os.path.join('data', 'IHH-CSI-{}.csv'.format(set_name)))
 
-    N = 200
-    
-    x = (1.5 + jax.random.truncated_normal(
-        key_x,
-        -1.5,
-        3.0,
-        shape=(N,),
-    )) / 4.5
-
-    z = jax.random.bernoulli(key_z, p=0.15, shape=(N,))
-
-    mu = jnp.where(
-        z,
-        jnp.polyval(5.0 * jnp.array([-1.0, 1.0, 0.0, 0.04]), x),
-        jnp.polyval(5.0 * jnp.array([-1.0, 0.7, 0.3, 0.04]), x),
-    )
-
-    eps = jax.random.normal(key_eps, shape=mu.shape) * 0.1
-    y = mu + eps
-
-    df = pd.DataFrame({
-        'Magnitude': x,
-        'Resistance': y,
-    })
-    
-    df.index.name = 'Patient ID'
-    df.to_csv(os.path.join('data', 'IHH-CSI.csv'))
-    
-    '''
-    plt.scatter(x[z], y[z], alpha=0.5)
-    plt.scatter(x[~z], y[~z], alpha=0.5)
-    plt.savefig(os.path.join(VIZ_DIR, 'tmp.png'))
-    plt.close()
-    '''
+    helper(140, 0, 'train')
+    helper(40, 1, 'val')
+    helper(20, 2, 'test')
 
 
 def stax_nn(layers, activation_fn=stax.LeakyRelu):
@@ -106,13 +102,11 @@ def neural_network_regression_univariate(
     
 def fit_and_save_regression_eval_metrics_models():    
     data = pd.read_csv(
-        os.path.join('data', 'IHH-CSI.csv'),
+        os.path.join('data', 'IHH-CSI-train.csv'),
         index_col='Patient ID',
     )
-
-    NUM_ITERATIONS = 50000
-
     
+    NUM_ITERATIONS = 50000
     
     def fit_helper(model, key):
         optimizer = numpyro.optim.Adam(step_size=0.01)
@@ -150,7 +144,7 @@ def fit_and_save_regression_eval_metrics_models():
         fitted_models.append(fit_helper(model, key))
         
     fig, axes = plt.subplots(
-        1, len(models), figsize=(4 * len(models), 4), sharex=True, sharey=True,
+        1, len(models), figsize=(4 * len(models), 4), sharex=True, 
     )
     
     for idx, (ax, result, name) in enumerate(zip(axes, fitted_models, names)):
@@ -164,7 +158,7 @@ def fit_and_save_regression_eval_metrics_models():
         ax.set_xlabel('Magnitude')
         if idx == 0:
             ax.set_ylabel('Resistance')
-        
+
     plt.tight_layout()
     plt.savefig(os.path.join(VIZ_DIR, 'eval_metrics_nn.png'))
     plt.close()

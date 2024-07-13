@@ -141,4 +141,4 @@ def plot_regression_of_resistance_vs_magnitude(
         c='red', alpha=0.8, label=r'$\mu(\cdot; W)$',
     )
         
-    ax.legend(loc='upper left')
+    ax.legend()
