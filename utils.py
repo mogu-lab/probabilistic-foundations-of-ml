@@ -99,3 +99,46 @@ def plot_classifier_of_control_vs_age_and_dose(
     plt.tight_layout()
     plt.show()
 
+
+def plot_regression_of_resistance_vs_magnitude(
+        data, 
+        fitted_model,
+        ax,
+):
+    '''
+    For use in the evaluation metrics unit: plot the regression models against the data
+
+    Arguments:
+        data: the data set, passed in as a pandas DataFrame
+        fitted_model: your fitted numpyro model
+        ax: a matplotlib axis object on which to plot
+
+    Return:
+        Nothing
+    '''
+    key = jrandom.PRNGKey(seed=0)
+    
+    test_x = jnp.linspace(
+        data['Magnitude'].min(), data['Magnitude'].max(), 200,
+    )[..., None]
+    
+    samples = cs349_sample_generative_process(
+        fitted_model, key, len(test_x), test_x,
+    )
+
+    ax.fill_between(
+        test_x.squeeze(),
+        samples['mu'][0].squeeze() - samples['std_dev'] * 2.0,
+        samples['mu'][0].squeeze() + samples['std_dev'] * 2.0,
+        color='blue', alpha=0.2, label=r'$95\%$ of Samples',
+    )
+    ax.scatter(
+        data['Magnitude'], data['Resistance'],
+        c='black', marker='x', alpha=0.8, label='Data', 
+    )    
+    ax.plot(
+        test_x.squeeze(), samples['mu'][0],
+        c='red', alpha=0.8, label=r'$\mu(\cdot; W)$',
+    )
+        
+    ax.legend(loc='upper left')
