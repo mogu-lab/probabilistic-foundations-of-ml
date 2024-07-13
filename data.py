@@ -1,6 +1,9 @@
 import argparse
 from collections import defaultdict
+import os
 
+import matplotlib
+import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 import pandas as pd
 import jax
 import jax.numpy as jnp
@@ -11,6 +14,9 @@ import numpyro.distributions as D
 import numpyro.distributions.constraints as C
 import numpyro.handlers as H
 import chex
+
+
+DATA_DIR = 'data'
 
 
 def jax_int_array_to_str_list(a, idx_to_s):
@@ -163,7 +169,7 @@ def generate_IHH_ER_data_discrete():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv('data/IHH-ER.csv')
+    df.to_csv(os.path.join('data', 'IHH-ER.csv'))
 
 
 #########################################################################
@@ -215,7 +221,7 @@ def generate_IHH_CTR_data_discrete_continuous():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv('data/IHH-CTR.csv')
+    df.to_csv(os.path.join('data', 'IHH-CTR.csv'))
 
 
 #########################################################################
@@ -308,9 +314,11 @@ def generate_IHH_CGLF_data_regression():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv('data/IHH-CTR-CGLF-regression-augmented.csv')
+    df.to_csv(os.path.join('data', 'IHH-CTR-CGLF-regression-augmented.csv'))
 
-    df.drop(columns=['Age']).to_csv('data/IHH-CTR-CGLF-regression.csv')
+    df.drop(columns=['Age']).to_csv(
+        os.path.join('data', 'IHH-CTR-CGLF-regression.csv'),
+    )
 
 
 #########################################################################
@@ -376,7 +384,9 @@ def generate_IHH_CGLF_data_classification():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv('data/IHH-CTR-CGLF-classification.csv')
+    df.to_csv(os.path.join('data', 'IHH-CTR-CGLF-classification.csv'))
+
+
 
 
     
@@ -384,7 +394,8 @@ def main():
     #generate_IHH_ER_data_discrete()
     #generate_IHH_CTR_data_discrete_continuous()
     #generate_IHH_CGLF_data_regression()
-    generate_IHH_CGLF_data_classification()
+    #generate_IHH_CGLF_data_classification()
+    pass
     
         
 if __name__ == '__main__':
