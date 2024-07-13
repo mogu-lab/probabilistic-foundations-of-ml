@@ -124,19 +124,19 @@ def fit_and_save_regression_eval_metrics_models():
         return result
 
     model_type1 = lambda N, x, y=None: neural_network_regression_univariate(
-        N, x, y=y, hidden_layers=[50], activation_fn=stax.Sigmoid,
-    )
-    
-    model_type2 = lambda N, x, y=None: neural_network_regression_univariate(
-        N, x, y=y, hidden_layers=[50, 50, 50],
-    )
-
-    model_type3 = lambda N, x, y=None: neural_network_regression_univariate(
         N, x, y=y, hidden_layers=[],
     )
 
+    model_type2 = lambda N, x, y=None: neural_network_regression_univariate(
+        N, x, y=y, hidden_layers=[50], activation_fn=stax.Sigmoid,
+    )
+    
+    model_type3 = lambda N, x, y=None: neural_network_regression_univariate(
+        N, x, y=y, hidden_layers=[50, 50, 50],
+    )
+    
     models = [model_type1, model_type2, model_type3]
-    names = ['Fitting "Just Right"', 'Overfitting', 'Underfitting']
+    names = ['Underfitting', 'Just Right', 'Overfitting']
     
     key = jrandom.PRNGKey(seed=0)
     fitted_models = []
