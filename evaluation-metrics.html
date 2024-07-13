@@ -422,11 +422,22 @@ document.write(`
 <li><p>We use the <em>validation</em> set to determine over/under-fitting (by comparing the fit on the validation vs. training data, as described above).</p></li>
 <li><p>Finally, we report the model’s performance on the <em>test</em> set.</p></li>
 </ul>
+<p>Often, we use <span class="math notranslate nohighlight">\(70\%\)</span> of the data for the training, <span class="math notranslate nohighlight">\(20\%\)</span> for validation, and <span class="math notranslate nohighlight">\(10\%\)</span> for testing.</p>
 <p><strong>But which metric should we use?</strong> That’s a million-dollar question! We will next present several common metrics for evaluating model performance numerically. As you will see, model performance is multi-faceted—there’s more to consider than just how well the model fits. For example, is the model fair? and will the model be understandable to a human? If we have multiple factors to consider, how can we possibly design a metric that gives us a single ranking of models from best to worst? The answer is: we can’t. We will have to use multiple metrics to evaluate our models. At times, these metrics will present us with contradictory information, and we will have to determine what to do.</p>
 </section>
 <section id="log-likelihood">
 <h2><span class="section-number">14.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Permalink to this heading">#</a></h2>
-<p><strong>A General Purpose Metric.</strong> Since so far, we fit our models by finding parameters that maximize the data log-likelihood, can we just use log-likelihood as an evaluation metric? If we trust this metric for <em>fitting</em> our model, surely we should trust it for <em>evaluation</em>. And what’s nice about log-likelihood is that, unlike some of the other metrics we’ll introduce next, it’s not model-specific. We can evaluate the log-likelihood of <em>any</em> probabilistic model.</p>
+<p><strong>A General Purpose Metric.</strong> Since so far, we fit our models by finding parameters that maximize the data log-likelihood (MLE). Can we also use log-likelihood as an evaluation metric? If we trust this metric for <em>fitting</em> our model, surely we should trust it for <em>evaluation</em> as well. And what’s nice about log-likelihood is that, unlike some of the other metrics we’ll introduce next, it’s not model-specific. We can evaluate the log-likelihood of <em>any</em> probabilistic model.</p>
+<p><strong>Log-Likelihood as an Evaluation Metric.</strong> Recall that the data log-likelihood is,</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f5ad21f9-5586-47ef-9755-86cb315f5428">
+<span class="eqno">(14.1)<a class="headerlink" href="#equation-f5ad21f9-5586-47ef-9755-86cb315f5428" title="Permalink to this equation">#</a></span>\[\begin{align}
+\log p(\mathcal{D}; \theta) &amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is our entire data set of <span class="math notranslate nohighlight">\(N\)</span> observations, each <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is an observation, and <span class="math notranslate nohighlight">\(\theta\)</span> is the model parameters. However, notice that in this definition, the data log-likelihood grows as <span class="math notranslate nohighlight">\(N\)</span> increases due to the sum. This means that, if our train, validation and test sets each have a different number of points, we cannot compare their log-likelihoods directly. To fix this problem, we instead compute the <em>average</em> log-likelihood (this is just the above equation divided by <span class="math notranslate nohighlight">\(N\)</span>):</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e5125d2c-383b-4054-bc65-1040c8037bbf">
+<span class="eqno">(14.2)<a class="headerlink" href="#equation-e5125d2c-383b-4054-bc65-1040c8037bbf" title="Permalink to this equation">#</a></span>\[\begin{align}
+\text{Avg. Log-Likelihood} = \frac{1}{N} \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta).
+\end{align}\]</div>
 <div class="admonition-exercise-getting-intuition-for-log-likelihood admonition">
 <p class="admonition-title">Exercise: Getting Intuition for Log-Likelihood</p>
 <p><strong>TODO:</strong></p>
@@ -436,15 +447,27 @@ document.write(`
 <li><p>Evaluate each model’s log-likelihood (provide function)</p></li>
 </ul>
 </div>
-<p><strong>Human-meaningful notions of fit.</strong> TODO Cons: units are difficult to interpret.</p>
+<p><strong>Human-meaningful Notions of Model-fit.</strong> So log-likelihood seems to work well when <em>comparing</em> models; given a collection of trained models, we can use log-likelihood on the validation set to select a model that is likely to fit the test set well. However, suppose we’re given a single model—how do we know if this model is good? TODO example interpreting log-likelihood values.</p>
 </section>
 <section id="metrics-for-regression">
 <h2><span class="section-number">14.3. </span>Metrics for Regression<a class="headerlink" href="#metrics-for-regression" title="Permalink to this heading">#</a></h2>
+<p><strong>Mean Squared Error (MSE).</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, MSE, specific to regression. This metric can be used together with log-likelihood to paint a clearer picture of model fit. This is, of course, not the only evaluation metric for regression, but it’s a common one, so we’ll focus on it here. For 1-dimensional output data, the MSE is defined as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c745d003-a63b-4a6f-b751-a7b408719c36">
+<span class="eqno">(14.3)<a class="headerlink" href="#equation-c745d003-a63b-4a6f-b751-a7b408719c36" title="Permalink to this equation">#</a></span>\[\begin{align}
+\text{MSE} &amp;= \frac{1}{N} \sum\limits_{n=1}^N (\underbrace{y_n - \widehat{y}_n}_{\text{error}})^2,
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(y_n\)</span> is an observation and <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> the model’s prediction. As the name suggests, we compute the error between our model’s prediction and the observation, square it, and average.</p>
+<p>But for a probabilistic model, what is the model’s “prediction”? In a probabilistic regression model, we fit a <em>distribution</em> of outputs given inputs, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, to the data. And a distribution is <em>not</em> a single prediction. Because of this, we have to summarize the conditional distribution using a single value. Here, we will use the mean (which also happens to be the mode—or the point for which the distribution is largest). We can compute it as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-cbc14976-0fcf-4c0a-853d-b1a803473339">
+<span class="eqno">(14.4)<a class="headerlink" href="#equation-cbc14976-0fcf-4c0a-853d-b1a803473339" title="Permalink to this equation">#</a></span>\[\begin{align}
+y_{n, s} &amp;\sim p_{Y | X}(\cdot | x_n) \quad \text{for } s = 1, \dots, S \quad (\text{draw $S$ samples from the probabilistic model}) \\
+\widehat{y}_n &amp;= \frac{1}{S} \sum_{s=1}^S y_{n, s} \quad (\text{average them})
+\end{align}\]</div>
 <p>TODO:</p>
 <ul class="simple">
 <li><p>Introduce MSE, R^2</p></li>
 <li><p>Pros: easy to interpret</p></li>
-<li><p>Cons: hard to know if scale of MSE is reasonable</p></li>
+<li><p>Cons: no uncertainty (doesn’t tell us if observation error variance is correct)</p></li>
 <li><p>Exercise: ask students to compute MSE and log-likelihood and decide which model they prefer</p></li>
 <li><p>Exercise: add additional sensitive feature to data—ask them to break down metrics on sensitive variable. Which model do they pick now?</p></li>
 </ul>
