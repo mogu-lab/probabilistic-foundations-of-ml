@@ -77,7 +77,22 @@ def cs349_mle(model, optimizer, key, num_steps, *args, **kwargs):
 
     return result
 
+
+def cs349_joint_data_log_likelihood(model, *args, **kwargs):
+    '''
+    A function that computes a fitted model's joint data log-likelihood
+
+    Arguments:
+        model: a function representing a numpyro model
+        *args, **kwargs: captures all arguments your model takes in
+
+    Returns:
+        The model's joint data log-likelihood
+    '''
+    return numpyro.infer.util.log_density(model, args, kwargs, {})[0]
     
+
+
 def cs349_save_trained_numpyro_model(model, parameters, fname):
     '''
     A function to save a numpyro model to a file
