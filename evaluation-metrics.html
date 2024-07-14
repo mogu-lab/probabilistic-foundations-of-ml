@@ -358,7 +358,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log-likelihood">14.2. Log-Likelihood</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics-for-regression">14.3. Metrics for Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics-for-classification">14.4. Metrics for Classification</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-evaluation">14.5. Challenges with Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broader-impact-analysis">14.5. Broader Impact Analysis</a></li>
 </ul>
             </nav>
         </div>
@@ -389,7 +389,7 @@ document.write(`
 <li><p>Introduce log-likelihood</p></li>
 <li><p>Introduce metrics specific to regression</p></li>
 <li><p>Introduce metrics specific to classification</p></li>
-<li><p>Discuss broader challenges with model evaluation</p></li>
+<li><p>Introduce a framework for broader impact analysis</p></li>
 </ul>
 <p><strong>Data.</strong> You’ve started a collaboration with doctors from IHH’s Center for Rare Disorders. The doctors are interested in better understanding Antenna Inflammation, in which a being’s antennas sporadically inflame for weeks at a time. This causes them to malfunction and is quite painful. Because the disease is so rare, it’s been difficult to gather enough information to develop a treatment. Currently, the only known treatment is to expose the inflamed antennas to high-energy space beams. While these beams do not cure the disease, they do alleviate the pain. Doctors are interested in better understanding what beam intensity to use; they suspect that a low-intensity beam might not help much, but too high of an intensity might also contribute to pain. They have collected data for you to analyze. Let’s take a look:</p>
 <div class="cell docutils container">
@@ -579,13 +579,13 @@ document.write(`
 <h2><span class="section-number">14.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Permalink to this heading">#</a></h2>
 <p><strong>A General Purpose Metric.</strong> Since so far, we fit our models by finding parameters that maximize the data log-likelihood (MLE). Can we also use log-likelihood as an evaluation metric? If we trust this metric for <em>fitting</em> our model, surely we should trust it for <em>evaluation</em> as well. And what’s nice about log-likelihood is that, unlike some of the other metrics we’ll introduce next, it’s not model-specific. We can evaluate the log-likelihood of <em>any</em> probabilistic model.</p>
 <p><strong>Log-Likelihood as an Evaluation Metric.</strong> Recall that the data log-likelihood is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a3141f1f-30e7-4c16-838b-6419e0f178d8">
-<span class="eqno">(14.1)<a class="headerlink" href="#equation-a3141f1f-30e7-4c16-838b-6419e0f178d8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-caab114c-2104-4977-a3d2-a9bd088754ce">
+<span class="eqno">(14.1)<a class="headerlink" href="#equation-caab114c-2104-4977-a3d2-a9bd088754ce" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \theta) &amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is our entire data set of <span class="math notranslate nohighlight">\(N\)</span> observations, each <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is an observation, and <span class="math notranslate nohighlight">\(\theta\)</span> is the model parameters. However, notice that in this definition, the data log-likelihood grows as <span class="math notranslate nohighlight">\(N\)</span> increases due to the sum. This means that, if our train, validation and test sets each have a different number of points, we cannot compare their log-likelihoods directly. To fix this problem, we instead compute the <em>average</em> log-likelihood (this is just the above equation divided by <span class="math notranslate nohighlight">\(N\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d7bc0b40-3ced-4e8c-91cd-4508f00b2082">
-<span class="eqno">(14.2)<a class="headerlink" href="#equation-d7bc0b40-3ced-4e8c-91cd-4508f00b2082" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-66f7c820-09f2-45fb-8e33-1aff0c83f415">
+<span class="eqno">(14.2)<a class="headerlink" href="#equation-66f7c820-09f2-45fb-8e33-1aff0c83f415" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Avg. Log-Likelihood} = \frac{1}{N} \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta).
 \end{align}\]</div>
 <div class="admonition-exercise-getting-intuition-for-log-likelihood admonition">
@@ -613,14 +613,14 @@ document.write(`
 <section id="metrics-for-regression">
 <h2><span class="section-number">14.3. </span>Metrics for Regression<a class="headerlink" href="#metrics-for-regression" title="Permalink to this heading">#</a></h2>
 <p><strong>Mean Squared Error (MSE).</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, MSE, specific to regression. This metric can be used together with log-likelihood to paint a clearer picture of model fit. This is, of course, not the only evaluation metric for regression, but it’s a common one, so we’ll focus on it here. For 1-dimensional output data, the MSE is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-08d70b69-89a6-4eb0-b319-9a6a3dc4adb2">
-<span class="eqno">(14.3)<a class="headerlink" href="#equation-08d70b69-89a6-4eb0-b319-9a6a3dc4adb2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2dafa3ff-6890-435f-88fb-4eb357f40636">
+<span class="eqno">(14.3)<a class="headerlink" href="#equation-2dafa3ff-6890-435f-88fb-4eb357f40636" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{MSE} &amp;= \frac{1}{N} \sum\limits_{n=1}^N (\underbrace{y_n - \widehat{y}_n}_{\text{error}})^2,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(y_n\)</span> is an observation and <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> the model’s prediction. As the name suggests, we compute the error between our model’s prediction and the observation, square it, and average. The MSE can be thought of as a measure of “spread” (or, in statistical lingo, the <em>variance</em>) of the data around the model’s prediction. Hopefully, in contrast to log-likelihood, it’s a little easier to understand, since we may have domain knowledge of what error, <span class="math notranslate nohighlight">\(y_n - \widehat{y}_n\)</span>, is considered high/low.</p>
 <p>But for a probabilistic model, what is the model’s “prediction”? In a probabilistic regression model, we have a <em>distribution</em> of outputs given inputs, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, and a distribution is <em>not</em> a single prediction. Because of this, we have to summarize the conditional distribution using a single value. Here, we will use the mean (which also happens to be the mode—or the most likely value of <span class="math notranslate nohighlight">\(y\)</span>). For our regression model, the mean of the distribion is the “trend,” so</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e39a0235-3371-48a7-a396-39fbe9b15f9b">
-<span class="eqno">(14.4)<a class="headerlink" href="#equation-e39a0235-3371-48a7-a396-39fbe9b15f9b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-76ca3cbb-aa95-4849-a642-d6213e5f780e">
+<span class="eqno">(14.4)<a class="headerlink" href="#equation-76ca3cbb-aa95-4849-a642-d6213e5f780e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{y}_n &amp;= \mu(x_n; W^\text{MLE}).
 \end{align}\]</div>
 <div class="admonition-exercise-implement-and-use-mse admonition">
@@ -639,14 +639,14 @@ document.write(`
 <section id="metrics-for-classification">
 <h2><span class="section-number">14.4. </span>Metrics for Classification<a class="headerlink" href="#metrics-for-classification" title="Permalink to this heading">#</a></h2>
 <p><strong>Accuracy.</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, accuracy, that’s specific to classification. Simply put, accuracy is the fraction of predictions the model got correct:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3b2d2e1e-bf3e-412d-8351-adafa10b21a9">
-<span class="eqno">(14.5)<a class="headerlink" href="#equation-3b2d2e1e-bf3e-412d-8351-adafa10b21a9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e246d86e-254f-42a6-847c-dba249ec3213">
+<span class="eqno">(14.5)<a class="headerlink" href="#equation-e246d86e-254f-42a6-847c-dba249ec3213" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Accuracy} &amp;= \frac{1}{N} \underbrace{\sum\limits_{n=1}^N \mathbb{I}(y_n = \widehat{y}_n),}_{\text{count correct predictions}}
 \end{align}\]</div>
 <p>where, as before, <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> is the model’s prediction, and <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an indicator function—a function that evaluates to <span class="math notranslate nohighlight">\(1\)</span> when the condition inside is true and <span class="math notranslate nohighlight">\(0\)</span> otherwise. The sum over the indicators counts the number of correct predictions. When divided by <span class="math notranslate nohighlight">\(N\)</span>, we get the fraction of correct predictions.</p>
 <p>Just like before, a probabilistic model does not make “predictions;” it models a full distribution over outputs given inputs. We, again, have to choose how to summarize this distribution using a single value. Remember that in our classification model, <span class="math notranslate nohighlight">\(\rho(x_n)\)</span> outputted the probability of <span class="math notranslate nohighlight">\(x_n\)</span> belonging to class 1 (vs. class 0). To turn this into a prediction, we will threshold it: if <span class="math notranslate nohighlight">\(\rho(x_n) \geq 0.5\)</span>, we’ll say <span class="math notranslate nohighlight">\(x_n\)</span> belongs to class 1—otherwise, it belongs to class 0. We can formalize this using an indicator function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-00b8579c-c432-4f1e-ae74-647e75fa06fb">
-<span class="eqno">(14.6)<a class="headerlink" href="#equation-00b8579c-c432-4f1e-ae74-647e75fa06fb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a30113b0-6834-4294-83fa-fcf20c15ac23">
+<span class="eqno">(14.6)<a class="headerlink" href="#equation-a30113b0-6834-4294-83fa-fcf20c15ac23" title="Permalink to this equation">#</a></span>\[\begin{align}
 \widehat{y}_n &amp;= \mathbb{I}(\rho(x_n) \geq 0.5)
 \end{align}\]</div>
 <div class="admonition-exercise-the-shortcomings-of-accuracy admonition">
@@ -654,18 +654,18 @@ document.write(`
 <p><strong>Context.</strong> Since the disease is incredibly rare, occurring only in <span class="math notranslate nohighlight">\(0.1\%\)</span> of the population, doctors don’t yet know what are its causes. The doctors have managed to acquire a large fund to collect data about a large swath of the population, ranging from genetic factors to environmental factors (demographics, occupation, diet, physiology, etc.). They just finished collecting the data and have run a preliminary analysis to determine which factors contribute most.</p>
 <p><strong>Challenge.</strong> Even though their model is <span class="math notranslate nohighlight">\(99.9\%\)</span> accurate, they have found that none of the factors seem to matter to the model—how is this possible? They recruited you to help understand what’s going on with their model.</p>
 <p><strong>Part 1:</strong> You decided to inspect the parameters of the model. In the model, <span class="math notranslate nohighlight">\(1\)</span> represents having the disease and <span class="math notranslate nohighlight">\(0\)</span> represents no disease. Lucky for you, the doctors used a linear classification model (so interpreting it is possible):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c3047c92-ea25-46a2-98e8-b2bdd9218c67">
-<span class="eqno">(14.7)<a class="headerlink" href="#equation-c3047c92-ea25-46a2-98e8-b2bdd9218c67" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c83d2076-33a9-443b-a040-252c93f88df5">
+<span class="eqno">(14.7)<a class="headerlink" href="#equation-c83d2076-33a9-443b-a040-252c93f88df5" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right) 
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-669933fe-2696-469e-ab91-bed48d146a0e">
-<span class="eqno">(14.8)<a class="headerlink" href="#equation-669933fe-2696-469e-ab91-bed48d146a0e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-01d8d4d9-6b2b-4d9b-a915-e7d3d275790a">
+<span class="eqno">(14.8)<a class="headerlink" href="#equation-01d8d4d9-6b2b-4d9b-a915-e7d3d275790a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) &amp;= \mathrm{sigmoid}\left( \theta^{(0)} + \sum\limits_{d=1}^{D_x} \theta^{(d)} \cdot x_n^{(d)} \right),
 \end{align}\]</div>
 <p>where the <span class="math notranslate nohighlight">\((d)\)</span>-superscript notation represents the <span class="math notranslate nohighlight">\(d\)</span>th dimension, and <span class="math notranslate nohighlight">\(D_x\)</span> is the dimensionality of the inputs <span class="math notranslate nohighlight">\(x_n\)</span>. When inspecting the parameters, you found that,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a4e7c5e0-2d60-4cf3-af37-a7f4f32715c7">
-<span class="eqno">(14.9)<a class="headerlink" href="#equation-a4e7c5e0-2d60-4cf3-af37-a7f4f32715c7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ff5d6811-502c-46c0-9d42-ef3f99705188">
+<span class="eqno">(14.9)<a class="headerlink" href="#equation-ff5d6811-502c-46c0-9d42-ef3f99705188" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;= [\underbrace{-6.90675}_{\theta^{(0)}}, \underbrace{0.0, 0.0, \dots, 0.0}_{\theta^{(1)}, \dots, \theta^{(D_x)}}].
 \end{align}\]</div>
 <p>Looking at the parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, which dimensions of the input matter most?</p>
@@ -714,16 +714,39 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
 <p><strong>Part 3:</strong> Make up a scenario in which you would prefer the model you didn’t choose? What differentiates your scenario from the one about the screening tool?</p>
 </div>
 </section>
-<section id="challenges-with-evaluation">
-<h2><span class="section-number">14.5. </span>Challenges with Evaluation<a class="headerlink" href="#challenges-with-evaluation" title="Permalink to this heading">#</a></h2>
-<p><strong>Model Performance is Multi-Faceted.</strong> There exists no single metric to rule them all. Model evaluation is a difficult and tricky process that involves much more than technical ML know-how.</p>
-<p>TODO:</p>
+<section id="broader-impact-analysis">
+<h2><span class="section-number">14.5. </span>Broader Impact Analysis<a class="headerlink" href="#broader-impact-analysis" title="Permalink to this heading">#</a></h2>
+<p><strong>ML in Sociotechnical Contexts.</strong> So far, we’ve focused on gaining intuition for qualitative metrics of model performance. We’ve seen that no single metric can paint a full picture of a model’s fit. And that multiple metrics can provide contradictory information—a model can be “good” according to one metric by “bad” according to another. Most importantly, we’ve seen that no metric can be meaningful without its context—in some contexts, false negatives are more tolerable than false positives, and in others its the opposite.</p>
+<p>However, our analysis of ML models <em>should not stop here</em>. For us to responsibly develop and use ML (or any technological system), it’s our responsibility not just to think about the technology, but also about their <em>sociotechnical context</em>—the software, hardware, data, model, people, affected communities, legal frameworks, business incentives, etc. that it will shape (or that will be shaped by its use). For this reason, we will now introduce a framework for conducting a broader impact analysis. This framework can serve as a starting point for thinking about ML in sociotechnical contexts.</p>
+<p><strong>Part A: Assessing Impact.</strong></p>
+<ol class="arabic simple">
+<li><p>Identify the stakeholders &amp; context</p></li>
+</ol>
 <ul class="simple">
-<li><p>Model performance is multi-dimensional, but we can only use one “scoring system” to select</p></li>
-<li><p>This is becomes even more tricky when fairness is involved</p></li>
-<li><p>How to be ethical? Participatory design.</p></li>
+<li><p>Who are the users?</p></li>
+<li><p>Who are the affected communities (are these the users)?</p></li>
+<li><p>What is the relationship between the users and the affected communities? What are the power structures that relate users and affected communities?</p></li>
+<li><p>What is the historical/cultural context of the type of task your tech performs (i.e. what is the relationship between what you are trying to accomplish, with respect to the users and affected communities, and the historical experience of these groups of people with past technologies that aimed to accomplish similar tasks)?</p></li>
 </ul>
-<p><strong>Sociotechnical Considerations.</strong></p>
+<ol class="arabic simple" start="2">
+<li><p>What types of good can your tech do?</p></li>
+</ol>
+<ul class="simple">
+<li><p>What kinds of needs do your users/communities have?</p></li>
+<li><p>What kinds of constraints do your users/communities have?</p></li>
+<li><p>How does your tech serve these needs?</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>What types of harm can your tech do?</p></li>
+</ol>
+<ul class="simple">
+<li><p>What kinds of side-effects and failures can your tech have? Does your tech increase or decrease the self-determination and agency of the users and affected communities?</p></li>
+<li><p>What kinds of direct harm can these side-effects/failures cause?</p></li>
+<li><p>What kinds of harm can the tech cause when embedded in the intended socio-technical system (trace out the effects through the web of relationships between stakeholders)?</p></li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p>What are you own ethical professional obligations in this project?</p></li>
+</ol>
 </section>
 </section>
 
@@ -798,7 +821,7 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#log-likelihood">14.2. Log-Likelihood</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics-for-regression">14.3. Metrics for Regression</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics-for-classification">14.4. Metrics for Classification</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-evaluation">14.5. Challenges with Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broader-impact-analysis">14.5. Broader Impact Analysis</a></li>
 </ul>
   </nav></div>
 
