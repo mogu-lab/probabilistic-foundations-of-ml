@@ -3,6 +3,7 @@ Helper functions for CS349.
 '''
 
 import argparse
+import dill
 
 import jax
 import jax.random as jrandom
@@ -76,4 +77,18 @@ def cs349_mle(model, optimizer, key, num_steps, *args, **kwargs):
 
     return result
 
+    
+def cs349_save_trained_numpyro_model(model, parameters, fname):
+    with open(fname, 'wb') as f:
+        dill.dump(dict(
+            model=model,
+            parameters=parameters,
+        ), f)
+
+        
+def cs349_load_trained_numpyro_model(fname):
+    with open(fname, 'rb') as f:        
+        r = dill.load(f)
+
+    return H.substitute(r['model'], data=r['parameters'])
     

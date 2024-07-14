@@ -1,8 +1,15 @@
+import glob
 import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 from sklearn.inspection import DecisionBoundaryDisplay
 import jax
 import jax.numpy as jnp
+
+# For loading pre-trained models
+import numpyro.distributions.constraints as C
+import numpyro.distributions as D
+import chex
+
 from cs349 import *
 
 
@@ -16,9 +23,9 @@ def convert_categorical_to_int(d, categories):
 
 
 def convert_day_of_week_to_int(d):
-    return convert_categorical_to_int(
-        d, ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    )
+    return convert_categorical_to_int(d, [
+        'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+    ])
 
 
 def plot_classifier_of_control_vs_age_and_dose(
@@ -100,7 +107,15 @@ def plot_classifier_of_control_vs_age_and_dose(
     plt.show()
 
 
-def plot_regression_of_resistance_vs_magnitude(
+def load_all_regression_models_of_comfort_vs_intensity():
+    models = []
+    for fname in sorted(glob.glob('data/regression_model_eval_metrics_*.dill')):
+        models.append(cs349_load_trained_numpyro_model(fname))
+
+    return models
+    
+
+def plot_regression_model_of_comfort_vs_intensity(
         data, 
         fitted_model,
         ax,
@@ -119,7 +134,7 @@ def plot_regression_of_resistance_vs_magnitude(
     key = jrandom.PRNGKey(seed=0)
     
     test_x = jnp.linspace(
-        data['Magnitude'].min(), data['Magnitude'].max(), 200,
+        data['Intensity'].min(), data['Intensity'].max(), 200,
     )[..., None]
     
     samples = cs349_sample_generative_process(
@@ -133,7 +148,7 @@ def plot_regression_of_resistance_vs_magnitude(
         color='blue', alpha=0.2, label=r'$95\%$ of Samples',
     )
     ax.scatter(
-        data['Magnitude'], data['Resistance'],
+        data['Intensity'], data['Comfort'],
         c='black', marker='x', alpha=0.8, label='Data', 
     )    
     ax.plot(
@@ -142,3 +157,25 @@ def plot_regression_of_resistance_vs_magnitude(
     )
         
     ax.legend()
+
+
+def plot_all_regression_models_of_comfort_vs_intensity(data, models):    
+    rows = 2
+    cols = 3
+    assert(rows * cols <= len(models))
+    
+    fig, axes = plt.subplots(
+        rows, cols, figsize=(4 * cols, 4 * rows), sharex=True, 
+    )
+    
+    for idx, (ax, m) in enumerate(zip(axes.flatten(), models)):
+        plot_regression_model_of_comfort_vs_intensity(data, m, ax)
+
+        ax.set_title('Model {}'.format(idx))
+        if idx % cols == 0:
+            ax.set_ylabel('Comfort')
+        if idx >= rows * cols - cols - 1:
+            ax.set_xlabel('Intensity')
+
+    plt.tight_layout()
+    plt.show()

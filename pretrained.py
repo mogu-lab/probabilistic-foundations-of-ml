@@ -1,3 +1,4 @@
+import copy
 import os
 
 import matplotlib
@@ -5,19 +6,14 @@ import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 import pandas as pd
 import jax
 import jax.numpy as jnp
-import jax.nn as jnn
 import jax.random as jrandom
 import numpyro
-import numpyro.distributions as D
-import numpyro.distributions.constraints as C
-import numpyro.handlers as H
-import chex
-import jax.example_libraries.stax as stax
 
 from utils import *
 from cs349 import *
 
 
+DATA_DIR = 'data'
 VIZ_DIR = '_static/figs'
 
 
@@ -50,59 +46,21 @@ def generate_regression_eval_metrics_data():
         y = mu + eps
         
         df = pd.DataFrame({
-            'Magnitude': x,
-            'Resistance': y,
+            'Intensity': x,
+            'Comfort': y,
         })
         
         df.index.name = 'Patient ID'
-        df.to_csv(os.path.join('data', 'IHH-CSI-{}.csv'.format(set_name)))
+        df.to_csv(os.path.join('data', 'IHH-CRD-{}.csv'.format(set_name)))
 
     helper(140, 0, 'train')
     helper(40, 1, 'val')
     helper(20, 2, 'test')
 
 
-def stax_nn(layers, activation_fn=stax.LeakyRelu):
-    modules = []
-    for idx, out_dim in enumerate(layers[1:]):
-        modules.append(stax.Dense(out_dim, W_init=stax.randn()))
-
-        if idx < len(layers) - 2:
-            modules.append(activation_fn)
-
-    return stax.serial(*modules)
-
-
-def neural_network_regression_univariate(
-        N, x, y=None, hidden_layers=[], activation_fn=stax.LeakyRelu,
-):
-    chex.assert_rank(x, 2)
-    chex.assert_axis_dimension(x, -1, 1)
-    if y is not None:
-        chex.assert_rank(y, 2)
-        chex.assert_axis_dimension(y, -1, 1)        
-        
-    fn = numpyro.module(
-        'NN',
-        stax_nn([1] + hidden_layers + [1], activation_fn=activation_fn),
-        input_shape=x.shape,
-    )
-
-    std_dev = numpyro.param(
-        'std_dev',
-        0.1,
-        constraint=C.positive,
-    )
-    
-    with numpyro.plate('data', N, dim=-2):
-        mu = numpyro.deterministic('mu', fn(x))
-        p_y_given_x = D.Normal(mu, std_dev)
-        numpyro.sample('y', p_y_given_x, obs=y)
-
-    
 def fit_and_save_regression_eval_metrics_models():    
     data = pd.read_csv(
-        os.path.join('data', 'IHH-CSI-train.csv'),
+        os.path.join('data', 'IHH-CRD-train.csv'),
         index_col='Patient ID',
     )
     
@@ -117,53 +75,126 @@ def fit_and_save_regression_eval_metrics_models():
             key, 
             NUM_ITERATIONS,
             len(data), 
-            jnp.array(data['Magnitude'])[..., None], 
-            y=jnp.array(data['Resistance'])[..., None],
+            jnp.array(data['Intensity'])[..., None], 
+            y=jnp.array(data['Comfort'])[..., None],
         )
 
         return result
 
-    model_type1 = lambda N, x, y=None: neural_network_regression_univariate(
+    def stax_nn(layers, activation_fn=jax.example_libraries.stax.LeakyRelu):
+        modules = []
+        for idx, out_dim in enumerate(layers[1:]):
+            modules.append(jax.example_libraries.stax.Dense(
+                out_dim, W_init=jax.example_libraries.stax.randn(),
+            ))
+            
+            if idx < len(layers) - 2:
+                modules.append(activation_fn)
+
+        return jax.example_libraries.stax.serial(*modules)
+
+    def neural_network_regression_univariate(
+            N, x, y=None, hidden_layers=[],
+            activation_fn=jax.example_libraries.stax.LeakyRelu,
+    ):
+        chex.assert_rank(x, 2)
+        chex.assert_axis_dimension(x, -1, 1)
+        if y is not None:
+            chex.assert_rank(y, 2)
+            chex.assert_axis_dimension(y, -1, 1)        
+            
+        fn = numpyro.module(
+            'NN',
+            stax_nn([1] + hidden_layers + [1], activation_fn=activation_fn),
+            input_shape=x.shape,
+        )
+        
+        std_dev = numpyro.param(
+            'std_dev',
+            0.1,
+            constraint=C.positive,
+        )
+        
+        with numpyro.plate('data', N, dim=-2):
+            mu = numpyro.deterministic('mu', fn(x))
+            p_y_given_x = D.Normal(mu, std_dev)
+            numpyro.sample('y', p_y_given_x, obs=y)
+
+    model0 = lambda N, x, y=None: neural_network_regression_univariate(
         N, x, y=y, hidden_layers=[],
     )
-
-    model_type2 = lambda N, x, y=None: neural_network_regression_univariate(
-        N, x, y=y, hidden_layers=[50], activation_fn=stax.Sigmoid,
+    
+    model1 = lambda N, x, y=None: neural_network_regression_univariate(
+        N, x, y=y, hidden_layers=[200],
+        activation_fn=jax.example_libraries.stax.Sigmoid,
     )
     
-    model_type3 = lambda N, x, y=None: neural_network_regression_univariate(
-        N, x, y=y, hidden_layers=[50, 50, 50],
+    model2 = lambda N, x, y=None: neural_network_regression_univariate(
+        N, x, y=y, hidden_layers=[50, 50, 40],
     )
     
-    models = [model_type1, model_type2, model_type3]
-    names = ['Underfitting', 'Just Right', 'Overfitting']
+    models = [model0, model1, model2]
     
     key = jrandom.PRNGKey(seed=0)
-    fitted_models = []
-    for model in models:
-        fitted_models.append(fit_helper(model, key))
+    results = []
+    for idx, model in enumerate(models):
+        result = fit_helper(model, key)
+        results.append(result)
         
-    fig, axes = plt.subplots(
-        1, len(models), figsize=(4 * len(models), 4), sharex=True, 
-    )
-    
-    for idx, (ax, result, name) in enumerate(zip(axes, fitted_models, names)):
-        plot_regression_of_resistance_vs_magnitude(
-            data, 
+        cs349_save_trained_numpyro_model(
             result.model_mle,
-            ax,
+            result.parameters_mle,
+            os.path.join(
+                DATA_DIR,
+                'regression_model_eval_metrics_{}.dill'.format(idx),
+            ),
         )
 
-        ax.set_title(name)           
-        ax.set_xlabel('Magnitude')
-        if idx == 0:
-            ax.set_ylabel('Resistance')
 
-    plt.tight_layout()
-    plt.savefig(os.path.join(VIZ_DIR, 'eval_metrics_nn.png'))
-    plt.close()
+    r = results[1]
+    
+    parameters = copy.deepcopy(r.parameters_mle)    
+    parameters['std_dev'] *= 2.0
+
+    cs349_save_trained_numpyro_model(
+        model1,
+        parameters,
+        os.path.join(
+            DATA_DIR,
+            'regression_model_eval_metrics_{}.dill'.format(len(models)),
+        ),
+    )
+
+    parameters = copy.deepcopy(r.parameters_mle)    
+    parameters['std_dev'] /= 2.0
+    
+    cs349_save_trained_numpyro_model(
+        model1,
+        parameters,
+        os.path.join(
+            DATA_DIR,
+            'regression_model_eval_metrics_{}.dill'.format(len(models) + 1),
+        ),
+    )
+
+    # The long way of setting parameters['NN$params'][2][1] = 0.3
+    parameters = copy.deepcopy(r.parameters_mle)
+    parameters = jax.tree.map(
+        lambda x: 0.3 if (x == parameters['NN$params'][2][1]).all() else x,
+        parameters,
+    )
+    
+    cs349_save_trained_numpyro_model(
+        model1,
+        parameters,
+        os.path.join(
+            DATA_DIR,
+            'regression_model_eval_metrics_{}.dill'.format(len(models) + 2),
+        ),
+    )
     
 
+    
 def main():
     generate_regression_eval_metrics_data()
     fit_and_save_regression_eval_metrics_models()    
