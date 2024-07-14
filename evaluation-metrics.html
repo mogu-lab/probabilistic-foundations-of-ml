@@ -391,11 +391,159 @@ document.write(`
 <li><p>Introduce metrics specific to classification</p></li>
 <li><p>Discuss broader challenges with model evaluation</p></li>
 </ul>
-<p><strong>Data:</strong> TODO</p>
-<ul class="simple">
-<li><p>Introduce motivating high-dimensional regression and classification data and tasks.</p></li>
-<li><p>Provide students with several choices of fitted models for each task to evaluate.</p></li>
-</ul>
+<p><strong>Data.</strong> You’ve started a collaboration with doctors from IHH’s Center for Rare Disorders. The doctors are interested in better understanding Antenna Inflammation, in which a being’s antennas sporadically inflame for weeks at a time. This causes them to malfunction and is quite painful. Because the disease is so rare, it’s been difficult to gather enough information to develop a treatment. Currently, the only known treatment is to expose the inflamed antennas to high-energy space beams. While these beams do not cure the disease, they do alleviate the pain. Doctors are interested in better understanding what beam intensity to use; they suspect that a low-intensity beam might not help much, but too high of an intensity might also contribute to pain. They have collected data for you to analyze. Let’s take a look:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import a bunch of libraries we&#39;ll be using below</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">jax.random</span> <span class="k">as</span> <span class="nn">jrandom</span>
+<span class="kn">from</span> <span class="nn">cs349</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Load the data into a pandas dataframe</span>
+<span class="n">csv_fname</span> <span class="o">=</span> <span class="s1">&#39;data/IHH-CRD-train.csv&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_fname</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;Patient ID&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print a random sample of patients, just to see what&#39;s in the data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Intensity</th>
+      <th>Comfort</th>
+    </tr>
+    <tr>
+      <th>Patient ID</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>45</th>
+      <td>0.308006</td>
+      <td>0.977233</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>0.502982</td>
+      <td>1.359451</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>0.125683</td>
+      <td>0.405900</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>0.520344</td>
+      <td>1.185005</td>
+    </tr>
+    <tr>
+      <th>92</th>
+      <td>0.404359</td>
+      <td>0.955264</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>0.471006</td>
+      <td>1.138226</td>
+    </tr>
+    <tr>
+      <th>131</th>
+      <td>0.767512</td>
+      <td>1.025494</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>0.534193</td>
+      <td>0.828949</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td>0.661706</td>
+      <td>1.179636</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>0.183754</td>
+      <td>0.742592</td>
+    </tr>
+    <tr>
+      <th>111</th>
+      <td>0.378024</td>
+      <td>0.670647</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>0.416132</td>
+      <td>0.664669</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>0.239045</td>
+      <td>0.871169</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>0.449077</td>
+      <td>0.933577</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>0.216425</td>
+      <td>0.722563</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Models.</strong> In addition to the data the doctors have collected, they’ve gone ahead and fit some models to the data. They haven’t told you much about the modeling choices they made, but still want your help selecting which model best to use. Let’s load up the models:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models</span> <span class="o">=</span> <span class="n">load_all_regression_models_of_comfort_vs_intensity</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of models loaded:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of models loaded: 6
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ve created a helper function for you to visualize all of the models. Let’s have a look:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_all_regression_models_of_comfort_vs_intensity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">models</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dce88487b654063a4dee5342e80ef88f2d14549d980828f067557e13e362e562.png" src="_images/dce88487b654063a4dee5342e80ef88f2d14549d980828f067557e13e362e562.png" />
+</div>
+</div>
 <section id="preventing-over-and-under-fitting">
 <h2><span class="section-number">14.1. </span>Preventing Over- and Under-fitting<a class="headerlink" href="#preventing-over-and-under-fitting" title="Permalink to this heading">#</a></h2>
 <p><strong>Decomposition into Signal vs. Noise.</strong> In probabilistic models, we often term one part of the model the “trend” or the “signal,” and we term the rest “noise” or “observation error.” For example, recall that in regression, our trend is captured by a function of the inputs, <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span>, around which we assume a Gaussian observation error. Similarly, in the classification model we introduced, our trend is captured by a function of the inputs, <span class="math notranslate nohighlight">\(\rho(\cdot; W)\)</span>, which computes the probability of belonging to class 1 (as opposed to class 0). We then sample from a Bernoulli distribution with that probability—this represents the “noise” or “observation error.” When fitting a probabilistic model, we’re always at risk of learning models that mix up what’s signal vs. what’s noise. This can happen in two ways:</p>
@@ -431,13 +579,13 @@ document.write(`
 <h2><span class="section-number">14.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Permalink to this heading">#</a></h2>
 <p><strong>A General Purpose Metric.</strong> Since so far, we fit our models by finding parameters that maximize the data log-likelihood (MLE). Can we also use log-likelihood as an evaluation metric? If we trust this metric for <em>fitting</em> our model, surely we should trust it for <em>evaluation</em> as well. And what’s nice about log-likelihood is that, unlike some of the other metrics we’ll introduce next, it’s not model-specific. We can evaluate the log-likelihood of <em>any</em> probabilistic model.</p>
 <p><strong>Log-Likelihood as an Evaluation Metric.</strong> Recall that the data log-likelihood is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a141e34-8077-45d7-b303-73b487e9e9f0">
-<span class="eqno">(14.1)<a class="headerlink" href="#equation-5a141e34-8077-45d7-b303-73b487e9e9f0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e4eb5ab1-5fc1-43e0-973a-c8a72ea555e3">
+<span class="eqno">(14.1)<a class="headerlink" href="#equation-e4eb5ab1-5fc1-43e0-973a-c8a72ea555e3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \theta) &amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is our entire data set of <span class="math notranslate nohighlight">\(N\)</span> observations, each <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is an observation, and <span class="math notranslate nohighlight">\(\theta\)</span> is the model parameters. However, notice that in this definition, the data log-likelihood grows as <span class="math notranslate nohighlight">\(N\)</span> increases due to the sum. This means that, if our train, validation and test sets each have a different number of points, we cannot compare their log-likelihoods directly. To fix this problem, we instead compute the <em>average</em> log-likelihood (this is just the above equation divided by <span class="math notranslate nohighlight">\(N\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5a019b69-e4e2-482a-922b-03f67e80818d">
-<span class="eqno">(14.2)<a class="headerlink" href="#equation-5a019b69-e4e2-482a-922b-03f67e80818d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a07ef44a-5923-47eb-94f5-992f99d881dd">
+<span class="eqno">(14.2)<a class="headerlink" href="#equation-a07ef44a-5923-47eb-94f5-992f99d881dd" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Avg. Log-Likelihood} = \frac{1}{N} \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta).
 \end{align}\]</div>
 <div class="admonition-exercise-getting-intuition-for-log-likelihood admonition">
@@ -455,14 +603,14 @@ document.write(`
 <section id="metrics-for-regression">
 <h2><span class="section-number">14.3. </span>Metrics for Regression<a class="headerlink" href="#metrics-for-regression" title="Permalink to this heading">#</a></h2>
 <p><strong>Mean Squared Error (MSE).</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, MSE, specific to regression. This metric can be used together with log-likelihood to paint a clearer picture of model fit. This is, of course, not the only evaluation metric for regression, but it’s a common one, so we’ll focus on it here. For 1-dimensional output data, the MSE is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-94bf685a-656d-470d-8c8f-9ec0d1312e88">
-<span class="eqno">(14.3)<a class="headerlink" href="#equation-94bf685a-656d-470d-8c8f-9ec0d1312e88" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7544b946-7591-43c3-a0d0-411b9e7f7189">
+<span class="eqno">(14.3)<a class="headerlink" href="#equation-7544b946-7591-43c3-a0d0-411b9e7f7189" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{MSE} &amp;= \frac{1}{N} \sum\limits_{n=1}^N (\underbrace{y_n - \widehat{y}_n}_{\text{error}})^2,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(y_n\)</span> is an observation and <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> the model’s prediction. As the name suggests, we compute the error between our model’s prediction and the observation, square it, and average. The MSE can be thought of as a measure of “spread” (or, in statistical lingo, the <em>variance</em>) of the data around the model’s prediction. Hopefully, in contrast to log-likelihood, it’s a little easier to understand, since we may have domain knowledge of what error, <span class="math notranslate nohighlight">\(y_n - \widehat{y}_n\)</span>, is considered high/low.</p>
 <p>But for a probabilistic model, what is the model’s “prediction”? In a probabilistic regression model, we have a <em>distribution</em> of outputs given inputs, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, and a distribution is <em>not</em> a single prediction. Because of this, we have to summarize the conditional distribution using a single value. Here, we will use the mean (which also happens to be the mode—or the most likely value of <span class="math notranslate nohighlight">\(y\)</span>). For our regression model, the mean of the distribion is the “trend,” so</p>
-<div class="amsmath math notranslate nohighlight" id="equation-005e337c-6114-4d2d-aff6-09d700747a7d">
-<span class="eqno">(14.4)<a class="headerlink" href="#equation-005e337c-6114-4d2d-aff6-09d700747a7d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1123de46-b525-498c-9dd0-8e16c39b5f72">
+<span class="eqno">(14.4)<a class="headerlink" href="#equation-1123de46-b525-498c-9dd0-8e16c39b5f72" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{y}_n &amp;= \mu(x_n; W^\text{MLE}).
 \end{align}\]</div>
 <div class="admonition-exercise-implement-and-use-mse admonition">
@@ -479,33 +627,33 @@ document.write(`
 <section id="metrics-for-classification">
 <h2><span class="section-number">14.4. </span>Metrics for Classification<a class="headerlink" href="#metrics-for-classification" title="Permalink to this heading">#</a></h2>
 <p><strong>Accuracy.</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, accuracy, that’s specific to classification. Simply put, accuracy is the fraction of predictions the model got correct:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-09fa482b-dd5d-4890-b3ef-317960c86825">
-<span class="eqno">(14.5)<a class="headerlink" href="#equation-09fa482b-dd5d-4890-b3ef-317960c86825" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d9b5bc87-a49c-4fe3-8836-5e8c5c30e967">
+<span class="eqno">(14.5)<a class="headerlink" href="#equation-d9b5bc87-a49c-4fe3-8836-5e8c5c30e967" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Accuracy} &amp;= \frac{1}{N} \underbrace{\sum\limits_{n=1}^N \mathbb{I}(y_n = \widehat{y}_n),}_{\text{count correct predictions}}
 \end{align}\]</div>
 <p>where, as before, <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> is the model’s prediction, and <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an indicator function—a function that evaluates to <span class="math notranslate nohighlight">\(1\)</span> when the condition inside is true and <span class="math notranslate nohighlight">\(0\)</span> otherwise. The sum over the indicators counts the number of correct predictions. When divided by <span class="math notranslate nohighlight">\(N\)</span>, we get the fraction of correct predictions.</p>
 <p>Just like before, a probabilistic model does not make “predictions;” it models a full distribution over outputs given inputs. We, again, have to choose how to summarize this distribution using a single value. Remember that in our classification model, <span class="math notranslate nohighlight">\(\rho(x_n)\)</span> outputted the probability of <span class="math notranslate nohighlight">\(x_n\)</span> belonging to class 1 (vs. class 0). To turn this into a prediction, we will threshold it: if <span class="math notranslate nohighlight">\(\rho(x_n) \geq 0.5\)</span>, we’ll say <span class="math notranslate nohighlight">\(x_n\)</span> belongs to class 1—otherwise, it belongs to class 0. We can formalize this using an indicator function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fd788e1b-80cf-4731-8a20-ec8735750ed2">
-<span class="eqno">(14.6)<a class="headerlink" href="#equation-fd788e1b-80cf-4731-8a20-ec8735750ed2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-33163e8f-8264-47dd-8356-7c7809f07610">
+<span class="eqno">(14.6)<a class="headerlink" href="#equation-33163e8f-8264-47dd-8356-7c7809f07610" title="Permalink to this equation">#</a></span>\[\begin{align}
 \widehat{y}_n &amp;= \mathbb{I}(\rho(x_n) \geq 0.5)
 \end{align}\]</div>
 <div class="admonition-exercise-the-shortcomings-of-accuracy admonition">
 <p class="admonition-title">Exercise: The Shortcomings of Accuracy</p>
-<p><strong>Context.</strong> You’ve started a collaboration with doctors from IHH’s Center for Rare Disorders. The doctors are interested in better understanding Antenna Inflammation, in which a being’s antennas sporadically inflame for weeks at a time. This causes them to malfunction and is quite painful. Since the disease is incredibly rare, occurring only in <span class="math notranslate nohighlight">\(0.1\%\)</span> of the population, doctors don’t yet know what are its causes—are they environmental or genetic? The doctors have managed to acquire a large fund to collect data about a large swath of the population, ranging from genetic factors to environmental factors (demographics, occupation, diet, physiological factors, etc.). They just finished collecting the data and have run preliminary analyses on the data to determine which factors contribute most.</p>
+<p><strong>Context.</strong> Since the disease is incredibly rare, occurring only in <span class="math notranslate nohighlight">\(0.1\%\)</span> of the population, doctors don’t yet know what are its causes. The doctors have managed to acquire a large fund to collect data about a large swath of the population, ranging from genetic factors to environmental factors (demographics, occupation, diet, physiology, etc.). They just finished collecting the data and have run a preliminary analysis to determine which factors contribute most.</p>
 <p><strong>Challenge.</strong> Even though their model is <span class="math notranslate nohighlight">\(99.9\%\)</span> accurate, they have found that none of the factors seem to matter to the model—how is this possible? They recruited you to help understand what’s going on with their model.</p>
 <p><strong>Part 1:</strong> You decided to inspect the parameters of the model. In the model, <span class="math notranslate nohighlight">\(1\)</span> represents having the disease and <span class="math notranslate nohighlight">\(0\)</span> represents no disease. Lucky for you, the doctors used a linear classification model (so interpreting it is possible):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4d1ff12b-b36f-4ef5-8846-7a956f345a42">
-<span class="eqno">(14.7)<a class="headerlink" href="#equation-4d1ff12b-b36f-4ef5-8846-7a956f345a42" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b94e182b-3028-41bd-bd9b-95b21979c1f9">
+<span class="eqno">(14.7)<a class="headerlink" href="#equation-b94e182b-3028-41bd-bd9b-95b21979c1f9" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right) 
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf0f35b6-0fc9-4daf-a028-468c8f34882b">
-<span class="eqno">(14.8)<a class="headerlink" href="#equation-bf0f35b6-0fc9-4daf-a028-468c8f34882b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6c72bf80-f7dd-48df-97f7-6894b81b5463">
+<span class="eqno">(14.8)<a class="headerlink" href="#equation-6c72bf80-f7dd-48df-97f7-6894b81b5463" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) &amp;= \mathrm{sigmoid}\left( \theta^{(0)} + \sum\limits_{d=1}^{D_x} \theta^{(d)} \cdot x_n^{(d)} \right),
 \end{align}\]</div>
 <p>where the <span class="math notranslate nohighlight">\((d)\)</span>-superscript notation represents the <span class="math notranslate nohighlight">\(d\)</span>th dimension, and <span class="math notranslate nohighlight">\(D_x\)</span> is the dimensionality of the inputs <span class="math notranslate nohighlight">\(x_n\)</span>. When inspecting the parameters, you found that,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d4f2e4b1-ecfe-4389-86c5-b3eaf0bbf6e7">
-<span class="eqno">(14.9)<a class="headerlink" href="#equation-d4f2e4b1-ecfe-4389-86c5-b3eaf0bbf6e7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cce3e33b-7c86-457c-837b-b11883099b73">
+<span class="eqno">(14.9)<a class="headerlink" href="#equation-cce3e33b-7c86-457c-837b-b11883099b73" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;= [\underbrace{-6.90675}_{\theta^{(0)}}, \underbrace{0.0, 0.0, \dots, 0.0}_{\theta^{(1)}, \dots, \theta^{(D_x)}}].
 \end{align}\]</div>
 <p>Looking at the parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, which dimensions of the input matter most?</p>
