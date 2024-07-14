@@ -3,6 +3,7 @@ import os
 
 import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
+import numpy as np
 import pandas as pd
 import jax
 import jax.numpy as jnp
@@ -44,15 +45,20 @@ def generate_regression_eval_metrics_data():
         
         eps = jax.random.normal(key_eps, shape=mu.shape) * 0.1
         y = mu + eps
-        
+
         df = pd.DataFrame({
             'Intensity': x,
             'Comfort': y,
+            'Race': np.array(['Ezakiens', 'Thadori'])[z.astype('int32')],
         })
         
         df.index.name = 'Patient ID'
-        df.to_csv(os.path.join('data', 'IHH-CRD-{}.csv'.format(set_name)))
+        df.to_csv(os.path.join('data', 'IHH-CRD-{}-augmented.csv'.format(set_name)))
 
+        df.drop(columns=['Race']).to_csv(
+            os.path.join('data', 'IHH-CRD-{}.csv'.format(set_name)),
+        )
+        
     helper(140, 0, 'train')
     helper(40, 1, 'val')
     helper(20, 2, 'test')
