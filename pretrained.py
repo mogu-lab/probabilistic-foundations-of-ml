@@ -177,8 +177,10 @@ def fit_and_save_regression_eval_metrics_models():
         ),
     )
 
-    # The long way of setting parameters['NN$params'][2][1] = 0.3
     parameters = copy.deepcopy(r.parameters_mle)
+    parameters['std_dev'] *= 2.0
+
+    # The long way of setting parameters['NN$params'][2][1] = 0.3    
     parameters = jax.tree.map(
         lambda x: 0.3 if (x == parameters['NN$params'][2][1]).all() else x,
         parameters,
@@ -193,7 +195,6 @@ def fit_and_save_regression_eval_metrics_models():
         ),
     )
     
-
     
 def main():
     generate_regression_eval_metrics_data()
