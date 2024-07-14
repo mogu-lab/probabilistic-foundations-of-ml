@@ -156,16 +156,27 @@ def plot_regression_model_of_comfort_vs_intensity(
         c='red', alpha=0.8, label=r'$\mu(\cdot; W)$',
     )
         
-    ax.legend()
+    ax.legend(loc='lower right')
 
 
-def plot_all_regression_models_of_comfort_vs_intensity(data, models):    
+def plot_all_regression_models_of_comfort_vs_intensity(data, models):
+    '''
+    For use in the evaluation metrics unit: plot ALL regression models against the data
+
+    Arguments:
+        data: the data set, passed in as a pandas DataFrame
+        models: a list of fitted numpyro models
+
+    Return:
+        Nothing
+    '''
+    
     rows = 2
     cols = 3
     assert(rows * cols <= len(models))
     
     fig, axes = plt.subplots(
-        rows, cols, figsize=(4 * cols, 4 * rows), sharex=True, 
+        rows, cols, figsize=(4.0 * cols, 3.5 * rows), sharex=True, 
     )
     
     for idx, (ax, m) in enumerate(zip(axes.flatten(), models)):

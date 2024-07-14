@@ -79,6 +79,16 @@ def cs349_mle(model, optimizer, key, num_steps, *args, **kwargs):
 
     
 def cs349_save_trained_numpyro_model(model, parameters, fname):
+    '''
+    A function to save a numpyro model to a file
+
+    Arguments:
+        model: a function representing a numpyro model
+        parameters: a dictionary containing parameters of the fitted model
+        fname: name of file for storing the model
+    
+    Returns: Nothing.
+    '''
     with open(fname, 'wb') as f:
         dill.dump(dict(
             model=model,
@@ -87,6 +97,15 @@ def cs349_save_trained_numpyro_model(model, parameters, fname):
 
         
 def cs349_load_trained_numpyro_model(fname):
+    '''
+    A function to load a numpyro model from a file
+
+    Arguments:
+        fname: name of file for storing the model
+    
+    Returns: the model
+    '''
+    
     with open(fname, 'rb') as f:        
         r = dill.load(f)
 
