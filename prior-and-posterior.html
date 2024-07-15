@@ -403,26 +403,26 @@ document.write(`
 <li><p>We can make our assumptions clear, and we can specify what type of inductive biases are appropriate for our task.</p></li>
 </ol>
 <p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? Isn’t the whole point that the machine will do the learning for us? To get around this problem, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>.</p>
-<p>Let’s derive Bayes’ rule generally before applying to our context. Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1311a290-b14e-4db6-9d06-4b7bc297ab68">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-1311a290-b14e-4db6-9d06-4b7bc297ab68" title="Permalink to this equation">#</a></span>\[\begin{align}
+<p>Let’s derive Bayes’ rule in general before applying it to our problem. Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-beb2c8d5-9313-4b41-b1a7-1a4102c03eb1">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-beb2c8d5-9313-4b41-b1a7-1a4102c03eb1" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
 &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
 \end{align}\]</div>
 <p>This means we can also equate the two factorizations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0ea3c03c-58e3-43be-be19-d234e8905a4d">
-<span class="eqno">(15.2)<a class="headerlink" href="#equation-0ea3c03c-58e3-43be-be19-d234e8905a4d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c2ae0d9f-adfb-43e3-b3d2-446cc7fc9682">
+<span class="eqno">(15.2)<a class="headerlink" href="#equation-c2ae0d9f-adfb-43e3-b3d2-446cc7fc9682" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
 \end{align}\]</div>
 <p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e5971132-64e1-4c09-bd60-379a08f87dfc">
-<span class="eqno">(15.3)<a class="headerlink" href="#equation-e5971132-64e1-4c09-bd60-379a08f87dfc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cb905e5e-01aa-48d4-91a6-ab66b9a3ffd2">
+<span class="eqno">(15.3)<a class="headerlink" href="#equation-cb905e5e-01aa-48d4-91a6-ab66b9a3ffd2" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
 \end{align}\]</div>
 <p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
 <p><strong>Bayesian Inference.</strong> Using Bayes’ rule in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. We can now relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, which we don’t know how to specify, to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, which we do know how to specify:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7b6d7d4c-8a0f-4a0e-851a-4179c5e070be">
-<span class="eqno">(15.4)<a class="headerlink" href="#equation-7b6d7d4c-8a0f-4a0e-851a-4179c5e070be" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f951e4e1-0ea4-4483-a2df-295f2e256fc0">
+<span class="eqno">(15.4)<a class="headerlink" href="#equation-f951e4e1-0ea4-4483-a2df-295f2e256fc0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} &amp;= \frac{\overbrace{p(\mathcal{D} | \theta)}^{\text{likelihood}} \cdot \overbrace{p(\theta)}^{\text{prior}}}{\underbrace{Z}_{\text{normalizing const.}}}
 \end{align}\]</div>
 <p>When used as a model-fitting paradigm, each term in Bayes’ rule has a special name. We’ll now define each:</p>
@@ -430,30 +430,30 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <li><p><strong>Likelihood:</strong> This is the data joint likelihood, which we’ve previously maximized as part of the MLE.</p>
 <blockquote>
 <div><p>For example, suppose we’re fitting a linear regression model to predict an intergalactic being’s glow given age. Our model is then:</p>
-</div></blockquote>
-<div class="amsmath math notranslate nohighlight" id="equation-ba2f8524-1b1f-492f-b946-6faaf75a640e">
-<span class="eqno">(15.5)<a class="headerlink" href="#equation-ba2f8524-1b1f-492f-b946-6faaf75a640e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-34562fa1-32a4-4b25-b08d-1da84cda0edb">
+<span class="eqno">(15.5)<a class="headerlink" href="#equation-34562fa1-32a4-4b25-b08d-1da84cda0edb" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D} | \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n | \theta) \\
     &amp;= \prod\limits_{n=1}^N p_{Y | X}(y_n | x_n, \theta) \\
     &amp;= \prod\limits_{n=1}^N \mathcal{N}(y_n | \underbrace{w \cdot x_n + b}_{\mu(x_n; w, b)}, \sigma^2)
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\theta = \{ w, b, \sigma \}\)</span> is the slope, intercept, and observation noise variance.</p>
+</div></blockquote>
 </li>
 <li><p><strong>Prior:</strong> This is the distribution of models we’re willing to consider <em>before having observed any data</em>. As we will show visually in a bit, the prior allows us to specify our model’s <em>inductive bias</em>.</p>
 <blockquote>
 <div><p>Continuing with the above example, we know that in general, glow decreases with age. We can encode this belief into the inductive bias of the model by selecting an appropriate prior distribution—one for which the slope, <span class="math notranslate nohighlight">\(w\)</span>, is likely negative. As an example, we could select,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f8cb9470-b10e-4c5f-bcf3-932805b4e0b2">
-<span class="eqno">(15.6)<a class="headerlink" href="#equation-f8cb9470-b10e-4c5f-bcf3-932805b4e0b2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-42f0f887-ce39-4e11-aaea-25d5945daf18">
+<span class="eqno">(15.6)<a class="headerlink" href="#equation-42f0f887-ce39-4e11-aaea-25d5945daf18" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(w) = \mathcal{N}(-1, 0.1).
     \end{align}\]</div>
 <p>In this way, <span class="math notranslate nohighlight">\(w\)</span> is most likely to be near <span class="math notranslate nohighlight">\(-1\)</span>. We can similarly encode our belief into the intercept, <span class="math notranslate nohighlight">\(b\)</span> of the model, saying we believe the intercept should be positive:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5b387579-2221-4831-9e7e-5d7054605359">
-<span class="eqno">(15.7)<a class="headerlink" href="#equation-5b387579-2221-4831-9e7e-5d7054605359" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bed83aba-114a-4e4c-9034-b6f1253f6a9d">
+<span class="eqno">(15.7)<a class="headerlink" href="#equation-bed83aba-114a-4e4c-9034-b6f1253f6a9d" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(b) = \mathcal{N}(1, 0.1).
     \end{align}\]</div>
 <p>Putting these together, we get the following prior distribution over our model parameters:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2973baac-3ded-435a-842f-8f040ad3f872">
-<span class="eqno">(15.8)<a class="headerlink" href="#equation-2973baac-3ded-435a-842f-8f040ad3f872" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1e1d4faf-190e-4f47-ae01-5cbe897d5ec6">
+<span class="eqno">(15.8)<a class="headerlink" href="#equation-1e1d4faf-190e-4f47-ae01-5cbe897d5ec6" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(w, b) = p(w) \cdot p(b) = \mathcal{N}(-1, 0.1) \cdot \mathcal{N}(1, 0.1)
     \end{align}\]</div>
 </div></blockquote>
@@ -461,8 +461,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 </li>
 <li><p><strong>Posterior:</strong> This is the distribution of interest. It’s called a posterior because it determines the distribution of likely models, <span class="math notranslate nohighlight">\(\theta\)</span>, <em>after having observed data</em>. As we will see in a bit, the posterior balances information from both the prior and the likelihood.</p></li>
 <li><p><strong>Normalizing Constant:</strong> This is a constant that turns the whole fraction into a valid probability density function (i.e. a function that integrates to 1). To compute <span class="math notranslate nohighlight">\(Z\)</span>, we integrate the numerator of Bayes’ rule over the support of <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c66c749e-f313-40d9-824a-fa45c8c2a6ba">
-<span class="eqno">(15.9)<a class="headerlink" href="#equation-c66c749e-f313-40d9-824a-fa45c8c2a6ba" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-75503947-3512-41c5-a1a4-814f392e0c1e">
+<span class="eqno">(15.9)<a class="headerlink" href="#equation-75503947-3512-41c5-a1a4-814f392e0c1e" title="Permalink to this equation">#</a></span>\[\begin{align}
     Z &amp;= \int\limits \underbrace{p(\mathcal{D} | \theta) \cdot p(\theta)}_{\text{numerator of Bayes' rule}} d\theta
     \end{align}\]</div>
 <p>In this way, when we divide by it, the whole fraction integrates to <span class="math notranslate nohighlight">\(1\)</span>.</p>
