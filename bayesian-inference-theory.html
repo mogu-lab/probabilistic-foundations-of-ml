@@ -404,25 +404,25 @@ document.write(`
 </ol>
 <p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? Isn’t the whole point that the machine will do the learning for us? To get around this problem, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>.</p>
 <p>Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b9066cf1-724f-44b3-ba6d-64187593c92b">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-b9066cf1-724f-44b3-ba6d-64187593c92b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9606f289-511c-49b3-a8b6-dcc69997a421">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-9606f289-511c-49b3-a8b6-dcc69997a421" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
 &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
 \end{align}\]</div>
 <p>This means we can also equate the two factorizations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cdaafaa5-0f46-4b65-9289-9f910e94ee4d">
-<span class="eqno">(15.2)<a class="headerlink" href="#equation-cdaafaa5-0f46-4b65-9289-9f910e94ee4d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-deea4e08-25a2-4bf4-9bac-6a7f94da3294">
+<span class="eqno">(15.2)<a class="headerlink" href="#equation-deea4e08-25a2-4bf4-9bac-6a7f94da3294" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
 \end{align}\]</div>
 <p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-228b7d6c-b0a3-4b97-aad8-0be789a39bb6">
-<span class="eqno">(15.3)<a class="headerlink" href="#equation-228b7d6c-b0a3-4b97-aad8-0be789a39bb6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7b632387-f453-4800-9391-b41d6b591482">
+<span class="eqno">(15.3)<a class="headerlink" href="#equation-7b632387-f453-4800-9391-b41d6b591482" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
 \end{align}\]</div>
 <p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
 <p><strong>Bayesian Inference.</strong> Using Bayes’ rule in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. We can now relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, which we don’t know how to specify, to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, which we do know how to specify:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7bd1bf44-1fd7-4032-b41b-90baa4bbfaa9">
-<span class="eqno">(15.4)<a class="headerlink" href="#equation-7bd1bf44-1fd7-4032-b41b-90baa4bbfaa9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8dd206da-9955-451d-b127-02f0ee5b84d8">
+<span class="eqno">(15.4)<a class="headerlink" href="#equation-8dd206da-9955-451d-b127-02f0ee5b84d8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} &amp;= \frac{\overbrace{p(\mathcal{D} | \theta)}^{\text{likelihood}} \cdot \overbrace{p(\theta)}^{\text{prior}}}{\underbrace{Z}_{\text{normalizing const.}}}
 \end{align}\]</div>
 <p>When used as a model-fitting paradigm, each term in Bayes’ rule has a special name. We’ll now define each:</p>
@@ -431,15 +431,15 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <li><p><strong>Prior:</strong> This is the distribution of models we’re willing to consider <em>before having observed any data</em>. As we will show visually in a bit, this distribution determines our <em>inductive bias</em>.</p></li>
 <li><p><strong>Posterior:</strong> This is the distribution of interest. It’s called a posterior because it determines the distribution of likely models, <span class="math notranslate nohighlight">\(\theta\)</span>, <em>after having observed data</em>.</p></li>
 <li><p><strong>Normalizing Constant</strong>: This is a constant that turns the whole fraction into a valid probability density function (i.e. a function that integrates to 1). To compute <span class="math notranslate nohighlight">\(Z\)</span>, we integrate the numerator of Bayes’ rule over the support of <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dba1c14f-69f9-4958-87f9-61b905a7e386">
-<span class="eqno">(15.5)<a class="headerlink" href="#equation-dba1c14f-69f9-4958-87f9-61b905a7e386" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2a9d0744-3fe6-4027-ac02-89e9416af5cb">
+<span class="eqno">(15.5)<a class="headerlink" href="#equation-2a9d0744-3fe6-4027-ac02-89e9416af5cb" title="Permalink to this equation">#</a></span>\[\begin{align}
     Z &amp;= \int\limits \underbrace{p(\mathcal{D} | \theta) \cdot p(\theta)}_{\text{numerator of Bayes' rule}} d\theta
     \end{align}\]</div>
 <p>In this way, when we divide by it, the whole fraction integrates to <span class="math notranslate nohighlight">\(1\)</span>.</p>
 </li>
 </ul>
 <p>Now that we have a formula for the posterior, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, what do we do with it? Since it’s a distribution, we can <em>sample</em> from it. That is, we can draw <span class="math notranslate nohighlight">\(\theta \sim p(\theta | \mathcal{D})\)</span> and visualize the models corresponding to each draw to plot our modeling uncertainty. The process of sampling from <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> is called <em>Bayesian inference.</em> In a bit, we’ll also talk about how to quantitatively evaluate the fit of Bayesian models.</p>
-<p><strong>Choice of Prior.</strong> In comparison to our first model-fitting paradigm, the MLE, the Bayesian approach requires us to specify one more thing: the prior, <span class="math notranslate nohighlight">\(p(\theta)\)</span>. How do we pick a good prior? That’s a difficult question. Generally, we have to think about the model’s inductive bias. What types of model do we consider <em>realistic</em> for our setting? We will next illustrate the whole Bayesian paradigm visually to gain a better sense of what the prior means, and how it interacts with the likelihood to get the posterior.</p>
+<p><strong>Choice of Prior.</strong> In comparison to our first model-fitting paradigm, the MLE, the Bayesian approach requires us to specify one more thing: the prior, <span class="math notranslate nohighlight">\(p(\theta)\)</span>. How do we pick a good prior? Generally, we have to think about the model’s inductive bias. What types of models do we consider <em>realistic</em> for our setting? We will next illustrate the whole Bayesian paradigm visually to gain a better sense of what the prior means, and how it interacts with the likelihood to get the posterior.</p>
 </section>
 <section id="bayesian-modeling-intuition">
 <h2><span class="section-number">15.3. </span>Bayesian Modeling: Intuition<a class="headerlink" href="#bayesian-modeling-intuition" title="Permalink to this heading">#</a></h2>
