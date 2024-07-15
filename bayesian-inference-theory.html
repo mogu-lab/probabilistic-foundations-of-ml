@@ -329,7 +329,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -345,6 +347,16 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-need-for-uncertainty-quantification">15.1. The Need for Uncertainty Quantification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.2. Fitting Models via Bayes’ Rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-predictive-distribution">15.3. Deriving the Predictive Distribution</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -367,6 +379,25 @@ document.write(`
 <p><strong>Context:</strong></p>
 <p><strong>Challenge:</strong></p>
 <p><strong>Outline:</strong></p>
+<section id="the-need-for-uncertainty-quantification">
+<h2><span class="section-number">15.1. </span>The Need for Uncertainty Quantification<a class="headerlink" href="#the-need-for-uncertainty-quantification" title="Permalink to this heading">#</a></h2>
+<p><strong>The MLE is Over-Confident.</strong> In safety-critical contexts, like those from the IHH, it’s important that our ML models don’t just fit the observed data well; they should also communicate with us the limits of their “knowledge.” Let’s illustrate what we mean. Consider the regression data below:</p>
+<p>TODO: figure with in-between and OOD uncertainty.</p>
+<p>As you see in the figure above, we don’t have data for some segments of the population of interest.</p>
+<p>TODO: explain why this is bad in the context of the task.</p>
+<p>TODO: give example with cats and COVID</p>
+<p>Ideally, our learning algorithm would give us options; it would give us several models that all fit the data reasonably well, but behave differently away from the data. Given these options, perhaps we could devise some algorithm to select the one we would like to use on our downstream task, or find some way to <em>combine</em> them. Unfortunately, the learning algorithm we’ve use so far—the MLE—doesn’t provide us with a way to do this. The MLE gives a <em>single</em> model.</p>
+<p><strong>Ensembling.</strong> One way to solve this issue is by relying on the imperfections of the optimizer. Remember that, especially for more expressive models, optimization tends to get stuck in local optima. What if we were to collect an <em>ensemble</em> of models, all fit with the MLE to data, but each optimized from a different random initialization? Because each model would get stuck in a different local optima, each <em>might</em> behave differently than the others away from the data. What’s nice about this approach is that it’s easy to implement: we already have all the tools we need! Let’s see what ensembling a neural network regression model looks like:</p>
+<p>TODO figure of NN ensemble on above data</p>
+<p>While effective in practice, ensembling also has one big problem when it comes to safety-critical contexts. It makes implicit assumptions that are difficult to understand. Specifically, we relied on the imperfections of our black-box optimizer to find us a diverse set of models. What kind of models will the optimizer give us, however? Do these models have an <em>inductive bias</em> that are appropriate for our task?</p>
+<p>The need for explicit assumptions motivates us to find an alternative way of fitting our models to day, leading us to the <em>Bayesian approach</em>.</p>
+</section>
+<section id="fitting-models-via-bayes-rule">
+<h2><span class="section-number">15.2. </span>Fitting Models via Bayes’ Rule<a class="headerlink" href="#fitting-models-via-bayes-rule" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="deriving-the-predictive-distribution">
+<h2><span class="section-number">15.3. </span>Deriving the Predictive Distribution<a class="headerlink" href="#deriving-the-predictive-distribution" title="Permalink to this heading">#</a></h2>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -427,6 +458,22 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-need-for-uncertainty-quantification">15.1. The Need for Uncertainty Quantification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.2. Fitting Models via Bayes’ Rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-predictive-distribution">15.3. Deriving the Predictive Distribution</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
