@@ -66,6 +66,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'bayesian-inference-theory';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/bayesian-inference-theory.html" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
@@ -394,6 +396,34 @@ document.write(`
 </section>
 <section id="fitting-models-via-bayes-rule">
 <h2><span class="section-number">15.2. </span>Fitting Models via Bayes’ Rule<a class="headerlink" href="#fitting-models-via-bayes-rule" title="Permalink to this heading">#</a></h2>
+<p><strong>The Bayesian Paradigm.</strong> So let’s go back to the drawing board and rethink how we’ve been fitting models this whole time. So far, our approach has been finding the <em>single</em> model that maximizes the probability of our observed data: <span class="math notranslate nohighlight">\(\theta^\text{MLE} = \log p(\mathcal{D}; \theta)\)</span>. But isn’t what we’re actually interested is the <em>distribution</em> of models given the data, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>? In other words, conditioned on the data we’ve observed so far, we want to know which models (represented by their parameters, <span class="math notranslate nohighlight">\(\theta\)</span>) are likely to fit the data well. In this new paradigm, we hope that:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> will capture a diversity of models with different inductive biases.</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> will make our assumptions clear, and will allow us to specify what type of inductive biases are appropriate for our task.</p></li>
+</ol>
+<p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? Isn’t the whole point that the machine will do the learning for us? To get around this problem, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>.</p>
+<p>Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-94483e03-3077-4f92-90ca-3e7702bd8709">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-94483e03-3077-4f92-90ca-3e7702bd8709" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
+&amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
+\end{align}\]</div>
+<p>This means we can also equate the two factorizations:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-99c65915-c701-4a73-be0f-4226d1b35ddf">
+<span class="eqno">(15.2)<a class="headerlink" href="#equation-99c65915-c701-4a73-be0f-4226d1b35ddf" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
+\end{align}\]</div>
+<p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-231757f4-544f-4871-ae34-ffe5c432060c">
+<span class="eqno">(15.3)<a class="headerlink" href="#equation-231757f4-544f-4871-ae34-ffe5c432060c" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
+\end{align}\]</div>
+<p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
+<p>Putting this back in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. Applying Bayes’ rule, we can relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> (which we don’t know how to specify) to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span> (which we do know how to specify):</p>
+<div class="amsmath math notranslate nohighlight" id="equation-6e3534d8-0768-4b8c-b6a9-1373aad0a4bc">
+<span class="eqno">(15.4)<a class="headerlink" href="#equation-6e3534d8-0768-4b8c-b6a9-1373aad0a4bc" title="Permalink to this equation">#</a></span>\[\begin{align}
+p(\theta | \mathcal{D}) &amp;= \frac{p(\mathcal{D} | \theta) \cdot p(\theta)}{p(\mathcal{D})}
+\end{align}\]</div>
 </section>
 <section id="deriving-the-predictive-distribution">
 <h2><span class="section-number">15.3. </span>Deriving the Predictive Distribution<a class="headerlink" href="#deriving-the-predictive-distribution" title="Permalink to this heading">#</a></h2>
