@@ -354,9 +354,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-need-for-uncertainty-quantification">15.1. The Need for Uncertainty Quantification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-we-need-uncertainty">15.1. Why We Need Uncertainty</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.2. Fitting Models via Bayes’ Rule</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-predictive-distribution">15.3. Deriving the Predictive Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition-for-bayesian-modeling">15.3. Intuition for Bayesian Modeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-predictive-distribution">15.4. Deriving the Predictive Distribution</a></li>
 </ul>
             </nav>
         </div>
@@ -381,8 +382,8 @@ document.write(`
 <p><strong>Context:</strong></p>
 <p><strong>Challenge:</strong></p>
 <p><strong>Outline:</strong></p>
-<section id="the-need-for-uncertainty-quantification">
-<h2><span class="section-number">15.1. </span>The Need for Uncertainty Quantification<a class="headerlink" href="#the-need-for-uncertainty-quantification" title="Permalink to this heading">#</a></h2>
+<section id="why-we-need-uncertainty">
+<h2><span class="section-number">15.1. </span>Why We Need Uncertainty<a class="headerlink" href="#why-we-need-uncertainty" title="Permalink to this heading">#</a></h2>
 <p><strong>The MLE is Over-Confident.</strong> In safety-critical contexts, like those from the IHH, it’s important that our ML models don’t just fit the observed data well; they should also communicate with us the limits of their “knowledge.” Let’s illustrate what we mean. Consider the regression data below:</p>
 <p>TODO: figure with in-between and OOD uncertainty.</p>
 <p>As you see in the figure above, we don’t have data for some segments of the population of interest.</p>
@@ -399,34 +400,50 @@ document.write(`
 <p><strong>The Bayesian Paradigm.</strong> So let’s go back to the drawing board and rethink how we’ve been fitting models this whole time. So far, our approach has been finding the <em>single</em> model that maximizes the probability of our observed data: <span class="math notranslate nohighlight">\(\theta^\text{MLE} = \log p(\mathcal{D}; \theta)\)</span>. But isn’t what we’re actually interested is the <em>distribution</em> of models given the data, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>? In other words, conditioned on the data we’ve observed so far, we want to know which models (represented by their parameters, <span class="math notranslate nohighlight">\(\theta\)</span>) are likely to fit the data well. In this new paradigm, we hope that:</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> will capture a diversity of models with different inductive biases.</p></li>
-<li><p><span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> will make our assumptions clear, and will allow us to specify what type of inductive biases are appropriate for our task.</p></li>
+<li><p>We can make our assumptions clear, and we can specify what type of inductive biases are appropriate for our task.</p></li>
 </ol>
 <p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? Isn’t the whole point that the machine will do the learning for us? To get around this problem, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>.</p>
 <p>Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-94483e03-3077-4f92-90ca-3e7702bd8709">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-94483e03-3077-4f92-90ca-3e7702bd8709" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-04fa6438-1ba1-4ab6-951d-ef84017dc974">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-04fa6438-1ba1-4ab6-951d-ef84017dc974" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
 &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
 \end{align}\]</div>
 <p>This means we can also equate the two factorizations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-99c65915-c701-4a73-be0f-4226d1b35ddf">
-<span class="eqno">(15.2)<a class="headerlink" href="#equation-99c65915-c701-4a73-be0f-4226d1b35ddf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-21cacf75-b65b-4ab9-9c9c-4c575dc1b928">
+<span class="eqno">(15.2)<a class="headerlink" href="#equation-21cacf75-b65b-4ab9-9c9c-4c575dc1b928" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
 \end{align}\]</div>
 <p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-231757f4-544f-4871-ae34-ffe5c432060c">
-<span class="eqno">(15.3)<a class="headerlink" href="#equation-231757f4-544f-4871-ae34-ffe5c432060c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-46ee82eb-c3e0-430c-8f46-42676204174b">
+<span class="eqno">(15.3)<a class="headerlink" href="#equation-46ee82eb-c3e0-430c-8f46-42676204174b" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
 \end{align}\]</div>
 <p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
-<p>Putting this back in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. Applying Bayes’ rule, we can relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> (which we don’t know how to specify) to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span> (which we do know how to specify):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6e3534d8-0768-4b8c-b6a9-1373aad0a4bc">
-<span class="eqno">(15.4)<a class="headerlink" href="#equation-6e3534d8-0768-4b8c-b6a9-1373aad0a4bc" title="Permalink to this equation">#</a></span>\[\begin{align}
-p(\theta | \mathcal{D}) &amp;= \frac{p(\mathcal{D} | \theta) \cdot p(\theta)}{p(\mathcal{D})}
+<p>Putting this back in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. Applying Bayes’ rule, we can relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, which we don’t know how to specify, to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, which we do know how to specify:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-3aca81b1-494c-421a-abad-34803d09bc8e">
+<span class="eqno">(15.4)<a class="headerlink" href="#equation-3aca81b1-494c-421a-abad-34803d09bc8e" title="Permalink to this equation">#</a></span>\[\begin{align}
+\underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} &amp;= \frac{\overbrace{p(\mathcal{D} | \theta)}^{\text{likelihood}} \cdot \overbrace{p(\theta)}^{\text{prior}}}{\underbrace{Z}_{\text{normalizing const.}}}
 \end{align}\]</div>
+<p>When used as a model-fitting paradigm, each term in Bayes’ rule has a special name. We’ll now define each:</p>
+<ul class="simple">
+<li><p>Likelihood, <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>: This is the data joint likelihood, which we’ve previously maximized as part of the MLE.</p></li>
+<li><p>Prior, <span class="math notranslate nohighlight">\(p(\theta)\)</span>: This is the distribution of models we’re willing to consider <em>before having observed any data</em>. As we will show visually in a bit, this distribution determines our <em>inductive bias</em>.</p></li>
+<li><p>Posterior, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>: This is the distribution of interest. It’s called a posterior because it determines the distribution of likely models, <span class="math notranslate nohighlight">\(\theta\)</span>, <em>after having observed data</em>.</p></li>
+<li><p>Normalizing constant, <span class="math notranslate nohighlight">\(Z\)</span>: This is a constant that turns the whole fraction into a valid probability density function (i.e. a function that integrates to 1). To compute <span class="math notranslate nohighlight">\(Z\)</span>, we integrate the numerator of Bayes’ rule over the support of <span class="math notranslate nohighlight">\(\theta\)</span>. In this way, when we divide by it, the whole fraction integrates to <span class="math notranslate nohighlight">\(1\)</span>.</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-ee20d585-2e42-4d05-a3d0-3cbf17605728">
+<span class="eqno">(15.5)<a class="headerlink" href="#equation-ee20d585-2e42-4d05-a3d0-3cbf17605728" title="Permalink to this equation">#</a></span>\[\begin{align}
+Z &amp;= \int\limits \underbrace{p(\mathcal{D} | \theta) \cdot p(\theta)}_{\text{numerator of Bayes' rule}} d\theta
+\end{align}\]</div>
+<p><strong>Choice of Prior.</strong> In comparison to our first model-fitting paradigm, the MLE, the Bayesian approach requires us to specify one more thing: the prior, <span class="math notranslate nohighlight">\(p(\theta)\)</span>. How do we pick a good prior? That’s a difficult question. Generally, we have to think about the model’s inductive bias. What types of model do we consider <em>realistic</em> for our setting? We will next illustrate the whole Bayesian paradigm visually to gain a better sense of what the prior means, and how it interacts with the likelihood to get the posterior.</p>
+</section>
+<section id="intuition-for-bayesian-modeling">
+<h2><span class="section-number">15.3. </span>Intuition for Bayesian Modeling<a class="headerlink" href="#intuition-for-bayesian-modeling" title="Permalink to this heading">#</a></h2>
+<p>We’ll now instantiate the Bayesian modeling paradigm for regression in 1-dimension to gain some intuition.</p>
 </section>
 <section id="deriving-the-predictive-distribution">
-<h2><span class="section-number">15.3. </span>Deriving the Predictive Distribution<a class="headerlink" href="#deriving-the-predictive-distribution" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">15.4. </span>Deriving the Predictive Distribution<a class="headerlink" href="#deriving-the-predictive-distribution" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -497,9 +514,10 @@ p(\theta | \mathcal{D}) &amp;= \frac{p(\mathcal{D} | \theta) \cdot p(\theta)}{p(
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-need-for-uncertainty-quantification">15.1. The Need for Uncertainty Quantification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-we-need-uncertainty">15.1. Why We Need Uncertainty</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.2. Fitting Models via Bayes’ Rule</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-predictive-distribution">15.3. Deriving the Predictive Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition-for-bayesian-modeling">15.3. Intuition for Bayesian Modeling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-predictive-distribution">15.4. Deriving the Predictive Distribution</a></li>
 </ul>
   </nav></div>
 
