@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>15. Bayesian Inference: Theory &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
+    <title>15. Bayesian Inference: Prior and Posterior &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
   
   
   
@@ -68,12 +68,12 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'bayesian-inference-theory';</script>
-    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/bayesian-inference-theory.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'prior-and-posterior';</script>
+    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/prior-and-posterior.html" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="16. Bayesian Inference: Code" href="bayesian-inference-code.html" />
+    <link rel="next" title="16. Bayesian Inference: Posterior Predictive" href="posterior-predictive.html" />
     <link rel="prev" title="14. Model Selection &amp; Evaluation" href="model-selection.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -200,8 +200,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian Inference</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">15. Bayesian Inference: Theory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bayesian-inference-code.html">16. Bayesian Inference: Code</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">15. Bayesian Inference: Prior and Posterior</a></li>
+<li class="toctree-l1"><a class="reference internal" href="posterior-predictive.html">16. Bayesian Inference: Posterior Predictive</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Models</span></p>
 <ul class="nav bd-sidenav">
@@ -262,7 +262,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/bayesian-inference-theory.ipynb" target="_blank"
+      <li><a href="_sources/prior-and-posterior.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -344,7 +344,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Bayesian Inference: Theory</h1>
+    <h1>Bayesian Inference: Prior and Posterior</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -357,7 +357,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-we-need-uncertainty">15.1. Why We Need Uncertainty</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.2. Fitting Models via Bayes’ Rule</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-modeling-intuition">15.3. Bayesian Modeling: Intuition</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-predictive-distribution">15.4. Deriving the Predictive Distribution</a></li>
 </ul>
             </nav>
         </div>
@@ -369,8 +368,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="bayesian-inference-theory">
-<h1><span class="section-number">15. </span>Bayesian Inference: Theory<a class="headerlink" href="#bayesian-inference-theory" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="bayesian-inference-prior-and-posterior">
+<h1><span class="section-number">15. </span>Bayesian Inference: Prior and Posterior<a class="headerlink" href="#bayesian-inference-prior-and-posterior" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
@@ -404,25 +403,25 @@ document.write(`
 </ol>
 <p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? Isn’t the whole point that the machine will do the learning for us? To get around this problem, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>.</p>
 <p>Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1d22733e-7fdf-48fb-8a57-ee51c4984522">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-1d22733e-7fdf-48fb-8a57-ee51c4984522" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-63d2921f-d4e4-4021-b8b8-82a740cf4eb1">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-63d2921f-d4e4-4021-b8b8-82a740cf4eb1" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
 &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
 \end{align}\]</div>
 <p>This means we can also equate the two factorizations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5521d6da-a7cb-4497-9f74-82244b952ae4">
-<span class="eqno">(15.2)<a class="headerlink" href="#equation-5521d6da-a7cb-4497-9f74-82244b952ae4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-eef2e3bd-d13a-4143-b033-c54f1f389b9a">
+<span class="eqno">(15.2)<a class="headerlink" href="#equation-eef2e3bd-d13a-4143-b033-c54f1f389b9a" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
 \end{align}\]</div>
 <p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6f60f309-c1c6-4cab-985c-d69e4961f42c">
-<span class="eqno">(15.3)<a class="headerlink" href="#equation-6f60f309-c1c6-4cab-985c-d69e4961f42c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e2b374cd-9f77-4b30-b498-0e9677dabeba">
+<span class="eqno">(15.3)<a class="headerlink" href="#equation-e2b374cd-9f77-4b30-b498-0e9677dabeba" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
 \end{align}\]</div>
 <p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
 <p><strong>Bayesian Inference.</strong> Using Bayes’ rule in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. We can now relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, which we don’t know how to specify, to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, which we do know how to specify:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-716bbda3-f721-4aae-9944-52b4f2ddb9ab">
-<span class="eqno">(15.4)<a class="headerlink" href="#equation-716bbda3-f721-4aae-9944-52b4f2ddb9ab" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-49815767-8dd8-4e3f-b4fe-0d50a9d5b7ac">
+<span class="eqno">(15.4)<a class="headerlink" href="#equation-49815767-8dd8-4e3f-b4fe-0d50a9d5b7ac" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} &amp;= \frac{\overbrace{p(\mathcal{D} | \theta)}^{\text{likelihood}} \cdot \overbrace{p(\theta)}^{\text{prior}}}{\underbrace{Z}_{\text{normalizing const.}}}
 \end{align}\]</div>
 <p>When used as a model-fitting paradigm, each term in Bayes’ rule has a special name. We’ll now define each:</p>
@@ -431,8 +430,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <li><p><strong>Prior:</strong> This is the distribution of models we’re willing to consider <em>before having observed any data</em>. As we will show visually in a bit, this distribution determines our <em>inductive bias</em>.</p></li>
 <li><p><strong>Posterior:</strong> This is the distribution of interest. It’s called a posterior because it determines the distribution of likely models, <span class="math notranslate nohighlight">\(\theta\)</span>, <em>after having observed data</em>.</p></li>
 <li><p><strong>Normalizing Constant</strong>: This is a constant that turns the whole fraction into a valid probability density function (i.e. a function that integrates to 1). To compute <span class="math notranslate nohighlight">\(Z\)</span>, we integrate the numerator of Bayes’ rule over the support of <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cdb7904b-83c9-4d22-9ed5-64f9daf2d097">
-<span class="eqno">(15.5)<a class="headerlink" href="#equation-cdb7904b-83c9-4d22-9ed5-64f9daf2d097" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4c02905a-05d6-49f3-8d83-ecd9d247a7ae">
+<span class="eqno">(15.5)<a class="headerlink" href="#equation-4c02905a-05d6-49f3-8d83-ecd9d247a7ae" title="Permalink to this equation">#</a></span>\[\begin{align}
     Z &amp;= \int\limits \underbrace{p(\mathcal{D} | \theta) \cdot p(\theta)}_{\text{numerator of Bayes' rule}} d\theta
     \end{align}\]</div>
 <p>In this way, when we divide by it, the whole fraction integrates to <span class="math notranslate nohighlight">\(1\)</span>.</p>
@@ -447,27 +446,6 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <p>TODO picture of prior</p>
 <p>TODO picture of posterior after 1 data, after 2 data, etc.</p>
 <p><strong>Relating Modeling Uncertainty to Everyday Life.</strong></p>
-</section>
-<section id="deriving-the-predictive-distribution">
-<h2><span class="section-number">15.4. </span>Deriving the Predictive Distribution<a class="headerlink" href="#deriving-the-predictive-distribution" title="Permalink to this heading">#</a></h2>
-<p><strong>Overview.</strong> TODO</p>
-<ul class="simple">
-<li><p>Our goal isn’t just to learn the parameters; our goal is to determine, given observed data points, what’s the probability of new data? State goal mathematically.</p></li>
-<li><p>Bayesian inference (sampling from the posterior) will actually help us accomplish that.</p></li>
-<li><p>To derive the distribution of new data given old data, we’ll have to introduce a few more facts about directed graphical models.</p></li>
-<li><p>We’ll instantiate everything here for regression, but the general principles apply</p></li>
-</ul>
-<p><strong>Representing Unobserved Variables in DGMs.</strong></p>
-<ul class="simple">
-<li><p>TODO show for regression, circle instead of dot</p></li>
-</ul>
-<p><strong>Representing the Joint Distribution of Training and Test Data in a DGM.</strong></p>
-<p><strong>Laws of Conditional Independence.</strong></p>
-<p><strong>Derivation.</strong></p>
-<div class="admonition-exercise-deriving-the-posterior-predictive-distribution admonition">
-<p class="admonition-title">Exercise: Deriving the Posterior Predictive Distribution</p>
-<p>TODO</p>
-</div>
 </section>
 </section>
 
@@ -512,11 +490,11 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
       </div>
     </a>
     <a class="right-next"
-       href="bayesian-inference-code.html"
+       href="posterior-predictive.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">16. </span>Bayesian Inference: Code</p>
+        <p class="prev-next-title"><span class="section-number">16. </span>Bayesian Inference: Posterior Predictive</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -541,7 +519,6 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-we-need-uncertainty">15.1. Why We Need Uncertainty</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.2. Fitting Models via Bayes’ Rule</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-modeling-intuition">15.3. Bayesian Modeling: Intuition</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-predictive-distribution">15.4. Deriving the Predictive Distribution</a></li>
 </ul>
   </nav></div>
 
