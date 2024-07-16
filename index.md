@@ -31,12 +31,13 @@ This course is currently under construction. Everything you see here is likely t
     <td>Data Science Major<br/>Class of 2025</td>    
   </tr>
   <tr>
-    <td><img style="max-width: 200px; background-color: transparent; border: none;" src="https://yanivyacoby.github.io/assets/img/prof_pic.png"></img></td>
-    <td colspan="2"><img style="max-width: 200px; background-color: transparent; border: none;" src="_images/sally_and_caroline.png"></img></td>
+    <td><br/><img style="max-width: 200px; background-color: transparent; border: none;" src="https://yanivyacoby.github.io/assets/img/prof_pic.png"></img></td>
+    <td colspan="2"><br/><img style="max-width: 200px; background-color: transparent; border: none;" src="_static/img/sally_and_caroline.png"></img></td>
   </tr>      
 </tbody>
 </table>
 
+<br/>
 <br/>
 
 **Semester:** Fall 2024
