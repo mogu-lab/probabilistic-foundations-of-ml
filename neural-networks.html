@@ -357,7 +357,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressive-functions-from-simple-building-blocks">13.2. Expressive Functions from Simple Building Blocks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-representations-via-matrices">13.3. Efficient Representations via Matrices</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">13.4. Neural Networks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-neural-networks">13.5. Challenges with Neural Networks</a></li>
 </ul>
             </nav>
@@ -381,8 +381,8 @@ document.write(`
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-253d0979-bc28-41ee-b7b2-33374aa4aa2f">
-<span class="eqno">(13.1)<a class="headerlink" href="#equation-253d0979-bc28-41ee-b7b2-33374aa4aa2f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-38993834-a118-49b6-a62f-932178a62a2c">
+<span class="eqno">(13.1)<a class="headerlink" href="#equation-38993834-a118-49b6-a62f-932178a62a2c" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -453,8 +453,8 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-baa2cc7a-598e-4e46-918d-9f102a49b0f8">
-<span class="eqno">(13.2)<a class="headerlink" href="#equation-baa2cc7a-598e-4e46-918d-9f102a49b0f8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f799caa4-d92d-4832-af50-0e769b94c72a">
+<span class="eqno">(13.2)<a class="headerlink" href="#equation-f799caa4-d92d-4832-af50-0e769b94c72a" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale and shift}} )
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
@@ -485,8 +485,8 @@ u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal
 </div>
 </div>
 <p>Of course, the above example is only for a 1-dimensional input. Ideally, our function class will work for higher-dimensional inputs. We can incorporate this into our simple block as follows. We define <span class="math notranslate nohighlight">\(D_x\)</span> to be the dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, and we sum over the scaled and shifted inputs as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9ed41ea3-7484-4da5-a83e-51957a1f65a3">
-<span class="eqno">(13.3)<a class="headerlink" href="#equation-9ed41ea3-7484-4da5-a83e-51957a1f65a3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ecd08c12-811e-4d41-869d-9a6c77461d00">
+<span class="eqno">(13.3)<a class="headerlink" href="#equation-ecd08c12-811e-4d41-869d-9a6c77461d00" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale and shift}} \right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^{(d)}\)</span> denotes the <span class="math notranslate nohighlight">\(d\)</span>-th dimension of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(w = \{ w_1, \dots w_d \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots b_d \}\)</span> have a different scale and shift for every dimension.</p>
@@ -516,13 +516,13 @@ u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cd
 </div>
 <p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. Now, let’s formally decide how to combine neurons into a function.</p>
 <p>Recall that a sigmoid always outputs a value in <span class="math notranslate nohighlight">\([0, 1]\)</span>. Because of this, <span class="math notranslate nohighlight">\(u(\cdot; w, b)\)</span> will also only output values in <span class="math notranslate nohighlight">\([0, 1]\)</span>. To represent functions outside of this limited range, we will apply a scale and shift like before, and then sum over a group of <span class="math notranslate nohighlight">\(H\)</span> of these neurons:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cd185d58-364e-424b-a6e5-d1c9024f5861">
-<span class="eqno">(13.4)<a class="headerlink" href="#equation-cd185d58-364e-424b-a6e5-d1c9024f5861" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d4388f2f-85a4-426a-ac49-0a760edcd9c0">
+<span class="eqno">(13.4)<a class="headerlink" href="#equation-d4388f2f-85a4-426a-ac49-0a760edcd9c0" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift}}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ebc0b24d-d01c-47c0-9038-e6026dd4b962">
-<span class="eqno">(13.5)<a class="headerlink" href="#equation-ebc0b24d-d01c-47c0-9038-e6026dd4b962" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-19436b2c-1ea0-4df5-a7f2-f083c5151dba">
+<span class="eqno">(13.5)<a class="headerlink" href="#equation-19436b2c-1ea0-4df5-a7f2-f083c5151dba" title="Permalink to this equation">#</a></span>\[\begin{align}
 W &amp;= \{ w_1^\text{in}, \dots, w_H^\text{in}, w_1^\text{out}, \dots, w_H^\text{out} \} \\
 b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\text{out} \}
 \end{align}\]</div>
@@ -601,47 +601,47 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
 <h2><span class="section-number">13.3. </span>Efficient Representations via Matrices<a class="headerlink" href="#efficient-representations-via-matrices" title="Permalink to this heading">#</a></h2>
 <p>So how can we code a neural network in a way that’s (a) easy to code, and (b) efficient for the computer to evaluate? We’ll now use some tricks from linear algebra—matrices—to help us out. Considerable <a class="reference external" href="https://en.wikipedia.org/wiki/Computational_complexity_of_matrix_multiplication" rel="noopener noreferrer" target="_blank">research and engineering</a> has gone into allowing your computer to multiply matrices fast. By relying on this prior work, we can implement our neural networks easily and efficiently. If you haven’t taken linear algebra before, that’s no problem. We’ll walk you through exactly the parts you need to know to implement your own neural network.</p>
 <p><strong>What’s a Matrix?</strong> For our purposes, you can think of a matrix as a 2-dimensional array. Here are some examples of matrices:</p>
-<figure class="align-center" id="matrices">
+<figure class="align-center" id="matrix-definition">
 <a class="reference internal image-reference" href="_images/matrices.jpg"><img alt="_images/matrices.jpg" src="_images/matrices.jpg" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 13.4 </span><span class="caption-text">Two matrices, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#matrices" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 13.4 </span><span class="caption-text">Two matrices, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#matrix-definition" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>We say that the matrix <span class="math notranslate nohighlight">\(A\)</span> (on the left) is a 2-by-4 matrix, since it has 2 rows and 4 columns. Similarly, the matrix <span class="math notranslate nohighlight">\(B\)</span> (on the right) is a 4-by-3 matrix.</p>
 <p><strong>Matrix Multiplication.</strong> To multiply two matrices, we take each row of the first matrix and each column of the second and proceed as follows:</p>
-<figure class="align-center" id="id1">
+<figure class="align-center" id="matrices-multiplication">
 <a class="reference internal image-reference" href="_images/matrix-multiplication.jpg"><img alt="_images/matrix-multiplication.jpg" src="_images/matrix-multiplication.jpg" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 13.5 </span><span class="caption-text">Matrix multiplication, <span class="math notranslate nohighlight">\(A \cdot B = C\)</span>, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 13.5 </span><span class="caption-text">Matrix multiplication, <span class="math notranslate nohighlight">\(A \cdot B = C\)</span>, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#matrices-multiplication" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>As you can see from the figure above, the number of columns in <span class="math notranslate nohighlight">\(A\)</span> must match the number of columns in <span class="math notranslate nohighlight">\(B\)</span>. Moreover, each element <span class="math notranslate nohighlight">\(c_{i, j}\)</span> in matrix <span class="math notranslate nohighlight">\(C\)</span> represents the following <em>sum of products</em>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-65934df8-3ec7-4fa4-b4ed-12a34ee0be8c">
-<span class="eqno">(13.6)<a class="headerlink" href="#equation-65934df8-3ec7-4fa4-b4ed-12a34ee0be8c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c5531996-8ef7-460d-8e0a-102567dbae76">
+<span class="eqno">(13.6)<a class="headerlink" href="#equation-c5531996-8ef7-460d-8e0a-102567dbae76" title="Permalink to this equation">#</a></span>\[\begin{align}
 c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(j\)</span> indexes into each element in the row of <span class="math notranslate nohighlight">\(A\)</span> <em>and</em> the corresponding element in the column of <span class="math notranslate nohighlight">\(B\)</span>. Next, we’ll make the connection between matrices and neural networks.</p>
 <p>So why is matrix multiplication defined this way? What are properties of matrices? That’s beyond the scope of this course.</p>
 <p><strong>Sums of Shifted and Scaled Numbers via Matrix Multiplication.</strong> You may have noticed that in our neural network math so far, there’s a pattern that keeps popping up. We keep summing over things that we’ve scaled and shifted. You can see this in the definition of a single neuron, <span class="math notranslate nohighlight">\(u(x; w, b)\)</span>, in the definition of a simple neural network, <span class="math notranslate nohighlight">\(f(x; W, b)\)</span>, as well as in the process of creating deeper networks. These sums look very much like the formula for <span class="math notranslate nohighlight">\(c_{i,j}\)</span> above. As such, we can represent this operation using <em>matrix multiplication</em>.</p>
 </section>
-<section id="id2">
-<h2><span class="section-number">13.4. </span>Neural Networks<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h2><span class="section-number">13.4. </span>Neural Networks<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p><strong>A 1-Layer Neural Network.</strong> Let <span class="math notranslate nohighlight">\(D_x\)</span> be the dimension of our inputs, <span class="math notranslate nohighlight">\(x\)</span>, and let <span class="math notranslate nohighlight">\(D_y\)</span> be the dimension of our outputs, <span class="math notranslate nohighlight">\(y\)</span>. We can now rewrite our definition of a neural network using matrices. Our neural network will consist of the following recipe:</p>
 <ol class="arabic">
 <li><p><em>Scaling the inputs.</em> We scale each dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, by <span class="math notranslate nohighlight">\(H\)</span> different values. This can be done using a matrix <span class="math notranslate nohighlight">\(W_0\)</span> of dimensions <span class="math notranslate nohighlight">\(D_x \times H\)</span>. This gives us: <span class="math notranslate nohighlight">\(x \cdot W_0\)</span>.</p></li>
 <li><p><em>Shifting the inputs.</em> We shift each of the values from the previous steps. This can be done by adding an array/vector, <span class="math notranslate nohighlight">\(b_0\)</span> of dimension <span class="math notranslate nohighlight">\(H\)</span> to the result from the previous step: <span class="math notranslate nohighlight">\(x \cdot W_0 + b_0\)</span>. These are our scaled and shifted inputs.</p></li>
 <li><p><em>Applying the activation.</em> We apply an activation function to the result from the previous step. We can use a sigmoid like before, or any other activation function we choose. For generality, we’ll call it <span class="math notranslate nohighlight">\(g(\cdot)\)</span>. This gives us <span class="math notranslate nohighlight">\(H\)</span> different neurons: <span class="math notranslate nohighlight">\(g(x \cdot W_0 + b_0)\)</span>.</p></li>
 <li><p><em>Scaling and shifting the outputs.</em> Recall that we get expressivity by adding scaled and shifted neurons together. To do this, we’ll introduce <span class="math notranslate nohighlight">\(W_1\)</span> and <span class="math notranslate nohighlight">\(b_1\)</span>, for scaling and shifting, respectively. <span class="math notranslate nohighlight">\(W_1\)</span> has dimensions <span class="math notranslate nohighlight">\(H \times D_y\)</span> and <span class="math notranslate nohighlight">\(b_1\)</span> has dimensions <span class="math notranslate nohighlight">\(D_y\)</span>. Altogether, this gives us the following formula:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-57e3fb1a-0cb3-4f33-be68-66ec7f1d01bb">
-<span class="eqno">(13.7)<a class="headerlink" href="#equation-57e3fb1a-0cb3-4f33-be68-66ec7f1d01bb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cca4cb67-6460-4d7b-9152-b7f484ca0d14">
+<span class="eqno">(13.7)<a class="headerlink" href="#equation-cca4cb67-6460-4d7b-9152-b7f484ca0d14" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(x; \underbrace{W_0, W_1, b_0, b_1}_{\text{parameters, } \theta}) = g(x \cdot W_0 + b_0) \cdot W_1 + b_1.
     \end{align}\]</div>
 <p>The number of neurons, <span class="math notranslate nohighlight">\(H\)</span>, is called the <em>hidden dimension</em> of the neural network.</p>
 </li>
 </ol>
 <p><strong>Deeper Networks.</strong> We can extend the above network by adding as many additional layers as you like:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9cd051bd-8982-4edf-b0cc-f11af78c9d4a">
-<span class="eqno">(13.8)<a class="headerlink" href="#equation-9cd051bd-8982-4edf-b0cc-f11af78c9d4a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-06038380-db15-4010-98f4-4e7d241bd21c">
+<span class="eqno">(13.8)<a class="headerlink" href="#equation-06038380-db15-4010-98f4-4e7d241bd21c" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{2-layers:} &amp;\quad g( \underbrace{g(x \cdot W_0 + b_0) \cdot W_1 + b_1}_{\text{1-layer neural network}} ) \cdot W_2 + b_2 \\
     \text{3-layers:} &amp;\quad g( \underbrace{g( g(x \cdot W_0 + b_0) \cdot W_1 + b_1) \cdot W_2 + b_2)}_{\text{2-layer neural network}} \cdot W_3 + b_3 \\
     \text{4-layers:} &amp;\quad g( \underbrace{g( g( g(x \cdot W_0 + b_0) \cdot W_1 + b_1) \cdot W_2 + b_2) \cdot W_3 + b_3}_{\text{3-layer neural network}} ) \cdot W_4 + b_4 \\
@@ -786,7 +786,7 @@ Impact Fairness Judgment</a></em>, the authors show that the type of explanation
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-shortcomings-of-polynomials">13.1. The Shortcomings of Polynomials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expressive-functions-from-simple-building-blocks">13.2. Expressive Functions from Simple Building Blocks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#efficient-representations-via-matrices">13.3. Efficient Representations via Matrices</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">13.4. Neural Networks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">13.4. Neural Networks</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges-with-neural-networks">13.5. Challenges with Neural Networks</a></li>
 </ul>
   </nav></div>

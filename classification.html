@@ -622,13 +622,13 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2da37d34-6522-4780-8277-769d4c6a9085">
-<span class="eqno">(12.1)<a class="headerlink" href="#equation-2da37d34-6522-4780-8277-769d4c6a9085" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e15951b9-6afe-4b39-bf42-5c02dc2464a2">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-e15951b9-6afe-4b39-bf42-5c02dc2464a2" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5ee73c4f-83cb-4585-83bb-02149bfd2c4a">
-<span class="eqno">(12.2)<a class="headerlink" href="#equation-5ee73c4f-83cb-4585-83bb-02149bfd2c4a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bb188233-0849-45e3-973a-7e9db157301e">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-bb188233-0849-45e3-973a-7e9db157301e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
@@ -667,8 +667,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <ul>
 <li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noopener noreferrer" target="_blank">here</a>).</p></li>
 <li><p>Age spans a larger range than dose: age spans a range of roughly 0 to 100, whereas dose spans a range of roughly 0 to 1. Because of this disparity, gradient descent may find your optimization tricky. A learning rate that’s appropriate for updating the coefficients of age may be too large for the dose and vice versa. Because of this, we recommend using the following functional form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-49f7c66d-2b40-45cb-9c0e-2d675e7ddb6f">
-<span class="eqno">(12.3)<a class="headerlink" href="#equation-49f7c66d-2b40-45cb-9c0e-2d675e7ddb6f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-36648ea3-5d2e-4012-a4d1-3ffb5198a765">
+<span class="eqno">(12.3)<a class="headerlink" href="#equation-36648ea3-5d2e-4012-a4d1-3ffb5198a765" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_d, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}{100} + \theta_d \cdot d_n + \theta_i,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a_n\)</span> is age with slope <span class="math notranslate nohighlight">\(\theta_a\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span> is dose with slope <span class="math notranslate nohighlight">\(\theta_d\)</span>, and <span class="math notranslate nohighlight">\(\theta_i\)</span> is the intercept. Notice that we divide <span class="math notranslate nohighlight">\(a_n\)</span> by <span class="math notranslate nohighlight">\(100\)</span> to account for this difference in range.</p>
