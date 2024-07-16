@@ -414,25 +414,25 @@ document.write(`
 </ol>
 <p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? Isn’t the whole point that the machine will do the learning for us? To get around this problem, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: the joint data likelihood, <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>.</p>
 <p>Let’s derive Bayes’ rule in general before applying it to our problem. Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7256bdff-81fb-4b4a-826c-995e3dfbe660">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-7256bdff-81fb-4b4a-826c-995e3dfbe660" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0e1ab05c-2b37-4561-bc67-ce6e2e131161">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-0e1ab05c-2b37-4561-bc67-ce6e2e131161" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
 &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
 \end{align}\]</div>
 <p>This means we can also equate the two factorizations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6ee1963c-a0b6-42fd-9e45-6468d0b33405">
-<span class="eqno">(15.2)<a class="headerlink" href="#equation-6ee1963c-a0b6-42fd-9e45-6468d0b33405" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ff99ff4d-24b4-41a5-b64f-3ce122793c26">
+<span class="eqno">(15.2)<a class="headerlink" href="#equation-ff99ff4d-24b4-41a5-b64f-3ce122793c26" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
 \end{align}\]</div>
 <p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec64a270-2800-4b12-b77e-e7b09587ccda">
-<span class="eqno">(15.3)<a class="headerlink" href="#equation-ec64a270-2800-4b12-b77e-e7b09587ccda" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7c90500b-5f41-4c14-ac48-41d041af3b2a">
+<span class="eqno">(15.3)<a class="headerlink" href="#equation-7c90500b-5f41-4c14-ac48-41d041af3b2a" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
 \end{align}\]</div>
 <p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
 <p><strong>Bayesian Inference.</strong> Using Bayes’ rule in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. We can now relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, which we don’t know how to specify, to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, which we do know how to specify:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3c8f769b-e11e-4f7a-b152-6cd53a5498d1">
-<span class="eqno">(15.4)<a class="headerlink" href="#equation-3c8f769b-e11e-4f7a-b152-6cd53a5498d1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f45daa0d-25d0-4412-bd86-e478954c4d4f">
+<span class="eqno">(15.4)<a class="headerlink" href="#equation-f45daa0d-25d0-4412-bd86-e478954c4d4f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} &amp;= \frac{\overbrace{p(\mathcal{D} | \theta)}^{\text{likelihood}} \cdot \overbrace{p(\theta)}^{\text{prior}}}{\underbrace{p(\mathcal{D})}_{\text{normalizing const.}}}
 \end{align}\]</div>
 <p>When used as a model-fitting paradigm, each term in Bayes’ rule has a special name. We’ll now define each:</p>
@@ -440,8 +440,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <li><p><strong>Likelihood:</strong> This is the data joint likelihood, which we’ve previously maximized as part of the MLE.</p>
 <blockquote>
 <div><p>For example, suppose we’re fitting a linear regression model to predict an intergalactic being’s glow given age. Our model is then:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-703330f7-5c2f-4471-a1e1-ee7d3b45c261">
-<span class="eqno">(15.5)<a class="headerlink" href="#equation-703330f7-5c2f-4471-a1e1-ee7d3b45c261" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-942d8b17-b4a3-4a76-ba05-401a9b680b3f">
+<span class="eqno">(15.5)<a class="headerlink" href="#equation-942d8b17-b4a3-4a76-ba05-401a9b680b3f" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D} | \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n | \theta) \\
     &amp;= \prod\limits_{n=1}^N p_{Y | X}(y_n | x_n, \theta) \\
     &amp;= \prod\limits_{n=1}^N \mathcal{N}(y_n | \underbrace{\theta_0 + \theta_1 \cdot x_n}_{\mu(x_n; \theta)}, \sigma^2)
@@ -453,8 +453,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <blockquote>
 <div><p>Continuing with the above example, we know that in general, glow decreases with age. We can encode this belief into the inductive bias of the model by selecting an appropriate prior distribution—one for which the slope, <span class="math notranslate nohighlight">\(\theta_1\)</span>, is likely negative. As an example, we could select, <span class="math notranslate nohighlight">\(\mathcal{N}(-1, 0.1)\)</span>. In this way, <span class="math notranslate nohighlight">\(\theta_1\)</span> is most likely to be near <span class="math notranslate nohighlight">\(-1\)</span>. We can similarly encode our belief into the intercept, <span class="math notranslate nohighlight">\(\theta_0\)</span>, saying we believe it should be positive: <span class="math notranslate nohighlight">\(\mathcal{N}(1, 0.1)\)</span>.
 Putting these together, we get the following prior distribution over our model parameters:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-afc419e8-8861-4585-a517-1bb3e74426b4">
-<span class="eqno">(15.6)<a class="headerlink" href="#equation-afc419e8-8861-4585-a517-1bb3e74426b4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-29fcf039-74c5-426e-9b58-0f2b4bfcbea8">
+<span class="eqno">(15.6)<a class="headerlink" href="#equation-29fcf039-74c5-426e-9b58-0f2b4bfcbea8" title="Permalink to this equation">#</a></span>\[\begin{align}
     p_\theta(\cdot) = p_{\theta_1}(\cdot) \cdot p_{\theta_0}(\cdot) = \mathcal{N}(-1, 0.1) \cdot \mathcal{N}(1, 0.1)
     \end{align}\]</div>
 </div></blockquote>
@@ -462,8 +462,8 @@ Putting these together, we get the following prior distribution over our model p
 </li>
 <li><p><strong>Posterior:</strong> This is the distribution of interest. It’s called a posterior because it determines the distribution of likely models, <span class="math notranslate nohighlight">\(\theta\)</span>, <em>after having observed data</em>. As we will see in a bit, the posterior balances information from both the prior and the likelihood.</p></li>
 <li><p><strong>Normalizing Constant:</strong> This is a constant that turns the whole fraction into a valid probability density function (i.e. a function that integrates to 1). To compute <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>, we integrate the numerator of Bayes’ rule over the support of <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-07fd3641-8e98-4a6e-9b07-8b2c7ab6a737">
-<span class="eqno">(15.7)<a class="headerlink" href="#equation-07fd3641-8e98-4a6e-9b07-8b2c7ab6a737" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-118b863d-2e1d-4be2-90cb-93abdb11b380">
+<span class="eqno">(15.7)<a class="headerlink" href="#equation-118b863d-2e1d-4be2-90cb-93abdb11b380" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D}) &amp;= \int\limits \underbrace{p(\mathcal{D} | \theta) \cdot p(\theta)}_{\text{numerator of Bayes' rule}} d\theta
     \end{align}\]</div>
 <p>In this way, when we divide by it, the whole fraction integrates to <span class="math notranslate nohighlight">\(1\)</span>. The formula for this normalizing constant is derived from the <em><a class="reference external" href="https://en.wikipedia.org/wiki/Law_of_total_probability" rel="noopener noreferrer" target="_blank">law of total probability</a></em>—more on this at a later chapter. And for now, we won’t worry about how to actually compute this integral.</p>
@@ -476,15 +476,15 @@ Putting these together, we get the following prior distribution over our model p
 <p>Thanks to Bayes’ rule, we now have a way to formally answer the question, what’s the probability of likely models given the observed data, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>. What’s exciting about this is that our definition of <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> (the posterior) depends on the likelihood, which we have experience with from prior chapters. Let’s put everything together to obtain our new modeling paradigm.</p>
 <ol class="arabic">
 <li><p><strong>Define a Bayesian Model.</strong> First, we have to update our generative process. Whereas before, our generative process consisted of all the steps necessary to sample from <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, our process will now sample from the joint distribution, <span class="math notranslate nohighlight">\(p(\mathcal{D}, \theta)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-290f30fe-4190-4168-90af-d9e75ffaa6c0">
-<span class="eqno">(15.8)<a class="headerlink" href="#equation-290f30fe-4190-4168-90af-d9e75ffaa6c0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fd4a4c5d-8613-4416-9537-2f2452034e12">
+<span class="eqno">(15.8)<a class="headerlink" href="#equation-fd4a4c5d-8613-4416-9537-2f2452034e12" title="Permalink to this equation">#</a></span>\[\begin{align}
        p(\mathcal{D}, \theta) &amp;= \underbrace{p(\mathcal{D} | \theta)}_{\text{like before}} \cdot \underbrace{p(\theta)}_{\text{new}}.
     \end{align}\]</div>
 <p>As you can see, our Bayesian generative process is the same as the one before, but it includes one additional step: sampling from the prior.</p>
 <blockquote>
 <div><p>Continuing with the Bayesian linear regression example, our generative process is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d6964af2-5513-4d85-908e-66048ad62d53">
-<span class="eqno">(15.9)<a class="headerlink" href="#equation-d6964af2-5513-4d85-908e-66048ad62d53" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a7393d86-1333-4092-a885-11650d9cb972">
+<span class="eqno">(15.9)<a class="headerlink" href="#equation-a7393d86-1333-4092-a885-11650d9cb972" title="Permalink to this equation">#</a></span>\[\begin{align}
     \theta_0 &amp;\sim p_{\theta_0}(\cdot) = \mathcal{N}(1, 0.1) \quad (\text{prior}) \\
     \theta_1 &amp;\sim p_{\theta_1}(\cdot) = \mathcal{N}(-1, 0.1) \quad (\text{prior}) \\
     y_n | x_n, \theta_0, \theta_1 &amp;\sim p_{Y | X, \theta_0, \theta_1}(\cdot | x_n, \theta_0, \theta_1) = \mathcal{N}(y_n | \underbrace{\theta_0 + \theta_1 \cdot x_n}_{\mu(x_n; \theta)}, \sigma^2) \quad (\text{likelihood})
@@ -494,15 +494,15 @@ Putting these together, we get the following prior distribution over our model p
 <li><p><strong>Perform Bayesian Inference (i.e. model-fitting).</strong> Having specified our Bayesian model, we can use Bayes’ rule to obtain a formula for the posterior, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>—but what do we do with it? Since it’s a distribution, we can <em>sample</em> from it. That is, we can draw <span class="math notranslate nohighlight">\(\theta \sim p(\theta | \mathcal{D})\)</span> and visualize the models corresponding to each draw to plot our modeling uncertainty. The process of sampling from <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> is called <em>Bayesian inference.</em> In the next chapter, we will talk about how to quantitatively evaluate a Bayesian model’s fit.</p></li>
 </ol>
 <p><strong>Illustration: Bayesian Regression.</strong> Let’s see what the Bayesian modeling paradigm looks like for regression, visually. Our generative process is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e994ee1-30ed-4ef6-8c90-dafc91176225">
-<span class="eqno">(15.10)<a class="headerlink" href="#equation-5e994ee1-30ed-4ef6-8c90-dafc91176225" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-179ad5a8-91ef-44b4-b00c-1d53de564073">
+<span class="eqno">(15.10)<a class="headerlink" href="#equation-179ad5a8-91ef-44b4-b00c-1d53de564073" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \quad (\text{prior}) \\
 y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta) = \mathcal{N}(\mu(x_n; \theta), \sigma^2) \quad (\text{likelihood}) \\
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\sigma\)</span> is a constant (so we can ignore it). We’ve picked an expressive function, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>, that will be fun to visualize—its details aren’t important.</p>
 <p>Given our generative process, our goal is to sample the posterior,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2f1a7545-c915-477f-ae5c-1cc47209830e">
-<span class="eqno">(15.11)<a class="headerlink" href="#equation-2f1a7545-c915-477f-ae5c-1cc47209830e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-83eb414d-fdcd-45cf-8c3c-7e492e04cb9b">
+<span class="eqno">(15.11)<a class="headerlink" href="#equation-83eb414d-fdcd-45cf-8c3c-7e492e04cb9b" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\theta | \mathcal{D}) &amp;= p(\theta | x_1, \dots, x_N, y_1, \dots, y_n).
 \end{align}\]</div>
 <p>For intuition, we can visualize posterior samples <span class="math notranslate nohighlight">\(\theta \sim p(\theta | \mathcal{D})\)</span> by plotting the <em>functions</em> they represent, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>. The plot below shows samples from the posterior as the number of points, <span class="math notranslate nohighlight">\(N\)</span>, increases.</p>
