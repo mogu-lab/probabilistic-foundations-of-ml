@@ -32,7 +32,7 @@ This course is currently under construction. Everything you see here is likely t
   </tr>
   <tr>
     <td><img style="max-width: 200px; background-color: transparent; border: none;" src="https://yanivyacoby.github.io/assets/img/prof_pic.png"></img></td>
-    <td colspan="2"><img style="max-width: 200px; background-color: transparent; border: none;" src="_static/img/sally_and_caroline.png"></img></td>
+    <td colspan="2"><img style="max-width: 200px; background-color: transparent; border: none;" src="_images/sally_and_caroline.png"></img></td>
   </tr>      
 </tbody>
 </table>
