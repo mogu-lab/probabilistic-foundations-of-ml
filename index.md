@@ -4,7 +4,40 @@
 This course is currently under construction. Everything you see here is likely to change!
 ```
 
-**Instructor:** [Yaniv Yacoby](https://yanivyacoby.github.io/) (he/him)
+
+<table style="width: 100%; text-align: center;">
+<thead>
+  <tr>
+    <th><a href="https://yanivyacoby.github.io/">Yaniv Yacoby</a> <span style="font-weight: normal;">(he/him)</span></th>
+    <th>Sally Kim <span style="font-weight: normal;">(she/her)</span></th>
+    <th>Caroline Jung <span style="font-weight: normal;">(she/her)</span></th>    
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>
+      <i>Instructor</i>
+    </td>
+    <td>
+      <i>Teaching Assistant</i>
+    </td>
+    <td>
+      <i>Teaching Assistant</i>
+    </td>
+  </tr>
+  <tr>
+    <td>Assistant Professor<br>Computer Science</td>
+    <td>Math &amp; Computer Science Major<br/>Class of 2025</td>
+    <td>Data Science Major<br/>Class of 2025</td>    
+  </tr>
+  <tr>
+    <td><img style="max-width: 200px;" src="https://yanivyacoby.github.io/assets/img/prof_pic.png"></img></td>
+    <td colspan="2"><img style="max-width: 200px;" src="_static/img/sally_and_caroline.png"></img></td>
+  </tr>      
+</tbody>
+</table>
+
+<br/>
 
 **Semester:** Fall 2024
 
