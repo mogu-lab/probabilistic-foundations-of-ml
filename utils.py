@@ -13,6 +13,9 @@ import chex
 from cs349 import *
 
 
+jax.config.update('jax_enable_x64', True)
+
+
 
 def convert_categorical_to_int(d, categories):
     r = 0
@@ -185,7 +188,7 @@ def plot_all_regression_models_of_comfort_vs_intensity(data, models):
         ax.set_title('Model {}'.format(idx))
         if idx % cols == 0:
             ax.set_ylabel('Comfort')
-        if idx >= rows * cols - cols - 1:
+        if idx > rows * cols - cols - 1:
             ax.set_xlabel('Intensity')
 
     plt.tight_layout()

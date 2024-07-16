@@ -13,13 +13,19 @@ import jax.random as jrandom
 import numpyro.distributions as D
 import numpy as np
 import pandas as pd
+import sklearn
 from sklearn.datasets import make_circles, make_classification, make_moons
 from sklearn.inspection import DecisionBoundaryDisplay
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier, MLPRegressor
 from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
+from sklearn.gaussian_process.kernels import RBF, ConstantKernel, WhiteKernel
+
+from utils import *
+from data import *
 
 
 OUTPUT_DIR = '_static/figs'
@@ -529,6 +535,69 @@ def inductive_bias_of_polynomial_regression(percent_ood):
     ))
     plt.close()
 
+
+def gp_regression_online():
+    df = pd.read_csv('data/IHH-CTR-CGLF-regression-augmented.csv')
+    X = np.array(df['Age'])
+    y = np.array(df['Telekinetic-Ability'])
+
+    X = X[..., None]
+    y = y[..., None]
+
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X, y)
+
+    std_dev = ABILITY_STD_DEV.item() / 20.0
+    kernel = ConstantKernel(0.1, 'fixed') * RBF() + WhiteKernel(std_dev, 'fixed')
+    
+    gp_kwargs = dict(
+        kernel=kernel,
+        random_state=0,
+        normalize_y=False,
+        n_restarts_optimizer=10,
+        alpha=1e-20,
+    )
+    
+    model_full = GaussianProcessRegressor(**gp_kwargs).fit(X, y)
+
+    parameters = model_full.get_params()
+    parameters['optimizer'] = None
+
+    margin = 50.0
+    test_X = np.linspace(X.min(), X.max() + margin, 200)[..., None]
+    
+    num_points = [0, 1, 2, 3, 4, 5, 16, 64, 256]
+    fig, axes = plt.subplots(3, 3, figsize=(8, 8), sharex=True, sharey=True)
+    for idx, (points, ax) in enumerate(zip(num_points, axes.flatten())):
+        model = GaussianProcessRegressor(**gp_kwargs).set_params(**parameters)
+
+        if points > 0:
+            model = model.fit(X_scaled[:points], y[:points])
+
+        mean, cov = model.predict(scaler.transform(test_X), return_cov=True)
+        cov -= np.eye(cov.shape[0]) * (std_dev - 1e-10)
+
+        test_y = jrandom.multivariate_normal(
+            jrandom.PRNGKey(seed=0), mean, cov, shape=(30,),
+        )
+
+        ax.plot(test_X, test_y.T, color='blue', alpha=0.2, label='Posterior')
+        ax.scatter(
+            X[:points], y[:points],
+            color='black', marker='x', zorder=5, label='Data',
+        )
+        ax.set_title(r'$N = {}$'.format(points))
+        ax.set_ylim([-1.0, 1.0])
+
+        if idx % 3 == 0:
+            ax.set_ylabel('Telekinetic-Ability')
+        if idx > 9 - 3 - 1:
+            ax.set_xlabel('Age')
+            
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'example_online_bayesian_regression.png'))
+    plt.close()
     
     
 def main():
@@ -540,6 +609,7 @@ def main():
     #plot_example_classification()
     #inductive_bias_of_polynomial_regression(percent_ood=0)
     #inductive_bias_of_polynomial_regression(percent_ood=30)
+    #gp_regression_online()
     pass
 
     
