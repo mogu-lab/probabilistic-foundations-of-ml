@@ -389,23 +389,23 @@ document.write(`
 <h2><span class="section-number">8.1. </span>The Data Generating Process<a class="headerlink" href="#the-data-generating-process" title="Permalink to this heading">#</a></h2>
 <p>In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions. In these functions, we describe the model’s “generative process”—or, a procedure we use to sample the observed data. You just learned how to represent a whole data set using a model (using the plate notation above). We will therefore walk through a specific example that we will then code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Suppose we want to model the joint distribution of the day-of-the-week, <span class="math notranslate nohighlight">\(D\)</span>, and whether a patient is intorixated, <span class="math notranslate nohighlight">\(I\)</span>. We can do this via the model,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e8c19db8-5c80-4574-9570-356f9ddcbe41">
-<span class="eqno">(8.1)<a class="headerlink" href="#equation-e8c19db8-5c80-4574-9570-356f9ddcbe41" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0cc1fd4e-470f-4eba-8eba-e97b87af6d16">
+<span class="eqno">(8.1)<a class="headerlink" href="#equation-0cc1fd4e-470f-4eba-8eba-e97b87af6d16" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi).
 \end{align}\]</div>
 <p>In this model,</p>
 <ul class="simple">
 <li><p><em>Marginal:</em> <span class="math notranslate nohighlight">\(p_D(\cdot; \pi)\)</span> is a distribution over the days of the week. We will therefore define it to be a Categorical distribution:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-01fb6f49-e5fd-4ab6-8bc4-2a58ffd482d9">
-<span class="eqno">(8.2)<a class="headerlink" href="#equation-01fb6f49-e5fd-4ab6-8bc4-2a58ffd482d9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-74021ee8-ad82-4a10-90c0-82de9b487bab">
+<span class="eqno">(8.2)<a class="headerlink" href="#equation-74021ee8-ad82-4a10-90c0-82de9b487bab" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi).
 \end{align}\]</div>
 <ul class="simple">
 <li><p><em>Conditional:</em> <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d_n; \rho)\)</span> is the probability that a patient arrives at the ER with intoxication given that <span class="math notranslate nohighlight">\(D = d_n\)</span>. Since “intoxication” is a binary outcome, we will model it using a Bernoulli. However, recall that the probability of intoxication <em>changes with the day of the week</em>—on some days, we’re more likely to treat patients with intoxication. The parameter of the Bernoulli distribution therefore needs to change depending on the day of the week. We therefore define:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-39854b10-be1e-4a99-acfb-957d9aa4e51b">
-<span class="eqno">(8.3)<a class="headerlink" href="#equation-39854b10-be1e-4a99-acfb-957d9aa4e51b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c9577a4d-4776-4bf3-8468-3f2060cff8f8">
+<span class="eqno">(8.3)<a class="headerlink" href="#equation-c9577a4d-4776-4bf3-8468-3f2060cff8f8" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 \end{align}\]</div>
 <p><strong>Valid Parameter Values:</strong> Since each entry of <span class="math notranslate nohighlight">\(\rho\)</span> represents a Bernoulli distribution, each entry must be on between 0 and 1 (i.e. on the “unit interval”). And since <span class="math notranslate nohighlight">\(\pi\)</span> is represents a Categorical distribution, its entries must sum to 1 (a fancy name of this is that <span class="math notranslate nohighlight">\(\pi\)</span> lies on a “simplex”). We note this briefly because we will have to communicate to <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> the valid values these parameters may take on (but don’t worry, this isn’t hard to do).</p>
@@ -532,18 +532,18 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;d&#39;: Array([[6, 2, 1, 3, 5, 2, 1, 5, 3, 6, 1, 3, 4, 1, 6, 5, 6, 6, 6, 4]],      dtype=int32),
- &#39;i&#39;: Array([[1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1]],      dtype=int32),
- &#39;pi&#39;: Array([[0.14285715, 0.14285715, 0.14285715, 0.14285715, 0.14285715,
-         0.14285715, 0.14285715]], dtype=float32),
- &#39;rho&#39;: Array([[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]], dtype=float32)}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;d&#39;: Array([[1, 2, 1, 2, 4, 4, 4, 0, 2, 4, 2, 2, 4, 1, 4, 4, 6, 5, 1, 5]],      dtype=int64),
+ &#39;i&#39;: Array([[1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0]],      dtype=int64),
+ &#39;pi&#39;: Array([[0.14285714, 0.14285714, 0.14285714, 0.14285714, 0.14285714,
+         0.14285714, 0.14285714]], dtype=float64),
+ &#39;rho&#39;: Array([[0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]], dtype=float64)}
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Performing the MLE:</strong> We will now perform the MLE using another helper function we’ve created. Recall that the MLE for this model is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6f43faa0-98ad-46dc-ae3b-c02a33c0bf16">
-<span class="eqno">(8.4)<a class="headerlink" href="#equation-6f43faa0-98ad-46dc-ae3b-c02a33c0bf16" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fc7d1451-eab8-4f6f-b5d4-9fc6e7b7e774">
+<span class="eqno">(8.4)<a class="headerlink" href="#equation-fc7d1451-eab8-4f6f-b5d4-9fc6e7b7e774" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi^\text{MLE}, \rho^\text{MLE} &amp;= \mathrm{argmax}_{\pi, \rho} \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \log \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \sum\limits_{n=1}^N \log p_{I | D}(i_n | d_n; \rho) + \log p_D(d_n; \pi)
@@ -765,19 +765,22 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1000 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:47,  1.89it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:44,  1.90it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▌       | 262/1000 [00:00&lt;00:01, 556.74it/s, init loss: 26390.5742, avg. loss [201-250]: 23521.5979]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|██        | 200/1000 [00:00&lt;00:01, 426.94it/s, init loss: 26390.5733, avg. loss [151-200]: 23682.9217]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 52%|█████▎    | 525/1000 [00:00&lt;00:00, 1039.16it/s, init loss: 26390.5742, avg. loss [451-500]: 23342.4140]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|████      | 405/1000 [00:00&lt;00:00, 806.10it/s, init loss: 26390.5733, avg. loss [351-400]: 23362.6612]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 79%|███████▉  | 789/1000 [00:00&lt;00:00, 1437.53it/s, init loss: 26390.5742, avg. loss [701-750]: 23335.6850]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 62%|██████▏   | 620/1000 [00:00&lt;00:00, 1142.51it/s, init loss: 26390.5733, avg. loss [551-600]: 23337.1126]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:00&lt;00:00, 1100.41it/s, init loss: 26390.5742, avg. loss [951-1000]: 23335.5536]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 83%|████████▎ | 834/1000 [00:00&lt;00:00, 1405.03it/s, init loss: 26390.5733, avg. loss [751-800]: 23335.6070]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:01&lt;00:00, 997.00it/s, init loss: 26390.5733, avg. loss [951-1000]: 23335.5544]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -801,7 +804,7 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3e8e2563db4cc7163f0d3e52df29a5babe1ba65e3bf86f5eb8cff2ddadb700e6.png" src="_images/3e8e2563db4cc7163f0d3e52df29a5babe1ba65e3bf86f5eb8cff2ddadb700e6.png" />
+<img alt="_images/27bfc66cba579713a4baf526e005277320a016a6e5cf8f280fb216942e39b9fb.png" src="_images/27bfc66cba579713a4baf526e005277320a016a6e5cf8f280fb216942e39b9fb.png" />
 </div>
 </div>
 <p><strong>Visualizing the Model’s Parameters:</strong> The learned model’s parameters, <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\rho\)</span>, can be accessed as below.</p>
@@ -812,10 +815,9 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.19870001, 0.1529    , 0.13990001, 0.1419    , 0.136     ,
-        0.113     , 0.11760001], dtype=float32),
- &#39;rho&#39;: Array([0.09473917, 0.09301588, 0.09448019, 0.10785804, 0.10519359,
-        0.40796468, 0.41496596], dtype=float32)}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.1987, 0.1529, 0.1399, 0.1419, 0.136 , 0.113 , 0.1176], dtype=float64),
+ &#39;rho&#39;: Array([0.09473922, 0.09301582, 0.09448023, 0.10785802, 0.10519358,
+        0.4079646 , 0.41496599], dtype=float64)}
 </pre></div>
 </div>
 </div>
@@ -901,12 +903,11 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;d&#39;: Array([[6, 1, 0, 2, 5, 1, 1, 5, 3, 6, 1, 3, 3, 1, 6, 4, 6, 6, 6, 4]],      dtype=int32),
- &#39;i&#39;: Array([[1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0]],      dtype=int32),
- &#39;pi&#39;: Array([[0.19870001, 0.1529    , 0.13990001, 0.1419    , 0.136     ,
-         0.113     , 0.11760001]], dtype=float32),
- &#39;rho&#39;: Array([[0.09473917, 0.09301588, 0.09448019, 0.10785804, 0.10519359,
-         0.40796468, 0.41496596]], dtype=float32)}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;d&#39;: Array([[0, 2, 1, 1, 3, 3, 4, 0, 1, 3, 2, 2, 4, 1, 4, 4, 5, 4, 0, 5]],      dtype=int64),
+ &#39;i&#39;: Array([[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],      dtype=int64),
+ &#39;pi&#39;: Array([[0.1987, 0.1529, 0.1399, 0.1419, 0.136 , 0.113 , 0.1176]], dtype=float64),
+ &#39;rho&#39;: Array([[0.09473922, 0.09301582, 0.09448023, 0.10785802, 0.10519358,
+         0.4079646 , 0.41496599]], dtype=float64)}
 </pre></div>
 </div>
 </div>
