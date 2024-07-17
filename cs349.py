@@ -12,7 +12,7 @@ import numpyro
 import numpyro.handlers as H
 
 
-def cs349_sample_generative_process(model, key, *args, num_samples=1, **kwargs):
+def cs349_sample_generative_process(model, key, *args, num_samples=None, **kwargs):
     '''
     A function to sample from a simple numpyro model.
 
@@ -37,6 +37,9 @@ def cs349_sample_generative_process(model, key, *args, num_samples=1, **kwargs):
     
         return result
 
+    if num_samples is None:
+        return sample_once(key)
+        
     return jax.vmap(sample_once)(jrandom.split(key, num_samples))
 
 

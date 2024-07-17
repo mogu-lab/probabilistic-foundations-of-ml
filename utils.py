@@ -146,8 +146,8 @@ def plot_regression_model_of_comfort_vs_intensity(
 
     ax.fill_between(
         test_x.squeeze(),
-        samples['mu'][0].squeeze() - samples['std_dev'] * 2.0,
-        samples['mu'][0].squeeze() + samples['std_dev'] * 2.0,
+        samples['mu'].squeeze() - samples['std_dev'] * 2.0,
+        samples['mu'].squeeze() + samples['std_dev'] * 2.0,
         color='blue', alpha=0.2, label=r'$95\%$ of Samples',
     )
     ax.scatter(
@@ -155,7 +155,7 @@ def plot_regression_model_of_comfort_vs_intensity(
         c='black', marker='x', alpha=0.8, label='Data', 
     )    
     ax.plot(
-        test_x.squeeze(), samples['mu'][0],
+        test_x.squeeze(), samples['mu'],
         c='red', alpha=0.8, label=r'$\mu(\cdot; W)$',
     )
         
