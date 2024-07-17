@@ -81,6 +81,56 @@ def cs349_mle(model, optimizer, key, num_steps, *args, **kwargs):
     return result
 
 
+def cs349_bayesian_inference(model, key, num_warmup, num_samples, *args, **kwargs):
+    '''
+    A function that performs Bayesian inference on a given model
+
+    Arguments:
+        model: a function representing a numpyro model
+        key: controls the randomness of the sampler
+        num_warmup: number of iterations used for warming up the algorithm
+        num_samples: number of samples to return
+        *args, **kwargs: captures all arguments your model takes in
+
+    Returns:
+        Posterior samples
+    '''
+    
+    mcmc = numpyro.infer.MCMC(
+        numpyro.infer.NUTS(model), 
+        num_warmup=num_warmup, 
+        num_samples=num_samples,
+    )
+    
+    mcmc.run(key, *args, **kwargs)
+    samples = mcmc.get_samples()
+
+    return samples
+
+
+def cs349_sample_predictive(model, key, posterior_samples, *args, **kwargs):
+    '''
+    A function that feeds samples from the posterior through the model again, useful for predictions
+
+    Arguments:
+        model: a function representing a numpyro model
+        key: controls the randomness of the sampler
+        posterior_samles: samples from the posterior
+        *args, **kwargs: captures all arguments your model takes in
+
+    Returns:
+        The model's joint data log-likelihood
+    '''
+    
+    predictive = numpyro.infer.util.Predictive(
+        model, 
+        posterior_samples=posterior_samples,
+        exclude_deterministic=True,
+    )
+    
+    return predictive(key, *args, **kwargs)
+    
+
 def cs349_joint_data_log_likelihood(model, *args, **kwargs):
     '''
     A function that computes a fitted model's joint data log-likelihood
