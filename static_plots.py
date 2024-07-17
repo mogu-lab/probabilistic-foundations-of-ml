@@ -598,7 +598,54 @@ def gp_regression_online():
     plt.tight_layout()
     plt.savefig(os.path.join(OUTPUT_DIR, 'example_online_bayesian_regression.png'))
     plt.close()
+
+
+def plot_nn_ensemble():
+    csv_fname = 'data/IHH-CTR-CGLF-regression-augmented.csv'
+    data = pd.read_csv(csv_fname, index_col='Patient ID')
+
+    plt.figure(figsize=(5.5, 3.5))
     
+    plt.scatter(
+        data['Age'], data['Telekinetic-Ability'],
+        color='black', alpha=0.5, marker='x', label='Data',
+    )
+    plt.axvspan(78, 93, alpha=0.5, color='red', label='No Data')
+
+    X_test = np.linspace(data['Age'].min(), data['Age'].max(), 100)[..., None]
+    
+    for i in range(10):
+        model = make_pipeline(
+            StandardScaler(),
+            MLPRegressor(
+                hidden_layer_sizes=(30, 30, 30 * (i + 1),),
+                max_iter=100000,
+                learning_rate='adaptive',
+                learning_rate_init=0.01,
+                random_state=i,
+                n_iter_no_change=200,
+                alpha=0.0,
+            ),
+        ).fit(
+            data['Age'].values[..., None],
+            data['Telekinetic-Ability'].values,
+        )
+
+        plt.plot(
+            X_test, model.predict(X_test),
+            color='blue', alpha=0.5, **(dict(label='Ensemble') if i == 0 else {}),
+        )
+                
+    plt.xlabel('Age')
+    plt.ylabel('Telekinetic Ability')
+    plt.title('Neural Network Ensemble')
+    plt.legend()
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'example_nn_ensemble_regression.png'))
+    plt.close()
+
+        
     
 def main():
     #plot_poisson_example()    
@@ -610,6 +657,7 @@ def main():
     #inductive_bias_of_polynomial_regression(percent_ood=0)
     #inductive_bias_of_polynomial_regression(percent_ood=30)
     #gp_regression_online()
+    #plot_nn_ensemble()
     pass
 
     
