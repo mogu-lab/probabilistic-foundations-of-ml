@@ -357,7 +357,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-we-need-uncertainty">15.1. Why We Need Uncertainty</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-uncertainty">15.2. What is Uncertainty?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bayesian-modeling-paradigm">15.3. The Bayesian Modeling Paradigm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.4. Fitting Models via Bayes’ Rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-fitting-via-bayes-rule">15.4. Model-Fitting via Bayes’ Rule</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-inference-in-numpyro">15.5. Bayesian Inference in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
             </nav>
@@ -393,14 +393,178 @@ document.write(`
 <li><p>Provide intuition for this modeling paradigm</p></li>
 <li><p>Implement this modeling paradigm in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></p></li>
 </ul>
+<p><strong>Data:</strong> To help make the concepts concrete, we’ll return to our regression data, in which we wanted to predict telekinetic ability from age. Let’s load the data in:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import a bunch of libraries we&#39;ll be using below</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpyro</span>
+<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="c1"># Load the data into a pandas dataframe</span>
+<span class="n">csv_fname</span> <span class="o">=</span> <span class="s1">&#39;data/IHH-CTR-CGLF-regression-augmented.csv&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_fname</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;Patient ID&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print a random sample of patients, just to see what&#39;s in the data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Age</th>
+      <th>Glow</th>
+      <th>Telekinetic-Ability</th>
+    </tr>
+    <tr>
+      <th>Patient ID</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>90</th>
+      <td>30.607729</td>
+      <td>0.604085</td>
+      <td>-0.020933</td>
+    </tr>
+    <tr>
+      <th>254</th>
+      <td>38.531357</td>
+      <td>0.613645</td>
+      <td>-0.070165</td>
+    </tr>
+    <tr>
+      <th>283</th>
+      <td>21.879414</td>
+      <td>0.829212</td>
+      <td>0.140791</td>
+    </tr>
+    <tr>
+      <th>445</th>
+      <td>2.949004</td>
+      <td>0.981120</td>
+      <td>0.261027</td>
+    </tr>
+    <tr>
+      <th>461</th>
+      <td>30.237446</td>
+      <td>0.688329</td>
+      <td>-0.027250</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>29.562483</td>
+      <td>0.796853</td>
+      <td>-0.033701</td>
+    </tr>
+    <tr>
+      <th>316</th>
+      <td>15.283975</td>
+      <td>0.839546</td>
+      <td>0.344510</td>
+    </tr>
+    <tr>
+      <th>489</th>
+      <td>2.688488</td>
+      <td>0.929422</td>
+      <td>0.268031</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>4.129371</td>
+      <td>0.893813</td>
+      <td>0.422464</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>15.194182</td>
+      <td>0.832483</td>
+      <td>0.375658</td>
+    </tr>
+    <tr>
+      <th>241</th>
+      <td>33.391247</td>
+      <td>0.676760</td>
+      <td>-0.028127</td>
+    </tr>
+    <tr>
+      <th>250</th>
+      <td>32.363740</td>
+      <td>0.711121</td>
+      <td>-0.078376</td>
+    </tr>
+    <tr>
+      <th>390</th>
+      <td>20.699366</td>
+      <td>0.683075</td>
+      <td>0.176542</td>
+    </tr>
+    <tr>
+      <th>289</th>
+      <td>51.370230</td>
+      <td>0.472696</td>
+      <td>-0.153246</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td>24.983784</td>
+      <td>0.703657</td>
+      <td>0.028212</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <section id="why-we-need-uncertainty">
 <h2><span class="section-number">15.1. </span>Why We Need Uncertainty<a class="headerlink" href="#why-we-need-uncertainty" title="Permalink to this heading">#</a></h2>
 <p><strong>The MLE is Over-Confident.</strong> In safety-critical contexts, like those from the IHH, it’s important that our ML models don’t just fit the observed data well; they should also communicate with us the limits of their “knowledge.” Let’s illustrate what we mean. Consider the regression data below:</p>
-<p>TODO: figure with in-between and OOD uncertainty.</p>
-<p>As you see in the figure above, we don’t have data for some segments of the population of interest.</p>
-<p>TODO: explain why this is bad in the context of the task.</p>
-<p>TODO: give example with cats and COVID</p>
-<p>Ideally, our learning algorithm would give us options; it would give us several models that all fit the data reasonably well, but behave differently away from the data. Given these options, perhaps we could devise some algorithm to select the one we would like to use on our downstream task, or find some way to <em>combine</em> them. Unfortunately, the learning algorithm we’ve use so far—the MLE—doesn’t provide us with a way to do this. The MLE gives a <em>single</em> model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Telekinetic-Ability&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Telekinetic Ability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dfb4ab8bd899cbbe50fa2f1199f911d181e7a8e13af1f4d781d8f95400e2dca2.png" src="_images/dfb4ab8bd899cbbe50fa2f1199f911d181e7a8e13af1f4d781d8f95400e2dca2.png" />
+</div>
+</div>
+<p>If we were to make a prediction for a patient of age 85, what should the model do? The model wasn’t trained on any such patients. Does the trend keep going down with age? Does it go up after age 80? It’s impossible for us to know because we haven’t observed data about such patients. In cases such as these, it’s important that our model alert us about its uncertainty.</p>
+<p>Especially in recent years, there has been more and more research dedicated to developing models that can reliably quantify uncertainty. As an example, a recent paper evaluated how confident different deep learning models are on a medical imaging task. In the paper, the authors evaluated models for predicting whether patients had COVID or not from X-ray scans. Here’s what they found:</p>
+<figure class="align-center" id="cats-vs-covid">
+<a class="reference internal image-reference" href="_images/cats-vs-covid.png"><img alt="_images/cats-vs-covid.png" src="_images/cats-vs-covid.png" style="width: 100%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 15.1 </span><span class="caption-text">ML models can be over-confident about wrong predictions. Figure adapted from <a class="reference external" href="https://www.semanticscholar.org/paper/Can-Your-AI-Differentiate-Cats-from-Covid-19-Sample-Mallick-Dwivedi/c100c33afbb2efa5197f7d6042022e1227c5e298" rel="noopener noreferrer" target="_blank">this paper</a>.</span><a class="headerlink" href="#cats-vs-covid" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>As you can see from the figure, the model makes predictions that aren’t only incorrect, <em>but also overconfident</em>. And it does this for inputs (like the cat) for which it should really just communicate “I don’t know.”</p>
+<p>How can a model know when it “doesn’t know”? When there are many possible models that fit the data reasonably well, but behave differently away from the data (i.e. on previously unseen inputs, like the cat). Given these options, perhaps we could devise some algorithm to select the one we would like to use on our downstream task, or find some way to <em>combine</em> them. Unfortunately, the learning algorithm we’ve use so far—the MLE—doesn’t provide us with a way to do this. The MLE gives a <em>single</em> model.</p>
 <p><strong>Ensembling.</strong> One way to solve this issue is by relying on the imperfections of the optimizer. Remember that, especially for more expressive models, optimization tends to get stuck in local optima. What if we were to collect an <em>ensemble</em> of models, all fit with the MLE to data, but each optimized from a different random initialization? Because each model would get stuck in a different local optima, each <em>might</em> behave differently than the others away from the data. What’s nice about this approach is that it’s easy to implement: we already have all the tools we need! Let’s see what ensembling a neural network regression model looks like:</p>
 <p>TODO figure of NN ensemble on above data</p>
 <p>While effective in practice, ensembling also has one big problem when it comes to safety-critical contexts. It makes implicit assumptions that are difficult to understand. Specifically, we relied on the imperfections of our black-box optimizer to find us a diverse set of models. What kind of models will the optimizer give us, however? Do these models have an <em>inductive bias</em> that are appropriate for our task?</p>
@@ -439,8 +603,8 @@ document.write(`
 <li><p><strong>Posterior Update:</strong> Post observing data, we <em>update</em> our beliefs about <span class="math notranslate nohighlight">\(\theta\)</span>. We do this by computing <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>. Observing data will help us reduce the initial uncertainty from the prior, honing in on a set of parameters that could explain the data well. As we show in a bit, this posterior update will depend on both the prior and the likelihood distributions.</p></li>
 </ol>
 <p><strong>Bayesian Models.</strong> By having a prior distribution <span class="math notranslate nohighlight">\(\theta\)</span> to encode our beliefs, we now treat <span class="math notranslate nohighlight">\(\theta\)</span> as a <em>random variable</em>. This means that our generative process will now include an additional line, in which we sample <span class="math notranslate nohighlight">\(\theta\)</span> from the prior. For example, for Bayesian regression, our generative process is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8b8f575e-2228-470d-88b5-ddf2e3880459">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-8b8f575e-2228-470d-88b5-ddf2e3880459" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-46dc6372-db60-4bc9-b1fe-bf770f0c92c9">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-46dc6372-db60-4bc9-b1fe-bf770f0c92c9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \quad (\text{prior}) \\
 y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta) = \mathcal{N}(\mu(x_n; \theta), \sigma^2) \quad (\text{likelihood}) \\
 \end{align}\]</div>
@@ -455,43 +619,43 @@ y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta) = \mathcal{N}(\mu(x_n
 <p>Before defining <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, let’s walk through an example to show you what this process looks like.</p>
 <p><strong>Illustration: Bayesian Regression.</strong> Let’s see what the Bayesian modeling paradigm looks like for regression, visually. We’ll use the generative process from above, setting <span class="math notranslate nohighlight">\(\sigma\)</span> as a constant (so we can ignore it). We’ve picked an expressive function, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>, that will be fun to visualize—its details aren’t important.</p>
 <p>Given our generative process, our goal is to sample the posterior,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f3f0f281-545f-40fe-b84a-54297ba0d58c">
-<span class="eqno">(15.2)<a class="headerlink" href="#equation-f3f0f281-545f-40fe-b84a-54297ba0d58c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0b6c93f7-061f-4761-96a2-085654848432">
+<span class="eqno">(15.2)<a class="headerlink" href="#equation-0b6c93f7-061f-4761-96a2-085654848432" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\theta | \mathcal{D}) &amp;= p(\theta | x_1, \dots, x_N, y_1, \dots, y_n).
 \end{align}\]</div>
 <p>For intuition, we can visualize posterior samples <span class="math notranslate nohighlight">\(\theta \sim p(\theta | \mathcal{D})\)</span> by plotting the <em>functions</em> they represent, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>. The plot below shows samples from the posterior as the number of points, <span class="math notranslate nohighlight">\(N\)</span>, increases.</p>
 <figure class="align-center" id="bayesian-update-example">
 <a class="reference internal image-reference" href="_images/example_online_bayesian_regression.png"><img alt="_images/example_online_bayesian_regression.png" src="_images/example_online_bayesian_regression.png" style="width: 100%;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.1 </span><span class="caption-text">Samples from the posterior of a Bayesian regression model, capturing epistemic uncertainty.</span><a class="headerlink" href="#bayesian-update-example" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 15.2 </span><span class="caption-text">Samples from the posterior of a Bayesian regression model, capturing epistemic uncertainty.</span><a class="headerlink" href="#bayesian-update-example" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In the above plot, <span class="math notranslate nohighlight">\(N = 0\)</span> represents our <em>prior</em>. The functions drawn from our prior illustrate our beliefs about which functions are appropriate for the data. In this specific case, our prior functions don’t exhibit any strong trends; overall, the functions don’t increase/decrease as age increases—they just wiggle about. However, the functions are incredibly smooth—another prior may have drawn more jagged functions. Whether this prior is appropriate for our task is up to you to decide.</p>
 <p>Next, we see what happens as we start observing data. As <span class="math notranslate nohighlight">\(N\)</span> increases, you can see our prior distribution getting “filtered out” by the likelihood. By this, we mean that our posterior will sample functions that are both likely under the prior <em>and</em> likelihood. It therefore keeps samples from the prior that also go <em>through the data</em> to ensure the likelihood is high. As you can see, in regions of the input space near our observed data, the posterior is quite certain about the trend; it knows the function must pass close to the observed data. But as we move away from the observed data, the posterior maintains a diversity of possible functions.</p>
 </section>
-<section id="fitting-models-via-bayes-rule">
-<h2><span class="section-number">15.4. </span>Fitting Models via Bayes’ Rule<a class="headerlink" href="#fitting-models-via-bayes-rule" title="Permalink to this heading">#</a></h2>
-<p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? Isn’t the whole point that the machine will do the learning for us? To get around this problem, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: the joint data likelihood, <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>.</p>
+<section id="model-fitting-via-bayes-rule">
+<h2><span class="section-number">15.4. </span>Model-Fitting via Bayes’ Rule<a class="headerlink" href="#model-fitting-via-bayes-rule" title="Permalink to this heading">#</a></h2>
+<p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? To avoid specifying this distribution by hand, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: the joint data likelihood, <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>. and the prior.</p>
 <p>Let’s derive Bayes’ rule in general before applying it to our problem. Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0676b181-2bba-4a56-9ec9-7b7d8d30e639">
-<span class="eqno">(15.3)<a class="headerlink" href="#equation-0676b181-2bba-4a56-9ec9-7b7d8d30e639" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-585c3470-25f7-4910-9ef6-7bbe68295519">
+<span class="eqno">(15.3)<a class="headerlink" href="#equation-585c3470-25f7-4910-9ef6-7bbe68295519" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
 &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
 \end{align}\]</div>
 <p>This means we can also equate the two factorizations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d76756d4-bdf3-4c8d-b171-ced50d4df214">
-<span class="eqno">(15.4)<a class="headerlink" href="#equation-d76756d4-bdf3-4c8d-b171-ced50d4df214" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dbd140b7-51bc-4ae8-9114-f54901bae1cd">
+<span class="eqno">(15.4)<a class="headerlink" href="#equation-dbd140b7-51bc-4ae8-9114-f54901bae1cd" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
 \end{align}\]</div>
 <p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-99231c78-8a10-40fb-a3d9-bd4d79868e29">
-<span class="eqno">(15.5)<a class="headerlink" href="#equation-99231c78-8a10-40fb-a3d9-bd4d79868e29" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bb692dc2-b8b3-4276-bffe-cfbf39982d68">
+<span class="eqno">(15.5)<a class="headerlink" href="#equation-bb692dc2-b8b3-4276-bffe-cfbf39982d68" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
 \end{align}\]</div>
 <p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
 <p><strong>Bayesian Inference.</strong> Using Bayes’ rule in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. We can now relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, which we don’t know how to specify, to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, which we do know how to specify:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1feb5eee-0def-4557-b22d-9f6046b5a0ae">
-<span class="eqno">(15.6)<a class="headerlink" href="#equation-1feb5eee-0def-4557-b22d-9f6046b5a0ae" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d8c67a03-7abe-499c-87e8-35b4f01f60b2">
+<span class="eqno">(15.6)<a class="headerlink" href="#equation-d8c67a03-7abe-499c-87e8-35b4f01f60b2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} &amp;= \frac{\overbrace{p(\mathcal{D} | \theta)}^{\text{likelihood}} \cdot \overbrace{p(\theta)}^{\text{prior}}}{\underbrace{p(\mathcal{D})}_{\text{normalizing const.}}}
 \end{align}\]</div>
 <p>When used as a model-fitting paradigm, each term in Bayes’ rule has a special name. We’ll now define each:</p>
@@ -499,8 +663,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <li><p><strong>Likelihood:</strong> This is the data joint likelihood, which we’ve previously maximized as part of the MLE.</p>
 <blockquote>
 <div><p>For example, suppose we’re fitting a linear regression model to predict an intergalactic being’s glow given age. Our model is then:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a706e788-adbc-44e5-9bad-dd80b664c954">
-<span class="eqno">(15.7)<a class="headerlink" href="#equation-a706e788-adbc-44e5-9bad-dd80b664c954" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c64c76b3-6903-4299-87ad-34c5e27069fc">
+<span class="eqno">(15.7)<a class="headerlink" href="#equation-c64c76b3-6903-4299-87ad-34c5e27069fc" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D} | \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n | \theta) \\
     &amp;= \prod\limits_{n=1}^N p_{Y | X}(y_n | x_n, \theta) \\
     &amp;= \prod\limits_{n=1}^N \mathcal{N}(y_n | \underbrace{\theta_0 + \theta_1 \cdot x_n}_{\mu(x_n; \theta)}, \sigma^2)
@@ -512,8 +676,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <blockquote>
 <div><p>Continuing with the above example, we know that in general, glow decreases with age. We can encode this belief into the inductive bias of the model by selecting an appropriate prior distribution—one for which the slope, <span class="math notranslate nohighlight">\(\theta_1\)</span>, is likely negative. As an example, we could select, <span class="math notranslate nohighlight">\(\mathcal{N}(-1, 0.1)\)</span>. In this way, <span class="math notranslate nohighlight">\(\theta_1\)</span> is most likely to be near <span class="math notranslate nohighlight">\(-1\)</span>. We can similarly encode our belief into the intercept, <span class="math notranslate nohighlight">\(\theta_0\)</span>, saying we believe it should be positive: <span class="math notranslate nohighlight">\(\mathcal{N}(1, 0.1)\)</span>.
 Putting these together, we get the following prior distribution over our model parameters:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-386dda88-455b-49c3-94cc-167822a8bdf2">
-<span class="eqno">(15.8)<a class="headerlink" href="#equation-386dda88-455b-49c3-94cc-167822a8bdf2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0575a49c-b384-49f8-951f-03d543547181">
+<span class="eqno">(15.8)<a class="headerlink" href="#equation-0575a49c-b384-49f8-951f-03d543547181" title="Permalink to this equation">#</a></span>\[\begin{align}
     p_\theta(\cdot) = p_{\theta_1}(\cdot) \cdot p_{\theta_0}(\cdot) = \mathcal{N}(-1, 0.1) \cdot \mathcal{N}(1, 0.1)
     \end{align}\]</div>
 </div></blockquote>
@@ -521,8 +685,8 @@ Putting these together, we get the following prior distribution over our model p
 </li>
 <li><p><strong>Posterior:</strong> This is the distribution of interest. It’s called a posterior because it determines the distribution of likely models, <span class="math notranslate nohighlight">\(\theta\)</span>, <em>after having observed data</em>. As we will see in a bit, the posterior balances information from both the prior and the likelihood.</p></li>
 <li><p><strong>Normalizing Constant:</strong> This is a constant that turns the whole fraction into a valid probability density function (i.e. a function that integrates to 1). To compute <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>, we integrate the numerator of Bayes’ rule over the support of <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-976b4d59-a0c3-4157-8ade-2fada56d81d2">
-<span class="eqno">(15.9)<a class="headerlink" href="#equation-976b4d59-a0c3-4157-8ade-2fada56d81d2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a31960bd-620a-4ffb-a312-4ff9bc66d518">
+<span class="eqno">(15.9)<a class="headerlink" href="#equation-a31960bd-620a-4ffb-a312-4ff9bc66d518" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D}) &amp;= \int\limits \underbrace{p(\mathcal{D} | \theta) \cdot p(\theta)}_{\text{numerator of Bayes' rule}} d\theta
     \end{align}\]</div>
 <p>In this way, when we divide by it, the whole fraction integrates to <span class="math notranslate nohighlight">\(1\)</span>. The formula for this normalizing constant is derived from the <em><a class="reference external" href="https://en.wikipedia.org/wiki/Law_of_total_probability" rel="noopener noreferrer" target="_blank">law of total probability</a></em>—more on this at a later chapter. And for now, we won’t worry about how to actually compute this integral.</p>
@@ -607,7 +771,7 @@ Putting these together, we get the following prior distribution over our model p
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-we-need-uncertainty">15.1. Why We Need Uncertainty</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-uncertainty">15.2. What is Uncertainty?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bayesian-modeling-paradigm">15.3. The Bayesian Modeling Paradigm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.4. Fitting Models via Bayes’ Rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-fitting-via-bayes-rule">15.4. Model-Fitting via Bayes’ Rule</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-inference-in-numpyro">15.5. Bayesian Inference in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
   </nav></div>
