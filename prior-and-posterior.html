@@ -355,9 +355,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-we-need-uncertainty">15.1. Why We Need Uncertainty</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.2. Fitting Models via Bayes’ Rule</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bayesian-modeling-paradigm">15.3. The Bayesian Modeling Paradigm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-inference-in-numpyro">15.4. Bayesian Inference in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-uncertainty">15.2. What is Uncertainty?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.3. Fitting Models via Bayes’ Rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bayesian-modeling-paradigm">15.4. The Bayesian Modeling Paradigm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-inference-in-numpyro">15.5. Bayesian Inference in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -405,8 +406,26 @@ document.write(`
 <p>While effective in practice, ensembling also has one big problem when it comes to safety-critical contexts. It makes implicit assumptions that are difficult to understand. Specifically, we relied on the imperfections of our black-box optimizer to find us a diverse set of models. What kind of models will the optimizer give us, however? Do these models have an <em>inductive bias</em> that are appropriate for our task?</p>
 <p>The need for explicit assumptions motivates us to find an alternative way of fitting our models to day, leading us to the <em>Bayesian approach</em>.</p>
 </section>
+<section id="what-is-uncertainty">
+<h2><span class="section-number">15.2. </span>What is Uncertainty?<a class="headerlink" href="#what-is-uncertainty" title="Permalink to this heading">#</a></h2>
+<p>To design a system that captures uncertainty, we first need to know what it means. To do this, let’s think about the uncertainty we encounter in everyday scenarios. Maybe these will help us formalize uncertainty mathematically.</p>
+<p><strong>Total Certainty.</strong> When you have lots of data, and you have a <em>mechanistic</em> understanding of the system, you have certainty. By mechanistic understand, we mean that you can characterize the system mathematically (e.g. you can predict how quickly an object will fall because you have an equation for gravity).</p>
+<blockquote>
+<div><p>Example: You’re asked to predict whether the sun will rise tomorrow. Of course, you know the sun will rise tomorrow, and you’re absolutely certain about it (if you have reason to believe the sun will not rise tomorrow, please do let the teaching staff know so they can head to the course bunker). So what makes you sure the sun will rise tomorrow? There are two reasons you will likely think about. (1) You have an abundance of observational data—the sun has risen every day of your life. (2) You have a model (or inductive bias)—you know that day and night are created by the earth’s rotation around its axis. Because you understand the mechanical properties of the system, you know that certain predictions just don’t make sense—like the sun can’t rise twice in the span of 24 hours.</p>
+</div></blockquote>
+<p><strong>Aleatoric Uncertainty.</strong> When you have lots of data from a <em>noisy</em> system, you can be certain about the probability of an outcome, but not about the actual outcome. As an example, having observed 100 flips of a fair coin, you can say with fair certainty that the coin will land heads 50% of the time. But you will never be able to predict whether the next flip will be heads with any greater accuracy. We call this type of uncertainty, <em>aleatoric uncertainty</em>. This is uncertainty that’s due to the inherent stochasticity in the system.</p>
+<blockquote>
+<div><p>You’re asked to predict whether it will rain at Wellesley next week. Having lived in New England for a little while, you scoff at the possibility of getting this prediction correct. New England weather is notoriously unpredictable. So what makes you uncertain about our prediction? You have an abundance of experiential data suggesting that weather is difficult to predict (how many times have you stood outside in the rain, while your phone’s weather app says it’s sunny?). As a result, you’re certain we can’t make a good prediction.</p>
+</div></blockquote>
+<p>All models we’ve worked with so far quantify aleatoric uncertainty. For example, in our regression and classification models, our observation error captures aleatoric uncertainty.</p>
+<p><strong>Epistemic Uncertainty.</strong> When you don’t have enough data, and you also don’t have a mechanistic understanding of the system, you have epistemic uncertainty.</p>
+<blockquote>
+<div><p>You’re colleague for the IHH is getting married on Venus next week. Your friend, who is also attending the wedding, asked you to predict the weather on Venus next week (so you can choose your outfit). Having forgotten all of your astrophysics knowledge (or having never learned it), you actually don’t know what the weather on Venus is like in general. As a result, what makes you uncertain is: (1) a lack of observations or experiential knowledge, and (2) a model (or domain knowledge) about Venus’s climate.</p>
+</div></blockquote>
+<p>None of our models so far have been able to capture epistemic uncertainty. In the regression case, epistemic uncertainty would be uncertainty over the parameters of the model. Epistemic uncertainty indicates that many potential models could explain the observed data, but we don’t know which one is the “right” one. We can gain certainty by observing more data.</p>
+</section>
 <section id="fitting-models-via-bayes-rule">
-<h2><span class="section-number">15.2. </span>Fitting Models via Bayes’ Rule<a class="headerlink" href="#fitting-models-via-bayes-rule" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">15.3. </span>Fitting Models via Bayes’ Rule<a class="headerlink" href="#fitting-models-via-bayes-rule" title="Permalink to this heading">#</a></h2>
 <p><strong>The Bayesian Paradigm.</strong> So let’s go back to the drawing board and rethink how we’ve been fitting models this whole time. So far, our approach has been finding the <em>single</em> model that maximizes the probability of our observed data: <span class="math notranslate nohighlight">\(\theta^\text{MLE} = \log p(\mathcal{D}; \theta)\)</span>. But isn’t what we’re actually interested is the <em>distribution</em> of models given the data, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>? In other words, conditioned on the data we’ve observed so far, we want to know which models (represented by their parameters, <span class="math notranslate nohighlight">\(\theta\)</span>) are likely to fit the data well. In this new paradigm, we hope that:</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> will capture a diversity of models with different inductive biases.</p></li>
@@ -414,25 +433,25 @@ document.write(`
 </ol>
 <p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? Isn’t the whole point that the machine will do the learning for us? To get around this problem, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: the joint data likelihood, <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>.</p>
 <p>Let’s derive Bayes’ rule in general before applying it to our problem. Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0e1ab05c-2b37-4561-bc67-ce6e2e131161">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-0e1ab05c-2b37-4561-bc67-ce6e2e131161" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d904ee3e-dcaa-4f1d-a7b7-2e6e0932e056">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-d904ee3e-dcaa-4f1d-a7b7-2e6e0932e056" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
 &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
 \end{align}\]</div>
 <p>This means we can also equate the two factorizations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ff99ff4d-24b4-41a5-b64f-3ce122793c26">
-<span class="eqno">(15.2)<a class="headerlink" href="#equation-ff99ff4d-24b4-41a5-b64f-3ce122793c26" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1662e8ac-a237-4cc7-a3ef-262a3fff63fc">
+<span class="eqno">(15.2)<a class="headerlink" href="#equation-1662e8ac-a237-4cc7-a3ef-262a3fff63fc" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
 \end{align}\]</div>
 <p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7c90500b-5f41-4c14-ac48-41d041af3b2a">
-<span class="eqno">(15.3)<a class="headerlink" href="#equation-7c90500b-5f41-4c14-ac48-41d041af3b2a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e2bf1de9-4e7a-4302-af32-9ee3ac72ee28">
+<span class="eqno">(15.3)<a class="headerlink" href="#equation-e2bf1de9-4e7a-4302-af32-9ee3ac72ee28" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
 \end{align}\]</div>
 <p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
 <p><strong>Bayesian Inference.</strong> Using Bayes’ rule in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. We can now relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, which we don’t know how to specify, to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, which we do know how to specify:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f45daa0d-25d0-4412-bd86-e478954c4d4f">
-<span class="eqno">(15.4)<a class="headerlink" href="#equation-f45daa0d-25d0-4412-bd86-e478954c4d4f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f814d318-01fc-4d3f-a211-de1c509893d0">
+<span class="eqno">(15.4)<a class="headerlink" href="#equation-f814d318-01fc-4d3f-a211-de1c509893d0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} &amp;= \frac{\overbrace{p(\mathcal{D} | \theta)}^{\text{likelihood}} \cdot \overbrace{p(\theta)}^{\text{prior}}}{\underbrace{p(\mathcal{D})}_{\text{normalizing const.}}}
 \end{align}\]</div>
 <p>When used as a model-fitting paradigm, each term in Bayes’ rule has a special name. We’ll now define each:</p>
@@ -440,8 +459,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <li><p><strong>Likelihood:</strong> This is the data joint likelihood, which we’ve previously maximized as part of the MLE.</p>
 <blockquote>
 <div><p>For example, suppose we’re fitting a linear regression model to predict an intergalactic being’s glow given age. Our model is then:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-942d8b17-b4a3-4a76-ba05-401a9b680b3f">
-<span class="eqno">(15.5)<a class="headerlink" href="#equation-942d8b17-b4a3-4a76-ba05-401a9b680b3f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f8e57a54-1f52-412c-86e1-5c7e132f669a">
+<span class="eqno">(15.5)<a class="headerlink" href="#equation-f8e57a54-1f52-412c-86e1-5c7e132f669a" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D} | \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n | \theta) \\
     &amp;= \prod\limits_{n=1}^N p_{Y | X}(y_n | x_n, \theta) \\
     &amp;= \prod\limits_{n=1}^N \mathcal{N}(y_n | \underbrace{\theta_0 + \theta_1 \cdot x_n}_{\mu(x_n; \theta)}, \sigma^2)
@@ -453,8 +472,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <blockquote>
 <div><p>Continuing with the above example, we know that in general, glow decreases with age. We can encode this belief into the inductive bias of the model by selecting an appropriate prior distribution—one for which the slope, <span class="math notranslate nohighlight">\(\theta_1\)</span>, is likely negative. As an example, we could select, <span class="math notranslate nohighlight">\(\mathcal{N}(-1, 0.1)\)</span>. In this way, <span class="math notranslate nohighlight">\(\theta_1\)</span> is most likely to be near <span class="math notranslate nohighlight">\(-1\)</span>. We can similarly encode our belief into the intercept, <span class="math notranslate nohighlight">\(\theta_0\)</span>, saying we believe it should be positive: <span class="math notranslate nohighlight">\(\mathcal{N}(1, 0.1)\)</span>.
 Putting these together, we get the following prior distribution over our model parameters:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-29fcf039-74c5-426e-9b58-0f2b4bfcbea8">
-<span class="eqno">(15.6)<a class="headerlink" href="#equation-29fcf039-74c5-426e-9b58-0f2b4bfcbea8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5154366c-5335-4077-bee5-b207fe91e959">
+<span class="eqno">(15.6)<a class="headerlink" href="#equation-5154366c-5335-4077-bee5-b207fe91e959" title="Permalink to this equation">#</a></span>\[\begin{align}
     p_\theta(\cdot) = p_{\theta_1}(\cdot) \cdot p_{\theta_0}(\cdot) = \mathcal{N}(-1, 0.1) \cdot \mathcal{N}(1, 0.1)
     \end{align}\]</div>
 </div></blockquote>
@@ -462,8 +481,8 @@ Putting these together, we get the following prior distribution over our model p
 </li>
 <li><p><strong>Posterior:</strong> This is the distribution of interest. It’s called a posterior because it determines the distribution of likely models, <span class="math notranslate nohighlight">\(\theta\)</span>, <em>after having observed data</em>. As we will see in a bit, the posterior balances information from both the prior and the likelihood.</p></li>
 <li><p><strong>Normalizing Constant:</strong> This is a constant that turns the whole fraction into a valid probability density function (i.e. a function that integrates to 1). To compute <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>, we integrate the numerator of Bayes’ rule over the support of <span class="math notranslate nohighlight">\(\theta\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-118b863d-2e1d-4be2-90cb-93abdb11b380">
-<span class="eqno">(15.7)<a class="headerlink" href="#equation-118b863d-2e1d-4be2-90cb-93abdb11b380" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-99230d01-da82-42b7-acae-304e2bdd8247">
+<span class="eqno">(15.7)<a class="headerlink" href="#equation-99230d01-da82-42b7-acae-304e2bdd8247" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D}) &amp;= \int\limits \underbrace{p(\mathcal{D} | \theta) \cdot p(\theta)}_{\text{numerator of Bayes' rule}} d\theta
     \end{align}\]</div>
 <p>In this way, when we divide by it, the whole fraction integrates to <span class="math notranslate nohighlight">\(1\)</span>. The formula for this normalizing constant is derived from the <em><a class="reference external" href="https://en.wikipedia.org/wiki/Law_of_total_probability" rel="noopener noreferrer" target="_blank">law of total probability</a></em>—more on this at a later chapter. And for now, we won’t worry about how to actually compute this integral.</p>
@@ -472,19 +491,19 @@ Putting these together, we get the following prior distribution over our model p
 <p>Next, let’s put everything together to get our new modeling paradigm.</p>
 </section>
 <section id="the-bayesian-modeling-paradigm">
-<h2><span class="section-number">15.3. </span>The Bayesian Modeling Paradigm<a class="headerlink" href="#the-bayesian-modeling-paradigm" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">15.4. </span>The Bayesian Modeling Paradigm<a class="headerlink" href="#the-bayesian-modeling-paradigm" title="Permalink to this heading">#</a></h2>
 <p>Thanks to Bayes’ rule, we now have a way to formally answer the question, what’s the probability of likely models given the observed data, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>. What’s exciting about this is that our definition of <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> (the posterior) depends on the likelihood, which we have experience with from prior chapters. Let’s put everything together to obtain our new modeling paradigm.</p>
 <ol class="arabic">
 <li><p><strong>Define a Bayesian Model.</strong> First, we have to update our generative process. Whereas before, our generative process consisted of all the steps necessary to sample from <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, our process will now sample from the joint distribution, <span class="math notranslate nohighlight">\(p(\mathcal{D}, \theta)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fd4a4c5d-8613-4416-9537-2f2452034e12">
-<span class="eqno">(15.8)<a class="headerlink" href="#equation-fd4a4c5d-8613-4416-9537-2f2452034e12" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-081cd660-5a29-4281-ad90-d5d894ad4ffe">
+<span class="eqno">(15.8)<a class="headerlink" href="#equation-081cd660-5a29-4281-ad90-d5d894ad4ffe" title="Permalink to this equation">#</a></span>\[\begin{align}
        p(\mathcal{D}, \theta) &amp;= \underbrace{p(\mathcal{D} | \theta)}_{\text{like before}} \cdot \underbrace{p(\theta)}_{\text{new}}.
     \end{align}\]</div>
 <p>As you can see, our Bayesian generative process is the same as the one before, but it includes one additional step: sampling from the prior.</p>
 <blockquote>
 <div><p>Continuing with the Bayesian linear regression example, our generative process is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a7393d86-1333-4092-a885-11650d9cb972">
-<span class="eqno">(15.9)<a class="headerlink" href="#equation-a7393d86-1333-4092-a885-11650d9cb972" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0e75d852-8573-4738-8be3-013efc2bcd64">
+<span class="eqno">(15.9)<a class="headerlink" href="#equation-0e75d852-8573-4738-8be3-013efc2bcd64" title="Permalink to this equation">#</a></span>\[\begin{align}
     \theta_0 &amp;\sim p_{\theta_0}(\cdot) = \mathcal{N}(1, 0.1) \quad (\text{prior}) \\
     \theta_1 &amp;\sim p_{\theta_1}(\cdot) = \mathcal{N}(-1, 0.1) \quad (\text{prior}) \\
     y_n | x_n, \theta_0, \theta_1 &amp;\sim p_{Y | X, \theta_0, \theta_1}(\cdot | x_n, \theta_0, \theta_1) = \mathcal{N}(y_n | \underbrace{\theta_0 + \theta_1 \cdot x_n}_{\mu(x_n; \theta)}, \sigma^2) \quad (\text{likelihood})
@@ -494,15 +513,15 @@ Putting these together, we get the following prior distribution over our model p
 <li><p><strong>Perform Bayesian Inference (i.e. model-fitting).</strong> Having specified our Bayesian model, we can use Bayes’ rule to obtain a formula for the posterior, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>—but what do we do with it? Since it’s a distribution, we can <em>sample</em> from it. That is, we can draw <span class="math notranslate nohighlight">\(\theta \sim p(\theta | \mathcal{D})\)</span> and visualize the models corresponding to each draw to plot our modeling uncertainty. The process of sampling from <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> is called <em>Bayesian inference.</em> In the next chapter, we will talk about how to quantitatively evaluate a Bayesian model’s fit.</p></li>
 </ol>
 <p><strong>Illustration: Bayesian Regression.</strong> Let’s see what the Bayesian modeling paradigm looks like for regression, visually. Our generative process is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-179ad5a8-91ef-44b4-b00c-1d53de564073">
-<span class="eqno">(15.10)<a class="headerlink" href="#equation-179ad5a8-91ef-44b4-b00c-1d53de564073" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ef02364b-accb-4cdf-a31b-46d519dd4a8a">
+<span class="eqno">(15.10)<a class="headerlink" href="#equation-ef02364b-accb-4cdf-a31b-46d519dd4a8a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \quad (\text{prior}) \\
 y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta) = \mathcal{N}(\mu(x_n; \theta), \sigma^2) \quad (\text{likelihood}) \\
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\sigma\)</span> is a constant (so we can ignore it). We’ve picked an expressive function, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>, that will be fun to visualize—its details aren’t important.</p>
 <p>Given our generative process, our goal is to sample the posterior,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83eb414d-fdcd-45cf-8c3c-7e492e04cb9b">
-<span class="eqno">(15.11)<a class="headerlink" href="#equation-83eb414d-fdcd-45cf-8c3c-7e492e04cb9b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f47afdfd-31f2-4780-85fd-940473bb9a11">
+<span class="eqno">(15.11)<a class="headerlink" href="#equation-f47afdfd-31f2-4780-85fd-940473bb9a11" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\theta | \mathcal{D}) &amp;= p(\theta | x_1, \dots, x_N, y_1, \dots, y_n).
 \end{align}\]</div>
 <p>For intuition, we can visualize posterior samples <span class="math notranslate nohighlight">\(\theta \sim p(\theta | \mathcal{D})\)</span> by plotting the <em>functions</em> they represent, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>. The plot below shows samples from the posterior as the number of points, <span class="math notranslate nohighlight">\(N\)</span>, increases.</p>
@@ -517,7 +536,7 @@ p(\theta | \mathcal{D}) &amp;= p(\theta | x_1, \dots, x_N, y_1, \dots, y_n).
 <p><strong>Computational Efficiency.</strong> Unfortunately for us, for most models, Bayesian inference is <em>intractable</em>, meaning there exists no efficient algorithm for posterior sampling. As a result, we will have to resort to approximations. This is the main drawback of Bayesian inference. Approximate Bayesian inference is fascinating, but unfortunately, we will not get to study it here. We will, however, learn how to use some approximate inference algorithms.</p>
 </section>
 <section id="bayesian-inference-in-numpyro">
-<h2><span class="section-number">15.4. </span>Bayesian Inference in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#bayesian-inference-in-numpyro" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">15.5. </span>Bayesian Inference in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#bayesian-inference-in-numpyro" title="Permalink to this heading">#</a></h2>
 <p><strong>Convergence of Posterior as <span class="math notranslate nohighlight">\(N \rightarrow \infty\)</span>.</strong></p>
 <p><strong>Dependence of Uncertainty on Prior Assumptions.</strong></p>
 </section>
@@ -591,9 +610,10 @@ p(\theta | \mathcal{D}) &amp;= p(\theta | x_1, \dots, x_N, y_1, \dots, y_n).
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-we-need-uncertainty">15.1. Why We Need Uncertainty</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.2. Fitting Models via Bayes’ Rule</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bayesian-modeling-paradigm">15.3. The Bayesian Modeling Paradigm</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-inference-in-numpyro">15.4. Bayesian Inference in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-uncertainty">15.2. What is Uncertainty?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-models-via-bayes-rule">15.3. Fitting Models via Bayes’ Rule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bayesian-modeling-paradigm">15.4. The Bayesian Modeling Paradigm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-inference-in-numpyro">15.5. Bayesian Inference in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
 </ul>
   </nav></div>
 
