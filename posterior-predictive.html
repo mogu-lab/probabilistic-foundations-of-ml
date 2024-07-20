@@ -356,10 +356,9 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition-model-averaging">16.1. Intuition: Model Averaging</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-the-posterior-predictive">16.2. Derivation of the Posterior Predictive</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-joint-distributions">16.3. The Geometry of Joint Distributions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laws-of-conditional-independence">16.4. Laws of Conditional Independence</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-posterior-predictive">16.5. Deriving the Posterior Predictive</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation-using-the-posterior-predictive">16.6. Model Evaluation using the Posterior Predictive</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laws-of-conditional-independence">16.3. Laws of Conditional Independence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#posterior-predictive-of-different-models">16.4. Posterior Predictive of Different Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation-using-the-posterior-predictive">16.5. Model Evaluation using the Posterior Predictive</a></li>
 </ul>
             </nav>
         </div>
@@ -381,13 +380,13 @@ document.write(`
 </div>
 </div>
 </div>
-<p><strong>Context:</strong> For safety-critical applications of ML, it’s important that our model captures two notions of uncertainty. Aleatoric uncertainty captures inherent stochasticity in the system. In contrast, epistemic uncertainty is uncertainty over possible <em>models</em> that could have fit the data. Multiple models can fit the data when we have a lack of data and/or a lack of mechanistic understanding of the system. We realized that fitting models using the MLE only captured aleatoric uncertainty. To additionally capture epistemic, we therefore had to rethink our modeling paradigm. Using Bayes’ rule, we were able to obtain a <em>distribution</em> over model parameters given the data, <span class="math notranslate nohighlight">\(p(\theta \mathcal{D})\)</span> (the posterior). Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we sampled from the posterior to obtain a diversity of models that fit the data. We interpreted a greater diversity of models indicated higher epistemic ucnertainty.</p>
+<p><strong>Context:</strong> For safety-critical applications of ML, it’s important that our model captures two notions of uncertainty. Aleatoric uncertainty captures inherent stochasticity in the system. In contrast, epistemic uncertainty is uncertainty over possible <em>models</em> that could have fit the data. Multiple models can fit the data when we have a lack of data and/or a lack of mechanistic understanding of the system. We realized that fitting models using the MLE only captured aleatoric uncertainty. To additionally capture epistemic, we therefore had to rethink our modeling paradigm. Using Bayes’ rule, we were able to obtain a <em>distribution</em> over model parameters given the data, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> (the posterior). Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we sampled from the posterior to obtain a diversity of models that fit the data. We interpreted a greater diversity of models indicated higher epistemic ucnertainty.</p>
 <p><strong>Challenge:</strong> Now that we have a posterior over model parameters, we can capture <em>epistemic</em> uncertainty. But how do we use this diverse set of models to (1) make predictions, and (2) compute the log-likelihood (for evaluation)? To do this, we will derive the <em>posterior predictive</em>, a distribution that translates a distribution over parameters to a distribution over data. This distributions can then be used to make predictions and evaluate the log-likelihood.</p>
 <p><strong>Outline:</strong></p>
 <ul class="simple">
 <li><p>Provide intuition for the posterior predictive</p></li>
 <li><p>Derive the posterior predictive</p></li>
-<li><p>Introduce two probability laws used in the derivation</p></li>
+<li><p>Introduce laws of conditional independence</p></li>
 <li><p>Evaluate the posterior predictive</p></li>
 </ul>
 <section id="intuition-model-averaging">
@@ -403,12 +402,12 @@ document.write(`
 </ol>
 <p><strong>Predicting.</strong> Using this ensemble, we can predict by <em>averaging</em> the predictions of the ensemble members:</p>
 <ol class="arabic">
-<li><p>We draw <span class="math notranslate nohighlight">\(\mathcal{D}_s \sim p(\cdot | \theta_s)\)</span> for each <span class="math notranslate nohighlight">\(\theta_s\)</span></p>
+<li><p>We draw <span class="math notranslate nohighlight">\(\mathcal{D}_s \sim p(\cdot | \theta_s)\)</span> for each <span class="math notranslate nohighlight">\(\theta_s\)</span>.</p>
 <blockquote>
 <div><p>For regression, we draw <span class="math notranslate nohighlight">\(y_s \sim p_{Y | X}(\cdot | x, \theta_s)\)</span>.</p>
 </div></blockquote>
 </li>
-<li><p>We average: <span class="math notranslate nohighlight">\(\frac{1}{S} \sum\limits_{s=1}^S \mathcal{D}_s\)</span></p>
+<li><p>We average: <span class="math notranslate nohighlight">\(\frac{1}{S} \sum\limits_{s=1}^S \mathcal{D}_s\)</span>.</p>
 <blockquote>
 <div><p>For regression, we average <span class="math notranslate nohighlight">\(\frac{1}{S} \sum\limits_{s=1}^S y_s\)</span>.</p>
 </div></blockquote>
@@ -433,47 +432,48 @@ document.write(`
 <h2><span class="section-number">16.2. </span>Derivation of the Posterior Predictive<a class="headerlink" href="#derivation-of-the-posterior-predictive" title="Permalink to this heading">#</a></h2>
 <p><strong>Goal.</strong> We want to derive a formula for <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span>, which represents the distribution of new data <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span> given the observed data, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>.</p>
 <blockquote>
-<div><p>For a regression model, this distribution is:
-\begin{align}
-p_{Y^* | X^<em>, \mathcal{D}}(y^</em> | x^<em>, \mathcal{D}) &amp;= p_{Y^</em> | X^<em>, \mathcal{D}}(y^</em> | x^*, x_1, \dots, x_N, y_1, \dots, y_N).
-\end{align}
-where <span class="math notranslate nohighlight">\(x^*\)</span> is a <em>new</em> input for which we’d like to make a prediction, <span class="math notranslate nohighlight">\(y^*\)</span>.</p>
+<div><p>For a regression model, this distribution is:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9368109e-0a4c-4f79-bfa5-e2442da780ee">
+<span class="eqno">(16.1)<a class="headerlink" href="#equation-9368109e-0a4c-4f79-bfa5-e2442da780ee" title="Permalink to this equation">#</a></span>\[\begin{align}
+    p_{Y^* | X^*, \mathcal{D}}(y^* | x^*, \mathcal{D}) &amp;= p_{Y^* | X^*, \mathcal{D}}(y^* | x^*, x_1, \dots, x_N, y_1, \dots, y_N),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(x^*\)</span> is a <em>new</em> input for which we’d like to make a prediction, <span class="math notranslate nohighlight">\(y^*\)</span>.</p>
 </div></blockquote>
 <p><strong>A Graphical Model for the Training <em>and</em> Test Data.</strong> Notice that our posterior predictive includes a new random variable, <span class="math notranslate nohighlight">\(\mathcal{D}*\)</span>. Let’s incorporate it into our graphical model so we can better reason about it.</p>
 <p>TODO depict DGM for abstract model and regression</p>
-<p><strong>Derivation.</strong> Now we have all we need in order to derive a formula for <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span>. Our first step is to multiply and divide <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span> by <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-db0241c5-72f3-4b54-9936-d2a90e041111">
-<span class="eqno">(16.1)<a class="headerlink" href="#equation-db0241c5-72f3-4b54-9936-d2a90e041111" title="Permalink to this equation">#</a></span>\[\begin{align}
+<p><strong>Derivation.</strong> Now we have all we need in order to derive a formula for <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span>. Our first step is to multiply and divide <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span> by <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9568b447-dd67-4a2d-9436-431808c5bd37">
+<span class="eqno">(16.2)<a class="headerlink" href="#equation-9568b447-dd67-4a2d-9436-431808c5bd37" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}^* | \mathcal{D}) &amp;= \frac{p(\mathcal{D}^* | \mathcal{D}) \cdot p(\mathcal{D})}{p(\mathcal{D})} 
 \end{align}\]</div>
 <p>We do this so that we can write the numerator as the <em>joint</em> distribution of <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span> and <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-14334398-00ac-443a-97e8-d77fb753b11d">
-<span class="eqno">(16.2)<a class="headerlink" href="#equation-14334398-00ac-443a-97e8-d77fb753b11d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b2b35066-5986-48c9-b746-2be7a6581640">
+<span class="eqno">(16.3)<a class="headerlink" href="#equation-b2b35066-5986-48c9-b746-2be7a6581640" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \frac{p(\mathcal{D}^*, \mathcal{D})}{p(\mathcal{D})} 
 \end{align}\]</div>
 <p>Next, we use the law of total probability to re-write the above as a joint distribution over <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, and <span class="math notranslate nohighlight">\(\theta\)</span>. We do this to introduce <span class="math notranslate nohighlight">\(\theta\)</span> into the equation—since our model’s prior, likelihood, and posterior all depend on <span class="math notranslate nohighlight">\(\theta\)</span>, it would be weird if the formula for <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span> didn’t depend on it. This gives us:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5f44cc9f-7a71-4bbd-9861-c98b560375b5">
-<span class="eqno">(16.3)<a class="headerlink" href="#equation-5f44cc9f-7a71-4bbd-9861-c98b560375b5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7e2594ad-4bc2-43c0-a252-e4bfaea4aed4">
+<span class="eqno">(16.4)<a class="headerlink" href="#equation-7e2594ad-4bc2-43c0-a252-e4bfaea4aed4" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \frac{\int p(\mathcal{D}^*, \mathcal{D}, \theta) \cdot d\theta}{p(\mathcal{D})} 
 \end{align}\]</div>
 <p>Now, we can factorize this joint distribution to get one term that’s the posterior, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, and one term that’s the marginal, <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9fd5da83-8fea-4fd1-a295-36799e51005d">
-<span class="eqno">(16.4)<a class="headerlink" href="#equation-9fd5da83-8fea-4fd1-a295-36799e51005d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-860b8b64-ed97-43f3-9e6f-1fed26c81ad9">
+<span class="eqno">(16.5)<a class="headerlink" href="#equation-860b8b64-ed97-43f3-9e6f-1fed26c81ad9" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \frac{\int p(\mathcal{D}^* | \theta, \mathcal{D}) \cdot p(\theta | \mathcal{D}) \cdot p(\mathcal{D}) \cdot d\theta}{p(\mathcal{D})} 
 \end{align}\]</div>
 <p>Since <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span> doesn’t depend on <span class="math notranslate nohighlight">\(\theta\)</span>, we can take it out of the integral, thereby canceling it with the <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span> in the denominator:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b72ba1f4-64fb-4fca-9e3a-63005d44a33d">
-<span class="eqno">(16.5)<a class="headerlink" href="#equation-b72ba1f4-64fb-4fca-9e3a-63005d44a33d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b9b1162b-e653-47eb-8370-26781af4c0a0">
+<span class="eqno">(16.6)<a class="headerlink" href="#equation-b9b1162b-e653-47eb-8370-26781af4c0a0" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \int p(\mathcal{D}^* | \theta, \mathcal{D}) \cdot p(\theta | \mathcal{D}) \cdot d\theta
 \end{align}\]</div>
 <p>Finally, using the laws of conditional independence, we know that <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \theta, \mathcal{D}) = p(\mathcal{D}^* | \theta)\)</span>. This is because, by conditioning on <span class="math notranslate nohighlight">\(\theta\)</span>, we remove all paths connecting <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> to <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span>. In other words, <span class="math notranslate nohighlight">\(\theta\)</span> summarizes all information from <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> needed to predict <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span>. This gives us the following equation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c77caab7-039d-4077-a15d-dcf2b110e9d8">
-<span class="eqno">(16.6)<a class="headerlink" href="#equation-c77caab7-039d-4077-a15d-dcf2b110e9d8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-52609ceb-73c4-46aa-aa4f-6cc23cdd8e8d">
+<span class="eqno">(16.7)<a class="headerlink" href="#equation-52609ceb-73c4-46aa-aa4f-6cc23cdd8e8d" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \int \underbrace{p(\mathcal{D}^* | \theta)}_{\text{likelihood of new data}} \cdot \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} \cdot d\theta
 \end{align}\]</div>
 <p>As you can see, <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span> is a function of the posterior and the joint data likelihood of the new data. Adding some syntactic sugar, we can write the above equation as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f0e13176-d0be-4ea1-83ee-41b28635e31d">
-<span class="eqno">(16.7)<a class="headerlink" href="#equation-f0e13176-d0be-4ea1-83ee-41b28635e31d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d3b9b58d-1874-43dc-ac7d-1573953fb91c">
+<span class="eqno">(16.8)<a class="headerlink" href="#equation-d3b9b58d-1874-43dc-ac7d-1573953fb91c" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \mathbb{E}_{p(\theta | \mathcal{D})} \left[ p(\mathcal{D}^* | \theta) \right]
 \end{align}\]</div>
 <p>This shows that to evaluate <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span>, we need to:</p>
@@ -483,43 +483,46 @@ p(\mathcal{D}^* | \mathcal{D}) &amp;= \frac{p(\mathcal{D}^* | \mathcal{D}) \cdot
 </ol>
 <p>As you can see this matches our intuition exactly!</p>
 </section>
-<section id="the-geometry-of-joint-distributions">
-<h2><span class="section-number">16.3. </span>The Geometry of Joint Distributions<a class="headerlink" href="#the-geometry-of-joint-distributions" title="Permalink to this heading">#</a></h2>
-<p><strong>Bayes’ Rule <span class="math notranslate nohighlight">\(\rightarrow\)</span> Cross-Sections.</strong> TODO</p>
-<p><strong>Law of Total Probability <span class="math notranslate nohighlight">\(\rightarrow\)</span> Sum of Cross-Sections.</strong> TODO</p>
-</section>
 <section id="laws-of-conditional-independence">
-<h2><span class="section-number">16.4. </span>Laws of Conditional Independence<a class="headerlink" href="#laws-of-conditional-independence" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">16.3. </span>Laws of Conditional Independence<a class="headerlink" href="#laws-of-conditional-independence" title="Permalink to this heading">#</a></h2>
 <p>Recall that the slope and intercept of a model may have been sampled independently under the prior, but as soon as we condition on data, they are no longer independent.</p>
 </section>
-<section id="deriving-the-posterior-predictive">
-<h2><span class="section-number">16.5. </span>Deriving the Posterior Predictive<a class="headerlink" href="#deriving-the-posterior-predictive" title="Permalink to this heading">#</a></h2>
+<section id="posterior-predictive-of-different-models">
+<h2><span class="section-number">16.4. </span>Posterior Predictive of Different Models<a class="headerlink" href="#posterior-predictive-of-different-models" title="Permalink to this heading">#</a></h2>
 <div class="admonition-exercise-derive-the-posterior-predictive-distribution admonition">
 <p class="admonition-title">Exercise: Derive the Posterior Predictive Distribution</p>
 <p>For each of the models below, draw the directed graphical model, and then derive the posterior predictive formula.</p>
 <p><strong>Part 1:</strong> Bayesian predictive model.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4a73ffe1-b479-454b-900f-cf000ddbee1c">
-<span class="eqno">(16.8)<a class="headerlink" href="#equation-4a73ffe1-b479-454b-900f-cf000ddbee1c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-754e044b-ae8d-4b2a-8825-1e3ac6bf4aad">
+<span class="eqno">(16.9)<a class="headerlink" href="#equation-754e044b-ae8d-4b2a-8825-1e3ac6bf4aad" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \\
 y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta)
 \end{align}\]</div>
-<p><strong>Part 2:</strong> Bayesian Concept-Bottlebeck model (CBM).</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cb313e85-63e5-4c7e-a6ff-aa514d17a7fb">
-<span class="eqno">(16.9)<a class="headerlink" href="#equation-cb313e85-63e5-4c7e-a6ff-aa514d17a7fb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<p><strong>Part 2:</strong> Bayesian Concept-Bottlebeck model (CBM). CBMs aim to make it easier to interpret model predictions. They do this by combining two models:</p>
+<ul class="simple">
+<li><p>CMBs first learning to predict “concepts” <span class="math notranslate nohighlight">\(c_n\)</span> associated, associated with input <span class="math notranslate nohighlight">\(x_n\)</span>. In a CBM, a concept is just a discrete attribute associated with the input; for example, if <span class="math notranslate nohighlight">\(x_n\)</span> is an image of wildlife, a concept could be rain, grass, dog, etc. You can think of <span class="math notranslate nohighlight">\(p_{C | X}\)</span> as a classifier.</p></li>
+<li><p>After having predicted the concept <span class="math notranslate nohighlight">\(c_n\)</span> from the input <span class="math notranslate nohighlight">\(x_n\)</span>, CBMs attempt to predict the final output <span class="math notranslate nohighlight">\(y_n\)</span> from the concept only. In this way, predictions of <span class="math notranslate nohighlight">\(y_n\)</span> can be analyzed in terms of the concepts, which as easier to understand, instead of with respect to the inputs, which could be high dimensional and difficult to reason about.</p></li>
+</ul>
+<p>A Bayesian CBM has the following generative process:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-511b585d-41bc-4f2b-9c3e-bae280ac4e44">
+<span class="eqno">(16.10)<a class="headerlink" href="#equation-511b585d-41bc-4f2b-9c3e-bae280ac4e44" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \\
 \phi &amp;\sim p_\phi(\cdot) \\
 c_n | x_n, \theta &amp;\sim p_{C | X}(\cdot | x_n, \theta) = \mathrm{Cat}(\pi(x_n; \theta)) \\
 y_n | c_n, \phi &amp;\sim p_{Y | C}(\cdot | c_n, \phi),
 \end{align}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\pi(\cdot; \theta)\)</span> is a function that maps <span class="math notranslate nohighlight">\(x_n\)</span> to the parameters of a categorical distribution. CBMs aim to make it easier to interpret model predictions. They do this by combining two models:</p>
-<ol class="arabic simple">
-<li><p>CMBs first learning to predict “concepts” <span class="math notranslate nohighlight">\(c_n\)</span> associated, associated with input <span class="math notranslate nohighlight">\(x_n\)</span>. In a CBM, a concept is just a discrete attribute associated with the input; for example, if <span class="math notranslate nohighlight">\(x_n\)</span> is an image of wildlife, a concept could be rain, grass, dog, etc. You can think of <span class="math notranslate nohighlight">\(p_{C | X}\)</span> as a classifier.</p></li>
-<li><p>After having predicted the concept <span class="math notranslate nohighlight">\(c_n\)</span> from the input <span class="math notranslate nohighlight">\(x_n\)</span>, CBMs attempt to predict the final output <span class="math notranslate nohighlight">\(y_n\)</span> from the concept only. In this way, predictions of <span class="math notranslate nohighlight">\(y_n\)</span> can be analyzed in terms of the concepts, which as easier to understand, instead of with respect to the inputs, which could be high dimensional and difficult to reason about.</p></li>
-</ol>
+<p>where <span class="math notranslate nohighlight">\(\pi(\cdot; \theta)\)</span> is a function that maps <span class="math notranslate nohighlight">\(x_n\)</span> to the parameters of a categorical distribution.</p>
+<p><strong>Part 3:</strong> Bayesian Factor Analysis.</p>
+<div class="amsmath math notranslate nohighlight" id="equation-c241b50b-7471-46fb-b9bc-c076938c697b">
+<span class="eqno">(16.11)<a class="headerlink" href="#equation-c241b50b-7471-46fb-b9bc-c076938c697b" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta &amp;\sim p_\theta(\cdot) \\
+z_n &amp;\sim p_Z(\cdot) \\
+x_n | z_n, \theta &amp;\sim p_{X | Z, \theta}(\cdot | z_n, \theta) 
+\end{align}\]</div>
 </div>
 </section>
 <section id="model-evaluation-using-the-posterior-predictive">
-<h2><span class="section-number">16.6. </span>Model Evaluation using the Posterior Predictive<a class="headerlink" href="#model-evaluation-using-the-posterior-predictive" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">16.5. </span>Model Evaluation using the Posterior Predictive<a class="headerlink" href="#model-evaluation-using-the-posterior-predictive" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -592,10 +595,9 @@ y_n | c_n, \phi &amp;\sim p_{Y | C}(\cdot | c_n, \phi),
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition-model-averaging">16.1. Intuition: Model Averaging</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivation-of-the-posterior-predictive">16.2. Derivation of the Posterior Predictive</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-geometry-of-joint-distributions">16.3. The Geometry of Joint Distributions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laws-of-conditional-independence">16.4. Laws of Conditional Independence</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deriving-the-posterior-predictive">16.5. Deriving the Posterior Predictive</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation-using-the-posterior-predictive">16.6. Model Evaluation using the Posterior Predictive</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#laws-of-conditional-independence">16.3. Laws of Conditional Independence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#posterior-predictive-of-different-models">16.4. Posterior Predictive of Different Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-evaluation-using-the-posterior-predictive">16.5. Model Evaluation using the Posterior Predictive</a></li>
 </ul>
   </nav></div>
 
