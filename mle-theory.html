@@ -198,15 +198,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="neural-networks.html">13. Neural Networks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-selection.html">14. Model Selection &amp; Evaluation</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian Inference</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="prior-and-posterior.html">15. Bayesian Inference: Prior and Posterior</a></li>
-<li class="toctree-l1"><a class="reference internal" href="posterior-predictive.html">16. Bayesian Inference: Posterior Predictive</a></li>
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Models</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="clustering.html">17. Clustering (Gaussian Mixture Models)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dimensionality-reduction.html">18. Dimensionality Reduction (Factor Analysis)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clustering.html">15. Clustering (Gaussian Mixture Models)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dimensionality-reduction.html">16. Dimensionality Reduction (Factor Analysis)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian Inference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="prior-and-posterior.html">17. Bayesian Inference: Prior and Posterior</a></li>
+<li class="toctree-l1"><a class="reference internal" href="posterior-predictive.html">18. Bayesian Inference: Posterior Predictive</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="time-series.html">19. Time Series (Dynamical Systems)</a></li>
 </ul>
 
@@ -411,20 +414,20 @@ document.write(`
 </div></blockquote>
 <p><strong>The MLE Objective.</strong>
 Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data; we will call it the <em>joint data likelihood</em>, since it is the <em>joint</em> distribution of all observations. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b7a3475c-d17d-42cb-bd70-416b8efa09fe">
-<span class="eqno">(7.1)<a class="headerlink" href="#equation-b7a3475c-d17d-42cb-bd70-416b8efa09fe" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e23aae49-3ca9-4206-91a7-80c6206569d9">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-e23aae49-3ca9-4206-91a7-80c6206569d9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A, M}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n, m_n)\)</span> for every <span class="math notranslate nohighlight">\(n = 1, \dots, N\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4bf5346f-5330-4759-8bac-b752ea98d3c0">
-<span class="eqno">(7.2)<a class="headerlink" href="#equation-4bf5346f-5330-4759-8bac-b752ea98d3c0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4efb0130-ac80-4b51-9bc6-b9a1f02cf7e6">
+<span class="eqno">(7.2)<a class="headerlink" href="#equation-4efb0130-ac80-4b51-9bc6-b9a1f02cf7e6" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ }  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
 <p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-930656e1-e25d-47df-935c-269f2614d8d6">
-<span class="eqno">(7.3)<a class="headerlink" href="#equation-930656e1-e25d-47df-935c-269f2614d8d6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-71e7e195-9cf3-4f16-81a4-db92499ef300">
+<span class="eqno">(7.3)<a class="headerlink" href="#equation-71e7e195-9cf3-4f16-81a4-db92499ef300" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
@@ -437,15 +440,15 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <ol class="arabic simple">
 <li><p>Logs turn products into sums: <span class="math notranslate nohighlight">\(\log (x \cdot y) = \log x + \log y\)</span>. Applying this formula to our MLE objective results in a <em>sum</em> of fractions, which is numerically stable:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-70b6d969-f76c-41bb-8bbb-e087af48d0a6">
-<span class="eqno">(7.4)<a class="headerlink" href="#equation-70b6d969-f76c-41bb-8bbb-e087af48d0a6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e734de77-c5b6-4b15-bc72-d0d2ec75b284">
+<span class="eqno">(7.4)<a class="headerlink" href="#equation-e734de77-c5b6-4b15-bc72-d0d2ec75b284" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>But by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability instead, will we get the wrong answer? Because the <span class="math notranslate nohighlight">\(\log\)</span> function is a <em>strictly increasing function</em>, our maxima will remain in the same location. That is:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-2a22d080-9738-4149-8028-268e349aa699">
-<span class="eqno">(7.5)<a class="headerlink" href="#equation-2a22d080-9738-4149-8028-268e349aa699" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1aa792c2-c12a-4377-a2d8-418d7fdb2e73">
+<span class="eqno">(7.5)<a class="headerlink" href="#equation-1aa792c2-c12a-4377-a2d8-418d7fdb2e73" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A, M}(d_n, c_n, h_n, a_n, m_n; \theta)
 \end{align}\]</div>
@@ -461,13 +464,13 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <section id="graphically-representing-i-i-d-observations-and-model-parameters">
 <h2><span class="section-number">7.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Permalink to this heading">#</a></h2>
 <p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model (DGM) representation to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0a5a5f79-346f-4663-a205-15ee11f82cf6">
-<span class="eqno">(7.6)<a class="headerlink" href="#equation-0a5a5f79-346f-4663-a205-15ee11f82cf6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f89baa60-a27b-48dc-8fa1-4ed53cb1ac57">
+<span class="eqno">(7.6)<a class="headerlink" href="#equation-f89baa60-a27b-48dc-8fa1-4ed53cb1ac57" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
 \end{align}\]</div>
 <p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in 1, \dots, N\)</span>. This gives us the following joint data likelihood:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3af9fe2e-bd6a-4574-8950-191669613908">
-<span class="eqno">(7.7)<a class="headerlink" href="#equation-3af9fe2e-bd6a-4574-8950-191669613908" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8971831f-7174-4985-b34f-aa25b613f272">
+<span class="eqno">(7.7)<a class="headerlink" href="#equation-8971831f-7174-4985-b34f-aa25b613f272" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
 &amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
