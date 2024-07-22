@@ -211,6 +211,7 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="time-series.html">19. Time Series (Dynamical Systems)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vaes.html">20. Variational Autoencoders (VAEs)</a></li>
 </ul>
 
     </div>
@@ -393,13 +394,13 @@ document.write(`
 <section id="analytic-solutions-to-optimization-problems">
 <h2><span class="section-number">9.1. </span>Analytic Solutions to Optimization Problems<a class="headerlink" href="#analytic-solutions-to-optimization-problems" title="Permalink to this heading">#</a></h2>
 <p><strong>Goal:</strong> Recall that our goal is to maximize the joint data log-likelihood:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e8c903a-52c7-428a-8949-ced7faefe70e">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-5e8c903a-52c7-428a-8949-ced7faefe70e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d630afd3-096a-4aaf-b1c9-bd36934d5d36">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-d630afd3-096a-4aaf-b1c9-bd36934d5d36" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_\theta \text{ } p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\theta\)</span> represents our model parameters. We will remain consistent with the convention of ML literature; we re-write the above problem as a minimization problem of our <em>negative</em> log-likelihood.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-da7b78fb-f279-4ab1-8928-c8b1d715c8ea">
-<span class="eqno">(9.2)<a class="headerlink" href="#equation-da7b78fb-f279-4ab1-8928-c8b1d715c8ea" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c10bdf80-bb38-4405-b62b-cf9633f931ec">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-c10bdf80-bb38-4405-b62b-cf9633f931ec" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmin}_\theta \underbrace{-p(\mathcal{D}; \theta)}_{\text{Our loss function, } \mathcal{L}(\theta)}
 \end{align}\]</div>
 <p>We call the <span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span> our “loss function,” since our goal is now to minimize our losses.</p>
@@ -411,8 +412,8 @@ document.write(`
 </figcaption>
 </figure>
 <p>Looking at the left plot above, we see that the minimum has a unique property: the loss function is <em>flat at the minimum</em>. In other words, at the minimum, the derivative of the loss function equals zero:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1ea201dc-2ebd-4123-bb57-b9d260bebd62">
-<span class="eqno">(9.3)<a class="headerlink" href="#equation-1ea201dc-2ebd-4123-bb57-b9d260bebd62" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-80b94bf1-6d26-445b-b0fc-f469a4a82d74">
+<span class="eqno">(9.3)<a class="headerlink" href="#equation-80b94bf1-6d26-445b-b0fc-f469a4a82d74" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{d \mathcal{L}(\theta)}{d \theta} = 0
 \end{align}\]</div>
 <p>Does the same hold for the right plot? Not exactly… At the minimum, we do have <span class="math notranslate nohighlight">\(\frac{d \mathcal{L}(\theta)}{d \theta} = 0\)</span>. But there are other points for which we also have <span class="math notranslate nohighlight">\(\frac{d \mathcal{L}(\theta)}{d \theta} = 0\)</span>.
@@ -435,19 +436,19 @@ This shows us that there are two <em>types</em> of optima: <em>global</em> and <
 <section id="an-example-analytically-solving-for-the-mle">
 <h2><span class="section-number">9.2. </span>An Example: Analytically Solving for the MLE<a class="headerlink" href="#an-example-analytically-solving-for-the-mle" title="Permalink to this heading">#</a></h2>
 <p><strong>The Model.</strong> Let’s see how this works by analytically performing the MLE on a simple example. Suppose we want to model the probability of a patient being hospitalized overnight. We can do this using a Bernoulli distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-80da70a3-9433-40db-a155-15121800c8de">
-<span class="eqno">(9.4)<a class="headerlink" href="#equation-80da70a3-9433-40db-a155-15121800c8de" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d6a1bc45-6857-4523-9138-4cab3fcf4bd6">
+<span class="eqno">(9.4)<a class="headerlink" href="#equation-d6a1bc45-6857-4523-9138-4cab3fcf4bd6" title="Permalink to this equation">#</a></span>\[\begin{align}
 H \sim p_H(\cdot; \rho) = \mathrm{Bern}(\rho).
 \end{align}\]</div>
 <p>Recall that the PMF of a Bernoulli RV is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-64926089-e2f9-4efe-8977-86cc9f76311c">
-<span class="eqno">(9.5)<a class="headerlink" href="#equation-64926089-e2f9-4efe-8977-86cc9f76311c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9a0a664e-3023-4f53-b800-fcfab348dccc">
+<span class="eqno">(9.5)<a class="headerlink" href="#equation-9a0a664e-3023-4f53-b800-fcfab348dccc" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an <em>indicator variable</em>—it evaluates to 1 if the condition in parentheses is true and 0 otherwise.</p>
 <p><strong>The Joint Data Likelihood.</strong> Now, let’s write the joint data log-likelihood for our model:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-391a48ff-e07e-43c7-969b-d345b8dc81a0">
-<span class="eqno">(9.6)<a class="headerlink" href="#equation-391a48ff-e07e-43c7-969b-d345b8dc81a0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6f8b47d5-61a2-428c-bc81-8e6a569e0bfb">
+<span class="eqno">(9.6)<a class="headerlink" href="#equation-6f8b47d5-61a2-428c-bc81-8e6a569e0bfb" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \rho) &amp;= \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \rho) \quad (\text{since observations are i.i.d}) \\
 &amp;= \log \prod\limits_{n=1}^N p_H(h_n; \rho) \\
 &amp;= \log \prod\limits_{n=1}^N \rho^{\mathbb{I}(h_n = 1)} \cdot (1 - \rho)^{\mathbb{I}(h_n = 0)} \quad (\text{using the definition of Bernoulli PMF}) \\
@@ -458,29 +459,29 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(T = \sum\limits_{n=1}^N \mathbb{I}(h_n = 1)\)</span> is the total number of hospitalizations.</p>
 <p><strong>The MLE Objective.</strong> Our MLE objective is therefore:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c29d6ed2-6f06-4062-afe0-70b04c167674">
-<span class="eqno">(9.7)<a class="headerlink" href="#equation-c29d6ed2-6f06-4062-afe0-70b04c167674" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-be784267-be2a-4dd5-907d-fa350d5da8f0">
+<span class="eqno">(9.7)<a class="headerlink" href="#equation-be784267-be2a-4dd5-907d-fa350d5da8f0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \\
 &amp;= \mathrm{argmax}_{\rho} \left( T \cdot \log \rho - (N - T) \cdot \log (1 - \rho) \right) \\
 &amp;= \mathrm{argmin}_{\rho} \underbrace{\left( -T \cdot \log \rho + (N - T) \cdot \log (1 - \rho) \right)}_{\text{Our loss function: } \mathcal{L}(\rho)} \quad (\text{maximizing a function is equivalent to minimizing its negative})
 \end{align}\]</div>
 <p><strong>Analytic Optimization.</strong> We take the gradient of the above loss <span class="math notranslate nohighlight">\(\mathcal{L}(\rho)\)</span> with respect to <span class="math notranslate nohighlight">\(\rho\)</span>, set it to <span class="math notranslate nohighlight">\(0\)</span> and solve:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e005680c-e0d4-4d91-916c-5c23dfdc9087">
-<span class="eqno">(9.8)<a class="headerlink" href="#equation-e005680c-e0d4-4d91-916c-5c23dfdc9087" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a6d06fbb-cc19-477a-ac2e-2815b4a0b731">
+<span class="eqno">(9.8)<a class="headerlink" href="#equation-a6d06fbb-cc19-477a-ac2e-2815b4a0b731" title="Permalink to this equation">#</a></span>\[\begin{align}
 0 &amp;= \frac{d \mathcal{L}(\rho)}{d \rho} \\
 &amp;= -\frac{T}{\rho} + \frac{N - T}{1 - \rho} \quad (\text{taking the derivative of } \mathcal{L}(\rho)) \\
 &amp;= \frac{T - N \cdot \rho}{\rho \cdot (\rho - 1)} \quad (\text{bringing fractions under common denominator}) \\
 &amp;= T - N \cdot \rho \quad (\text{multiplying both sides by } \rho \cdot (\rho - 1))
 \end{align}\]</div>
 <p>Solving the above gives us the solution,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-50516dab-172b-4dfb-858b-d674f341850b">
-<span class="eqno">(9.9)<a class="headerlink" href="#equation-50516dab-172b-4dfb-858b-d674f341850b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-75994c23-e639-45cf-91e8-7e7a63cea0c9">
+<span class="eqno">(9.9)<a class="headerlink" href="#equation-75994c23-e639-45cf-91e8-7e7a63cea0c9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho &amp;= \frac{T}{N}.
 \end{align}\]</div>
 <p>The solution is exactly the proportion of hospitalizations out of the total number of hospital visits!</p>
 <p><strong>A Note on Constraint Optimization.</strong> Oftentimes, when performing the MLE analytically, we need to constrain the parameters to lie within valid ranges. For example, <span class="math notranslate nohighlight">\(\rho\)</span> should only be allowed to take on values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. Formally, we express such a constraint as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0607822c-a27f-4810-aeb2-ad0bda012ba5">
-<span class="eqno">(9.10)<a class="headerlink" href="#equation-0607822c-a27f-4810-aeb2-ad0bda012ba5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-62f04270-20d7-4c8e-9357-780f4c232c5b">
+<span class="eqno">(9.10)<a class="headerlink" href="#equation-62f04270-20d7-4c8e-9357-780f4c232c5b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} &amp;= \mathrm{argmax}_{\rho} \text{ } \log p(\mathcal{D}; \rho) \quad \text{subject to} \quad 0 \leq \rho \leq 1 \\
 \end{align}\]</div>
 <p>In our derivation, it just so happens that the solution already satisfies this constraint. However, for different models, we may have to enforce such constraints explicitly. To enforce these constraints, one can use <a class="reference external" href="https://en.wikipedia.org/wiki/Lagrange_multiplier" rel="noopener noreferrer" target="_blank">lagrange multipliers</a>. We will not cover this method in here, but just want to point out that this class of methods exists.</p>
@@ -520,22 +521,22 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 <ol class="arabic simple">
 <li><p>Compute the gradient of the loss with respect to the parameters, evaluated at the current value of the parameters:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-33f9e332-3d74-40c8-8bf3-d9f4b0d403d6">
-<span class="eqno">(9.11)<a class="headerlink" href="#equation-33f9e332-3d74-40c8-8bf3-d9f4b0d403d6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2329ecd5-3512-45ac-8fb9-df743cb173f2">
+<span class="eqno">(9.11)<a class="headerlink" href="#equation-2329ecd5-3512-45ac-8fb9-df743cb173f2" title="Permalink to this equation">#</a></span>\[\begin{align}
     u &amp;\leftarrow \frac{d \mathcal{L}(\theta)}{d \theta} \Bigg|_{\theta = \theta^\text{current}}
   \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>Take a step in the direction of the negative gradient (steepest descent):</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-0442908b-d591-4bc6-8811-b0490822432a">
-<span class="eqno">(9.12)<a class="headerlink" href="#equation-0442908b-d591-4bc6-8811-b0490822432a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8796bd67-e500-4ca1-8222-596e14706baf">
+<span class="eqno">(9.12)<a class="headerlink" href="#equation-8796bd67-e500-4ca1-8222-596e14706baf" title="Permalink to this equation">#</a></span>\[\begin{align}
     \theta^\text{next} &amp;\leftarrow \theta^\text{current} - \alpha \cdot u
   \end{align}\]</div>
 <ol class="arabic simple" start="3">
 <li><p>Update the model parameters:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-7901d2c7-1e04-48d2-ae78-0714e45aef3d">
-<span class="eqno">(9.13)<a class="headerlink" href="#equation-7901d2c7-1e04-48d2-ae78-0714e45aef3d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d40adfed-ea43-4587-9dff-f3c303bc7d3b">
+<span class="eqno">(9.13)<a class="headerlink" href="#equation-d40adfed-ea43-4587-9dff-f3c303bc7d3b" title="Permalink to this equation">#</a></span>\[\begin{align}
     \theta^\text{current} &amp;\leftarrow \theta^\text{next}
   \end{align}\]</div>
 </section>
@@ -608,29 +609,29 @@ p_H(h; \rho) = \rho^{\mathbb{I}(h = 1)} \cdot (1 - \rho)^{\mathbb{I}(h = 0)},
 </ol>
 </div>
 <p><strong>Ensuring Parameters Satisfy Constraints.</strong> Sometimes we need our parameters to satisfy certain properties. For example, in the above example, in which we computed the MLE for the Bernoulli model, we need to ensure our parameter, <span class="math notranslate nohighlight">\(\rho\)</span>, lies on the interval <span class="math notranslate nohighlight">\([0, 1]\)</span>. How can we satisfy this constraint using gradient descent? We define <span class="math notranslate nohighlight">\(\rho\)</span> as a <em>function</em> of another variable, <span class="math notranslate nohighlight">\(\theta\)</span>, such that the unconstrained <span class="math notranslate nohighlight">\(\theta\)</span> (i.e. <span class="math notranslate nohighlight">\(\theta \in \mathbb{R}\)</span>) is transformed into a constrained <span class="math notranslate nohighlight">\(\rho\)</span> (i.e. <span class="math notranslate nohighlight">\(\rho \in [0, 1]\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b7bc5ef9-dc25-40f2-bc03-a6ac7ed74bec">
-<span class="eqno">(9.14)<a class="headerlink" href="#equation-b7bc5ef9-dc25-40f2-bc03-a6ac7ed74bec" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-10796895-a197-4a58-9a58-2183c471cb1f">
+<span class="eqno">(9.14)<a class="headerlink" href="#equation-10796895-a197-4a58-9a58-2183c471cb1f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho &amp;= g(\theta).
 \end{align}\]</div>
 <p>We then perform the optimization over <span class="math notranslate nohighlight">\(\theta\)</span>. To make this possible, we need an invertible function <span class="math notranslate nohighlight">\(g(\cdot)\)</span> that maps the real-line to the unit interval (i.e. <span class="math notranslate nohighlight">\(g: \mathbb{R} \rightarrow [0, 1]\)</span>). For this, we can use a function known as a sigmoid:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-832ccf43-c445-4f45-82e3-cc20962582f3">
-<span class="eqno">(9.15)<a class="headerlink" href="#equation-832ccf43-c445-4f45-82e3-cc20962582f3" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-201c76ea-f0f4-4741-90ea-e9d4a6142883">
+<span class="eqno">(9.15)<a class="headerlink" href="#equation-201c76ea-f0f4-4741-90ea-e9d4a6142883" title="Permalink to this equation">#</a></span>\[\begin{align}
 g(\theta) = \frac{1}{1 + e^{-\theta}}.
 \end{align}\]</div>
 <p>Check out its <a class="reference external" href="https://en.wikipedia.org/wiki/Sigmoid_function" rel="noopener noreferrer" target="_blank">Wikipedia page</a> to see what it looks like.</p>
 <p>Putting this all together, instead of solving our original optimization problem,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-642dab24-253b-4d8f-ad61-9f8d3eb68c53">
-<span class="eqno">(9.16)<a class="headerlink" href="#equation-642dab24-253b-4d8f-ad61-9f8d3eb68c53" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-193406ad-dd2e-4901-9766-7d3fa49e5301">
+<span class="eqno">(9.16)<a class="headerlink" href="#equation-193406ad-dd2e-4901-9766-7d3fa49e5301" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} &amp;= \mathrm{argmin}_{\rho} \text{ } \mathcal{L}(\rho) \quad \text{subject to} \quad 0 \leq \rho \leq 1,
 \end{align}\]</div>
 <p>we solve,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-107a00c8-f978-42f6-94c0-09eb63dd9855">
-<span class="eqno">(9.17)<a class="headerlink" href="#equation-107a00c8-f978-42f6-94c0-09eb63dd9855" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-96d52079-7566-42cd-b516-f4d02ffd9562">
+<span class="eqno">(9.17)<a class="headerlink" href="#equation-96d52079-7566-42cd-b516-f4d02ffd9562" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmin}_{\theta} \text{ } \mathcal{L}(g(\theta)).
 \end{align}\]</div>
 <p>We can then get <span class="math notranslate nohighlight">\(\rho^\text{MLE}\)</span> from <span class="math notranslate nohighlight">\(\theta^\text{MLE}\)</span> by using the inverse of <span class="math notranslate nohighlight">\(g(\cdot)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d3e8c929-3db9-4a2f-919d-a73d1a51ce8b">
-<span class="eqno">(9.18)<a class="headerlink" href="#equation-d3e8c929-3db9-4a2f-919d-a73d1a51ce8b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-efe60ad0-2ec8-493a-b9f4-38f38c41118b">
+<span class="eqno">(9.18)<a class="headerlink" href="#equation-efe60ad0-2ec8-493a-b9f4-38f38c41118b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho^\text{MLE} = g^{-1}(\theta^\text{MLE}).
 \end{align}\]</div>
 <p>This is how constraints (such as <code class="docutils literal notranslate"><span class="pre">C.unit_interval</span></code>) in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> are implemented internally. Of course, each constraint relies on a different transform, <span class="math notranslate nohighlight">\(g(\cdot)\)</span>.</p>
