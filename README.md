@@ -35,4 +35,11 @@ pip install -r requirements.txt
 
 ## Helpful Readings
 
-1. [A Conceptual Introduction to Hamiltonian Monte Carlo](https://arxiv.org/pdf/1701.02434)
+Advanced Topics:
+* [A Conceptual Introduction to Hamiltonian Monte Carlo](https://arxiv.org/pdf/1701.02434)
+
+Ethics:
+* [Dehumanized Data Points](https://medium.com/@mpierredavis/dehumanized-data-points-f32423311a40)
+* [The Numbers Don't Speak for Themselves](https://data-feminism.mitpress.mit.edu/pub/czq9dfs5/release/3)
+* [Catherine D'Ignazio: Data is never a raw, truthful input – and it is never neutral](https://www.theguardian.com/technology/2020/mar/21/catherine-dignazio-data-is-never-a-raw-truthful-input-and-it-is-never-neutral)
+
