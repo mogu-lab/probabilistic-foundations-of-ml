@@ -32,3 +32,7 @@ pip install -r requirements.txt
 </div>
 ```
 
+
+## Helpful Readings
+
+1. [A Conceptual Introduction to Hamiltonian Monte Carlo](https://arxiv.org/pdf/1701.02434)
