@@ -437,8 +437,8 @@ document.write(`
 <p><strong>Goal.</strong> We want to derive a formula for <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span>, which represents the distribution of new data <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span> given the observed data, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>.</p>
 <blockquote>
 <div><p>For a regression model, this distribution is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ac703ab3-c1ed-47e9-8762-3ae875758427">
-<span class="eqno">(18.1)<a class="headerlink" href="#equation-ac703ab3-c1ed-47e9-8762-3ae875758427" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4b7a0066-7a66-472a-af2d-b5eca3aee74e">
+<span class="eqno">(18.1)<a class="headerlink" href="#equation-4b7a0066-7a66-472a-af2d-b5eca3aee74e" title="Permalink to this equation">#</a></span>\[\begin{align}
     p_{Y^* | X^*, \mathcal{D}}(y^* | x^*, \mathcal{D}) &amp;= p_{Y^* | X^*, \mathcal{D}}(y^* | x^*, x_1, \dots, x_N, y_1, \dots, y_N),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^*\)</span> is a <em>new</em> input for which we’d like to make a prediction, <span class="math notranslate nohighlight">\(y^*\)</span>.</p>
@@ -459,38 +459,38 @@ document.write(`
     </iframe>
   </div>
 </div><p><strong>Derivation.</strong> Now we have all we need in order to derive a formula for <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span>. Our first step is to multiply and divide <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span> by <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a82ca94-0d72-4f40-9821-97de72fde038">
-<span class="eqno">(18.2)<a class="headerlink" href="#equation-8a82ca94-0d72-4f40-9821-97de72fde038" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9e20722-a4e9-4439-b98f-c0ef5ae067b5">
+<span class="eqno">(18.2)<a class="headerlink" href="#equation-f9e20722-a4e9-4439-b98f-c0ef5ae067b5" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}^* | \mathcal{D}) &amp;= \frac{p(\mathcal{D}^* | \mathcal{D}) \cdot p(\mathcal{D})}{p(\mathcal{D})} 
 \end{align}\]</div>
 <p>We do this so that we can write the numerator as the <em>joint</em> distribution of <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span> and <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0068d6c0-5b3a-426d-986d-8e70f6481903">
-<span class="eqno">(18.3)<a class="headerlink" href="#equation-0068d6c0-5b3a-426d-986d-8e70f6481903" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f1bf404c-f6ef-4445-8aa5-9d3a0cddacf3">
+<span class="eqno">(18.3)<a class="headerlink" href="#equation-f1bf404c-f6ef-4445-8aa5-9d3a0cddacf3" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \frac{p(\mathcal{D}^*, \mathcal{D})}{p(\mathcal{D})} 
 \end{align}\]</div>
 <p>Next, we use the law of total probability to re-write the above as a joint distribution over <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, and <span class="math notranslate nohighlight">\(\theta\)</span>. We do this to introduce <span class="math notranslate nohighlight">\(\theta\)</span> into the equation—since our model’s prior, likelihood, and posterior all depend on <span class="math notranslate nohighlight">\(\theta\)</span>, it would be weird if the formula for <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span> didn’t depend on it. This gives us:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-61044f6d-a4c2-46b5-8efd-4d187628d0c0">
-<span class="eqno">(18.4)<a class="headerlink" href="#equation-61044f6d-a4c2-46b5-8efd-4d187628d0c0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-43185697-fe86-4e81-835f-3da4de4f174f">
+<span class="eqno">(18.4)<a class="headerlink" href="#equation-43185697-fe86-4e81-835f-3da4de4f174f" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \frac{\int p(\mathcal{D}^*, \mathcal{D}, \theta) \cdot d\theta}{p(\mathcal{D})} 
 \end{align}\]</div>
 <p>Now, we can factorize this joint distribution to get one term that’s the posterior, <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, and one term that’s the marginal, <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c106fc5c-8b3c-46fe-879b-27100ab4bdd2">
-<span class="eqno">(18.5)<a class="headerlink" href="#equation-c106fc5c-8b3c-46fe-879b-27100ab4bdd2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-625a5758-333d-436b-8f5d-376a16aa7c88">
+<span class="eqno">(18.5)<a class="headerlink" href="#equation-625a5758-333d-436b-8f5d-376a16aa7c88" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \frac{\int p(\mathcal{D}^* | \theta, \mathcal{D}) \cdot p(\theta | \mathcal{D}) \cdot p(\mathcal{D}) \cdot d\theta}{p(\mathcal{D})} 
 \end{align}\]</div>
 <p>Since <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span> doesn’t depend on <span class="math notranslate nohighlight">\(\theta\)</span>, we can take it out of the integral, thereby canceling it with the <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span> in the denominator:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4dc0af8d-dfc3-41ca-a0b7-78ed76e0ffd1">
-<span class="eqno">(18.6)<a class="headerlink" href="#equation-4dc0af8d-dfc3-41ca-a0b7-78ed76e0ffd1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f06847d3-cb82-4bdc-8abe-024f33c4ea3c">
+<span class="eqno">(18.6)<a class="headerlink" href="#equation-f06847d3-cb82-4bdc-8abe-024f33c4ea3c" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \int p(\mathcal{D}^* | \theta, \mathcal{D}) \cdot p(\theta | \mathcal{D}) \cdot d\theta
 \end{align}\]</div>
 <p>Finally, using the laws of conditional independence, we know that <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \theta, \mathcal{D}) = p(\mathcal{D}^* | \theta)\)</span>. This is because, by conditioning on <span class="math notranslate nohighlight">\(\theta\)</span>, we remove all paths connecting <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> to <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span>. In other words, <span class="math notranslate nohighlight">\(\theta\)</span> summarizes all information from <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> needed to predict <span class="math notranslate nohighlight">\(\mathcal{D}^*\)</span>. This gives us the following equation:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-68376319-806a-4bd8-9a5d-e69ebf670ece">
-<span class="eqno">(18.7)<a class="headerlink" href="#equation-68376319-806a-4bd8-9a5d-e69ebf670ece" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-87688788-260c-44af-a33f-8c852e620cf8">
+<span class="eqno">(18.7)<a class="headerlink" href="#equation-87688788-260c-44af-a33f-8c852e620cf8" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \int \underbrace{p(\mathcal{D}^* | \theta)}_{\text{likelihood of new data}} \cdot \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} \cdot d\theta
 \end{align}\]</div>
 <p>As you can see, <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span> is a function of the posterior and the joint data likelihood of the new data. Adding some syntactic sugar, we can write the above equation as:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-852ed55a-a72b-4eba-a1d8-8942141d97b2">
-<span class="eqno">(18.8)<a class="headerlink" href="#equation-852ed55a-a72b-4eba-a1d8-8942141d97b2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cfe6fd30-66b8-451c-a950-c34af43f5440">
+<span class="eqno">(18.8)<a class="headerlink" href="#equation-cfe6fd30-66b8-451c-a950-c34af43f5440" title="Permalink to this equation">#</a></span>\[\begin{align}
 &amp;= \mathbb{E}_{p(\theta | \mathcal{D})} \left[ p(\mathcal{D}^* | \theta) \right]
 \end{align}\]</div>
 <p>This shows that to evaluate <span class="math notranslate nohighlight">\(p(\mathcal{D}^* | \mathcal{D})\)</span>, we need to:</p>
@@ -510,8 +510,8 @@ p(\mathcal{D}^* | \mathcal{D}) &amp;= \frac{p(\mathcal{D}^* | \mathcal{D}) \cdot
 <p class="admonition-title">Exercise: Derive the Posterior Predictive Distribution</p>
 <p>For each of the models below, draw the directed graphical model (that captures both the train and test data). Then, derive the posterior predictive formula.</p>
 <p><strong>Part 1:</strong> Bayesian predictive model.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0346d89e-d1e5-42c3-9f6d-aff75185f813">
-<span class="eqno">(18.9)<a class="headerlink" href="#equation-0346d89e-d1e5-42c3-9f6d-aff75185f813" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-39c78875-beb7-4d12-bf45-763aea8c2822">
+<span class="eqno">(18.9)<a class="headerlink" href="#equation-39c78875-beb7-4d12-bf45-763aea8c2822" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \\
 y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta)
 \end{align}\]</div>
@@ -521,8 +521,8 @@ y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta)
 <li><p>After having predicted the concept <span class="math notranslate nohighlight">\(c_n\)</span> from the input <span class="math notranslate nohighlight">\(x_n\)</span>, CBMs attempt to predict the final output <span class="math notranslate nohighlight">\(y_n\)</span> from the concept only. In this way, predictions of <span class="math notranslate nohighlight">\(y_n\)</span> can be analyzed in terms of the concepts, which as easier to understand, instead of with respect to the inputs, which could be high dimensional and difficult to reason about.</p></li>
 </ul>
 <p>A Bayesian CBM has the following generative process:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e84663e2-b148-456f-8538-fa288a21ead5">
-<span class="eqno">(18.10)<a class="headerlink" href="#equation-e84663e2-b148-456f-8538-fa288a21ead5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f76be7f8-a8bd-4680-a0e5-a5c388f2bbdb">
+<span class="eqno">(18.10)<a class="headerlink" href="#equation-f76be7f8-a8bd-4680-a0e5-a5c388f2bbdb" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \\
 \phi &amp;\sim p_\phi(\cdot) \\
 c_n | x_n, \theta &amp;\sim p_{C | X}(\cdot | x_n, \theta) = \mathrm{Cat}(\pi(x_n; \theta)) \\
@@ -530,15 +530,15 @@ y_n | c_n, \phi &amp;\sim p_{Y | C}(\cdot | c_n, \phi),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\pi(\cdot; \theta)\)</span> is a function that maps <span class="math notranslate nohighlight">\(x_n\)</span> to the parameters of a categorical distribution.</p>
 <p><strong>Part 3:</strong> Bayesian Factor Analysis.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c98a4b86-468a-4d88-84b0-cbc147ac8c68">
-<span class="eqno">(18.11)<a class="headerlink" href="#equation-c98a4b86-468a-4d88-84b0-cbc147ac8c68" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5222bb0c-39cd-42ca-a275-e4d077899e7b">
+<span class="eqno">(18.11)<a class="headerlink" href="#equation-5222bb0c-39cd-42ca-a275-e4d077899e7b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \\
 z_n &amp;\sim p_Z(\cdot) \\
 x_n | z_n, \theta &amp;\sim p_{X | Z, \theta}(\cdot | z_n, \theta) 
 \end{align}\]</div>
 <p><strong>Part 4:</strong> Bayesian predictive model with input noise.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ee5278c9-2b7b-4f50-9885-9ab7323b507e">
-<span class="eqno">(18.12)<a class="headerlink" href="#equation-ee5278c9-2b7b-4f50-9885-9ab7323b507e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a6e09c4d-1cac-4043-9287-dc6570d930cc">
+<span class="eqno">(18.12)<a class="headerlink" href="#equation-a6e09c4d-1cac-4043-9287-dc6570d930cc" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \\
 z_n &amp;\sim p_Z(\cdot) \\
 y_n | x_n, z_n, \theta &amp;\sim p_{Y | X, Z, \theta}(\cdot | x_n, z_n, \theta) 
