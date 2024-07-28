@@ -73,7 +73,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="15. Bayesian Inference: Prior and Posterior" href="prior-and-posterior.html" />
+    <link rel="next" title="15. Gaussian Mixture Models (Clustering)" href="gmms.html" />
     <link rel="prev" title="13. Neural Networks" href="neural-networks.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -198,15 +198,20 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="neural-networks.html">13. Neural Networks</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">14. Model Selection &amp; Evaluation</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gmms.html">15. Gaussian Mixture Models (Clustering)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="factor-analysis.html">16. Factor Analysis (Dimensionality Reduction)</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian Inference</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="prior-and-posterior.html">15. Bayesian Inference: Prior and Posterior</a></li>
-<li class="toctree-l1"><a class="reference internal" href="posterior-predictive.html">16. Bayesian Inference: Posterior Predictive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prior-and-posterior.html">17. Bayesian Inference: Prior and Posterior</a></li>
+<li class="toctree-l1"><a class="reference internal" href="posterior-predictive.html">18. Bayesian Inference: Posterior Predictive</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="time-series.html">17. Time Series (Dynamical Systems)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vaes.html">18. Variational Autoencoders (VAEs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time-series.html">19. Time Series (Dynamical Systems)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vaes.html">20. Variational Autoencoders (VAEs)</a></li>
 </ul>
 
     </div>
@@ -578,13 +583,13 @@ document.write(`
 <h2><span class="section-number">14.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Permalink to this heading">#</a></h2>
 <p><strong>A General Purpose Metric.</strong> Since so far, we fit our models by finding parameters that maximize the data log-likelihood (MLE). Can we also use log-likelihood as an evaluation metric? If we trust this metric for <em>fitting</em> our model, surely we should trust it for <em>evaluation</em> as well. And what’s nice about log-likelihood is that, unlike some of the other metrics we’ll introduce next, it’s not model-specific. We can evaluate the log-likelihood of <em>any</em> probabilistic model.</p>
 <p><strong>Log-Likelihood as an Evaluation Metric.</strong> Recall that the data log-likelihood is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-db5ac878-4568-49fe-a568-6c352098998d">
-<span class="eqno">(14.1)<a class="headerlink" href="#equation-db5ac878-4568-49fe-a568-6c352098998d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4170a74a-e346-4464-a5e9-c69b42c87f1e">
+<span class="eqno">(14.1)<a class="headerlink" href="#equation-4170a74a-e346-4464-a5e9-c69b42c87f1e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \theta) &amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is our entire data set of <span class="math notranslate nohighlight">\(N\)</span> observations, each <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is an observation, and <span class="math notranslate nohighlight">\(\theta\)</span> is the model parameters. However, notice that in this definition, the data log-likelihood grows as <span class="math notranslate nohighlight">\(N\)</span> increases due to the sum. This means that, if our train, validation and test sets each have a different number of points, we cannot compare their log-likelihoods directly. To fix this problem, we instead compute the <em>average</em> log-likelihood (this is just the above equation divided by <span class="math notranslate nohighlight">\(N\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2a5dc70a-b566-4dd1-896a-fd20b7667c91">
-<span class="eqno">(14.2)<a class="headerlink" href="#equation-2a5dc70a-b566-4dd1-896a-fd20b7667c91" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0c6d8796-452a-4902-9f55-09cbc0732fed">
+<span class="eqno">(14.2)<a class="headerlink" href="#equation-0c6d8796-452a-4902-9f55-09cbc0732fed" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Avg. Log-Likelihood} = \frac{1}{N} \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta).
 \end{align}\]</div>
 <div class="admonition-exercise-getting-intuition-for-log-likelihood admonition">
@@ -612,14 +617,14 @@ document.write(`
 <section id="metrics-for-regression">
 <h2><span class="section-number">14.3. </span>Metrics for Regression<a class="headerlink" href="#metrics-for-regression" title="Permalink to this heading">#</a></h2>
 <p><strong>Mean Squared Error (MSE).</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, MSE, specific to regression. This metric can be used together with log-likelihood to paint a clearer picture of model fit. This is, of course, not the only evaluation metric for regression, but it’s a common one, so we’ll focus on it here. For 1-dimensional output data, the MSE is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-398a5c23-4395-4154-a5ba-41ac3e0c79f0">
-<span class="eqno">(14.3)<a class="headerlink" href="#equation-398a5c23-4395-4154-a5ba-41ac3e0c79f0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3c704828-79a4-4db4-bdde-fefc17803d2f">
+<span class="eqno">(14.3)<a class="headerlink" href="#equation-3c704828-79a4-4db4-bdde-fefc17803d2f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{MSE} &amp;= \frac{1}{N} \sum\limits_{n=1}^N (\underbrace{y_n - \widehat{y}_n}_{\text{error}})^2,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(y_n\)</span> is an observation and <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> the model’s prediction. As the name suggests, we compute the error between our model’s prediction and the observation, square it, and average. The MSE can be thought of as a measure of “spread” (or, in statistical lingo, the <em>variance</em>) of the data around the model’s prediction. Hopefully, in contrast to log-likelihood, it’s a little easier to understand, since we may have domain knowledge of what error, <span class="math notranslate nohighlight">\(y_n - \widehat{y}_n\)</span>, is considered high/low.</p>
 <p>But for a probabilistic model, what is the model’s “prediction”? In a probabilistic regression model, we have a <em>distribution</em> of outputs given inputs, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, and a distribution is <em>not</em> a single prediction. Because of this, we have to summarize the conditional distribution using a single value. Here, we will use the mean (which also happens to be the mode—or the most likely value of <span class="math notranslate nohighlight">\(y\)</span>). For our regression model, the mean of the distribion is the “trend,” so</p>
-<div class="amsmath math notranslate nohighlight" id="equation-95b81d94-8034-4392-9aea-265b9e9ece5c">
-<span class="eqno">(14.4)<a class="headerlink" href="#equation-95b81d94-8034-4392-9aea-265b9e9ece5c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-abe4e1eb-38fd-4584-9f22-6d8f992c21c8">
+<span class="eqno">(14.4)<a class="headerlink" href="#equation-abe4e1eb-38fd-4584-9f22-6d8f992c21c8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{y}_n &amp;= \mu(x_n; W^\text{MLE}).
 \end{align}\]</div>
 <div class="admonition-exercise-implement-and-use-mse admonition">
@@ -638,14 +643,14 @@ document.write(`
 <section id="metrics-for-classification">
 <h2><span class="section-number">14.4. </span>Metrics for Classification<a class="headerlink" href="#metrics-for-classification" title="Permalink to this heading">#</a></h2>
 <p><strong>Accuracy.</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, accuracy, that’s specific to classification. Simply put, accuracy is the fraction of predictions the model got correct:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-207f3f47-2b9c-406f-ac20-cd652fcb236c">
-<span class="eqno">(14.5)<a class="headerlink" href="#equation-207f3f47-2b9c-406f-ac20-cd652fcb236c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6fb07437-83b4-46c8-bc17-a2122ec094d4">
+<span class="eqno">(14.5)<a class="headerlink" href="#equation-6fb07437-83b4-46c8-bc17-a2122ec094d4" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Accuracy} &amp;= \frac{1}{N} \underbrace{\sum\limits_{n=1}^N \mathbb{I}(y_n = \widehat{y}_n),}_{\text{count correct predictions}}
 \end{align}\]</div>
 <p>where, as before, <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> is the model’s prediction, and <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an indicator function—a function that evaluates to <span class="math notranslate nohighlight">\(1\)</span> when the condition inside is true and <span class="math notranslate nohighlight">\(0\)</span> otherwise. The sum over the indicators counts the number of correct predictions. When divided by <span class="math notranslate nohighlight">\(N\)</span>, we get the fraction of correct predictions.</p>
 <p>Just like before, a probabilistic model does not make “predictions;” it models a full distribution over outputs given inputs. We, again, have to choose how to summarize this distribution using a single value. Remember that in our classification model, <span class="math notranslate nohighlight">\(\rho(x_n)\)</span> outputted the probability of <span class="math notranslate nohighlight">\(x_n\)</span> belonging to class 1 (vs. class 0). To turn this into a prediction, we will threshold it: if <span class="math notranslate nohighlight">\(\rho(x_n) \geq 0.5\)</span>, we’ll say <span class="math notranslate nohighlight">\(x_n\)</span> belongs to class 1—otherwise, it belongs to class 0. We can formalize this using an indicator function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1c139e74-2db3-4e9b-a205-23aefedfcc45">
-<span class="eqno">(14.6)<a class="headerlink" href="#equation-1c139e74-2db3-4e9b-a205-23aefedfcc45" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2fa6f99b-a2f5-42c2-abfe-90b15ee94507">
+<span class="eqno">(14.6)<a class="headerlink" href="#equation-2fa6f99b-a2f5-42c2-abfe-90b15ee94507" title="Permalink to this equation">#</a></span>\[\begin{align}
 \widehat{y}_n &amp;= \mathbb{I}(\rho(x_n) \geq 0.5)
 \end{align}\]</div>
 <div class="admonition-exercise-the-shortcomings-of-accuracy admonition">
@@ -653,18 +658,18 @@ document.write(`
 <p><strong>Context.</strong> Since the disease is incredibly rare, occurring only in <span class="math notranslate nohighlight">\(0.1\%\)</span> of the population, doctors don’t yet know what are its causes. The doctors have managed to acquire a large fund to collect data about a large swath of the population, ranging from genetic factors to environmental factors (demographics, occupation, diet, physiology, etc.). They just finished collecting the data and have run a preliminary analysis to determine which factors contribute most.</p>
 <p><strong>Challenge.</strong> Even though their model is <span class="math notranslate nohighlight">\(99.9\%\)</span> accurate, they have found that none of the factors seem to matter to the model—how is this possible? They recruited you to help understand what’s going on with their model.</p>
 <p><strong>Part 1:</strong> You decided to inspect the parameters of the model. In the model, <span class="math notranslate nohighlight">\(1\)</span> represents having the disease and <span class="math notranslate nohighlight">\(0\)</span> represents no disease. Lucky for you, the doctors used a linear classification model (so interpreting it is possible):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-04a4b97e-29ae-4398-90b0-a571b689090a">
-<span class="eqno">(14.7)<a class="headerlink" href="#equation-04a4b97e-29ae-4398-90b0-a571b689090a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-394ee9f8-ca3e-433a-8ff6-342d77739300">
+<span class="eqno">(14.7)<a class="headerlink" href="#equation-394ee9f8-ca3e-433a-8ff6-342d77739300" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right) 
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-79f746c7-0679-4b45-979e-10ba64f2a86d">
-<span class="eqno">(14.8)<a class="headerlink" href="#equation-79f746c7-0679-4b45-979e-10ba64f2a86d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-74123579-299f-47c2-93ba-09bda7c77de3">
+<span class="eqno">(14.8)<a class="headerlink" href="#equation-74123579-299f-47c2-93ba-09bda7c77de3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) &amp;= \mathrm{sigmoid}\left( \theta^{(0)} + \sum\limits_{d=1}^{D_x} \theta^{(d)} \cdot x_n^{(d)} \right),
 \end{align}\]</div>
 <p>where the <span class="math notranslate nohighlight">\((d)\)</span>-superscript notation represents the <span class="math notranslate nohighlight">\(d\)</span>th dimension, and <span class="math notranslate nohighlight">\(D_x\)</span> is the dimensionality of the inputs <span class="math notranslate nohighlight">\(x_n\)</span>. When inspecting the parameters, you found that,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4bc88b90-4ee3-4042-9de6-5713b3bea110">
-<span class="eqno">(14.9)<a class="headerlink" href="#equation-4bc88b90-4ee3-4042-9de6-5713b3bea110" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5906e41e-22b6-4dfa-a06b-07f05ba4e336">
+<span class="eqno">(14.9)<a class="headerlink" href="#equation-5906e41e-22b6-4dfa-a06b-07f05ba4e336" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;= [\underbrace{-6.90675}_{\theta^{(0)}}, \underbrace{0.0, 0.0, \dots, 0.0}_{\theta^{(1)}, \dots, \theta^{(D_x)}}].
 \end{align}\]</div>
 <p>Looking at the parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, which dimensions of the input matter most?</p>
@@ -830,11 +835,11 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
       </div>
     </a>
     <a class="right-next"
-       href="prior-and-posterior.html"
+       href="gmms.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">15. </span>Bayesian Inference: Prior and Posterior</p>
+        <p class="prev-next-title"><span class="section-number">15. </span>Gaussian Mixture Models (Clustering)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

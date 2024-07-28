@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>18. Variational Autoencoders (VAEs) &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
+    <title>20. Variational Autoencoders (VAEs) &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
   
   
   
@@ -73,7 +73,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="17. Time Series (Dynamical Systems)" href="time-series.html" />
+    <link rel="prev" title="19. Time Series (Dynamical Systems)" href="time-series.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -197,15 +197,20 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="neural-networks.html">13. Neural Networks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model-selection.html">14. Model Selection &amp; Evaluation</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gmms.html">15. Gaussian Mixture Models (Clustering)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="factor-analysis.html">16. Factor Analysis (Dimensionality Reduction)</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian Inference</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="prior-and-posterior.html">15. Bayesian Inference: Prior and Posterior</a></li>
-<li class="toctree-l1"><a class="reference internal" href="posterior-predictive.html">16. Bayesian Inference: Posterior Predictive</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prior-and-posterior.html">17. Bayesian Inference: Prior and Posterior</a></li>
+<li class="toctree-l1"><a class="reference internal" href="posterior-predictive.html">18. Bayesian Inference: Posterior Predictive</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="time-series.html">17. Time Series (Dynamical Systems)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">18. Variational Autoencoders (VAEs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time-series.html">19. Time Series (Dynamical Systems)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">20. Variational Autoencoders (VAEs)</a></li>
 </ul>
 
     </div>
@@ -352,17 +357,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helpful-identities">18.1. Helpful Identities</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">18.2. Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">18.3. Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model">18.4. The Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">18.5. Demo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">18.6. Inference</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helpful-identities">20.1. Helpful Identities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">20.2. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">20.3. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model">20.4. The Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">20.5. Demo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">20.6. Inference</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#can-we-apply-em">Can we apply EM?</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variational-inference">Variational Inference</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together">18.7. Putting it all together</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together">20.7. Putting it all together</a></li>
 </ul>
             </nav>
         </div>
@@ -375,9 +380,9 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="variational-autoencoders-vaes">
-<h1><span class="section-number">18. </span>Variational Autoencoders (VAEs)<a class="headerlink" href="#variational-autoencoders-vaes" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">20. </span>Variational Autoencoders (VAEs)<a class="headerlink" href="#variational-autoencoders-vaes" title="Permalink to this heading">#</a></h1>
 <section id="helpful-identities">
-<h2><span class="section-number">18.1. </span>Helpful Identities<a class="headerlink" href="#helpful-identities" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">20.1. </span>Helpful Identities<a class="headerlink" href="#helpful-identities" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(I\)</span> is the identity matrix</p></li>
 <li><p><span class="math notranslate nohighlight">\(\log(A \cdot B) = \log A + \log B\)</span></p></li>
@@ -388,7 +393,7 @@ document.write(`
 </ul>
 </section>
 <section id="introduction">
-<h2><span class="section-number">18.2. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">20.2. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
 <p><strong>Motivation:</strong></p>
 <ul class="simple">
 <li><p>Want to be able to generate realistic-looking data (e.g. airport security)</p></li>
@@ -408,7 +413,7 @@ document.write(`
 </ol>
 </section>
 <section id="overview">
-<h2><span class="section-number">18.3. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">20.3. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>Introduce the model</p></li>
 <li><p>Demo</p></li>
@@ -418,23 +423,23 @@ document.write(`
 </ol>
 </section>
 <section id="the-model">
-<h2><span class="section-number">18.4. </span>The Model<a class="headerlink" href="#the-model" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">20.4. </span>The Model<a class="headerlink" href="#the-model" title="Permalink to this heading">#</a></h2>
 <p><strong>Model:</strong> Variational Autoencoder / Non-linear Factor Analysis</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0322492e-d05c-4170-81af-f9ee5cb04e1d">
-<span class="eqno">(18.1)<a class="headerlink" href="#equation-0322492e-d05c-4170-81af-f9ee5cb04e1d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-79debd3b-07e2-4d5b-944c-d3368cb664fb">
+<span class="eqno">(20.1)<a class="headerlink" href="#equation-79debd3b-07e2-4d5b-944c-d3368cb664fb" title="Permalink to this equation">#</a></span>\[\begin{align}
 z &amp;\sim p(z) = \mathcal{N}(0, I) \\
 x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 \end{align}\]</div>
 <p>When <span class="math notranslate nohighlight">\(f(z; \theta)\)</span> is a linear function, this model is known as <strong>factor analysis</strong>.</p>
 <p><strong>Picture for intuition:</strong> TODO.</p>
 <p><strong>Inference Goal:</strong> maximize the likelihood of the data under the model (MLE)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e7c096b-c4af-4772-934c-fc9330084987">
-<span class="eqno">(18.2)<a class="headerlink" href="#equation-7e7c096b-c4af-4772-934c-fc9330084987" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-75752139-7023-4b04-99df-8eb7fe556347">
+<span class="eqno">(20.2)<a class="headerlink" href="#equation-75752139-7023-4b04-99df-8eb7fe556347" title="Permalink to this equation">#</a></span>\[\begin{align}
 \max\limits_\theta \frac{1}{N} \sum\limits_{n=1}^N \log p(x_n; \theta)
 \end{align}\]</div>
 </section>
 <section id="demo">
-<h2><span class="section-number">18.5. </span>Demo<a class="headerlink" href="#demo" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">20.5. </span>Demo<a class="headerlink" href="#demo" title="Permalink to this heading">#</a></h2>
 <p><strong>Links:</strong></p>
 <ul class="simple">
 <li><p><a class="reference external" href="http://taylordenouden.com/VAE-Latent-Space-Explorer/" rel="noopener noreferrer" target="_blank">Demo</a></p></li>
@@ -453,10 +458,10 @@ x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 </ol>
 </section>
 <section id="inference">
-<h2><span class="section-number">18.6. </span>Inference<a class="headerlink" href="#inference" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">20.6. </span>Inference<a class="headerlink" href="#inference" title="Permalink to this heading">#</a></h2>
 <p><strong>Can we use the naive MLE?</strong> MLE for this model is intractable:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3a473aa1-480d-4506-a07a-37ca52d0bca0">
-<span class="eqno">(18.3)<a class="headerlink" href="#equation-3a473aa1-480d-4506-a07a-37ca52d0bca0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c243680b-614a-434c-aed3-0b4f4ddf6bca">
+<span class="eqno">(20.3)<a class="headerlink" href="#equation-c243680b-614a-434c-aed3-0b4f4ddf6bca" title="Permalink to this equation">#</a></span>\[\begin{align}
 \max\limits_\theta \frac{1}{N} \sum\limits_{n=1}^N \log p(x_n; \theta)
 &amp;= \max\limits_\theta \frac{1}{N} \sum\limits_{n=1}^N \log \underbrace{\mathbb{E}_{p(z_n)} [ p(x_n | z_n; \theta) ]}_{\text{intractable}}
 \end{align}\]</div>
@@ -468,8 +473,8 @@ x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 <section id="can-we-apply-em">
 <h3>Can we apply EM?<a class="headerlink" href="#can-we-apply-em" title="Permalink to this heading">#</a></h3>
 <p>Let’s derive it:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a7c4fb5d-a7a1-4f2a-9ca6-3a458911bd08">
-<span class="eqno">(18.4)<a class="headerlink" href="#equation-a7c4fb5d-a7a1-4f2a-9ca6-3a458911bd08" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a12818e7-8238-4d0c-8700-200dc8a6ef30">
+<span class="eqno">(20.4)<a class="headerlink" href="#equation-a12818e7-8238-4d0c-8700-200dc8a6ef30" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(x_n; \theta) 
 &amp;= \log \mathbb{E}_{p(z_n)} [ p(x_n | z_n; \theta) ] \\
 &amp;= \log \int\limits_{z_n} p(x_n | z_n; \theta) p(z_n) d z_n \\
@@ -477,13 +482,13 @@ x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 &amp;= \log \mathbb{E}_{q(z_n)} \left[ \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right] \quad \text{Importance Sampling: how to select } q(z_n)? \\
 &amp;\geq \mathbb{E}_{q(z_n)} \left[ \log \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right] \quad \text{Soln: optimize lower bound jointly w.r.t } \theta, q(z_n)
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-8a63d93f-f63f-467a-9f3b-7dbe6906992e">
-<span class="eqno">(18.5)<a class="headerlink" href="#equation-8a63d93f-f63f-467a-9f3b-7dbe6906992e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5247a45d-87a8-4c7e-8657-8ffbb84262b4">
+<span class="eqno">(20.5)<a class="headerlink" href="#equation-5247a45d-87a8-4c7e-8657-8ffbb84262b4" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{\frac{1}{N} \sum\limits_{n=1}^N \log p(x_n; \theta)}_{\text{log marginal/incomplete likelihood}} \geq \underbrace{\frac{1}{N} \sum\limits_{n=1}^N \mathbb{E}_{q(z_n)} \left[ \log \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right]}_{\text{ELBO}(\theta, q(z_1), \dots, q(z_N))}
 \end{align}\]</div>
 <p>In EM, this is the objective we optimize via coordinate ascent. Before applying coordinate ascent, let’s understand the <strong>tightness</strong> of this bound.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-68c0bffd-8b20-40a5-9ba5-8c675dd75e7b">
-<span class="eqno">(18.6)<a class="headerlink" href="#equation-68c0bffd-8b20-40a5-9ba5-8c675dd75e7b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2e8599c1-ad17-454f-a51e-59b9c18284e8">
+<span class="eqno">(20.6)<a class="headerlink" href="#equation-2e8599c1-ad17-454f-a51e-59b9c18284e8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{1}{N} \sum\limits_{n=1}^N \log p(x_n; \theta) 
 &amp;= \underbrace{\frac{1}{N} \sum\limits_{n=1}^N  \mathbb{E}_{q(z_n)} \left[ \log \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right]}_{\text{ELBO}(\theta, q(z_1), \dots, q(z_N))} + \underbrace{\frac{1}{N} \sum\limits_{n=1}^N \text{KL} \left[ q(z_n) || p(z_n | x_n; \theta) \right]}_{\geq 0 \quad \text{&quot;gap&quot;}}
 \end{align}\]</div>
@@ -491,8 +496,8 @@ x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 <ul class="simple">
 <li><p><strong>E-step:</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-16d4e076-68df-41f2-87e1-b3684ec7cd8c">
-<span class="eqno">(18.7)<a class="headerlink" href="#equation-16d4e076-68df-41f2-87e1-b3684ec7cd8c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2658b79f-edd2-4634-baea-558e4132cba9">
+<span class="eqno">(20.7)<a class="headerlink" href="#equation-2658b79f-edd2-4634-baea-558e4132cba9" title="Permalink to this equation">#</a></span>\[\begin{align}
 q^\text{new}(z_1) &amp;= \mathrm{argmax}_{q(z_1)} \quad \text{ELBO}(\theta^\text{old}, q(z_1), \dots, q^\text{old}(z_N)) \\
 &amp;\vdots \\
 q^\text{new}(z_N) &amp;= \mathrm{argmax}_{q(z_N)} \quad \text{ELBO}(\theta^\text{old}, q^\text{old}(z_1), \dots, q(z_N))
@@ -500,8 +505,8 @@ q^\text{new}(z_N) &amp;= \mathrm{argmax}_{q(z_N)} \quad \text{ELBO}(\theta^\text
 <ul class="simple">
 <li><p><strong>M-step:</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-a39cf29b-30bf-4b67-a439-3a52f9fdf55b">
-<span class="eqno">(18.8)<a class="headerlink" href="#equation-a39cf29b-30bf-4b67-a439-3a52f9fdf55b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-19a1c939-e985-4d9d-85a6-b01a5d58e848">
+<span class="eqno">(20.8)<a class="headerlink" href="#equation-19a1c939-e985-4d9d-85a6-b01a5d58e848" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{new} = \mathrm{argmax}_{\theta} \quad &amp;\text{ELBO}(\theta, q^\text{old}(z_1), \dots, q^\text{old}(z_N)) 
 \end{align}\]</div>
 <ul class="simple">
@@ -518,43 +523,43 @@ q^\text{new}(z_N) &amp;= \mathrm{argmax}_{q(z_N)} \quad \text{ELBO}(\theta^\text
 <p>We can! But we’ll need to make a few changes to our inference (in 3 parts).</p>
 <p><strong>Part 1: Select form for <span class="math notranslate nohighlight">\(q(z_n)\)</span>.</strong> Previously, we set <span class="math notranslate nohighlight">\(q^\text{new}(z_n) = p(z_n | x_n; \theta^\text{old})\)</span> using an analytic formula. However, when such a formula does not exist, what can we do? Let’s approximate the posterior.</p>
 <p>That is, we’ll set <span class="math notranslate nohighlight">\(q(z_n)\)</span> to come from some family of distributions that’s easy to work with (i.e. that we can sample from and for which we can evaluate the PDF). This distribution will not capture the posterior perfectly, but will hopefully capture it well enough. We’ll call this family of distributions a <strong>variational family</strong>. One common choice is a diagonal Gaussian:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f9e1bebe-1630-4e23-89c2-4cd5cbad5b9d">
-<span class="eqno">(18.9)<a class="headerlink" href="#equation-f9e1bebe-1630-4e23-89c2-4cd5cbad5b9d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c7584265-840e-44f6-8767-ee31b2c08a32">
+<span class="eqno">(20.9)<a class="headerlink" href="#equation-c7584265-840e-44f6-8767-ee31b2c08a32" title="Permalink to this equation">#</a></span>\[\begin{align}
 q(z_n) = \mathcal{N}(\mu_n, \sigma^2_n)
 \end{align}\]</div>
 <p>Now, when we maximize the ELBO, we do so by taking gradients with respect to the parameters of <span class="math notranslate nohighlight">\(q(z_n)\)</span>, as opposed to relative to <span class="math notranslate nohighlight">\(q(z_n)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-61e2e720-1cfc-4e6e-bc74-92383837535a">
-<span class="eqno">(18.10)<a class="headerlink" href="#equation-61e2e720-1cfc-4e6e-bc74-92383837535a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-381b483c-888c-40ec-b440-1e9bdf915870">
+<span class="eqno">(20.10)<a class="headerlink" href="#equation-381b483c-888c-40ec-b440-1e9bdf915870" title="Permalink to this equation">#</a></span>\[\begin{align}
 \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \text{ELBO}(\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N) 
 \end{align}\]</div>
 <p><strong>Part 2: Reparameterization Trick.</strong></p>
-<div class="amsmath math notranslate nohighlight" id="equation-77ebc640-f434-49a3-83d6-e751029f9870">
-<span class="eqno">(18.11)<a class="headerlink" href="#equation-77ebc640-f434-49a3-83d6-e751029f9870" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b5fc19d6-14e1-471a-a3ff-928be3b71abb">
+<span class="eqno">(20.11)<a class="headerlink" href="#equation-b5fc19d6-14e1-471a-a3ff-928be3b71abb" title="Permalink to this equation">#</a></span>\[\begin{align}
 \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \text{ELBO}(\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N)
 &amp;= \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \frac{1}{N} \sum\limits_{n=1}^N \mathbb{E}_{q(z_n)} \left[ \log \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right] \\
 &amp;\approx \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \frac{1}{N} \sum\limits_{n=1}^N \frac{1}{S} \sum\limits_{s=1}^S \left[ \log \frac{p(x_n | z_n^{(s)}; \theta) p(z_n^{(s)})}{q(z_n^{(s)})} \right]
 \end{align}\]</div>
 <p>But how can we take a gradient with respect to a <strong>sample</strong>, <span class="math notranslate nohighlight">\(z_n^{(s)}\)</span>? We can use the following identity (know as the <strong>reparameterization trick</strong>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1efcae90-1065-4159-809e-2f4fff585e7e">
-<span class="eqno">(18.12)<a class="headerlink" href="#equation-1efcae90-1065-4159-809e-2f4fff585e7e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-01c48a0f-110f-4ad9-a997-9859ca36dada">
+<span class="eqno">(20.12)<a class="headerlink" href="#equation-01c48a0f-110f-4ad9-a997-9859ca36dada" title="Permalink to this equation">#</a></span>\[\begin{align}
 z_n^{(s)} &amp;= r(\eta_n^{(s)}, \sigma_n, \mu_n) \\
 &amp;= \eta_n^{(s)} \cdot \sigma_n + \mu_n, \quad \eta_n^{(s)} \sim \mathcal{N}(0, I)
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-0cf85c3d-bc8c-4ea9-acac-aaad92b954ff">
-<span class="eqno">(18.13)<a class="headerlink" href="#equation-0cf85c3d-bc8c-4ea9-acac-aaad92b954ff" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3ba20132-8e40-4a62-851a-3e7ccebf9aed">
+<span class="eqno">(20.13)<a class="headerlink" href="#equation-3ba20132-8e40-4a62-851a-3e7ccebf9aed" title="Permalink to this equation">#</a></span>\[\begin{align}
 \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \text{ELBO}(\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N)
 &amp;= \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \frac{1}{N} \sum\limits_{n=1}^N \mathbb{E}_{p(\eta)} \left[ \log \frac{p(x_n | r(\eta_n^{(s)}, \sigma_n, \mu_n); \theta) p(r(\eta_n^{(s)}, \sigma_n, \mu_n))}{q(r(\eta_n^{(s)}, \sigma_n, \mu_n))} \right] \\
 \end{align}\]</div>
 <p><strong>Part 3: Amortize Inference.</strong> The above gradients are over a very large number of parameters (specifically <span class="math notranslate nohighlight">\(N\)</span>), which does not scale well. Can we make this more efficient?</p>
 <p>Yes! By <strong>amortizing</strong>: we set <span class="math notranslate nohighlight">\(q(z_n) = \mathcal{N}(\mu(x_n; \phi), \sigma^2(x_n; \phi))\)</span>, where <span class="math notranslate nohighlight">\(\mu(\cdot; \phi), \sigma^2(\cdot; \phi)\)</span> are neural networks parameterized by <span class="math notranslate nohighlight">\(\phi\)</span>. Now, we only need to compute gradients with respect to <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c2100a74-f7d5-404f-a42c-1c0bc5c62f8a">
-<span class="eqno">(18.14)<a class="headerlink" href="#equation-c2100a74-f7d5-404f-a42c-1c0bc5c62f8a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-26336da1-f159-41a9-855a-8b98144483cd">
+<span class="eqno">(20.14)<a class="headerlink" href="#equation-26336da1-f159-41a9-855a-8b98144483cd" title="Permalink to this equation">#</a></span>\[\begin{align}
 \nabla_{\theta, \phi} \text{ELBO}(\theta, \phi)
 \end{align}\]</div>
 </section>
 </section>
 <section id="putting-it-all-together">
-<h2><span class="section-number">18.7. </span>Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">20.7. </span>Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this heading">#</a></h2>
 <img alt="https://miro.medium.com/max/982/1*6MxYa1CLA4Kuy0i65Wc4sw.png" src="https://miro.medium.com/max/982/1*6MxYa1CLA4Kuy0i65Wc4sw.png" />
 </section>
 </section>
@@ -596,7 +601,7 @@ z_n^{(s)} &amp;= r(\eta_n^{(s)}, \sigma_n, \mu_n) \\
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">17. </span>Time Series (Dynamical Systems)</p>
+        <p class="prev-next-title"><span class="section-number">19. </span>Time Series (Dynamical Systems)</p>
       </div>
     </a>
 </div></div>
@@ -617,17 +622,17 @@ z_n^{(s)} &amp;= r(\eta_n^{(s)}, \sigma_n, \mu_n) \\
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helpful-identities">18.1. Helpful Identities</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">18.2. Introduction</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">18.3. Overview</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model">18.4. The Model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">18.5. Demo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">18.6. Inference</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#helpful-identities">20.1. Helpful Identities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">20.2. Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">20.3. Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model">20.4. The Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demo">20.5. Demo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inference">20.6. Inference</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#can-we-apply-em">Can we apply EM?</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variational-inference">Variational Inference</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together">18.7. Putting it all together</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together">20.7. Putting it all together</a></li>
 </ul>
   </nav></div>
 

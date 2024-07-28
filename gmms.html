@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Academic Support &amp; Office Hours &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
+    <title>15. Gaussian Mixture Models (Clustering) &#8212; Probabilistic Foundations of Machine Learning (CS349)</title>
   
   
   
@@ -66,13 +66,15 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'help';</script>
-    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/help.html" />
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'gmms';</script>
+    <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/gmms.html" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Skills Check" href="skills-check.html" />
-    <link rel="prev" title="Schedule" href="schedule.html" />
+    <link rel="next" title="16. Factor Analysis (Dimensionality Reduction)" href="factor-analysis.html" />
+    <link rel="prev" title="14. Model Selection &amp; Evaluation" href="model-selection.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -164,10 +166,10 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Course</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Academic Support &amp; Office Hours</a></li>
+<li class="toctree-l1"><a class="reference internal" href="help.html">Academic Support &amp; Office Hours</a></li>
 <li class="toctree-l1"><a class="reference internal" href="skills-check.html">Skills Check</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
@@ -197,8 +199,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="model-selection.html">14. Model Selection &amp; Evaluation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Models</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="gmms.html">15. Gaussian Mixture Models (Clustering)</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">15. Gaussian Mixture Models (Clustering)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="factor-analysis.html">16. Factor Analysis (Dimensionality Reduction)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian Inference</span></p>
@@ -264,7 +266,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/help.md" target="_blank"
+      <li><a href="_sources/gmms.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -274,7 +276,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -333,7 +335,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -344,11 +348,22 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Academic Support & Office Hours</h1>
+    <h1>Gaussian Mixture Models (Clustering)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latent-variable-models">15.1. Latent Variable Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-law-of-total-probability-discrete">15.2. The Law of Total Probability (Discrete)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-for-gmms">15.3. Maximum Likelihood for GMMs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gmms-in-numpyro">15.4. GMMs in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -358,8 +373,41 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="academic-support-office-hours">
-<h1>Academic Support &amp; Office Hours<a class="headerlink" href="#academic-support-office-hours" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="gaussian-mixture-models-clustering">
+<h1><span class="section-number">15. </span>Gaussian Mixture Models (Clustering)<a class="headerlink" href="#gaussian-mixture-models-clustering" title="Permalink to this heading">#</a></h1>
+<p><strong>Context:</strong> Sometimes our data contains hidden structure—structure that we’d like to uncover in order to answer some scientific question.</p>
+<p><strong>Challenge:</strong> TODO</p>
+<p><strong>Outline:</strong> TODO</p>
+<p><strong>Data:</strong> TODO</p>
+<section id="latent-variable-models">
+<h2><span class="section-number">15.1. </span>Latent Variable Models<a class="headerlink" href="#latent-variable-models" title="Permalink to this heading">#</a></h2>
+<p>TODO:</p>
+<ul class="simple">
+<li><p>Introduce concept of latent variables</p></li>
+<li><p>Introduce GMMs as a specific model and explain its usefulness (also explain its relation to “clustering”) &lt;– introduce its generative process and its DGM</p></li>
+<li><p>Exercise: (a) describe scenarios and as students to say which variable is latent, (b) ask them to come up with scenarios with latent variables</p></li>
+<li><p>Highlight the problem: what’s the MLE for this model?</p></li>
+</ul>
+</section>
+<section id="the-law-of-total-probability-discrete">
+<h2><span class="section-number">15.2. </span>The Law of Total Probability (Discrete)<a class="headerlink" href="#the-law-of-total-probability-discrete" title="Permalink to this heading">#</a></h2>
+<p><strong>Definition.</strong> Suppose you have two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> with joint distribution, and suppose that <span class="math notranslate nohighlight">\(A\)</span> is discrete. Then the law of total probability says we can compute the marginal <span class="math notranslate nohighlight">\(p_B(b)\)</span> from the joint <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span> as follows:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-95ad4945-9b9c-49b1-b3df-e87d7e6cfc3f">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-95ad4945-9b9c-49b1-b3df-e87d7e6cfc3f" title="Permalink to this equation">#</a></span>\[\begin{align}
+p_B(b) &amp;= \sum\limits_{a \in S_A} p_{A, B}(a, b)
+\end{align}\]</div>
+<p><strong>Intuition.</strong></p>
+</section>
+<section id="maximum-likelihood-for-gmms">
+<h2><span class="section-number">15.3. </span>Maximum Likelihood for GMMs<a class="headerlink" href="#maximum-likelihood-for-gmms" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="gmms-in-numpyro">
+<h2><span class="section-number">15.4. </span>GMMs in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#gmms-in-numpyro" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Ask to generate samples</p></li>
+<li><p>Ask to infer clusters</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -394,20 +442,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="schedule.html"
+       href="model-selection.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Schedule</p>
+        <p class="prev-next-title"><span class="section-number">14. </span>Model Selection &amp; Evaluation</p>
       </div>
     </a>
     <a class="right-next"
-       href="skills-check.html"
+       href="factor-analysis.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Skills Check</p>
+        <p class="prev-next-title"><span class="section-number">16. </span>Factor Analysis (Dimensionality Reduction)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -420,6 +468,23 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latent-variable-models">15.1. Latent Variable Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-law-of-total-probability-discrete">15.2. The Law of Total Probability (Discrete)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-for-gmms">15.3. Maximum Likelihood for GMMs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gmms-in-numpyro">15.4. GMMs in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
