@@ -179,3 +179,41 @@ def cs349_load_trained_numpyro_model(fname):
 
     return H.substitute(r['model'], data=r['parameters'])
     
+
+def cs349_mle_continuous_lvm(model, optimizer, key, num_steps, *args, **kwargs):
+    '''
+    A function to perform MLE on a numpyro model with continuous latent variables.
+    Note: this function assumes NO DISCRETE latent variables.
+
+    Arguments:
+        model: a function representing a numpyro model
+        optimizer: a numpyro optimizer (e.g. optimizer = numpyro.optim.Adam(step_size=0.01))
+        key: a random generator key
+        num_steps: the number of iterations of gradient descent 
+        *args, **kwargs: captures all arguments your model takes in
+    
+    Returns: An object containing,
+        model_mle: The model with parameters fixed those that maximize the likelihood
+        parameters: The values of the parameters that maximize the likelihood
+        losses: the loss function for the MLE for every step of gradient descent
+        log_likelihood: the log-likelihood of the model for every step of gradient descent
+    '''
+
+    guide = numpyro.infer.autoguide.AutoDiagonalNormal(model)
+        
+    svi = numpyro.infer.SVI(
+        model, guide, optimizer, loss=numpyro.infer.Trace_ELBO(),
+    )
+
+    svi_result = svi.run(key, num_steps, *args, **kwargs)
+    print('Done.')
+    
+    params = svi_result.params    
+    result = argparse.Namespace(
+        model_mle=H.substitute(model, data=params), 
+        parameters_mle=params,
+        losses=svi_result.losses,
+        log_likelihood=-svi_result.losses,        
+    )
+
+    return result

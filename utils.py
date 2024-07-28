@@ -1,9 +1,12 @@
+import math
 import glob
 import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
+from mpl_toolkits.axes_grid1 import ImageGrid
 from sklearn.inspection import DecisionBoundaryDisplay
 import jax
 import jax.numpy as jnp
+import jax.example_libraries.stax as stax
 
 # For loading pre-trained models
 import numpyro.distributions.constraints as C
@@ -15,6 +18,11 @@ from cs349 import *
 
 jax.config.update('jax_enable_x64', True)
 
+
+
+###############################################################################
+# Utiliites for Units on Directed Graphical Models
+###############################################################################
 
 
 def convert_categorical_to_int(d, categories):
@@ -29,6 +37,11 @@ def convert_day_of_week_to_int(d):
     return convert_categorical_to_int(d, [
         'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
     ])
+
+
+###############################################################################
+# Utiliites for Units on Predictive Models
+###############################################################################
 
 
 def plot_classifier_of_control_vs_age_and_dose(
@@ -193,3 +206,84 @@ def plot_all_regression_models_of_comfort_vs_intensity(data, models):
 
     plt.tight_layout()
     plt.show()
+
+
+###############################################################################
+# Utiliites for Units on Generative Models
+###############################################################################
+
+
+def neural_network_fn(name, N, layers, activation_fn=stax.LeakyRelu):
+    '''
+    For use in the dimensionality reduction unit unit: creates a neural network function
+
+    Arguments:
+        name: name of neural network (should be unique for each numpyro model)
+        N: number of observations (usually this is the size of the plate)
+        layers: a list representing the number of hidden layers in the network
+                e.g. [2, 50, 100, 5] is a neural network that transform 
+                2-dimensional inputs into 5-dimensional outputs using two hidden layers, 
+                one with 50 and one with 100 neurons.
+        activation_fn: choice of activation function
+
+    Return:
+        A neural network function for use in a numpyro model. 
+        In calling this function, the network's parameters will be 
+        automatically created and initialized:
+
+        fn = neural_network_fn('NN', 100, [2, 50, 100, 5])
+        
+        The network can then be used as follows:
+
+        y = fn(x)        
+    '''
+    
+    modules = []
+    for idx, out_dim in enumerate(layers[1:]):
+        modules.append(stax.Dense(
+            out_dim, W_init=stax.randn(),
+        ))
+            
+        if idx < len(layers) - 2:
+            modules.append(activation_fn)
+
+    return numpyro.module(
+        name,
+        stax.serial(*modules),
+        input_shape=(N, layers[0]),
+    )
+        
+
+def visualize_microscope_samples(samples):
+    '''
+    For use in the dimensionality reduction unit unit: visualizes samples
+
+    Arguments:
+        samples: An (S, 24 * 24)-shaped array of generated samples
+                 where S is the number of samples
+
+    Return:
+        Nothing
+    '''
+    
+    chex.assert_rank(samples, 2)
+    chex.assert_axis_dimension(samples, -1, 24 * 24)
+
+    width = math.ceil(math.sqrt(samples.shape[0]))
+
+    fig = plt.figure(figsize=(width, width))
+    grid = ImageGrid(
+        fig, 111,
+        nrows_ncols=(width, width),  
+        axes_pad=0.0,
+        share_all=True,
+    )
+
+    grid[0].get_xaxis().set_ticks([])    
+    grid[0].get_yaxis().set_ticks([])
+    
+    for ax, im in zip(grid, samples):
+        ax.imshow(im.reshape(24, 24), cmap='gray', vmin=0.0, vmax=1.0)
+
+    plt.show()
+

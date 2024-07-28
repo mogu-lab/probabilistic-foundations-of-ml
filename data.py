@@ -1,7 +1,9 @@
 import argparse
 from collections import defaultdict
 import os
+import glob
 
+from PIL import Image
 import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 import pandas as pd
@@ -169,7 +171,7 @@ def generate_IHH_ER_data_discrete():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv(os.path.join('data', 'IHH-ER.csv'))
+    df.to_csv(os.path.join(DATA_DIR, 'IHH-ER.csv'))
 
 
 #########################################################################
@@ -221,7 +223,7 @@ def generate_IHH_CTR_data_discrete_continuous():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv(os.path.join('data', 'IHH-CTR.csv'))
+    df.to_csv(os.path.join(DATA_DIR, 'IHH-CTR.csv'))
 
 
 #########################################################################
@@ -314,10 +316,10 @@ def generate_IHH_CGLF_data_regression():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv(os.path.join('data', 'IHH-CTR-CGLF-regression-augmented.csv'))
+    df.to_csv(os.path.join(DATA_DIR, 'IHH-CTR-CGLF-regression-augmented.csv'))
 
     df.drop(columns=['Age']).to_csv(
-        os.path.join('data', 'IHH-CTR-CGLF-regression.csv'),
+        os.path.join(DATA_DIR, 'IHH-CTR-CGLF-regression.csv'),
     )
 
 
@@ -384,9 +386,22 @@ def generate_IHH_CGLF_data_classification():
     })
 
     df.index.name = 'Patient ID'
-    df.to_csv(os.path.join('data', 'IHH-CTR-CGLF-classification.csv'))
+    df.to_csv(os.path.join(DATA_DIR, 'IHH-CTR-CGLF-classification.csv'))
 
 
+
+def IHH_microscope_data():
+    '''
+    Data from:
+    https://huggingface.co/datasets/calcuis/pixel-character
+    '''
+    images = []
+    for fname in sorted(glob.glob('raw/pixel_characters/microscope_img/*.png')):
+        im = Image.open(fname).convert('L')
+        images.append((jnp.array(im) / 255.0).reshape(1, -1))
+
+    images = jnp.vstack(images)
+    jnp.save(os.path.join(DATA_DIR, 'microscope.npy'), images)
 
 
     
@@ -395,6 +410,7 @@ def main():
     #generate_IHH_CTR_data_discrete_continuous()
     #generate_IHH_CGLF_data_regression()
     #generate_IHH_CGLF_data_classification()
+    #IHH_microscope_data()
     pass
     
         
