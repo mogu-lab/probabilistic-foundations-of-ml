@@ -375,10 +375,146 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="gaussian-mixture-models-clustering">
 <h1><span class="section-number">15. </span>Gaussian Mixture Models (Clustering)<a class="headerlink" href="#gaussian-mixture-models-clustering" title="Permalink to this heading">#</a></h1>
-<p><strong>Context:</strong> Sometimes our data contains hidden structure—structure that we’d like to uncover in order to answer some scientific question.</p>
-<p><strong>Challenge:</strong> TODO</p>
-<p><strong>Outline:</strong> TODO</p>
-<p><strong>Data:</strong> TODO</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Context:</strong> Sometimes our data contains hidden structure—structure that we’d like to uncover in order to answer some scientific question. For example, recall the data set we analyzed in the unit on continuous probability from IHH’s Center for Telekinesis Research (CTR). The researchers at the IHH’s CTR study the propensity of intergalactic beings for telekinesis—the ability. They were interested in understanding how different physiological conditions affect a being’s telekinetic abilities. That is, they observed each patient’s telekinetic-ability and wanted to understand how it related to some underlying condition (allergic reaction, intoxication, and entangled antennas). In their specific case, their data did contain the underlying condition. However, often times, our data doesn’t contain this information. In such cases, our goal is to <em>uncover</em> the underlying types of patients. Doing so may help identify patients that benefit from different treatments. For example, in addition to each patient’s underlying physiological condition, their telekinetic ability could have been impacted by environmental factors growing up, their genetics, etc. It’s hard to know a priori which of these factors are truly important, so its not worth investing in collecting all this data (which is expensive).</p>
+<p><strong>Challenge:</strong> But how can we possibly uncover a variable that’s not in the data? By making assumptions about the distribution of this variable, as well as how it relates to the other variables in the data, we can! In statistical lingo, such <em>unobserved</em> variables are called <em>latent</em> variables. As we will show here, there’s only one rule of probability we need to learn in order to use our existing toolkit to model latent variables.</p>
+<p><strong>Outline:</strong></p>
+<ul class="simple">
+<li><p>Introduce latent variable models, as well as our first latent variable model (LVM)—the Gaussian Mixture Model (GMM)</p></li>
+<li><p>Introduce the law of total probability (in the descrete case), which will allow us to compute the MLE for LVMs</p></li>
+<li><p>Compute the MLE for the GMM</p></li>
+<li><p>Implement a GMM in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></p></li>
+</ul>
+<p><strong>Data:</strong> We will start by modeling the data introduced in the chapter on continuous probability. The data includes two variables—the patient’s telekinetic ability, and their underlying condition. We will <em>pretend</em> that we did not observe their underlying condition. Our goal will then be to <em>infer</em> it given their telekinetic ability. Let’s remind ourselves what the data looks like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import a bunch of libraries we&#39;ll be using below</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Load the data into a pandas dataframe</span>
+<span class="n">csv_fname</span> <span class="o">=</span> <span class="s1">&#39;data/IHH-CTR.csv&#39;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">csv_fname</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;Patient ID&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print a random sample of patients, just to see what&#39;s in the data</span>
+<span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Condition</th>
+      <th>Telekinetic-Ability</th>
+    </tr>
+    <tr>
+      <th>Patient ID</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>398</th>
+      <td>Allergic Reaction</td>
+      <td>0.510423</td>
+    </tr>
+    <tr>
+      <th>3833</th>
+      <td>Allergic Reaction</td>
+      <td>0.479960</td>
+    </tr>
+    <tr>
+      <th>4836</th>
+      <td>Intoxication</td>
+      <td>2.043218</td>
+    </tr>
+    <tr>
+      <th>4572</th>
+      <td>Allergic Reaction</td>
+      <td>-0.443333</td>
+    </tr>
+    <tr>
+      <th>636</th>
+      <td>Intoxication</td>
+      <td>1.423190</td>
+    </tr>
+    <tr>
+      <th>2545</th>
+      <td>Intoxication</td>
+      <td>1.392568</td>
+    </tr>
+    <tr>
+      <th>1161</th>
+      <td>Intoxication</td>
+      <td>2.110151</td>
+    </tr>
+    <tr>
+      <th>2230</th>
+      <td>Intoxication</td>
+      <td>2.102866</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>Intoxication</td>
+      <td>1.865081</td>
+    </tr>
+    <tr>
+      <th>2530</th>
+      <td>Allergic Reaction</td>
+      <td>0.401414</td>
+    </tr>
+    <tr>
+      <th>4070</th>
+      <td>Intoxication</td>
+      <td>2.271342</td>
+    </tr>
+    <tr>
+      <th>1261</th>
+      <td>Allergic Reaction</td>
+      <td>-0.455159</td>
+    </tr>
+    <tr>
+      <th>4682</th>
+      <td>Entangled Antennas</td>
+      <td>-1.713834</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>Intoxication</td>
+      <td>2.000120</td>
+    </tr>
+    <tr>
+      <th>906</th>
+      <td>Intoxication</td>
+      <td>1.693633</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <section id="latent-variable-models">
 <h2><span class="section-number">15.1. </span>Latent Variable Models<a class="headerlink" href="#latent-variable-models" title="Permalink to this heading">#</a></h2>
 <p>TODO:</p>
@@ -392,8 +528,8 @@ document.write(`
 <section id="the-law-of-total-probability-discrete">
 <h2><span class="section-number">15.2. </span>The Law of Total Probability (Discrete)<a class="headerlink" href="#the-law-of-total-probability-discrete" title="Permalink to this heading">#</a></h2>
 <p><strong>Definition.</strong> Suppose you have two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> with joint distribution, and suppose that <span class="math notranslate nohighlight">\(A\)</span> is discrete. Then the law of total probability says we can compute the marginal <span class="math notranslate nohighlight">\(p_B(b)\)</span> from the joint <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span> as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-95ad4945-9b9c-49b1-b3df-e87d7e6cfc3f">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-95ad4945-9b9c-49b1-b3df-e87d7e6cfc3f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-21349fbe-8fba-40e9-a20c-7a040f7ca880">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-21349fbe-8fba-40e9-a20c-7a040f7ca880" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_B(b) &amp;= \sum\limits_{a \in S_A} p_{A, B}(a, b)
 \end{align}\]</div>
 <p><strong>Intuition.</strong></p>
