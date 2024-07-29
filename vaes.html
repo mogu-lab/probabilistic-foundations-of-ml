@@ -425,16 +425,16 @@ document.write(`
 <section id="the-model">
 <h2><span class="section-number">20.4. </span>The Model<a class="headerlink" href="#the-model" title="Permalink to this heading">#</a></h2>
 <p><strong>Model:</strong> Variational Autoencoder / Non-linear Factor Analysis</p>
-<div class="amsmath math notranslate nohighlight" id="equation-49296ab2-2dbb-42c6-acb4-984e7ca8bdc9">
-<span class="eqno">(20.1)<a class="headerlink" href="#equation-49296ab2-2dbb-42c6-acb4-984e7ca8bdc9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9fb32a50-bb83-4668-bb22-1e5f586f611e">
+<span class="eqno">(20.1)<a class="headerlink" href="#equation-9fb32a50-bb83-4668-bb22-1e5f586f611e" title="Permalink to this equation">#</a></span>\[\begin{align}
 z &amp;\sim p(z) = \mathcal{N}(0, I) \\
 x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 \end{align}\]</div>
 <p>When <span class="math notranslate nohighlight">\(f(z; \theta)\)</span> is a linear function, this model is known as <strong>factor analysis</strong>.</p>
 <p><strong>Picture for intuition:</strong> TODO.</p>
 <p><strong>Inference Goal:</strong> maximize the likelihood of the data under the model (MLE)</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c63ab84c-c640-470f-96c2-22e00cf97ca4">
-<span class="eqno">(20.2)<a class="headerlink" href="#equation-c63ab84c-c640-470f-96c2-22e00cf97ca4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1ab04f3c-6917-493a-9188-fc0fd1228233">
+<span class="eqno">(20.2)<a class="headerlink" href="#equation-1ab04f3c-6917-493a-9188-fc0fd1228233" title="Permalink to this equation">#</a></span>\[\begin{align}
 \max\limits_\theta \frac{1}{N} \sum\limits_{n=1}^N \log p(x_n; \theta)
 \end{align}\]</div>
 </section>
@@ -460,8 +460,8 @@ x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 <section id="inference">
 <h2><span class="section-number">20.6. </span>Inference<a class="headerlink" href="#inference" title="Permalink to this heading">#</a></h2>
 <p><strong>Can we use the naive MLE?</strong> MLE for this model is intractable:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-acf489df-7b63-48b0-aa7f-0fdee3d17242">
-<span class="eqno">(20.3)<a class="headerlink" href="#equation-acf489df-7b63-48b0-aa7f-0fdee3d17242" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9230a34-4122-4d0f-98b8-db1183867ca9">
+<span class="eqno">(20.3)<a class="headerlink" href="#equation-f9230a34-4122-4d0f-98b8-db1183867ca9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \max\limits_\theta \frac{1}{N} \sum\limits_{n=1}^N \log p(x_n; \theta)
 &amp;= \max\limits_\theta \frac{1}{N} \sum\limits_{n=1}^N \log \underbrace{\mathbb{E}_{p(z_n)} [ p(x_n | z_n; \theta) ]}_{\text{intractable}}
 \end{align}\]</div>
@@ -473,8 +473,8 @@ x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 <section id="can-we-apply-em">
 <h3>Can we apply EM?<a class="headerlink" href="#can-we-apply-em" title="Permalink to this heading">#</a></h3>
 <p>Let’s derive it:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d57bba4e-0fac-4087-934c-a07305e629ea">
-<span class="eqno">(20.4)<a class="headerlink" href="#equation-d57bba4e-0fac-4087-934c-a07305e629ea" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1267a8f4-1fd6-477c-90c4-ca7c37b8b5e2">
+<span class="eqno">(20.4)<a class="headerlink" href="#equation-1267a8f4-1fd6-477c-90c4-ca7c37b8b5e2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(x_n; \theta) 
 &amp;= \log \mathbb{E}_{p(z_n)} [ p(x_n | z_n; \theta) ] \\
 &amp;= \log \int\limits_{z_n} p(x_n | z_n; \theta) p(z_n) d z_n \\
@@ -482,13 +482,13 @@ x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 &amp;= \log \mathbb{E}_{q(z_n)} \left[ \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right] \quad \text{Importance Sampling: how to select } q(z_n)? \\
 &amp;\geq \mathbb{E}_{q(z_n)} \left[ \log \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right] \quad \text{Soln: optimize lower bound jointly w.r.t } \theta, q(z_n)
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-d8d7c132-b5af-46be-8052-71e32c002a12">
-<span class="eqno">(20.5)<a class="headerlink" href="#equation-d8d7c132-b5af-46be-8052-71e32c002a12" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-739bcb29-5061-4254-863b-a90ccb83278a">
+<span class="eqno">(20.5)<a class="headerlink" href="#equation-739bcb29-5061-4254-863b-a90ccb83278a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{\frac{1}{N} \sum\limits_{n=1}^N \log p(x_n; \theta)}_{\text{log marginal/incomplete likelihood}} \geq \underbrace{\frac{1}{N} \sum\limits_{n=1}^N \mathbb{E}_{q(z_n)} \left[ \log \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right]}_{\text{ELBO}(\theta, q(z_1), \dots, q(z_N))}
 \end{align}\]</div>
 <p>In EM, this is the objective we optimize via coordinate ascent. Before applying coordinate ascent, let’s understand the <strong>tightness</strong> of this bound.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d337dbb-9e0d-4649-ba5f-3e2dcd5663fa">
-<span class="eqno">(20.6)<a class="headerlink" href="#equation-6d337dbb-9e0d-4649-ba5f-3e2dcd5663fa" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-334e73a9-1e99-47e2-9d03-356044b418f8">
+<span class="eqno">(20.6)<a class="headerlink" href="#equation-334e73a9-1e99-47e2-9d03-356044b418f8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \frac{1}{N} \sum\limits_{n=1}^N \log p(x_n; \theta) 
 &amp;= \underbrace{\frac{1}{N} \sum\limits_{n=1}^N  \mathbb{E}_{q(z_n)} \left[ \log \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right]}_{\text{ELBO}(\theta, q(z_1), \dots, q(z_N))} + \underbrace{\frac{1}{N} \sum\limits_{n=1}^N \text{KL} \left[ q(z_n) || p(z_n | x_n; \theta) \right]}_{\geq 0 \quad \text{&quot;gap&quot;}}
 \end{align}\]</div>
@@ -496,8 +496,8 @@ x | z &amp;\sim p(x | z; \theta) = \mathcal{N}(f(z; \theta), \sigma^2 \cdot I)
 <ul class="simple">
 <li><p><strong>E-step:</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-c94c2ab6-9437-4810-b305-83e8c6b3419d">
-<span class="eqno">(20.7)<a class="headerlink" href="#equation-c94c2ab6-9437-4810-b305-83e8c6b3419d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-81450845-51c6-4092-a056-3e883e80fb62">
+<span class="eqno">(20.7)<a class="headerlink" href="#equation-81450845-51c6-4092-a056-3e883e80fb62" title="Permalink to this equation">#</a></span>\[\begin{align}
 q^\text{new}(z_1) &amp;= \mathrm{argmax}_{q(z_1)} \quad \text{ELBO}(\theta^\text{old}, q(z_1), \dots, q^\text{old}(z_N)) \\
 &amp;\vdots \\
 q^\text{new}(z_N) &amp;= \mathrm{argmax}_{q(z_N)} \quad \text{ELBO}(\theta^\text{old}, q^\text{old}(z_1), \dots, q(z_N))
@@ -505,8 +505,8 @@ q^\text{new}(z_N) &amp;= \mathrm{argmax}_{q(z_N)} \quad \text{ELBO}(\theta^\text
 <ul class="simple">
 <li><p><strong>M-step:</strong></p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-fe7d96d8-696f-4145-8bc1-77b23dc7c86e">
-<span class="eqno">(20.8)<a class="headerlink" href="#equation-fe7d96d8-696f-4145-8bc1-77b23dc7c86e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5a9a4e55-32a3-49fb-9c11-cf1ee95db84a">
+<span class="eqno">(20.8)<a class="headerlink" href="#equation-5a9a4e55-32a3-49fb-9c11-cf1ee95db84a" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{new} = \mathrm{argmax}_{\theta} \quad &amp;\text{ELBO}(\theta, q^\text{old}(z_1), \dots, q^\text{old}(z_N)) 
 \end{align}\]</div>
 <ul class="simple">
@@ -523,37 +523,37 @@ q^\text{new}(z_N) &amp;= \mathrm{argmax}_{q(z_N)} \quad \text{ELBO}(\theta^\text
 <p>We can! But we’ll need to make a few changes to our inference (in 3 parts).</p>
 <p><strong>Part 1: Select form for <span class="math notranslate nohighlight">\(q(z_n)\)</span>.</strong> Previously, we set <span class="math notranslate nohighlight">\(q^\text{new}(z_n) = p(z_n | x_n; \theta^\text{old})\)</span> using an analytic formula. However, when such a formula does not exist, what can we do? Let’s approximate the posterior.</p>
 <p>That is, we’ll set <span class="math notranslate nohighlight">\(q(z_n)\)</span> to come from some family of distributions that’s easy to work with (i.e. that we can sample from and for which we can evaluate the PDF). This distribution will not capture the posterior perfectly, but will hopefully capture it well enough. We’ll call this family of distributions a <strong>variational family</strong>. One common choice is a diagonal Gaussian:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7f334d58-adea-4e79-afd0-2fc053f41c4b">
-<span class="eqno">(20.9)<a class="headerlink" href="#equation-7f334d58-adea-4e79-afd0-2fc053f41c4b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1d53873c-40d5-4a9c-9481-7356ef08713e">
+<span class="eqno">(20.9)<a class="headerlink" href="#equation-1d53873c-40d5-4a9c-9481-7356ef08713e" title="Permalink to this equation">#</a></span>\[\begin{align}
 q(z_n) = \mathcal{N}(\mu_n, \sigma^2_n)
 \end{align}\]</div>
 <p>Now, when we maximize the ELBO, we do so by taking gradients with respect to the parameters of <span class="math notranslate nohighlight">\(q(z_n)\)</span>, as opposed to relative to <span class="math notranslate nohighlight">\(q(z_n)\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b96226f8-7377-4447-8a13-635d154876be">
-<span class="eqno">(20.10)<a class="headerlink" href="#equation-b96226f8-7377-4447-8a13-635d154876be" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-289ce278-e6a2-4fca-bae8-ce271a05f1a4">
+<span class="eqno">(20.10)<a class="headerlink" href="#equation-289ce278-e6a2-4fca-bae8-ce271a05f1a4" title="Permalink to this equation">#</a></span>\[\begin{align}
 \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \text{ELBO}(\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N) 
 \end{align}\]</div>
 <p><strong>Part 2: Reparameterization Trick.</strong></p>
-<div class="amsmath math notranslate nohighlight" id="equation-7556fd9c-b484-419f-b39d-1af715b0e91e">
-<span class="eqno">(20.11)<a class="headerlink" href="#equation-7556fd9c-b484-419f-b39d-1af715b0e91e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b98cabdd-39bd-4bf8-8507-fbb736762046">
+<span class="eqno">(20.11)<a class="headerlink" href="#equation-b98cabdd-39bd-4bf8-8507-fbb736762046" title="Permalink to this equation">#</a></span>\[\begin{align}
 \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \text{ELBO}(\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N)
 &amp;= \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \frac{1}{N} \sum\limits_{n=1}^N \mathbb{E}_{q(z_n)} \left[ \log \frac{p(x_n | z_n; \theta) p(z_n)}{q(z_n)} \right] \\
 &amp;\approx \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \frac{1}{N} \sum\limits_{n=1}^N \frac{1}{S} \sum\limits_{s=1}^S \left[ \log \frac{p(x_n | z_n^{(s)}; \theta) p(z_n^{(s)})}{q(z_n^{(s)})} \right]
 \end{align}\]</div>
 <p>But how can we take a gradient with respect to a <strong>sample</strong>, <span class="math notranslate nohighlight">\(z_n^{(s)}\)</span>? We can use the following identity (know as the <strong>reparameterization trick</strong>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-78f9e1a9-9366-46ca-9c6e-bec8da190941">
-<span class="eqno">(20.12)<a class="headerlink" href="#equation-78f9e1a9-9366-46ca-9c6e-bec8da190941" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6d5bbb61-c737-4007-9237-5fe67e6eb1df">
+<span class="eqno">(20.12)<a class="headerlink" href="#equation-6d5bbb61-c737-4007-9237-5fe67e6eb1df" title="Permalink to this equation">#</a></span>\[\begin{align}
 z_n^{(s)} &amp;= r(\eta_n^{(s)}, \sigma_n, \mu_n) \\
 &amp;= \eta_n^{(s)} \cdot \sigma_n + \mu_n, \quad \eta_n^{(s)} \sim \mathcal{N}(0, I)
 \end{align}\]</div>
-<div class="amsmath math notranslate nohighlight" id="equation-764a9ab5-0415-453f-a7ab-205e4c1802e8">
-<span class="eqno">(20.13)<a class="headerlink" href="#equation-764a9ab5-0415-453f-a7ab-205e4c1802e8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-36e429b6-0658-4a3f-9e43-91b6a8787867">
+<span class="eqno">(20.13)<a class="headerlink" href="#equation-36e429b6-0658-4a3f-9e43-91b6a8787867" title="Permalink to this equation">#</a></span>\[\begin{align}
 \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \text{ELBO}(\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N)
 &amp;= \nabla_{\theta, \mu_1, \sigma_1, \dots, \mu_N, \sigma_N} \frac{1}{N} \sum\limits_{n=1}^N \mathbb{E}_{p(\eta)} \left[ \log \frac{p(x_n | r(\eta_n^{(s)}, \sigma_n, \mu_n); \theta) p(r(\eta_n^{(s)}, \sigma_n, \mu_n))}{q(r(\eta_n^{(s)}, \sigma_n, \mu_n))} \right] \\
 \end{align}\]</div>
 <p><strong>Part 3: Amortize Inference.</strong> The above gradients are over a very large number of parameters (specifically <span class="math notranslate nohighlight">\(N\)</span>), which does not scale well. Can we make this more efficient?</p>
 <p>Yes! By <strong>amortizing</strong>: we set <span class="math notranslate nohighlight">\(q(z_n) = \mathcal{N}(\mu(x_n; \phi), \sigma^2(x_n; \phi))\)</span>, where <span class="math notranslate nohighlight">\(\mu(\cdot; \phi), \sigma^2(\cdot; \phi)\)</span> are neural networks parameterized by <span class="math notranslate nohighlight">\(\phi\)</span>. Now, we only need to compute gradients with respect to <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-95f2242e-2e09-4f77-972e-896713792bf2">
-<span class="eqno">(20.14)<a class="headerlink" href="#equation-95f2242e-2e09-4f77-972e-896713792bf2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b92a33b3-60a9-4088-8584-d7650af6a0e9">
+<span class="eqno">(20.14)<a class="headerlink" href="#equation-b92a33b3-60a9-4088-8584-d7650af6a0e9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \nabla_{\theta, \phi} \text{ELBO}(\theta, \phi)
 \end{align}\]</div>
 </section>
