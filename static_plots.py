@@ -645,7 +645,38 @@ def plot_nn_ensemble():
     plt.savefig(os.path.join(OUTPUT_DIR, 'example_nn_ensemble_regression.png'))
     plt.close()
 
-        
+
+def plot_1d_gmm():
+    p_x0 = D.Normal(-1.0, 0.2)
+    p_x1 = D.Normal(0.0, 0.4)
+    p_x2 = D.Normal(2.0, 0.6)
+
+    x = jnp.linspace(-2.0, 4.0, 200)
+
+    fig, axes = plt.subplots(1, 2, figsize=(7, 3), sharex=True)
+    axes[0].plot(x, jnp.exp(p_x0.log_prob(x)), label=r'$\mathcal{N}(\mu_0, \sigma^2_0)$')
+    axes[0].plot(x, jnp.exp(p_x1.log_prob(x)), label=r'$\mathcal{N}(\mu_1, \sigma^2_1)$')
+    axes[0].plot(x, jnp.exp(p_x2.log_prob(x)), label=r'$\mathcal{N}(\mu_2, \sigma^2_2)$')
+
+    axes[1].plot(
+        x,
+        (jnp.exp(p_x0.log_prob(x)) + jnp.exp(p_x1.log_prob(x)) + jnp.exp(p_x2.log_prob(x))) / 3.0,
+        color='black',
+    )
+
+    axes[0].set_xlabel('$x$')
+    axes[0].set_ylabel('PDF')
+    axes[0].set_title('GMM Components')
+    axes[0].legend()
+
+    axes[1].set_xlabel('$x$')
+    axes[1].set_title(r'GMM PDF, $p_X(\cdot)$')
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, 'example_1d_gmm.png'))
+    plt.close()
+
+    
     
 def main():
     #plot_poisson_example()    
@@ -658,6 +689,7 @@ def main():
     #inductive_bias_of_polynomial_regression(percent_ood=30)
     #gp_regression_online()
     #plot_nn_ensemble()
+    #plot_1d_gmm() 
     pass
 
     
