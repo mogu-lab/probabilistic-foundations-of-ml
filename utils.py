@@ -267,14 +267,16 @@ def visualize_microscope_samples(samples):
     '''
     
     chex.assert_rank(samples, 2)
-    chex.assert_axis_dimension(samples, -1, 24 * 24)
+    im_width = int(math.sqrt(samples.shape[-1]))
+    
+    chex.assert_axis_dimension(samples, -1, im_width * im_width)
 
-    width = math.ceil(math.sqrt(samples.shape[0]))
+    grid_width = math.ceil(math.sqrt(samples.shape[0]))
 
-    fig = plt.figure(figsize=(width, width))
+    fig = plt.figure(figsize=(grid_width, grid_width))
     grid = ImageGrid(
         fig, 111,
-        nrows_ncols=(width, width),  
+        nrows_ncols=(grid_width, grid_width),  
         axes_pad=0.0,
         share_all=True,
     )
@@ -283,7 +285,7 @@ def visualize_microscope_samples(samples):
     grid[0].get_yaxis().set_ticks([])
     
     for ax, im in zip(grid, samples):
-        ax.imshow(im.reshape(24, 24), cmap='gray', vmin=0.0, vmax=1.0)
+        ax.imshow(im.reshape(im_width, im_width), cmap='gray', vmin=0.0, vmax=1.0)
 
     plt.show()
 
