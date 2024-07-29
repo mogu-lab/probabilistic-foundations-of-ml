@@ -358,7 +358,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latent-variable-models">15.1. Latent Variable Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latent-variable-models-lvms">15.1. Latent Variable Models (LVMs)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-law-of-total-probability-discrete">15.2. The Law of Total Probability (Discrete)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-for-gmms">15.3. Maximum Likelihood for GMMs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gmms-in-numpyro">15.4. GMMs in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
@@ -515,8 +515,17 @@ document.write(`
 </table>
 </div></div></div>
 </div>
-<section id="latent-variable-models">
-<h2><span class="section-number">15.1. </span>Latent Variable Models<a class="headerlink" href="#latent-variable-models" title="Permalink to this heading">#</a></h2>
+<section id="latent-variable-models-lvms">
+<h2><span class="section-number">15.1. </span>Latent Variable Models (LVMs)<a class="headerlink" href="#latent-variable-models-lvms" title="Permalink to this heading">#</a></h2>
+<p><strong>Overview.</strong> Latent variable models allow us to model variables we actually did not observe. We will do this using the very same toolkit we’ve used so far; we’ll write down a joint distribution for all variables—observed and latent—as well as a directed graphical model. We will then perform MLE on the resultant model. We will instantiate everything with a specific model—Gaussian Mixture Model (GMM)—which will help us find patient types in the above IHH data.</p>
+<p><strong>Gaussian Mixture Models (GMMs).</strong> GMMs are depicted by the following directed graphical model:</p>
+<div class="canva-centered-embedding">
+  <div class="canva-iframe-container">
+    <iframe loading="lazy" class="canva-iframe"
+      src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGIs1vP9i0&#x2F;-IWykjjF-dWy5DOBnqfudA&#x2F;view?embed">
+    </iframe>
+  </div>
+</div>
 <p>TODO:</p>
 <ul class="simple">
 <li><p>Introduce concept of latent variables</p></li>
@@ -528,8 +537,8 @@ document.write(`
 <section id="the-law-of-total-probability-discrete">
 <h2><span class="section-number">15.2. </span>The Law of Total Probability (Discrete)<a class="headerlink" href="#the-law-of-total-probability-discrete" title="Permalink to this heading">#</a></h2>
 <p><strong>Definition.</strong> Suppose you have two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> with joint distribution, and suppose that <span class="math notranslate nohighlight">\(A\)</span> is discrete. Then the law of total probability says we can compute the marginal <span class="math notranslate nohighlight">\(p_B(b)\)</span> from the joint <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span> as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-21349fbe-8fba-40e9-a20c-7a040f7ca880">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-21349fbe-8fba-40e9-a20c-7a040f7ca880" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ff60902d-b246-487d-a79b-914faf4c26d4">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-ff60902d-b246-487d-a79b-914faf4c26d4" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_B(b) &amp;= \sum\limits_{a \in S_A} p_{A, B}(a, b)
 \end{align}\]</div>
 <p><strong>Intuition.</strong></p>
@@ -613,7 +622,7 @@ p_B(b) &amp;= \sum\limits_{a \in S_A} p_{A, B}(a, b)
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latent-variable-models">15.1. Latent Variable Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#latent-variable-models-lvms">15.1. Latent Variable Models (LVMs)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-law-of-total-probability-discrete">15.2. The Law of Total Probability (Discrete)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-for-gmms">15.3. Maximum Likelihood for GMMs</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gmms-in-numpyro">15.4. GMMs in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></a></li>
