@@ -12,7 +12,7 @@
 ## Installation
 
 ```
-conda create --name book python=3.10 -y
+create -n book -c conda-forge python=3.10 -y
 pip install -r requirements.txt
 ```
 
