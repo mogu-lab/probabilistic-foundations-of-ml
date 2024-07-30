@@ -666,11 +666,11 @@ def plot_1d_gmm():
 
     axes[0].set_xlabel('$x$')
     axes[0].set_ylabel('PDF')
-    axes[0].set_title('GMM Components')
+    axes[0].set_title('Mixture Components')
     axes[0].legend()
 
     axes[1].set_xlabel('$x$')
-    axes[1].set_title(r'GMM PDF, $p_X(\cdot)$')
+    axes[1].set_title(r'Observed Distribution, $p_X(\cdot; \theta)$')
     
     plt.tight_layout()
     plt.savefig(os.path.join(OUTPUT_DIR, 'example_1d_gmm.png'))
