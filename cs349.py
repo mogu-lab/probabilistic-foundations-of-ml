@@ -10,6 +10,7 @@ import jax.random as jrandom
 import jax.numpy as jnp
 import numpyro
 import numpyro.handlers as H
+import numpyro.contrib.funsor as F
 
 
 def cs349_sample_generative_process(model, key, *args, num_samples=None, **kwargs):
@@ -179,6 +180,40 @@ def cs349_load_trained_numpyro_model(fname):
 
     return H.substitute(r['model'], data=r['parameters'])
     
+
+'''
+# IGNORE!
+def cs349_mle_discrete_lvm(model, optimizer, key, num_steps, *args, latent_variables=[], **kwargs):
+    key_init, key_opt = jrandom.split(key, 2)
+    
+    global_model = H.block(
+        H.seed(
+            F.config_enumerate(model), 
+            key_init,
+        ), 
+        hide=latent_variables,
+    )
+
+    global_guide = numpyro.infer.autoguide.AutoDelta(global_model)
+        
+    svi = numpyro.infer.SVI(
+        global_model, global_guide, optimizer, loss=numpyro.infer.TraceEnum_ELBO(),
+        )
+    
+        svi_result = svi.run(key_opt, num_steps, *args, **kwargs)
+        print('Done.')
+    
+    params = svi_result.params    
+    result = argparse.Namespace(
+        model_mle=H.substitute(model, data=params), 
+        parameters_mle=params,
+        losses=svi_result.losses,
+        log_likelihood=-svi_result.losses,        
+    )
+
+    return result
+'''
+
 
 def cs349_mle_continuous_lvm(model, optimizer, key, num_steps, *args, **kwargs):
     '''
