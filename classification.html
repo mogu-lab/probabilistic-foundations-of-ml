@@ -376,6 +376,11 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matplotlib is building the font cache; this may take a moment.
+</pre></div>
+</div>
+</div>
 </div>
 <p><strong>Context:</strong> We’ve just learned the framework underlying predictive models—their directed graphical model and MLE objective. We’ve instantiated this framework for regression—the task of predicting <em>real-valued</em> outputs from inputs. Now, we will provide another instantiation: classification. Classification focuses on predicting <em>categorical-valued</em> outputs from inputs. For example, given chest X-rays, we may want to predict whether a patient has COVID or not; given a sample of text, we may want to predict whether it has positive or negative sentiment; given a patient’s demographic information, we may want to predict whether medication will be helpful, unhelpful, or harmful.</p>
 <p><strong>Challenge:</strong> A classification model is a specific instance of a predictive model; as such, you may find it useful to review the unit on regression before continuing. After reviewing, you’ll notice that the main piece that differentiates different types of predictive models is the choice of conditional. That is, if our goal is to predict <span class="math notranslate nohighlight">\(Y\)</span> from <span class="math notranslate nohighlight">\(X\)</span>, we need to define <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>. Whereas for regression, we used a real-valued distribution—a Gaussian—here we will use a Bernoulli or Categorical distribution.</p>
@@ -621,13 +626,13 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f408c3f9-76d4-40d7-830d-fb9130bf0c64">
-<span class="eqno">(12.1)<a class="headerlink" href="#equation-f408c3f9-76d4-40d7-830d-fb9130bf0c64" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-61668025-4d13-4206-9739-376c2cb79ee7">
+<span class="eqno">(12.1)<a class="headerlink" href="#equation-61668025-4d13-4206-9739-376c2cb79ee7" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7d2cc454-3fd3-4c10-ada7-f502761eb095">
-<span class="eqno">(12.2)<a class="headerlink" href="#equation-7d2cc454-3fd3-4c10-ada7-f502761eb095" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d3f08292-6364-4c98-bd96-f2acedc29dd5">
+<span class="eqno">(12.2)<a class="headerlink" href="#equation-d3f08292-6364-4c98-bd96-f2acedc29dd5" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
@@ -666,8 +671,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <ul>
 <li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noopener noreferrer" target="_blank">here</a>).</p></li>
 <li><p>Age spans a larger range than dose: age spans a range of roughly 0 to 100, whereas dose spans a range of roughly 0 to 1. Because of this disparity, gradient descent may find your optimization tricky. A learning rate that’s appropriate for updating the coefficients of age may be too large for the dose and vice versa. Because of this, we recommend using the following functional form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bf5c4604-99cc-4b60-9b69-a3d562b11a0c">
-<span class="eqno">(12.3)<a class="headerlink" href="#equation-bf5c4604-99cc-4b60-9b69-a3d562b11a0c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b4cf7dd6-6604-47d6-be65-f4049e550b9d">
+<span class="eqno">(12.3)<a class="headerlink" href="#equation-b4cf7dd6-6604-47d6-be65-f4049e550b9d" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_d, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}{100} + \theta_d \cdot d_n + \theta_i,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a_n\)</span> is age with slope <span class="math notranslate nohighlight">\(\theta_a\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span> is dose with slope <span class="math notranslate nohighlight">\(\theta_d\)</span>, and <span class="math notranslate nohighlight">\(\theta_i\)</span> is the intercept. Notice that we divide <span class="math notranslate nohighlight">\(a_n\)</span> by <span class="math notranslate nohighlight">\(100\)</span> to account for this difference in range.</p>
