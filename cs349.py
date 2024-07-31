@@ -234,7 +234,7 @@ def cs349_mle_continuous_lvm(model, optimizer, key, num_steps, *args, **kwargs):
         log_likelihood: the log-likelihood of the model for every step of gradient descent
     '''
 
-    guide = numpyro.infer.autoguide.AutoDiagonalNormal(model)
+    guide = numpyro.infer.autoguide.AutoNormal(model)
         
     svi = numpyro.infer.SVI(
         model, guide, optimizer, loss=numpyro.infer.Trace_ELBO(),
