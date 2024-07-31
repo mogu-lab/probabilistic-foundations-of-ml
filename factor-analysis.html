@@ -66,6 +66,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'factor-analysis';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs349-fall-2024/factor-analysis.html" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
@@ -384,7 +386,8 @@ document.write(`
 <li><p>Introduce the continuous version of the law of total probability</p></li>
 <li><p>Implement Factor Analysis in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></p></li>
 </ul>
-<p><strong>Data:</strong> In the past week, the IHH has been hit hard by some unknown disease, spreading through the in-patient population. The IHH’s Center for Epidemiology has recently been tasked with understanding the disease and stopping its spread. They have been working hard around the clock, taking patient saliva samples and screening it under a microscope to understand what’s going on. They sent you the following data set and asked you to take a look. You opened one of the microscope images and here’s what you found:</p>
+<p><strong>Data:</strong> In the past week, the IHH has been hit hard by some unknown disease, spreading through the in-patient population. The IHH’s Center for Epidemiology has recently been tasked with understanding the disease and stopping its spread. They have been working hard around the clock, taking patient saliva samples and screening it under a microscope to understand what’s going on. They sent you a data set consisting of microscope images—each <span class="math notranslate nohighlight">\(24 \times 24\)</span> in size (576 pixels in total)—in which each pixel takes on values from <span class="math notranslate nohighlight">\(0.0\)</span> to <span class="math notranslate nohighlight">\(1.0\)</span> (black to white). To summarize, each observation, <span class="math notranslate nohighlight">\(x_n\)</span> is a 576-long array of values between <span class="math notranslate nohighlight">\([0, 1]\)</span>: <span class="math notranslate nohighlight">\(x_n \in [0, 1]^{567}\)</span>.</p>
+<p>You opened one of the microscope images and here’s what you found:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
@@ -401,7 +404,7 @@ document.write(`
 <img alt="_images/d7fc94f07d8f67ba09d8fb84e3e4db7a4582acfe59c3d079b6abd4923dedefc3.png" src="_images/d7fc94f07d8f67ba09d8fb84e3e4db7a4582acfe59c3d079b6abd4923dedefc3.png" />
 </div>
 </div>
-<p>The microscope image actually shows an intergalactic virus! And this specific intergalactic virus seems to be wearing a hat! If it weren’t for the epidemic at the IHH, this would have been super cute. Let’s have a look at a bunch more of thesse.</p>
+<p>The microscope image actually shows an intergalactic virus! And this specific intergalactic virus seems to be wearing a hat! If it weren’t for the epidemic at the IHH, this would have been super cute. Let’s have a look at a bunch more of these.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_microscope_samples</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">100</span><span class="p">])</span>
@@ -415,6 +418,32 @@ document.write(`
 <p>It seems like we have a whole collection of viruses here, each different, and wreaking havoc in a different way. Your colleagues at the Center for Epidemiology have limited bandwidth. They can’t possibly look at every virus sample collected from every patient to understand the various mechanisms that cause the disease. As such, they’ve enlisted you to help them out. They hypothesize that although these viruses look different, most aren’t important for the presentation of the disease. As such, they would like you to learn a low-dimensional representation so that they can better explore these viruses.</p>
 <section id="factor-analysis-model">
 <h2><span class="section-number">16.1. </span>Factor Analysis Model<a class="headerlink" href="#factor-analysis-model" title="Permalink to this heading">#</a></h2>
+<p><strong>Model.</strong> So how can we help our IHH colleagues? Let’s think about their hypothesis. They said they believe there the data can actually be represented by a small number of dimensions. Using this idea, let’s assume our data <em>was actually</em> generated by a distribution on a low dimensional space. For simplicity, let’s go with a 2-dimensional Gaussian with unit variance:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-89215cc2-902c-48d2-9663-f0873941948d">
+<span class="eqno">(16.1)<a class="headerlink" href="#equation-89215cc2-902c-48d2-9663-f0873941948d" title="Permalink to this equation">#</a></span>\[\begin{align}
+z_n &amp;\sim p_Z(\cdot) = \mathcal{N}\left( 
+\begin{bmatrix} 0.0 \\ 0.0 \end{bmatrix},
+\begin{bmatrix} 1.0 &amp; 0.0 \\ 0.0 &amp; 1.0 \end{bmatrix}
+\right).
+\end{align}\]</div>
+<p><span class="math notranslate nohighlight">\(Z\)</span> represents our <em>latent</em> variable, since we never actually observed it—we only observed the high-dimensional microscope images. To make notation easier, we will denote square matrices with 1s along the diagonal and 0s everywhere else with <span class="math notranslate nohighlight">\(I_d\)</span> (this is called the <a class="reference external" href="https://en.wikipedia.org/wiki/Identity_matrix" rel="noopener noreferrer" target="_blank">identity matrix</a>). We will use the subscript-<span class="math notranslate nohighlight">\(d\)</span> to denote the size of the matrix. Using this notation, we have:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-0bf16982-5950-4c26-8df8-88f00f8c3314">
+<span class="eqno">(16.2)<a class="headerlink" href="#equation-0bf16982-5950-4c26-8df8-88f00f8c3314" title="Permalink to this equation">#</a></span>\[\begin{align}
+z_n &amp;\sim p_Z(\cdot) = \mathcal{N}(0, I_2)
+\end{align}\]</div>
+<p>Next, we need some way of translating the latent variable into our observed variable. We can do this by assuming there exists some function <span class="math notranslate nohighlight">\(f(\cdot; W)\)</span>, with parameters <span class="math notranslate nohighlight">\(W\)</span>, that maps the low-dimensional latent space to the high-dimensional observation space. In our case, <span class="math notranslate nohighlight">\(f(\cdot; W)\)</span> will map a 2-dimensional space to a 576-dimensional space: <span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \rightarrow [0, 1]^{576}\)</span>. This function can be anything we’d like it to be. In many applications of factor analysis (e.g. in psychology), it’s common to use a linear function; however, for image data, like in our case, it’s better to use a non-linear function. We will use a neural network.</p>
+<p>Using <span class="math notranslate nohighlight">\(f(\cdot;  W)\)</span>, we can write the conditional distribution of the observed data given the latent variable. The most common choice for factor analysis is:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-94a8e4cf-30e1-4831-b290-d85be45c3006">
+<span class="eqno">(16.3)<a class="headerlink" href="#equation-94a8e4cf-30e1-4831-b290-d85be45c3006" title="Permalink to this equation">#</a></span>\[\begin{align}
+x_n | z_n &amp;\sim p_{X | Z}(\cdot | z_n) = \mathcal{N}(f(z_n;  W), \sigma^2 \cdot I_{576}),
+\end{align}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta = \{W, \sigma \}\)</span> are our model parameters.</p>
+<p>Putting this all together, we have the following generative process:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-9e50d27d-ac39-42aa-95b8-ee590cb80613">
+<span class="eqno">(16.4)<a class="headerlink" href="#equation-9e50d27d-ac39-42aa-95b8-ee590cb80613" title="Permalink to this equation">#</a></span>\[\begin{align}
+z_n &amp;\sim p_Z(\cdot) = \mathcal{N}(0, I_2) \\
+x_n | z_n &amp;\sim p_{X | Z}(\cdot | z_n) = \mathcal{N}(f(z_n;  W), \sigma^2)
+\end{align}\]</div>
 <ul class="simple">
 <li><p>Motivate factor analysis (dimensionality reduction, interpolation in latent space)</p></li>
 <li><p>Show graphical model (same as GMM)</p></li>
@@ -437,6 +466,7 @@ document.write(`
 <li><p>Ask to generate samples</p></li>
 <li><p>Ask to decode along a latent path</p></li>
 </ul>
+<p><strong>Acknowledgements.</strong> Data adapted from <a class="reference external" href="https://huggingface.co/datasets/calcuis/pixel-character" rel="noopener noreferrer" target="_blank">this repository</a>.</p>
 </section>
 </section>
 
