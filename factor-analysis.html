@@ -367,10 +367,52 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="factor-analysis-dimensionality-reduction">
 <h1><span class="section-number">16. </span>Factor Analysis (Dimensionality Reduction)<a class="headerlink" href="#factor-analysis-dimensionality-reduction" title="Permalink to this heading">#</a></h1>
-<p><strong>Context:</strong></p>
-<p><strong>Challenge:</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">cs349</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Context:</strong> As we found in the chapter on Gaussian Mixture Models (GMMs), our data might contain latent structure. In the IHH context, for example, each patient can be described by some underlying condition that explains their data, where there’s a fixed number of possible conditions. However, what happens if the hidden structure is not discrete, but is continuous. By this, we mean that, instead of supposing there exists a discrete number of latent underlying patient conditions, there may be a <em>spectrum</em> of underlying conditions. Every patient lies somewhere on this spectrum, and our goal uncover it.</p>
+<p><strong>Challenge:</strong> In order to place patients on this “spectrum,” we’ll have to use a continuous latent variable. We will introduce a new model, called Factor Analysis, which does exactly this. However, when using a continuous latent variable, we’ll run into some challenges. First, we’ll notice that we need a continuous version of the law of total probability. Second, we’ll need some efficient computational scheme to apply the law of total probability in practice.</p>
 <p><strong>Outline:</strong></p>
-<p><strong>Data:</strong></p>
+<ul class="simple">
+<li><p>Introduce the Factor Analysis model</p></li>
+<li><p>Introduce the continuous version of the law of total probability</p></li>
+<li><p>Implement Factor Analysis in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code></p></li>
+</ul>
+<p><strong>Data:</strong> In the past week, the IHH has been hit hard by some unknown disease, spreading through the in-patient population. The IHH’s Center for Epidemiology has recently been tasked with understanding the disease and stopping its spread. They have been working hard around the clock, taking patient saliva samples and screening it under a microscope to understand what’s going on. They sent you the following data set and asked you to take a look. You opened one of the microscope images and here’s what you found:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+
+<span class="c1"># Load the data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;data/microscope.npy&#39;</span><span class="p">)</span>
+
+<span class="c1"># Visualize one of the microscope images</span>
+<span class="n">visualize_microscope_samples</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d7fc94f07d8f67ba09d8fb84e3e4db7a4582acfe59c3d079b6abd4923dedefc3.png" src="_images/d7fc94f07d8f67ba09d8fb84e3e4db7a4582acfe59c3d079b6abd4923dedefc3.png" />
+</div>
+</div>
+<p>The microscope image actually portrayed a microscopic intergalactic being! You couldn’t believe your eyes, so you decided to visualize a whole bunch of them:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_microscope_samples</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="mi">100</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5e702dbb1e9e07bc0af138c799cb5f8f84f9b3c263bbd633ce2f2b4e6c8c80f0.png" src="_images/5e702dbb1e9e07bc0af138c799cb5f8f84f9b3c263bbd633ce2f2b4e6c8c80f0.png" />
+</div>
+</div>
+<p>And so it seems we’ve got the whole family.</p>
 <section id="factor-analysis-model">
 <h2><span class="section-number">16.1. </span>Factor Analysis Model<a class="headerlink" href="#factor-analysis-model" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
