@@ -1,4 +1,4 @@
-# Course Mission
+# Goals and Expectations
 
 
 ```{contents}
@@ -39,6 +39,19 @@ We're here because we care about your experiences as students and as individuals
 * **We want to know about your experience in the course.** We always strive to improve the course for future generations of students. We therefore value your feedback. 
 
 
+
+
+## Classroom Environment
+
+**Diversity, Equity, and Inclusion (DEI):** It is the mission of the teaching staff that students from all diverse backgrounds and perspectives be well served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that students bring to this class be viewed as a resource, strength, and benefit. We aim to create a learning environment that is inclusive and respectful of diversity: gender, sexuality, disability, age, socioeconomic status, ethnicity, race, and culture. Your suggestions for how to better our classroom community are always encouraged and appreciated.
+
+Since a large part of this course requires students to work in groups, in alignment with our teaching mission, we ask that students explicitly reflect on and implement practices for building teams that are diverse along many axes. The teaching staff is happy to help you brainstorm how to create an inclusive and productive working culture for your team.
+
+
+**Mental Health:** We value your mental health more than anything else. If you're finding yourself facing mental health challenges, please come talk to us. As instructors, we have had our own fair share of mental health challenges. We are happy to help you find the support you need, whether on- or off-campus---our door is always open!
+
+
+
 ## How to Succeed in CS 349?
 
 
@@ -68,20 +81,7 @@ We're here because we care about your experiences as students and as individuals
 
 
 
-## Classroom Environment
-
-**Diversity, Equity, and Inclusion (DEI):** It is the mission of the teaching staff that students from all diverse backgrounds and perspectives be well served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that students bring to this class be viewed as a resource, strength, and benefit. We aim to create a learning environment that is inclusive and respectful of diversity: gender, sexuality, disability, age, socioeconomic status, ethnicity, race, and culture. Your suggestions for how to better our classroom community are always encouraged and appreciated.
-
-Since a large part of this course requires students to work in groups, in alignment with our teaching mission, we ask that students explicitly reflect on and implement practices for building teams that are diverse along many axes. The teaching staff is happy to help you brainstorm how to create an inclusive and productive working culture for your team.
-
-
-**Mental Health:** We value your mental health more than anything else. If you're finding yourself facing mental health challenges, please come talk to us. As instructors, we have had our own fair share of mental health challenges. We are happy to help you find the support you need, whether on- or off-campus---our door is always open!
-
-
-
-
-
-
+<br/>
 
 
 **Acknowledgements.** This page draws on [CS 240's syllabus](https://cs.wellesley.edu/~cs240/s24/about/), and Evan Peck's [What I want you to know about me as your professor](https://medium.com/bucknell-hci/what-i-want-you-to-know-about-me-as-your-professor-58c9c2e91e33).
