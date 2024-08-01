@@ -240,13 +240,17 @@ def neural_network_fn(name, N, layers, activation_fn=stax.LeakyRelu):
     
     modules = []
     for idx, out_dim in enumerate(layers[1:]):
+        # Create a linear transform
+        # In deep learning lingo, this is called a "dense layer"
         modules.append(stax.Dense(
             out_dim, W_init=stax.randn(),
         ))
-            
+
+        # Create an activation function
         if idx < len(layers) - 2:
             modules.append(activation_fn)
 
+    # Register the neural networks parameters with numpyro.param
     return numpyro.module(
         name,
         stax.serial(*modules),
