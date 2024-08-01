@@ -29,7 +29,7 @@ Course grade percentages are converted to letters via the table below:
 | $< 60.0\%$ | F |
 
 
-In case the average grade in the class is lower than expected, we may raise everyone's grades. We will *never* lower the grades.
+In case the average grade in the class is lower than expected, we may raise everyone's grades. We will **never** lower grades.
 
 Recall that the minimum grade to earn credit under credit/no credit grading is C. The minimum grade to pass and earn credit under normal letter grading is D.
 
@@ -50,16 +50,19 @@ TODO
 
 ## Accessibility and Disability
 
-Every student has a right to full access in this course. If you need any accommodations for CS 349, please contact Wellesley’s Disability Services. You should request accommodations as early as possible during the course, since some situations can require significant time for accommodation design. If you need immediate accommodations, please arrange an appointment with me as soon as possible. If you are unsure but suspect you may have an undocumented need for accommodations, you are encouraged to contact Disability Services. They can provide assistance including screening and referral for assessments. Disability Services can be reached at `disabilityservices@wellesley.edu`, at `781-283-2434`, or by [scheduling an appointment online](https://www.wellesley.edu/disability).
+**Disability Services.** Every student has a right to full access in this course. If you need any accommodations for CS 349, please contact Wellesley’s Disability Services. You should request accommodations **as early as possible**, since some situations can require significant time for accommodation design. If you need immediate accommodations, please arrange an appointment with the course instructor as soon as possible.
+
+**Unsure about your need for accomodations?** If you are unsure but suspect you may have an undocumented need for accommodations, you are encouraged to contact Disability Services. They can provide assistance including screening and referral for assessments. Disability Services can be reached at `disabilityservices@wellesley.edu`, at `781-283-2434`, or by [scheduling an appointment online](https://www.wellesley.edu/disability).
+
 
 
 ## Religious Observance
 
-Students whose religious observances conflict with scheduled course events should contact the instructors in advance to discuss alternative arrangements. You may do this through the [Wellesley College Religious Observance Notification System](https://webapps.wellesley.edu/religious_calendar/) if you prefer.
+Students whose religious observances conflict with scheduled course events should contact the instructors **in advance** to discuss alternative arrangements. You may do this through the [Wellesley College Religious Observance Notification System](https://webapps.wellesley.edu/religious_calendar/) if you prefer.
 
 
 
-## Policies on Discrimination, Harassment, and Sexual Misconduct
+## Discrimination, Harassment, and Sexual Misconduct
 
 Wellesley College considers diversity essential to educational excellence, and we are committed to being a community in which each member thrives. The College does not allow discrimination or harassment based on race, color, sex, gender identity or expression, sexual orientation, ethnic or national origin or ancestry, physical or mental disability, pregnancy or any other protected status under applicable local, state or federal law.
 
