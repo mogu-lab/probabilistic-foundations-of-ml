@@ -17,7 +17,7 @@ Course grade percentages are converted to letters via the table below:
 
 | **Percentage** | **Letter Grade** |
 |---|---|
-| $\geq 95.0\%$ | A |
+| $\geq 93.3\%$ | A |
 | $\geq 90.0\%$ | A- |
 | $\geq 86.6\%$ | B+ |
 | $\geq 83.3\%$ | B |
