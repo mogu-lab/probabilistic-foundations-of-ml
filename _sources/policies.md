@@ -17,7 +17,7 @@ Course grade percentages are converted to letters via the table below:
 
 | **Percentage** | **Letter Grade** |
 |---|---|
-| $\geq 95.0\%$ | A |
+| $\geq 93.3\%$ | A |
 | $\geq 90.0\%$ | A- |
 | $\geq 86.6\%$ | B+ |
 | $\geq 83.3\%$ | B |
@@ -68,7 +68,7 @@ Wellesley College considers diversity essential to educational excellence, and w
 
 If you or someone you know has experienced discrimination or harassment, support is available to you:
 * **Confidential Reporting:** Students can report their experiences to [Health Services](https://www.wellesley.edu/healthservice) (`781-283-2810`); [Stone Center Counseling Service](https://www.wellesley.edu/counseling) (`781-283-2839`); or [Religious and Spiritual Life](https://www.wellesley.edu/campuslife/community/religiousandspirituallife) (`781-283-2685`). *These offices are not required to report allegations of sexual misconduct to the College.*
-* **Non-Confidential Reporting:** You can let either of your CS 349 instructors know. As faculty members, we are obligated to report allegations of sex-based discrimination to the [Non-discrimination/Title IX Office](https://www.wellesley.edu/administration/offices/titleix).
+* **Non-Confidential Reporting:** You can let your CS 349 instructor know. As faculty, we are obligated to report allegations of sex-based discrimination to the [Non-discrimination/Title IX Office](https://www.wellesley.edu/administration/offices/titleix).
   * You can report directly to the [Non-discrimination/Title IX Office](https://www.wellesley.edu/administration/offices/titleix) (`781-283-2451`) to receive support, and to learn more about your options for a response by the College or about reporting to a different institution.
   * You can report to the [Wellesley College Police Department](https://www.wellesley.edu/police) (Emergency: `781-283-5555`, Non-emergency: `781-283-2121`) if you believe a crime has been committed, or if there is an immediate safety risk.
 
