@@ -1,8 +1,11 @@
 import math
 import glob
+
 import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 from mpl_toolkits.axes_grid1 import ImageGrid
+import matplotlib.animation
+from IPython.display import HTML
 from sklearn.inspection import DecisionBoundaryDisplay
 import jax
 import jax.numpy as jnp
@@ -215,7 +218,7 @@ def plot_all_regression_models_of_comfort_vs_intensity(data, models):
 
 def neural_network_fn(name, N, layers, activation_fn=stax.LeakyRelu):
     '''
-    For use in the dimensionality reduction unit unit: creates a neural network function
+    For use in the factor analysis unit: creates a neural network function
 
     Arguments:
         name: name of neural network (should be unique for each numpyro model)
@@ -260,7 +263,7 @@ def neural_network_fn(name, N, layers, activation_fn=stax.LeakyRelu):
 
 def visualize_microscope_samples(samples):
     '''
-    For use in the dimensionality reduction unit unit: visualizes samples
+    For use in the factor analysis unit: visualizes samples
 
     Arguments:
         samples: An (S, 24 * 24)-shaped array of generated samples
@@ -293,3 +296,66 @@ def visualize_microscope_samples(samples):
 
     plt.show()
 
+
+def animate_latent_space_path(result, z1, z2, num_points=50, speed=10):
+    '''
+    For use in the factor analysis unit: animates a path in the latent space
+
+    Arguments:
+        result: what's returned by the function, cs349_mle_continuous_lvm
+        z1: a starting coordinate in the latent space 
+        z2: an ending coordinate in the latent space
+        num_points: number of points connecting z1 to z2
+        speed: number of frames-per-second in the generated animation
+
+    Return:
+        HTML code that will be rendered in a Jupyter notebook. 
+    '''
+    assert(z1.shape == (2,))
+    assert(z2.shape == (2,))
+    
+    if 'z_auto_loc' not in result.parameters_mle:
+        raise Exception('Make sure your latent variable is named "z", and that you use the appropriate MLE function for this model')
+    
+    # Get the 'z' most likely to have generated every 'x'
+    z_mu = result.parameters_mle['z_auto_loc']
+    assert(z_mu.ndim == 2)
+    assert(z_mu.shape[-1] == 2)
+
+    # Interpolate between z1 to z2 to create a "path" in the latent space
+    rho = jnp.linspace(0.0, 1.0, num_points)[..., None]
+    z_path = z1[None, ...] * rho + z2[None, ...] * (1.0 - rho)
+
+    # Decode the latent variables along the path
+    path = cs349_sample_generative_process(
+        H.condition(result.model_mle, data=dict(z=z_path)), 
+        jrandom.PRNGKey(seed=0), 
+        N=z_path.shape[0], 
+    )
+
+    if 'mu' not in path:
+        raise Exception('You must name the output of the decoder function "mu" using numpy.deterministic')
+    
+    x_path = path['mu']
+    assert(x_path.shape == (num_points, 24 * 24))
+    
+    # Visualize
+    fig, axes = plt.subplots(1, 2, figsize=(8, 3.5))
+
+    axes[0].scatter(z_mu[:, 0], z_mu[:, 1], alpha=0.2)
+    axes[0].plot(z_path[[0, -1], 0], z_path[[0, -1], 1], color='black')
+    axes[0].set_title('Data Projected into Latent Space')    
+    cur = axes[0].scatter(z_path[0:1, 0], z_path[0:1, 1], color='red', marker='*', s=70, zorder=5)
+
+    axes[1].set_title('Corresponding Image')
+    
+    def animate(i):
+        cur.set_offsets(z_path[i:(i+1)])
+        axes[1].imshow(x_path[i].reshape(24, 24), cmap='gray', vmin=0.0, vmax=1.0)
+    
+    ani = matplotlib.animation.FuncAnimation(fig, animate, frames=len(x_path))        
+    html = HTML(ani.to_jshtml(default_mode='reflect', fps=speed))
+    plt.close()
+    
+    return html
+    
