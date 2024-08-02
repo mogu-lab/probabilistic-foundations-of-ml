@@ -43,3 +43,7 @@ Ethics:
 * [The Numbers Don't Speak for Themselves](https://data-feminism.mitpress.mit.edu/pub/czq9dfs5/release/3)
 * [Catherine D'Ignazio: Data is never a raw, truthful input – and it is never neutral](https://www.theguardian.com/technology/2020/mar/21/catherine-dignazio-data-is-never-a-raw-truthful-input-and-it-is-never-neutral)
 
+
+## Future Materials
+
+* Geometry of Bayes' fule and law of total probability for continuous distributions
