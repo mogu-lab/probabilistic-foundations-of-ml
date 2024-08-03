@@ -5,6 +5,7 @@
 However, our analysis of ML models *should not stop here*. For us to responsibly develop and use ML (or any technological system), it's our responsibility not just to think about the technology, but also about their *sociotechnical context*---the software, hardware, data, model, people, affected communities, legal frameworks, business incentives, etc. that it will shape (or that will be shaped by its use). For this reason, we will now introduce a framework for conducting a broader impact analysis. This framework can serve as a starting point for thinking about ML in sociotechnical contexts. 
 
 
+
 ## Broader Impact Analysis
 
 **Part A: Assessing Impact.** 
@@ -43,6 +44,7 @@ However, our analysis of ML models *should not stop here*. For us to responsibly
     * Did you consult with domain experts, typical users, or representative community members in the inception, development, and deployment of the project?
     * Through what mechanisms can your domain experts, users/affected communities provide feedback during your inception, development, and deployment processes? If these mechanisms exist, what barriers may stop you from getting feedback?
     * How do you resolve conflicts of visions (e.g. between community members, between designers, between designer and user)?
+
 
 
 ````{admonition} Exercise: Conducting a Broader Impact Analysis
