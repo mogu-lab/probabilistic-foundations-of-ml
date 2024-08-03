@@ -4,9 +4,11 @@ import os
 import glob
 
 from PIL import Image
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 import pandas as pd
+import sklearn.datasets
 import jax
 import jax.numpy as jnp
 import jax.nn as jnn
@@ -390,6 +392,38 @@ def generate_IHH_CGLF_data_classification():
 
 
 
+###############################################################################
+# IHH Center for Epidemiology
+###############################################################################
+
+
+def IHH_fever_vs_heart_rate():
+    columns = ['Fever', 'Heart-Rate']
+    n = 500
+    
+    z = np.random.randint(0, high=3, size=(n,))
+    c1 = np.random.multivariate_normal([-1.0, -1.0], [[0.3, 0.1], [0.1, 0.3]], size=n)
+    c2 = np.random.multivariate_normal([1.5, -1.5], [[2.8, -0.2], [-0.2, 3.2]], size=n)
+    c3 = np.random.multivariate_normal([0.0, 1.0], [[1., 0.0], [0.0, 0.2]], size=n)
+
+    samples = 0.0
+    for idx, c in enumerate([c1, c2, c3]):
+        samples += c * np.expand_dims(z == idx, axis=-1)
+
+    df = pd.DataFrame(samples, columns=columns)
+    
+    df.index.name = 'Patient ID'
+    df.to_csv(os.path.join(DATA_DIR, 'IHH-CE-clustering.csv'))
+
+    df = pd.DataFrame(
+        sklearn.datasets.make_moons(n_samples=n, noise=0.17)[0],
+        columns=columns,
+    )
+
+    df.index.name = 'Patient ID'
+    df.to_csv(os.path.join(DATA_DIR, 'IHH-sister-CE-clustering.csv'))
+    
+
 def IHH_microscope_data():
     '''
     Data from:
@@ -410,6 +444,7 @@ def main():
     #generate_IHH_CTR_data_discrete_continuous()
     #generate_IHH_CGLF_data_regression()
     #generate_IHH_CGLF_data_classification()
+    #IHH_fever_vs_heart_rate()
     #IHH_microscope_data()
     pass
     
