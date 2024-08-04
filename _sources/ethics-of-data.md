@@ -27,8 +27,9 @@ All three questions are fundementally concerned with *representation*. Data offe
 * Pick one example from Chapter 4 of Data Feminism. In what way(s) would this author argue that the example dehumanized people through data?
 
 **Part 3:** Read *[Dehumanization in Medicine: Causes, Solutions, and Functions](https://search.ebscohost.com/login.aspx?direct=true&db=edsfra&AN=edsfra.25778882&site=eds-live&authtype=ip,sso&custid=s8895369)*.
-* In the process of developing ML models for healthcare contexts, are we at risk of dehumanizing patients? Which of the six causes identified by the author are applicable to us. Are there causes that are applicable to us that aren't mentioned?
-* Read *[Words, Do No Harm](https://www.hopkinsmedicine.org/news/articles/2023/05/words-do-no-harm)*. What are the ways in which dehumanizing language affect patient care? What are potential effects of dehumanizing language in ML for healthcare? 
+* In the process of developing ML models for healthcare contexts, are we at risk of dehumanizing patients? Which of the six causes identified by the author are applicable to us (and why). Are there causes that are applicable to us that aren't mentioned?
+* Read *[Words, Do No Harm](https://www.hopkinsmedicine.org/news/articles/2023/05/words-do-no-harm)*. What are the ways in which dehumanizing language can affect patient care? 
+* Is there language we use when talking about ML that's implicitly dehumanizing? 
 ````
 
 
