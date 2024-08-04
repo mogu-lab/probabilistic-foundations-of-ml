@@ -7,7 +7,7 @@
 ## What's lost when we represent people as data?
 
 
-````{admonition} Exercise
+````{admonition} Exercise: Ethics of Representation
 **Part 1:** From the book, *Data Feminism*, read *[Chapter 4: "What Gets Counted Counts"](https://data-feminism.mitpress.mit.edu/pub/h1w0nbqp/release/3)*.
 * According to the author, what differentiates "data" from "information"? 
 * What do we gain, and what do we lose when we turn information into data? 
@@ -28,7 +28,7 @@
 ## Is data neutral?
 
 
-````{admonition} Exercise
+````{admonition} Exercise: Data Neutrality 
 **Part 1:** From the book, *[Invisible Women: Data Bias in a World Designed for Men](https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=nlebk&AN=2030243&authtype=shib&site=eds-live&scope=site&custid=s8895369)*, read *Chapter 10: The Drugs Don't Work*. You can find an online version of the book from the Wellesley College Library. Then answer the following questions:
 * What factors lead to the exlusion of female health data?
 * What are the consequences of excluding female participants from medical research?
@@ -45,7 +45,7 @@
 
 ## How do we responsibly collect and use data?
 
-````{admonition} Exercise
+````{admonition} Exercise: Responsible and Ethical Practices
 **Part 1:** What are pillars of responsible and ethical data *collection*? What practices will set us up for success?
 
 **Part 2:** What are pillars of responsible and ethical data *usage*? What practices will set us up for success?
