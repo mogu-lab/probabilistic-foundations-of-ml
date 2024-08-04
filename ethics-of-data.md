@@ -2,7 +2,7 @@
 
 **Context:** So far, we've been giving data from our collaborators and we've done our best to help answer their scientific questions. Without much reflection, we can easily conclude that we've done "good" in the world; after all, we've just doing our best to improve patient care for beings across the galaxy. But is this the limit to our role in our IHH? Or are we also responsible for asking the "bigger questions"---to question our professional role from an ethical perspective? 
 
-**Challenge:** One challenge we may have is that we don't even know what we should ask ourselves. This is where our colleagues who study gender and critical race theory, anthropology, philosophy, science and technology studies, the history of science, and more, can offer us invaluable perspectives. 
+**Challenge:** One challenge we may have is that we don't even know what we should ask ourselves. It's therefore important we work with a diverse team that can help us examine our blind spots: e.g. colleagues with different identities/backgrounds, people affected by AI/ML systems, experts on gender and critical race theory, anthropology, philosophy, science and technology studies, the history of science, and more. 
 
 **Outline:** We'll focus on three questions:
 * What's lost when we represent people as data?
