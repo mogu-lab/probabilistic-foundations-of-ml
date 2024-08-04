@@ -9,7 +9,7 @@
 * Is data neutral?
 * How do we responsibly collect and use data?
 
-All three questions are fundementally concerned with *representation*. Data offers us a representation of people. Models offer us a representation of people, as well as of our *assumptions*. As the readings below will argue, these representations are shaped by implicit and explicit societal values. For us to act responsibly and ethically, they must be carefully interrogated. 
+All three questions are fundementally concerned with *representation*. Data offers us a representation of people. Models offer us a representation of people, as well as of our *assumptions*. This is exactly what we've been concerned with so far! And as the readings below will argue, these representations are shaped by implicit and explicit societal values. For us to act responsibly and ethically, we must therefore interrogate them. 
 
 
 ## What's lost when we represent people as data?
