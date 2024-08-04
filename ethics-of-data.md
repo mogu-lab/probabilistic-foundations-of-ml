@@ -1,7 +1,15 @@
 # The Ethics of Data
 
+**Context:** So far, we've been giving data from our collaborators and we've done our best to help answer their scientific questions. Without much reflection, we can easily conclude that we've done "good" in the world; after all, we've just doing our best to improve patient care for beings across the galaxy. But is this the limit to our role in our IHH? Or are we also responsible for asking the "bigger questions"---to question our professional role from an ethical perspective? 
 
+**Challenge:** One challenge we may have is that we don't even know what we should ask ourselves. This is where our colleagues who study gender and critical race theory, anthropology, philosophy, science and technology studies, the history of science, and more, can offer us invaluable perspectives. 
 
+**Outline:** We'll focus on three questions:
+* What's lost when we represent people as data?
+* Is data neutral?
+* How do we responsibly collect and use data?
+
+All three questions are fundementally concerned with *representation*. Data offers us a representation of people. Models offer us a representation of people, as well as of our *assumptions*. As the readings below will argue, these representations are shaped by implicit and explicit societal values. For us to act responsibly and ethically, they must be carefully interrogated. 
 
 
 ## What's lost when we represent people as data?
