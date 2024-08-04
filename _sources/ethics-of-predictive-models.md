@@ -1,9 +1,14 @@
 # The Ethics of Predictive Models in Sociotechnical Systems
 
-**ML in Sociotechnical Contexts.** So far, we've focused on gaining intuition for qualitative metrics of model performance. We've seen that no single metric can paint a full picture of a model's fit. And that multiple metrics can provide contradictory information---a model can be "good" according to one metric by "bad" according to another. Most importantly, we've seen that no metric can be meaningful without its context---in some contexts, false negatives are more tolerable than false positives, and in others its the opposite. 
+**Contexts:** So far, we've focused on gaining intuition for qualitative metrics of model performance. We've seen that no single metric can paint a full picture of a model's fit. And that multiple metrics can provide contradictory information---a model can be "good" according to one metric by "bad" according to another. Most importantly, we've seen that no metric can be meaningful without its context---in some contexts, false negatives are more tolerable than false positives, and in others its the opposite. 
 
-However, our analysis of ML models *should not stop here*. For us to responsibly develop and use ML (or any technological system), it's our responsibility not just to think about the technology, but also about their *sociotechnical context*---the software, hardware, data, model, people, affected communities, legal frameworks, business incentives, etc. that it will shape (or that will be shaped by its use). For this reason, we will now introduce a framework for conducting a broader impact analysis. This framework can serve as a starting point for thinking about ML in sociotechnical contexts. 
+However, our analysis of ML models *should not stop here*. For us to responsibly develop and use ML (or any technological system), it's our responsibility not just to think about the technology, but also about their *sociotechnical context*---the software, hardware, data, model, people, affected communities, legal frameworks, business incentives, etc. that it will shape (or that will be shaped by its use). 
 
+**Challenge:** What should we consider when evaluating an ML system in its sociotechnical context? There are many facets to consider. We will now introduce a framework for conducting a *broader impact analysis*. This framework can serve as a starting point for thinking about ML in sociotechnical contexts. 
+
+**Outline:**
+* Introduce the broader impact analysis framework
+* Perform a broader impact analysis on case studies
 
 
 ## Broader Impact Analysis
@@ -45,7 +50,10 @@ However, our analysis of ML models *should not stop here*. For us to responsibly
     * Through what mechanisms can your domain experts, users/affected communities provide feedback during your inception, development, and deployment processes? If these mechanisms exist, what barriers may stop you from getting feedback?
     * How do you resolve conflicts of visions (e.g. between community members, between designers, between designer and user)?
 
+**Acknowledgements.** This framework was adapted from Weiwei Pan's offering of [AM207](https://onefishy.github.io/am207/) at Harvard.
 
+
+## Case Studies
 
 ````{admonition} Exercise: Conducting a Broader Impact Analysis
 Choose one of the following articles:
@@ -55,4 +63,5 @@ Choose one of the following articles:
 
 For the article you chose, imagine you are the engineer who developed the technology. Conduct a broader impact analysis. 
 ````
+
 
