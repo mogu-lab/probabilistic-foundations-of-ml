@@ -21,8 +21,8 @@ Read *[The myth of generalisability in clinical research and machine learning in
 * What is statistical significance testing? 
 * What are p-values? 
 * What are the scientific criticisms against statistical significance testing?
-* Given that there are so many criticisms of p-values, why do scientists keep using this?
-* How do you think statistical significance testing has been shaping science? Think of: What types of scientific discoveries gain public visibility? What kinds of scientific questions are more likely to be studied and to get funded? What kind of scientists get rewarded with more power and influence? 
+* P-values are a human-created tool that has made its way into scientific standards, which, like other standards, are debated and negotiated throughout time. How can such standards shape scientific discourse? Use p-values as an example and think of: What types of scientific discoveries gain public visibility? What kinds of scientific questions are more likely to be studied and to get funded? What kind of scientists get rewarded with more power and influence? 
+* How can we tell if the standard used in ML are promoting good scientific practices? For example, should we use the MLE? 
 
 **Part 2:** Read, *[Unpacking the flawed science cited in the Texas abortion pill ruling](https://www.washingtonpost.com/health/2023/04/13/abortion-pill-safety/)*.
 * What was scientifically flawed about the arguments made by the plaintiff?
@@ -35,7 +35,7 @@ Read *[The myth of generalisability in clinical research and machine learning in
 ## Are data-driven systems "objective"?
 
 ````{admonition} Exercise: Objectivity of ML Systems
-**Part 1:** Read [Great promise but potential for peril](https://news.harvard.edu/gazette/story/2020/10/ethical-concerns-mount-as-ai-takes-bigger-decision-making-role/).
-* In the article, Sandel says AI "confers [...] scientific objectivity." What do they mean? 
-* In your opinion, how does AI obtain scientific credibility?
+Read *[AI Myths: AI can be objective/unbiased](https://www.aimyths.org/ai-can-be-objective-or-unbiased)*.
+* 
+
 ````
