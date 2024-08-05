@@ -1,8 +1,8 @@
 # The Ethics of Data
 
-**Context:** So far, we've been giving data from our collaborators and we've done our best to help answer their scientific questions. Without much reflection, we can easily conclude that we've done "good" in the world; after all, we've just doing our best to improve patient care for beings across the galaxy. But is this the limit to our role in our IHH? Or are we also responsible for asking the "bigger questions"---to question our professional role from an ethical perspective? 
+**Context:** So far, we've been given data from our collaborators at the IHH and we've done our best to help answer their scientific questions. Without much reflection, we can easily conclude that we've done "good" in the world; after all, we've just been doing our best to improve patient care for beings across the galaxy. But is this the limit to our role at our IHH? Or are we also responsible for asking the "bigger questions"---to question our professional role from an ethical perspective? 
 
-**Challenge:** One challenge we may have is that we don't even know what we should ask ourselves. It's therefore important we work with a diverse team that can help us examine our blind spots: e.g. colleagues with different identities/backgrounds, people affected by AI/ML systems, experts on gender and critical race theory, anthropology, philosophy, science and technology studies, the history of science, and more. 
+**Challenge:** One challenge we may have is that we don't even know what we should ask ourselves. It's therefore important we work with a diverse team that can help us examine our blind spots: e.g. colleagues with different identities/backgrounds, people affected by our AI/ML systems, experts on gender and critical race theory, anthropology, philosophy, science and technology studies, history of science, and more. 
 
 **Outline:** We'll focus on three questions:
 * What's lost when we represent people as data?
@@ -45,7 +45,7 @@ All three questions are fundementally concerned with *representation*. Data offe
 * What can you, as an individual, do to address the problems presented in the chapter?
 * What can we, as a society, do to address the problems presented in the chapter?
 
-**Part 2:** Read *[Data is never a raw, truthful input – and it is never neutral](https://www.theguardian.com/technology/2020/mar/21/catherine-dignazio-data-is-never-a-raw-truthful-input-and-it-is-never-neutral)*.
+**Part 2:** Read *[Data is never a raw, truthful input---and it is never neutral](https://www.theguardian.com/technology/2020/mar/21/catherine-dignazio-data-is-never-a-raw-truthful-input-and-it-is-never-neutral)*.
 * When the author says "data is never neutral," what do they mean?
 * What are "who questions"? Why does the author advocate for using them?
 * Whose responsbility is it to ask the "who questions"? The person who funds the research? The researcher who collected the data? The data scientist who analyzed it?

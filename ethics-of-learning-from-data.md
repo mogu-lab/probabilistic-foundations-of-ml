@@ -13,8 +13,8 @@ Read [The myth of generalisability in clinical research and machine learning in 
 
 ## How can we tell if we learned something from data?
 
- * [800 scientists say it’s time to abandon “statistical significance”](https://www.vox.com/latest-news/2019/3/22/18275913/statistical-significance-p-values-explained)
-   * [5 things journalists should know about statistical significance in research](https://journalistsresource.org/home/statistical-significance-research-5-things/)
+* [800 scientists say it’s time to abandon "statistical significance"](https://www.vox.com/latest-news/2019/3/22/18275913/statistical-significance-p-values-explained)
+* [5 things journalists should know about statistical significance in research](https://journalistsresource.org/home/statistical-significance-research-5-things/)
 
 
 
