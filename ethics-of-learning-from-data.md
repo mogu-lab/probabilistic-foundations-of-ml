@@ -47,7 +47,14 @@ Read, *[The myth of generalisability in clinical research and machine learning i
 ## Are data-driven systems objective?
 
 ````{admonition} Exercise: Objectivity of ML Systems
-Read *[AI Myths: AI can be objective/unbiased](https://www.aimyths.org/ai-can-be-objective-or-unbiased)*.
-* 
+**Part 1:** Read *[AI Myths: AI can be objective/unbiased](https://www.aimyths.org/ai-can-be-objective-or-unbiased)*.
+* What are the types of AI biases the author describes? 
+* What are the barriers for "fixing" AI bias?
+* What are the criticisms against the framing of AI harms as "biases"? 
+* What is "AI inevitability"? And what's the author's critique of it?
 
+**Part 2:** 
+* Looking at the readings about the objectivity of science and of data-driven systems, are the problems identified technical? cultural? both? 
+* What are the pillars of responsible and ethical automated learning systems? What practices will set us up for success?
 ````
+
