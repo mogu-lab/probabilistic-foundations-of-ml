@@ -50,10 +50,6 @@ However, our analysis of ML models *should not stop here*. For us to responsibly
     * Through what mechanisms can your domain experts, users/affected communities provide feedback during your inception, development, and deployment processes? If these mechanisms exist, what barriers may stop you from getting feedback?
     * How do you resolve conflicts of visions (e.g. between community members, between designers, between designer and user)?
 
-**Acknowledgements.** This framework was adapted from Weiwei Pan's offering of [AM207](https://onefishy.github.io/am207/) at Harvard.
-
-
-## Case Studies
 
 ````{admonition} Exercise: Conducting a Broader Impact Analysis
 Choose one of the following articles:
@@ -62,6 +58,22 @@ Choose one of the following articles:
 3. [Rooting Out AI’s Biases](https://magazine.publichealth.jhu.edu/2023/rooting-out-ais-biases)
 
 For the article you chose, imagine you are the engineer who developed the technology. Conduct a broader impact analysis. 
+````
+
+**Acknowledgements.** This framework was adapted from Weiwei Pan's offering of [AM207](https://onefishy.github.io/am207/) at Harvard.
+
+
+## The need for Explainable AI (XAI)
+
+````{admonition} Exercise: Explainable AI
+Read, *[Explainability for artifcial intelligence
+in healthcare: a multidisciplinary perspective](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7706019/pdf/12911_2020_Article_1332.pdf)*.
+* What's the technological perspective?
+* The legal perspective?
+* The medical perspective?
+* The patient perspective?
+* The ethical perspective?
+* The paper argues that "omitting explainability in clinical decision support systems poses a threat to core ethical values in medicine and may have detrimental consequences for individual and public health." In your opinion, do XAI fix these issues?
 ````
 
 
