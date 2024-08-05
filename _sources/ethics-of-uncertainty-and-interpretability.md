@@ -47,7 +47,7 @@ Note: This paper focuses on recidivism prediction. There are many criticisms of 
 * What's a "moral crumple zone"? Instantiate this using the Google incidents from 2015-2017. 
 * What are the author's criticisms of the human-in-the-loop paradigm?
 
-**Part 3:** In your opinion, are explainablility, uncertainty, and more broadly, human-in-the-loop AI-assisted decision-making just shifting the blame from the AI developers to the AI users? Why or why not?
+**Part 3:** Explainability and uncertainty are both tools for building human-in-the-loop systems---systems that incorporate AI into human decision-making. In your opinion, are explainablility and uncertainty just shifting the responsibility from the AI developers to the AI users? Why or why not?
 
 ````
 
