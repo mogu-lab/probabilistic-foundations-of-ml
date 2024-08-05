@@ -1,6 +1,13 @@
 # The Ethics of Uncertainty and Interpretability in Human/AI Systems
 
-**Context:** 
+**Context:** When considering AI systems in sociotechnical contexts, it's important to consider the ways in which AI will be used---that is, the human-AI collaboration. So far, we've hinted that both interpretability and uncertainty are important for building ethical, fair, and trustworthy systems. 
+
+**Challenge:** As we will see, human-AI collaboration is doesn't always work as intended. As a result, it's important to devote as much to studying human-AI collaboration as to the development of AI systems alone. 
+
+**Outline:** 
+1. What do we need for effective Human/AI collaborations?
+2. Challenges with current Human/AI collaboration practices
+
 
 
 ## What do we need for effective Human/AI collaborations?
@@ -29,7 +36,7 @@
 * If the type of explanation influences a user's perception of fairness, are there aspects of the user's decision-making process that might be influenced? 
 * Given that explanations have such influence over the users, how can we ensure our explanations are *informative* and not *manipulative*? 
 
-Note: This paper focuses on recidivism prediction. There are many criticisms of the use for AI in this domain that are important to consider. If you're interested in learning more, read the following two papers:
+Note: This paper focuses on recidivism prediction. There are many criticisms of the use for AI in this domain that are important to consider. If you're interested in learning more, the following papers are a good place to start:
 * [Layers of Bias: A Unified Approach for Understanding Problems With Risk Assessment](https://journals.sagepub.com/doi/abs/10.1177/0093854818811379)
 * [Beyond Bias: Re-Imagining the Terms of ‘Ethical AI’ in Criminal Law](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3377921)
 
