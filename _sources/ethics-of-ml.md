@@ -28,7 +28,7 @@
 **Part 1:** Science as a human endeavor 
 * TODO
 
-**Part 2:** Read, *[Do artifacts have politics?](https://faculty.cc.gatech.edu/~beki/cs4001/Winner.pdf)*. 
+**Part 2:** Read, *[Do artifacts have politics?](https://faculty.cc.gatech.edu/~beki/cs4001/Winner.pdf)*
 * TODO
 
 ````
@@ -40,7 +40,7 @@
 
 
 ````{admonition} Exercise: Everything is Political
-**Part 1:** Read, *[The TESCREAL bundle: Eugenics and the promise of utopia through artificial general intelligence](https://firstmonday.org/ojs/index.php/fm/article/view/13636/11606)*. 
+**Part 1:** Read, *[The TESCREAL bundle: Eugenics and the promise of utopia through artificial general intelligence](https://firstmonday.org/ojs/index.php/fm/article/view/13636/11606)*.
 * TODO
 
 ````
