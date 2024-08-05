@@ -3,13 +3,20 @@
 
 
 
-## Eugenics and the Birth of Statistics
-
-* [Eugenics and the Ethics of Statistical Analysis](https://gppreview.com/2019/12/16/eugenics-ethics-statistical-analysis/)
+## Eugenics and the Birth of Modern Statistics
 
 
-````{admonition} Exercise: 
-TODO
+
+
+````{admonition} Exercise: Background on Eugenics and Statistics
+**Part 1:** Read, *[Eugenics and Scientific Racism](https://www.genome.gov/about-genomics/fact-sheets/Eugenics-and-Scientific-Racism)*.
+* TODO
+
+**Part 2:** From, *[The Mismeasure of Man](http://tankona.free.fr/gould1981.pdf)*, read:
+* TODO
+
+**Part 3:** Read, *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)*. 
+* TODO
 ````
 
 
@@ -17,23 +24,24 @@ TODO
 
 
 
+````{admonition} Exercise: Everything is Political
+**Part 1:** Science as a human endeavor 
+* TODO
 
-## Science is a human endeavor 
+**Part 2:** Read, *[Do artifacts have politics?](https://faculty.cc.gatech.edu/~beki/cs4001/Winner.pdf)*. 
+* TODO
 
-
-
-
-
-
-## The politics of artifacts
-
-
-* [Do artifacts have politics?](https://faculty.cc.gatech.edu/~beki/cs4001/Winner.pdf)
-
-
+````
 
 
 
 
 ## What can we learn from this?
+
+
+````{admonition} Exercise: Everything is Political
+**Part 1:** Read, *[The TESCREAL bundle: Eugenics and the promise of utopia through artificial general intelligence](https://firstmonday.org/ojs/index.php/fm/article/view/13636/11606)*. 
+* TODO
+
+````
 
