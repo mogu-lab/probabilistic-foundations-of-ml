@@ -1,10 +1,22 @@
 # The Ethics of Learning from Data
 
+**Context:** In the past few chapters, we've developed the machinery necessary to fit ML models to data. We can then use these fitted models for a variety of tasks, like answering scientific questions, making future predictions, etc. With this new power, we also have a new responsbility: we must understand the *limitations* of what our models can learn from data. By this, we don't mean what types of data sets a model can successfully capture---we mean what conclusions can we ethically and responsibly draw about people and society, and how these conclusions should inform social change. 
+
+**Challenge:** As before, nothing about the technical materials we've presented so far can point us in the right direction. We must turn to our colleagues who study the broader sociotechnical system in which we live to help us interrogate our practice. 
+
+**Outline:** There are three questions we will focus on. 
+1. What does ML learn from data?
+2. Is science objective?
+3. Are data-driven systems objective? 
+
+All three questions are fundementally concerned with the ethics of applying insights derived from our models to the broader society. 
+
+
 
 ## What does ML learn from data?
 
 ````{admonition} Exercise: Generalizability of ML Systems.
-Read *[The myth of generalisability in clinical research and machine learning in health care](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7444947/pdf/main.pdf)*.
+Read, *[The myth of generalisability in clinical research and machine learning in health care](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7444947/pdf/main.pdf)*.
 * What is generalizability? And what are the different "levels" of generalizability?
 * Why might an ML system struggle to generalize? (Hint: see green panel). 
 * In science, why do we value generalizability?
@@ -14,10 +26,10 @@ Read *[The myth of generalisability in clinical research and machine learning in
 ````
 
 
-## Is science "objective"? 
+## Is science objective? 
 
 ````{admonition} Exercise: Objectivity of Science
-**Part 1:** Read *[5 things journalists should know about statistical significance in research](https://journalistsresource.org/home/statistical-significance-research-5-things/)*.
+**Part 1:** Read, *[5 things journalists should know about statistical significance in research](https://journalistsresource.org/home/statistical-significance-research-5-things/)*.
 * What is statistical significance testing? 
 * What are p-values? 
 * What are the scientific criticisms against statistical significance testing?
@@ -32,7 +44,7 @@ Read *[The myth of generalisability in clinical research and machine learning in
 ````
 
 
-## Are data-driven systems "objective"?
+## Are data-driven systems objective?
 
 ````{admonition} Exercise: Objectivity of ML Systems
 Read *[AI Myths: AI can be objective/unbiased](https://www.aimyths.org/ai-can-be-objective-or-unbiased)*.
