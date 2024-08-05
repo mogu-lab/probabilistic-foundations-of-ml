@@ -45,9 +45,9 @@ Note: This paper focuses on recidivism prediction. There are many criticisms of 
 * In the accident, who ended up being held responsible? Do you agree with this? Why or why not? 
 * Do you think that if the self-driving AI had some notion of uncertainty, what this have helped avoid the accident? If so, in what ways? If not, why not?
 * What's a "moral crumple zone"? Instantiate this using the Google incidents from 2015-2017. 
-* What are the author's criticisms of human-in-the-loop paradigm?
+* What are the author's criticisms of the human-in-the-loop paradigm?
 
-**Part 3:** In your opinion, are explainablility, uncertainty, and more broadly, human-in-the-loop AI-assisted decision making just shifting the blame from the AI developers to the AI users? Why or why not?
+**Part 3:** In your opinion, are explainablility, uncertainty, and more broadly, human-in-the-loop AI-assisted decision-making just shifting the blame from the AI developers to the AI users? Why or why not?
 
 ````
 
