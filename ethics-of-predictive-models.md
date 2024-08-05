@@ -9,6 +9,7 @@ However, our analysis of ML models *should not stop here*. For us to responsibly
 **Outline:**
 * Introduce the broader impact analysis framework
 * Perform a broader impact analysis on case studies
+* The need for explainable AI
 
 
 ## Broader Impact Analysis
