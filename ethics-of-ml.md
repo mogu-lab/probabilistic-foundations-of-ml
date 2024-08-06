@@ -80,10 +80,10 @@ Many of the techniques introduced in this class were created by leaders of the e
 * As the author of *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)* argues, statistical tests have politics for two main reasons. The first is that, at its heart, it enforces a binarization: either something is or isn't statistically significant. What are the political implications of this?
 * Second, statistical tests have politics because they encourage a fixation on difference, as opposed to magnitude. That is, you can find two quantities that are statistically significantly different, but in practice the fact they are different may be meaningless. What are the political implications of this?
 * Do we find eugenics ideals embedded in the math of other methods? Let's consider the MLE. For a regression model, we find that the MLE gives us a model that minimizes the squared error between true and observed (see the section on on-probabilistic regression):
-\begin{align}
-\frac{1}{N} \sum\limits_{n=1}^N \left(y_n^\text{observed} - y_n^\text{predicted} \right)^2.
-\end{align}
-If our data set includes points from two populations, a majority and a minority population, which population will have a better-fitting model? What are the political implications of this?
+    \begin{align}
+    \frac{1}{N} \sum\limits_{n=1}^N \left(y_n^\text{observed} - y_n^\text{predicted} \right)^2.
+    \end{align}
+    If our data set includes points from two populations, a majority and a minority population, which population will have a better-fitting model? What are the political implications of this?
 
 **Part 4:** Reflection.
 * Did you find anything surprising about these readings/exercises?
