@@ -85,25 +85,15 @@ Many of the techniques introduced in this class were created by leaders of the e
  It's important for us not just to study ongoing harms of the movement, but to consider whether we, as scientists, are fundementally different from the leaders of eugenics. Are we subject to the same types of biases and unscientific methods? 
 
 
-
-
 ````{admonition} Exercise: Everything is Political
-**Part 1:** Science as a human endeavor 
+**Part 1:** Read, *[The TESCREAL bundle: Eugenics and the promise of utopia through artificial general intelligence](https://firstmonday.org/ojs/index.php/fm/article/view/13636/11606)*.
 * TODO
 
-
-
 ````
-
 
 
 
 ## What can we learn from this?
 
 
-````{admonition} Exercise: Everything is Political
-**Part 1:** Read, *[The TESCREAL bundle: Eugenics and the promise of utopia through artificial general intelligence](https://firstmonday.org/ojs/index.php/fm/article/view/13636/11606)*.
-* TODO
-
-````
 
