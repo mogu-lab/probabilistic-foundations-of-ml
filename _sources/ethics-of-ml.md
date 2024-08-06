@@ -70,7 +70,7 @@ Many of the techniques introduced in this class were created by leaders of the e
 
 ````{admonition} Exercise: The Politics of Artifacts
 **Part 1:** Language, idealogy, and practice. 
-* Many eugenicists advocated to "let the data speak for itself." Is this different from the language used to tout the benefits of Deep Learning, that it's "data-driven"? Why or why not?
+* Many eugenicists advocated to "let the data speak for itself." Is this different from the language used to tout the benefits of Deep Learning, that it's "data-driven"? Why or why not? What are the potential harms of this idea?
 * Many eugenicists advocated for the use of correlation analysis to find variables that have statistically significant relationships in the data. Does this practice lend itself more easily to confirmatory science (science used to justify what we already believe)? Why or why not? 
 * Have you noticed other potential similarities between practices of eugenics and practices of data science / ML?
 
@@ -82,13 +82,13 @@ Many of the techniques introduced in this class were created by leaders of the e
 * What argument can you make that statistical methods aren't politically neutral?
 
 **Part 3:** The politics of the math behind statistics and ML. 
-* As the author of *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)* argues, statistical tests have politics for two main reasons. The first is that, at its heart, it enforces a binarization: either something is or isn't statistically significant. What are the political implications of this?
-* Second, statistical tests have politics because they encourage a fixation on difference, as opposed to magnitude. That is, you can find two quantities that are statistically significantly different, but in practice the fact they are different may be meaningless. What are the political implications of this?
+* As the author of *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)* argues, statistical tests have politics for two main reasons. The first is that, at its heart, it enforces a binarization: either something is or isn't statistically significant. What are the political implications of this? What are the potential harms of this?
+* Second, statistical tests have politics because they encourage a fixation on difference, as opposed to magnitude. That is, you can find two quantities that are statistically significantly different, but in practice the fact they are different may be meaningless. What are the political implications of this? What are the potential harms of this?
 * Do we find eugenics ideals embedded in the math of other methods? Let's consider the MLE. For a regression model, we find that the MLE gives us a model that minimizes the squared error between true and observed (see the section on non-probabilistic regression):
     \begin{align}
     \frac{1}{N} \sum\limits_{n=1}^N \left(y_n^\text{observed} - y_n^\text{predicted} \right)^2.
     \end{align}
-    If our data set includes points from two populations, a majority and a minority population, which population will have a better-fitting model? What are the political implications of this?
+    If our data set includes points from two populations, a majority and a minority population, which population will have a better-fitting model? What are the political implications of this? What are the potential harms of this?
 * In your opinion, should we stop using these tools? Why or why not?
 
 **Part 4:** Reflection.
@@ -131,7 +131,6 @@ By this point, you may be thinking, why did we learn all of this ML just to tear
 ````{admonition} Exercise: Reflection
 * What did you learn from reading about the eugenics movement? 
 * How will what you learned inform your approach to science?
-
 ````
 
 
