@@ -84,6 +84,7 @@ Many of the techniques introduced in this class were created by leaders of the e
     \frac{1}{N} \sum\limits_{n=1}^N \left(y_n^\text{observed} - y_n^\text{predicted} \right)^2.
     \end{align}
     If our data set includes points from two populations, a majority and a minority population, which population will have a better-fitting model? What are the political implications of this?
+* In your opinion, should we stop using these tools? Why or why not?
 
 **Part 4:** Reflection.
 * Did you find anything surprising about these readings/exercises?
@@ -100,15 +101,25 @@ Many of the techniques introduced in this class were created by leaders of the e
 It's important for us not just to study ongoing harms of the movement, but to consider whether we, as scientists, are fundementally different from the leaders of eugenics. Are we subject to the same types of biases and unscientific methods? 
 
 
-````{admonition} Exercise: Everything is Political
+````{admonition} Exercise: Eugenics in AI Research
 **Part 1:** Read, *[The TESCREAL bundle: Eugenics and the promise of utopia through artificial general intelligence](https://firstmonday.org/ojs/index.php/fm/article/view/13636/11606)*.
-* TODO
-
+* What's AGI? and what are the criticisms the author presents against building an AGI?
+* What is the TESCREAL bundle?
+* What is "second-wave eugenics"? How does the author connect the TESCREAL bundle to second-wave eugenics?
 ````
 
 
 
 ## What can we learn from this?
+
+
+````{admonition} Exercise: Reflection
+* What can we learn from the fallacies of the eugenics movement? 
+* How can we revise our own scientific practice to avoid these pitfalls?
+* 
+
+````
+
 
 
 
