@@ -662,8 +662,8 @@ document.write(`
 <li><p><strong>Posterior Update:</strong> Post observing data, we <em>update</em> our beliefs about <span class="math notranslate nohighlight">\(\theta\)</span>. We do this by computing <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>. Observing data will help us reduce the initial uncertainty from the prior, honing in on a set of parameters that could explain the data well. As we show in a bit, this posterior update will depend on both the prior and the likelihood distributions.</p></li>
 </ol>
 <p><strong>Bayesian Models.</strong> By having a prior distribution <span class="math notranslate nohighlight">\(\theta\)</span> to encode our beliefs, we now treat <span class="math notranslate nohighlight">\(\theta\)</span> as a <em>random variable</em>. This means that our generative process will now include an additional line, in which we sample <span class="math notranslate nohighlight">\(\theta\)</span> from the prior. For example, for Bayesian regression, our generative process is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-45dceeca-2c84-4433-9b42-fd08ebeb5a38">
-<span class="eqno">(21.1)<a class="headerlink" href="#equation-45dceeca-2c84-4433-9b42-fd08ebeb5a38" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-df1b6b16-7c7d-4e4d-83a1-78461bd04ca3">
+<span class="eqno">(21.1)<a class="headerlink" href="#equation-df1b6b16-7c7d-4e4d-83a1-78461bd04ca3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \quad (\text{prior}) \\
 y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta) = \mathcal{N}(\mu(x_n; \theta), \sigma^2) \quad (\text{likelihood}) \\
 \end{align}\]</div>
@@ -678,8 +678,8 @@ y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta) = \mathcal{N}(\mu(x_n
 <p>Before defining <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, let’s walk through an example to show you what this process looks like.</p>
 <p><strong>Illustration: Bayesian Regression.</strong> Let’s see what the Bayesian modeling paradigm looks like for regression, visually. We’ll use the generative process from above, setting <span class="math notranslate nohighlight">\(\sigma\)</span> as a constant (so we can ignore it). We’ve picked an expressive function, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>, that will be fun to visualize—its details aren’t important.</p>
 <p>Given our generative process, our goal is to sample the posterior,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-521785c0-7dc4-467a-af75-cb0f249ce17c">
-<span class="eqno">(21.2)<a class="headerlink" href="#equation-521785c0-7dc4-467a-af75-cb0f249ce17c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-29233fe8-2413-4d0f-82cd-54c903227715">
+<span class="eqno">(21.2)<a class="headerlink" href="#equation-29233fe8-2413-4d0f-82cd-54c903227715" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\theta | \mathcal{D}) &amp;= p(\theta | x_1, \dots, x_N, y_1, \dots, y_n).
 \end{align}\]</div>
 <p>For intuition, we can visualize posterior samples <span class="math notranslate nohighlight">\(\theta \sim p(\theta | \mathcal{D})\)</span> by plotting the <em>functions</em> they represent, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>. The plot below shows samples from the posterior as the number of points, <span class="math notranslate nohighlight">\(N\)</span>, increases.</p>
@@ -696,25 +696,25 @@ p(\theta | \mathcal{D}) &amp;= p(\theta | x_1, \dots, x_N, y_1, \dots, y_n).
 <h2><span class="section-number">21.4. </span>Model-Fitting via Bayes’ Rule<a class="headerlink" href="#model-fitting-via-bayes-rule" title="Permalink to this heading">#</a></h2>
 <p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? To avoid specifying this distribution by hand, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: the joint data likelihood, <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>. and the prior.</p>
 <p>Let’s derive Bayes’ rule in general before applying it to our problem. Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-05fae1f1-084b-4374-be90-49418d4088bb">
-<span class="eqno">(21.3)<a class="headerlink" href="#equation-05fae1f1-084b-4374-be90-49418d4088bb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ca7a14ab-6356-40e1-94d6-aef3e744f72f">
+<span class="eqno">(21.3)<a class="headerlink" href="#equation-ca7a14ab-6356-40e1-94d6-aef3e744f72f" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
 &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
 \end{align}\]</div>
 <p>This means we can also equate the two factorizations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-89639761-4d19-4b57-aa98-10f0b65e618e">
-<span class="eqno">(21.4)<a class="headerlink" href="#equation-89639761-4d19-4b57-aa98-10f0b65e618e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-143d7bf2-095a-4a82-a3e5-aeb0ec41081f">
+<span class="eqno">(21.4)<a class="headerlink" href="#equation-143d7bf2-095a-4a82-a3e5-aeb0ec41081f" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
 \end{align}\]</div>
 <p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5837f1de-5aae-4e95-8f65-de15270a5a86">
-<span class="eqno">(21.5)<a class="headerlink" href="#equation-5837f1de-5aae-4e95-8f65-de15270a5a86" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-efbe5f70-29ea-4280-9104-8c784e8a570d">
+<span class="eqno">(21.5)<a class="headerlink" href="#equation-efbe5f70-29ea-4280-9104-8c784e8a570d" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
 \end{align}\]</div>
 <p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
 <p><strong>Bayesian Inference.</strong> Using Bayes’ rule in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. We can now relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, which we don’t know how to specify, to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, which we do know how to specify:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3f254004-f8cd-4fb6-beb5-b355e3e234b9">
-<span class="eqno">(21.6)<a class="headerlink" href="#equation-3f254004-f8cd-4fb6-beb5-b355e3e234b9" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-bd93872e-66c4-4304-8170-cc6a1825132c">
+<span class="eqno">(21.6)<a class="headerlink" href="#equation-bd93872e-66c4-4304-8170-cc6a1825132c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} &amp;= \frac{\overbrace{p(\mathcal{D} | \theta)}^{\text{likelihood}} \cdot \overbrace{p(\theta)}^{\text{prior}}}{\underbrace{p(\mathcal{D})}_{\text{normalizing const.}}}
 \end{align}\]</div>
 <p>When used as a model-fitting paradigm, each term in Bayes’ rule has a special name. We’ll now define each:</p>
@@ -722,8 +722,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <li><p><strong>Likelihood:</strong> This is the data joint likelihood, which we’ve previously maximized as part of the MLE.</p>
 <blockquote>
 <div><p>For example, suppose we’re fitting a linear regression model to predict an intergalactic being’s glow given age. Our model is then:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ad652d93-9fce-4d44-83c9-20a8853708bd">
-<span class="eqno">(21.7)<a class="headerlink" href="#equation-ad652d93-9fce-4d44-83c9-20a8853708bd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d4d01fdc-2bf9-4af8-b76b-e11025131831">
+<span class="eqno">(21.7)<a class="headerlink" href="#equation-d4d01fdc-2bf9-4af8-b76b-e11025131831" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D} | \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n | \theta) \\
     &amp;= \prod\limits_{n=1}^N p_{Y | X}(y_n | x_n, \theta) \\
     &amp;= \prod\limits_{n=1}^N \mathcal{N}(y_n | \underbrace{\theta_0 + \theta_1 \cdot x_n}_{\mu(x_n; \theta)}, \sigma^2)
@@ -735,8 +735,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <blockquote>
 <div><p>Continuing with the above example, we know that in general, glow decreases with age. We can encode this belief into the inductive bias of the model by selecting an appropriate prior distribution—one for which the slope, <span class="math notranslate nohighlight">\(\theta_1\)</span>, is likely negative. As an example, we could select, <span class="math notranslate nohighlight">\(\mathcal{N}(-1, 0.1)\)</span>. In this way, <span class="math notranslate nohighlight">\(\theta_1\)</span> is most likely to be near <span class="math notranslate nohighlight">\(-1\)</span>. We can similarly encode our belief into the intercept, <span class="math notranslate nohighlight">\(\theta_0\)</span>, saying we believe it should be positive: <span class="math notranslate nohighlight">\(\mathcal{N}(1, 0.1)\)</span>.
 Putting these together, we get the following prior distribution over our model parameters:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0ef6018e-5cfe-4af4-8238-61a8dd5007be">
-<span class="eqno">(21.8)<a class="headerlink" href="#equation-0ef6018e-5cfe-4af4-8238-61a8dd5007be" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fe6238f8-5afe-46da-a1b3-5dfd44f33ceb">
+<span class="eqno">(21.8)<a class="headerlink" href="#equation-fe6238f8-5afe-46da-a1b3-5dfd44f33ceb" title="Permalink to this equation">#</a></span>\[\begin{align}
     p_\theta(\cdot) = p_{\theta_1}(\cdot) \cdot p_{\theta_0}(\cdot) = \mathcal{N}(-1, 0.1) \cdot \mathcal{N}(1, 0.1)
     \end{align}\]</div>
 </div></blockquote>
@@ -744,8 +744,8 @@ Putting these together, we get the following prior distribution over our model p
 </li>
 <li><p><strong>Posterior:</strong> This is the distribution of interest. It’s called a posterior because it determines the distribution of likely models, <span class="math notranslate nohighlight">\(\theta\)</span>, <em>after having observed data</em>. The posterior balances information from both the prior and the likelihood.</p></li>
 <li><p><strong>Normalizing Constant:</strong> This is a constant that turns the whole fraction into a valid probability density function (i.e. a function that integrates to 1). To compute <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>, we use the law of total probability:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3956e82d-74a6-4083-a9d6-1900611947f1">
-<span class="eqno">(21.9)<a class="headerlink" href="#equation-3956e82d-74a6-4083-a9d6-1900611947f1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f24f4c02-c3e9-4e88-bf26-7ee27a6e6e27">
+<span class="eqno">(21.9)<a class="headerlink" href="#equation-f24f4c02-c3e9-4e88-bf26-7ee27a6e6e27" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D}) &amp;= \int\limits \underbrace{p(\mathcal{D} | \theta) \cdot p(\theta)}_{\text{numerator of Bayes' rule}} d\theta
     \end{align}\]</div>
 <p>Notice that the law of total probability tells us to integrate the numerator of Bayes’ rule over the support of <span class="math notranslate nohighlight">\(\theta\)</span>. In doing so, when we divide by it, the whole fraction integrates to <span class="math notranslate nohighlight">\(1\)</span>. In general, marginalizing out a variable via the law of total probability is intractable—there’s no analytic solution to it, and approximating it is computationally too expensive. For now, we won’t worry about how to compute this integral (or how to <em>avoid</em> computing it).</p>
@@ -816,49 +816,49 @@ Putting these together, we get the following prior distribution over our model p
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/10000 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/10000 [00:00&lt;30:07,  5.53it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/10000 [00:00&lt;29:43,  5.61it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  8%|▊         | 757/10000 [00:00&lt;00:02, 3339.86it/s, init loss: 210237.3728, avg. loss [1-500]: 12332.9556]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  7%|▋         | 746/10000 [00:00&lt;00:02, 3316.22it/s, init loss: 210237.3728, avg. loss [1-500]: 12332.9556]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 15%|█▌        | 1520/10000 [00:00&lt;00:01, 4997.88it/s, init loss: 210237.3728, avg. loss [1001-1500]: 734.2828]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 15%|█▌        | 1522/10000 [00:00&lt;00:01, 5041.84it/s, init loss: 210237.3728, avg. loss [1001-1500]: 734.2828]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 23%|██▎       | 2291/10000 [00:00&lt;00:01, 5960.63it/s, init loss: 210237.3728, avg. loss [1501-2000]: 678.9703]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 23%|██▎       | 2300/10000 [00:00&lt;00:01, 6017.10it/s, init loss: 210237.3728, avg. loss [1501-2000]: 678.9703]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 31%|███       | 3065/10000 [00:00&lt;00:01, 6559.13it/s, init loss: 210237.3728, avg. loss [2501-3000]: 514.1815]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 31%|███       | 3073/10000 [00:00&lt;00:01, 6593.08it/s, init loss: 210237.3728, avg. loss [2501-3000]: 514.1815]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 38%|███▊      | 3838/10000 [00:00&lt;00:00, 6937.34it/s, init loss: 210237.3728, avg. loss [3001-3500]: 400.8029]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 38%|███▊      | 3840/10000 [00:00&lt;00:00, 6940.54it/s, init loss: 210237.3728, avg. loss [3001-3500]: 400.8029]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 46%|████▌     | 4609/10000 [00:00&lt;00:00, 7179.65it/s, init loss: 210237.3728, avg. loss [4001-4500]: 83.3632] 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 46%|████▌     | 4596/10000 [00:00&lt;00:00, 7135.43it/s, init loss: 210237.3728, avg. loss [4001-4500]: 83.3632] 
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 54%|█████▍    | 5380/10000 [00:00&lt;00:00, 7342.96it/s, init loss: 210237.3728, avg. loss [4501-5000]: -115.7751]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 54%|█████▎    | 5360/10000 [00:00&lt;00:00, 7292.38it/s, init loss: 210237.3728, avg. loss [4501-5000]: -115.7751]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 61%|██████▏   | 6142/10000 [00:00&lt;00:00, 7426.33it/s, init loss: 210237.3728, avg. loss [5501-6000]: -367.9644]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 61%|██████    | 6123/10000 [00:00&lt;00:00, 7393.86it/s, init loss: 210237.3728, avg. loss [5501-6000]: -367.9644]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 69%|██████▉   | 6910/10000 [00:01&lt;00:00, 7503.11it/s, init loss: 210237.3728, avg. loss [6001-6500]: -380.6392]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 69%|██████▉   | 6887/10000 [00:01&lt;00:00, 7468.20it/s, init loss: 210237.3728, avg. loss [6001-6500]: -380.6392]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 77%|███████▋  | 7673/10000 [00:01&lt;00:00, 7540.55it/s, init loss: 210237.3728, avg. loss [7001-7500]: -381.3525]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 76%|███████▋  | 7647/10000 [00:01&lt;00:00, 7506.97it/s, init loss: 210237.3728, avg. loss [7001-7500]: -381.3525]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 84%|████████▍ | 8438/10000 [00:01&lt;00:00, 7572.96it/s, init loss: 210237.3728, avg. loss [7501-8000]: -381.4603]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 84%|████████▍ | 8411/10000 [00:01&lt;00:00, 7545.63it/s, init loss: 210237.3728, avg. loss [7501-8000]: -381.4603]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 92%|█████████▏| 9200/10000 [00:01&lt;00:00, 7585.66it/s, init loss: 210237.3728, avg. loss [8501-9000]: -381.5809]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 92%|█████████▏| 9173/10000 [00:01&lt;00:00, 7565.49it/s, init loss: 210237.3728, avg. loss [8501-9000]: -381.5809]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|█████████▉| 9970/10000 [00:01&lt;00:00, 7618.86it/s, init loss: 210237.3728, avg. loss [9001-9500]: -381.6450]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 99%|█████████▉| 9938/10000 [00:01&lt;00:00, 7589.87it/s, init loss: 210237.3728, avg. loss [9001-9500]: -381.6450]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10000/10000 [00:01&lt;00:00, 6723.44it/s, init loss: 210237.3728, avg. loss [9501-10000]: -381.6892]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10000/10000 [00:01&lt;00:00, 6715.12it/s, init loss: 210237.3728, avg. loss [9501-10000]: -381.6892]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
