@@ -33,11 +33,14 @@ pip install -r requirements.txt
 ```
 
 
-## Helpful Readings
+## Additional Readings
 
 Advanced Topics:
 * [A Conceptual Introduction to Hamiltonian Monte Carlo](https://arxiv.org/pdf/1701.02434)
 
+
+Ethics:
+* [Predicted benefits, proven harms](https://thesociologicalreview.org/magazine/june-2023/artificial-intelligence/predicted-benefits-proven-harms/)
 
 
 ## Future Materials
