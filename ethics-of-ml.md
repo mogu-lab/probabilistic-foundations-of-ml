@@ -11,26 +11,22 @@
 ## Eugenics and the Birth of Modern Statistics
 
 
-
-
 ````{admonition} Exercise: Background on Eugenics and Statistics
 **Part 1:** Read, *[Eugenics and Scientific Racism](https://www.genome.gov/about-genomics/fact-sheets/Eugenics-and-Scientific-Racism)*.
 * What was the goal of eugenics / scientific racism?
-* What form did eugenics take in the US? in Nazi Germany?
-* Was eugenics a wide-spread movement?
+* What form did eugenics take in the US? In Nazi Germany?
+* Who was leading the eugenics movement?
 
-**Part 2:** From, *[The Mismeasure of Man](http://tankona.free.fr/gould1981.pdf)*, read:
-* Chapter 3: Measuring Heads, "The allure of numbers."
-
-Then, answer:
+**Part 2:** From, *[The Mismeasure of Man](http://tankona.free.fr/gould1981.pdf)*, read "The allure of numbers" and "Masters of craniometry: Paul Broca and his school" from Chapter 3 (trigger warning: offensive, discriminatory language). 
 * What's the "allure of numbers"?
 * What does the author mean by "Science is rooted in creative interpretation"? Provide an example (of the "numbers," interpretation, and theory). 
 * What were some of the things Francis Galton quantified? What are some fallacies of conclusions he might draw from his data?
 * What's "craniometry"? 
 * What happened when Mall tried to replicate Bean's findings? 
+* What were the fallacies of Broca's scientific methods?
 
 **Part 3:** Read, *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)*. 
-* TODO
+* Who were Galton, Pearon, and Fisher? 
 ````
 
 
