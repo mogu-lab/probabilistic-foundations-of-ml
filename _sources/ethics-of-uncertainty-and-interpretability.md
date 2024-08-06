@@ -33,7 +33,7 @@
 * Why do the authors argue interpretability is important for ensuring fairness?
 * What are the different notions of fairness discussed in the paper?
 * What did the authors find?
-* If the type of explanation influences a user's perception of fairness, are there aspects of the user's decision-making process that might be influenced? 
+* If the type of explanation influences a user's perception of fairness, are there other aspects of the user's decision-making process that might be influenced? What are they?
 * Given that explanations have such influence over the users, how can we ensure our explanations are *informative* and not *manipulative*? 
 
 Note: This paper focuses on recidivism prediction. There are many criticisms of the use for AI in this domain that are important to consider. If you're interested in learning more, the following papers are a good place to start:
@@ -43,7 +43,7 @@ Note: This paper focuses on recidivism prediction. There are many criticisms of 
 **Part 2:** From *[Moral Crumple Zones: Cautionary Tales in Human-Robot Interaction](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2757236)*, read "Introduction," "Robots on the road," and "Conclusion."
 * What were the sources of failure in the self-driving Uber car accident? 
 * In the accident, who ended up being held responsible? Do you agree with this? Why or why not? 
-* Do you think that if the self-driving AI had some notion of uncertainty, what this have helped avoid the accident? If so, in what ways? If not, why not?
+* Do you think that if the self-driving AI had some notion of uncertainty, would it have helped avoid the accident? If so, in what ways? If not, why not?
 * What's a "moral crumple zone"? Instantiate this using the Google incidents from 2015-2017. 
 * What are the author's criticisms of the human-in-the-loop paradigm?
 

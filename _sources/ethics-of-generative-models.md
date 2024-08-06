@@ -16,7 +16,7 @@
 ````{admonition} Exercise: Conduct a Broader Impact Analysis
 Read one of the following:
 * [Stable Bias: Evaluating Societal Representations in Diffusion Models](https://arxiv.org/pdf/2303.11408)
-* (Trigger warning: visual data that reinforces stereotypes). [Humans are Biased; Generative AI is Even Worse. Stable Diffusion’s text-to-image model amplifies stereotypes about race and gender---here's why that matters](https://www.bloomberg.com/graphics/2023-generative-ai-bias/)
+* (Trigger warning: model outputs that reinforce stereotypes). [Humans are Biased; Generative AI is Even Worse. Stable Diffusion’s text-to-image model amplifies stereotypes about race and gender---here's why that matters](https://www.bloomberg.com/graphics/2023-generative-ai-bias/)
 
 Then answer these questions:
 * Conduct a broader impact analysis of the technology described (text-to-image stable diffusion models).
