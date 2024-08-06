@@ -1,11 +1,15 @@
 # The Ethics of Machine Learning: A View from History
 
-**Context:** 
+**Context:** In the previous chapters on ethics, we've considered how societal values shape data collection and modeling choices. We will now dive more deeply into the historical context from which many ideas behind statistics and probabilistic ML emerged. We will use this historical context as a way to reflect and question the ethics behind our own practices. 
 
-**Challenge:** 
+**Challenge:** The specific movement we will examine is eugenics. We recognize that many of the topics here may be uncomfortable to you---we will read documents concerned with offensive discriminatory ideologies. We have chosen these topics because we consider them important to modern discussions of ethics in ML/AI. We ask that you maintain and open communication with us about how you're feeling as you make your way through these readings and exercises. 
 
 **Outline:** 
-
+* What was the eugenics movement?
+* The birth of modern statistics
+* The politics of ML
+* Science is a human endeavor
+* What can we learn from this?
 
 
 ## What is the Eugenics Movement?
@@ -51,6 +55,7 @@ However, here, we argue that dismissing eugenics as bad science is irresponsible
 * In what ways have scientists criticized the scientific legitimacy of eugenics since?
 
 **Part 2:** Reflection.
+* If you were alive during the height of the eugenics movement, do you think you would have bought into it? Why or why not?
 * Did you find anything surprising about the reading?
 * How did the reading make you feel?
 * What did it make you reflect on?
@@ -95,14 +100,14 @@ Many of the techniques introduced in this class were created by leaders of the e
 
 
 
-## Science as a Human Endeavor
+## Science is a Human Endeavor
 
 
 It's important for us not just to study ongoing harms of the movement, but to consider whether we, as scientists, are fundementally different from the leaders of eugenics. Are we subject to the same types of biases and unscientific methods? 
 
 
 ````{admonition} Exercise: Eugenics in AI Research
-**Part 1:** Read, *[The TESCREAL bundle: Eugenics and the promise of utopia through artificial general intelligence](https://firstmonday.org/ojs/index.php/fm/article/view/13636/11606)*.
+Read, *[The TESCREAL bundle: Eugenics and the promise of utopia through artificial general intelligence](https://firstmonday.org/ojs/index.php/fm/article/view/13636/11606)*.
 * What's AGI? and what are the criticisms the author presents against building an AGI?
 * What is the TESCREAL bundle?
 * What is "second-wave eugenics"? How does the author connect the TESCREAL bundle to second-wave eugenics?
@@ -112,11 +117,20 @@ It's important for us not just to study ongoing harms of the movement, but to co
 
 ## What can we learn from this?
 
+By this point, you may be thinking, why did we learn all of this ML just to tear this knowledge down in the end? Given the deep ties between ML and eugenics, how can we ethically and responsibly move forward as technologists? There are a few things we hope you took away from the readings and exercises so far. 
+
+**Everything is political.** As we've seen in earlier units on ethics, data, modeling, and interpretation of results are not neutral. The questions we ask and the scientific process we follow are informed by our societal values, and are therefore not neutral. Everything can and should be interrogated from a variety of lenses. 
+
+**More specifically, math and science are human-made.** All knowledge you learned in math, statistics, and computer science courses was created by humans. For example, the MLE does not exist in nature; it is not the universally "right" way to fit a probabilistic model (also human-made) to data. It was invented by person a little over 100 years ago. It therefore deserves to be questioned and interrogated. 
+
+**We want to empower you to ask the big questions.** We're not asking you to toss out everything you know; we're asking you to think deeply about the implicit assumptions behind the tools we use---to analyze them mathematically, unfold their consequences in sociotechnical systems, consider them in their historical context, etc. Moreover, we argue that this is the *true spirit* of probabilistic ML---to use a variety of lenses to make our assumptions explicit so can make informed, ethical, and responsible choices. 
+
+**You don't need to have answers to these questions.** The questions we are raising---the questions we're asking *you* to raise---may not have good answers yet. These are open research questions that aren't for us to answer individually; they will require us to engage with other people with different perspectives, identities, and lived experiences. We ask you to embrace confusion and tension; we know it's hard, and we believe it's the way to move productively move forward. 
+
 
 ````{admonition} Exercise: Reflection
-* What can we learn from the fallacies of the eugenics movement? 
-* How can we revise our own scientific practice to avoid these pitfalls?
-* 
+* What did you learn from the the eugenics movement? 
+* How will what you learn inform your approach to science?
 
 ````
 
