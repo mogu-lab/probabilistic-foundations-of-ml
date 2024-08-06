@@ -25,6 +25,7 @@
 * What were the fallacies of Broca's scientific methods?
 
 **Part 3:** Reflection.
+* Did you find anything surprising about these readings?
 * How did these readings make you feel?
 * What did they make you reflect on?
 * What questions do you have?
@@ -41,27 +42,36 @@ However, here, we argue that dismissing eugenics as bad science is irresponsible
 
 
 ````{admonition} Exercise: The Development of Modern Statistics
-**Part 1:** Read, *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)*. 
+**Part 1:** Read, *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)* (trigger warning: offensive discriminatory language). 
+* In what ways does the author claim eugenics shaped statistics?
 * Who were Galton, Pearon, and Fisher? 
-* TODO
+* Which statistical tools did each develop? And what purpose was each developed for?
+* How did these scientists argue for the objectivity of their findings?
+* What's the legacy of eugenics that's mentioned in the article?
+* In what ways have scientists criticized the scientific legitimacy of eugenics since?
 
 **Part 2:** Reflection.
-* How did these readings make you feel?
-* What did they make you reflect on?
+* Did you find anything surprising about the reading?
+* How did the reading make you feel?
+* What did it make you reflect on?
 * What questions do you have?
 ````
 
 
 ## The Politics of ML
 
-Many of the techniques introduced in this class were created by leaders of the eugenics movement. To name a few, the MLE was proposed by Fisher in *[On an Absolute Criterion for Fitting Frequency Curves](https://www.jstor.org/stable/2246266)*. Factor Analysis was proposed by Burt in *[Experimental Tests of General Intelligence](https://bpspsychub.onlinelibrary.wiley.com/doi/10.1111/j.2044-8295.1909.tb00197.x)*, and [refined by Spearman](https://www.semanticscholar.org/paper/Charles-Spearman%2C-Cyril-Burt%2C-and-the-origins-of-Lovie-Lovie/b4f2fe99f093d7dce355b3a1aff15889b0e364c3). Linear regression was proposed by Fisher in *[The Goodness of Fit of Regression Formulae, and the Distribution of Regression Coefficients](https://www.jstor.org/stable/2341124)*. Correlation was proposed by Galton in *[Co-Relations and Their Measurement, Chiefly from Anthropometric Data](https://www.jstor.org/stable/114860)*. 
+Many of the techniques introduced in this class were created by leaders of the eugenics movement. To name a few, the MLE was proposed by Fisher in *[On an Absolute Criterion for Fitting Frequency Curves](https://www.jstor.org/stable/2246266)*. Factor Analysis was proposed by Burt in *[Experimental Tests of General Intelligence](https://bpspsychub.onlinelibrary.wiley.com/doi/10.1111/j.2044-8295.1909.tb00197.x)*, and [refined by Spearman](https://www.semanticscholar.org/paper/Charles-Spearman%2C-Cyril-Burt%2C-and-the-origins-of-Lovie-Lovie/b4f2fe99f093d7dce355b3a1aff15889b0e364c3). Linear regression was proposed by Fisher in *[The Goodness of Fit of Regression Formulae, and the Distribution of Regression Coefficients](https://www.jstor.org/stable/2341124)*. Correlation was proposed by Galton in *[Co-Relations and Their Measurement, Chiefly from Anthropometric Data](https://www.jstor.org/stable/114860)*. Given this, we have to ask ourselves: are there remnants of eugenics idealogy in our ML toolkit? 
 
 
 ````{admonition} Exercise: The Politics of Artifacts
-**Part 1:** Read, *[Do artifacts have politics?](https://faculty.cc.gatech.edu/~beki/cs4001/Winner.pdf)*
+**Part 1:**: Language and idealogy. 
+* "Data-driven"
+* 
+
+**Part 2:** Read, *[Do artifacts have politics?](https://faculty.cc.gatech.edu/~beki/cs4001/Winner.pdf)*
 * TODO
 
-**Part 2:** Are there remnants of eugenics idealogy in our ML toolkit? 
+**Part 3:** 
 * TODO
 ````
 
