@@ -18,7 +18,7 @@ However, our analysis of ML models *should not stop here*. For us to responsibly
 1. Identify the stakeholders and context:
     * Who are the users?
     * Who are the affected communities (are these the users)?
-    * What is the relationship between the users and the affected communities? What are the power structures that relate users and affected communities?
+    * What is the relationship between the users and the affected communities? What are the power structures that relate users to affected communities?
     * What is the historical/cultural context of the type of task your tech performs (i.e. what is the relationship between what you are trying to accomplish, with respect to the users and affected communities, and the historical experience of these groups of people with past technologies that aimed to accomplish similar tasks)?
 2. What are the potential benefits of your technology?
     * What kinds of needs do your users/communities have?
@@ -36,9 +36,9 @@ However, our analysis of ML models *should not stop here*. For us to responsibly
     * What design choices are dictated by your boss vs. what design choices do you make? 
     * To what extent are you (personally) ethically responsible for the impact of your company’s design decisions?
 2. How much due diligence checking for harm should you do? 
-    * How can you resolve a conflict of interests?
-    * What are your obligations in situations where your assigned task works against public interest?
-    * What do you do if the interest of your users conflicts with public interest?
+    * How can you resolve conflicts of interest?
+    * What are your obligations in situations where your assigned task works against the public interest?
+    * What do you do if the interest of your users conflicts with the public interest?
 
 
 **Part C: Inclusion, Diversity, and Participation.**
@@ -67,14 +67,14 @@ For the article you chose, imagine you are the engineer who developed the techno
 ## The need for Explainable AI (XAI)
 
 ````{admonition} Exercise: Explainable AI
-Read, *[Explainability for artifcial intelligence
+Read, *[Explainability for artificial intelligence
 in healthcare: a multidisciplinary perspective](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7706019/pdf/12911_2020_Article_1332.pdf)*.
 * What's the technological perspective?
 * The legal perspective?
 * The medical perspective?
-* The patient perspective?
+* The patient's perspective?
 * The ethical perspective?
-* The paper argues that "omitting explainability in clinical decision support systems poses a threat to core ethical values in medicine and may have detrimental consequences for individual and public health." In your opinion, do XAI fix these issues?
+* The paper argues that "omitting explainability in clinical decision support systems poses a threat to core ethical values in medicine and may have detrimental consequences for individual and public health." In your opinion, does XAI fix these issues?
 ````
 
 
