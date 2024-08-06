@@ -64,15 +64,23 @@ Many of the techniques introduced in this class were created by leaders of the e
 
 
 ````{admonition} Exercise: The Politics of Artifacts
-**Part 1:**: Language and idealogy. 
-* "Data-driven"
-* 
+**Part 1:** Language, idealogy, and practice. 
+* Many eugenecists advocated to "let the data speak for itself." Is this different from the language used to tout the benefits of Deep Learning, that it's "data-driven"? Why or why not?
+* Many eugenecists advocated for the use of correlation analysis to find variables that have statistically significant relationships in the data. Does this practice lend itself more easily to confirmatory science (science used to justify what we already believe)? Why or why not? 
+* Are there other potential similarities between practices of eugenics and practices of data science / ML you noticed?
 
 **Part 2:** Read, *[Do artifacts have politics?](https://faculty.cc.gatech.edu/~beki/cs4001/Winner.pdf)*
-* TODO
+* How will the legacy of Robert Moses continue to shape New York City? Making a parallel to eugenics, how might the legacy of Galton, Pearson, and Fisher may continue to shape science? ML? 
+* How does the author define "inherently political technologies"? Explain an example they provide. 
+* How would the author argue that the autocomplete system embedded in our email is inherently political? 
+* What argument can you make that statistical methods are politically neutral?
+* What argument can you make that statistical methods aren't politically neutral?
 
-**Part 3:** 
-* TODO
+**Part 3:** The politics of the math behind statistics and ML. 
+* As the author of *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)* (trigger warning: offensive discriminatory language) argues, statistical tests have politics for two main reasons. The first is that, at its heart, it forces a binarization: either something is or isn't statistically significant. 
+* Second, statistical tests have politics because they encourage a fixation on difference, as opposed to magnitude. That is, you can find two quantities that are statistically significantly different, but in practice the fact they are different may be meaningless. 
+* Do we find eugenics ideals embedded in the math of other methods? Let's consider the MLE. 
+
 ````
 
 
@@ -80,9 +88,7 @@ Many of the techniques introduced in this class were created by leaders of the e
 ## Science as a Human Endeavor
 
 
-
-
- It's important for us not just to study ongoing harms of the movement, but to consider whether we, as scientists, are fundementally different from the leaders of eugenics. Are we subject to the same types of biases and unscientific methods? 
+It's important for us not just to study ongoing harms of the movement, but to consider whether we, as scientists, are fundementally different from the leaders of eugenics. Are we subject to the same types of biases and unscientific methods? 
 
 
 ````{admonition} Exercise: Everything is Political
@@ -97,3 +103,5 @@ Many of the techniques introduced in this class were created by leaders of the e
 
 
 
+* What argument can you make that statistical methods are politically neutral?
+* What argument can you make that statistical methods aren't politically neutral?
