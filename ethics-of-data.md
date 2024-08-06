@@ -9,7 +9,7 @@
 * Is data neutral?
 * How do we responsibly collect and use data?
 
-All three questions are fundementally concerned with *representation*. Data offers us a representation of people; models offer us a representation of people, as well as of our *assumptions*. This is exactly what we've focused on so far! And as the readings below will argue, these representations are shaped by implicit and explicit societal values. For us to act responsibly and ethically, we must therefore interrogate them. 
+All three questions are fundamentally concerned with *representation*. Data offers us a representation of people; models offer us a representation of people, as well as of our *assumptions*. This is exactly what we've focused on so far! And as the readings below will argue, these representations are shaped by implicit and explicit societal values. For us to act responsibly and ethically, we must therefore interrogate them. 
 
 
 ## What's lost when we represent people as data?
@@ -39,7 +39,7 @@ All three questions are fundementally concerned with *representation*. Data offe
 
 ````{admonition} Exercise: Data Neutrality 
 **Part 1:** From the book, *[Invisible Women: Data Bias in a World Designed for Men](https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=nlebk&AN=2030243&authtype=shib&site=eds-live&scope=site&custid=s8895369)*, read *Chapter 10: The Drugs Don't Work* (Trigger warning in 2nd paragraph---invasive, involuntary medical procedure). Then answer the following questions:
-* What factors lead to the exlusion of female health data?
+* What factors lead to the exclusion of female health data?
 * What are the consequences of excluding female participants from medical research?
 * Given what you read, are there any other groups of people you now suspect are excluded from medical research? What makes you suspect this? 
 * What can you, as an individual, do to address the problems presented in the chapter?
@@ -48,7 +48,7 @@ All three questions are fundementally concerned with *representation*. Data offe
 **Part 2:** Read *[Data is never a raw, truthful input---and it is never neutral](https://www.theguardian.com/technology/2020/mar/21/catherine-dignazio-data-is-never-a-raw-truthful-input-and-it-is-never-neutral)*.
 * When the author says "data is never neutral," what do they mean?
 * What are "who questions"? Why does the author advocate for using them?
-* Whose responsbility is it to ask the "who questions"? The person who funds the research? The researcher who collected the data? The data scientist who analyzed it?
+* Whose responsibility is it to ask the "who questions"? The person who funds the research? The researcher who collected the data? The data scientist who analyzed it?
 ````
 
 

@@ -3,7 +3,7 @@
 
 **Contexts:** We can evaluate predictive models in terms of their prediction error, confusion matrices, etc. Moreover, we can begin to assess for discrimination by comparing these notions of predictive error across different subgroups in our data. Can we do the same for generative models?
 
-**Challenge:** Generative models pose new challenges for evalaution. Log-likelihood allows us to compare different generative models, but how can we tell if a model's log-likelihood is sufficiently high for some downstream task? And how can we determine whether the generative model learned generates biased data (e.g. data that reinforces stereotypes)? 
+**Challenge:** Generative models pose new challenges for evaluation. Log-likelihood allows us to compare different generative models, but how can we tell if a model's log-likelihood is sufficiently high for some downstream task? And how can we determine whether the generative model learned generates biased data (e.g. data that reinforces stereotypes)? 
 
 **Outline:** 
 * We'll start with a broader impact analysis of some case studies
@@ -28,7 +28,7 @@ Then answer these questions:
 
 ````{admonition} Exercise: Qualitative Approaches to Evaluating Generative AI
 Read, ["I wouldn’t say offensive but...": Disability-Centered Perspectives on Large Language Models](https://dl.acm.org/doi/pdf/10.1145/3593013.3593989).
-* What methodology did the authors use to assess the model? How did their approach differ from the purely metric-based approach from the class?
+* What methodology did the authors use to assess the model? How did their approach differ from the purely metric-based approach from class?
 * What does their methodology capture that cannot be captured via metric-based evaluation?
 * Using this methodology, what did the authors learn?
 ````

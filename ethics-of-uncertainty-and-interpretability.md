@@ -2,7 +2,7 @@
 
 **Context:** When considering AI systems in sociotechnical contexts, it's important to consider the ways in which AI will be used---that is, the human-AI collaboration. So far, we've hinted that both interpretability and uncertainty are important for building ethical, fair, and trustworthy systems. 
 
-**Challenge:** As we will see, human-AI collaboration is doesn't always work as intended. As a result, it's important to devote as much to studying human-AI collaboration as to the development of AI systems alone. 
+**Challenge:** As we will see, human-AI collaboration doesn't always work as intended. As a result, it's important to devote as much to studying human-AI collaboration as to the development of AI systems alone. 
 
 **Outline:** 
 1. What do we need for effective Human/AI collaborations?
@@ -19,7 +19,7 @@
 * How does the author envision using uncertainty (epistemic, aleatoric, and conformal) in clinical settings?
 * Do you anticipate any challenges incorporating uncertainty as they envision? If so, what are they? If not, why not?
 
-**Part 2:** Read, *[How Should Clinicians Communicate With Patients About the Roles of Artificially Intelligent Team Members?](https://journalofethics.ama-assn.org/article/how-should-clinicians-communicate-patients-about-roles-artificially-intelligent-team-members/2019-02)*.
+**Part 2:** Read, *[How Should Clinicians Communicate With Patients About the Roles of Artificially Intelligent Team Members?](https://journalofethics.ama-assn.org/article/how-should-clinicians-communicate-patients-about-roles-artificially-intelligent-team-members/2019-02)*
 * What are the challenges highlighted by the authors in using AI in their context? 
 * Are there any additional challenges you foresee?
 ````
@@ -36,7 +36,7 @@
 * If the type of explanation influences a user's perception of fairness, are there other aspects of the user's decision-making process that might be influenced? What are they?
 * Given that explanations have such influence over the users, how can we ensure our explanations are *informative* and not *manipulative*? 
 
-Note: This paper focuses on recidivism prediction. There are many criticisms of the use for AI in this domain that are important to consider. If you're interested in learning more, the following papers are a good place to start:
+Note: This paper focuses on recidivism prediction. There are many criticisms of the use of AI in this domain that are important to consider. If you're interested in learning more, the following papers are a good place to start:
 * [Layers of Bias: A Unified Approach for Understanding Problems With Risk Assessment](https://journals.sagepub.com/doi/abs/10.1177/0093854818811379)
 * [Beyond Bias: Re-Imagining the Terms of ‘Ethical AI’ in Criminal Law](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3377921)
 
@@ -47,7 +47,7 @@ Note: This paper focuses on recidivism prediction. There are many criticisms of 
 * What's a "moral crumple zone"? Instantiate this using the Google incidents from 2015-2017. 
 * What are the author's criticisms of the human-in-the-loop paradigm?
 
-**Part 3:** Explainability and uncertainty are both tools for building human-in-the-loop systems---systems that incorporate AI into human decision-making. In your opinion, are explainablility and uncertainty just shifting the responsibility from the AI developers to the AI users? Why or why not?
+**Part 3:** Explainability and uncertainty are both tools for building human-in-the-loop systems---systems that incorporate AI into human decision-making. In your opinion, are explainability and uncertainty just shifting the responsibility from the AI developers to the AI users? Why or why not?
 
 ````
 
