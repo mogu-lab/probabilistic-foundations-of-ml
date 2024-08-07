@@ -55,6 +55,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
+          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Probability (Discrete)</span>
           </li>
@@ -66,6 +70,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">09</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Conditional Probability (Discrete)</span>
