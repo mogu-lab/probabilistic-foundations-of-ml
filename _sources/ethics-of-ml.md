@@ -134,5 +134,7 @@ By this point, you may be thinking, why did we learn all of this ML just to tear
 ````
 
 
+<br/>
+**Acknowledgements:** This chapter draws on [FASPE 2024](https://www.faspe-ethics.org/). 
 
 

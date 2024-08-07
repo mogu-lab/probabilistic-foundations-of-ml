@@ -60,5 +60,6 @@ All three questions are fundamentally concerned with *representation*. Data offe
 **Part 2:** What are pillars of responsible and ethical data *usage*? What practices will set us up for success?
 ````
 
-
+<br/>
+**Acknowledgements:** This chapter draws on [FASPE 2024](https://www.faspe-ethics.org/). 
 
