@@ -33,6 +33,14 @@ pip install -r requirements.txt
 ```
 
 
+## DeepNote Setup
+
+1. Add student to workspace as editor
+2. Ask student to duplicate homework project as private
+3. Rename project "Homework N: FIRST-NAME LAST-NAME"
+4. Click share, and invite `yy109@wellesley.edu` with edit access
+
+
 ## Additional Readings
 
 Advanced Topics:

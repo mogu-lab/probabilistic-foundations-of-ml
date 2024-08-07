@@ -1,6 +1,8 @@
-'''
-Helper functions for CS349. 
-'''
+###############################################################################
+# Functions for Fitting NumPyro Models in CS349. DO NOT EDIT.
+# Version 0
+###############################################################################
+
 
 import argparse
 import dill
