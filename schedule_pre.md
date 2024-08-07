@@ -5,3 +5,12 @@ Since this course is new, please expect that the schedule will change to accomod
 ```
 
 
+**Office Hours:**
+* Yaniv Yacoby: TBD
+* Caroline Jung: TBD
+* Sally Kim: TBD
+
+
+**Course Schedule:**
+
+
