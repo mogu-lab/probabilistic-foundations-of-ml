@@ -31,15 +31,18 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
-            <span> TBD</span>
+            <span>TBD</span>
           </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> What is Probabilistic ML?</span>
+            <span><ul>
+<li>What is Probabilistic ML?</li>
+<li>Vectorization</li>
+</ul></span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
-            <span> HW1: Vectorization</span>
+            <span>HW1: Vectorization</span>
           </li>
         </ul>
       </td>
@@ -49,7 +52,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Probability (Discrete)</span>
+            <span>Probability (Discrete)</span>
           </li>
         </ul>
       </td>
@@ -61,7 +64,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Conditional Probability (Discrete)</span>
+            <span>Conditional Probability (Discrete)</span>
           </li>
         </ul>
       </td>
@@ -71,11 +74,15 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Code+Math Lab</span>
+            <span>Code+Math Lab</span>
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span> HW1: Vectorization</span>
+            <span>HW1: Vectorization</span>
+          </li>
+          <li>
+            <span class="tag released_tag">Released:</span>
+            <span>HW2: Directed Graphical Models</span>
           </li>
         </ul>
       </td>
@@ -85,7 +92,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Joint Probability (Discrete)</span>
+            <span>Joint Probability (Discrete)</span>
           </li>
         </ul>
       </td>
@@ -97,7 +104,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Maximum Likelihood (Theory)</span>
+            <span>Maximum Likelihood (Theory)</span>
           </li>
         </ul>
       </td>
@@ -107,7 +114,11 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Math Lab</span>
+            <span>Math Lab</span>
+          </li>
+          <li>
+            <span class="tag due_tag">Due:</span>
+            <span>HW2: Directed Graphical Models</span>
           </li>
         </ul>
       </td>
@@ -117,7 +128,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Maximum Likelihood (Practice)</span>
+            <span>Maximum Likelihood (Practice)</span>
           </li>
         </ul>
       </td>
@@ -129,7 +140,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Maximum Likelihood (Practice)</span>
+            <span>Maximum Likelihood (Practice)</span>
           </li>
         </ul>
       </td>
@@ -139,7 +150,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Code Lab</span>
+            <span>Code Lab</span>
           </li>
         </ul>
       </td>
@@ -149,7 +160,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Ethics Case Study</span>
+            <span>Ethics Case Study</span>
           </li>
         </ul>
       </td>
@@ -161,7 +172,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Probability (Continuous)</span>
+            <span>Probability (Continuous)</span>
           </li>
         </ul>
       </td>
@@ -171,7 +182,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Math Lab</span>
+            <span>Math Lab</span>
           </li>
         </ul>
       </td>
@@ -181,7 +192,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Regression (Linear)</span>
+            <span>Regression (Linear)</span>
           </li>
         </ul>
       </td>
@@ -193,7 +204,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Code Lab</span>
+            <span>Code Lab</span>
           </li>
         </ul>
       </td>
@@ -203,7 +214,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Classification (Linear)</span>
+            <span>Classification (Linear)</span>
           </li>
         </ul>
       </td>
@@ -213,7 +224,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Code Lab</span>
+            <span>Code Lab</span>
           </li>
         </ul>
       </td>
@@ -234,7 +245,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Regression and Classification (Non-Linear)</span>
+            <span>Regression and Classification (Non-Linear)</span>
           </li>
         </ul>
       </td>
@@ -244,7 +255,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Code Lab</span>
+            <span>Code Lab</span>
           </li>
         </ul>
       </td>
@@ -256,7 +267,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Evaluation Metrics</span>
+            <span>Evaluation Metrics</span>
           </li>
         </ul>
       </td>
@@ -266,7 +277,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Code Lab</span>
+            <span>Code Lab</span>
           </li>
         </ul>
       </td>
@@ -276,7 +287,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Ethics Case Study</span>
+            <span>Ethics Case Study</span>
           </li>
         </ul>
       </td>
@@ -288,7 +299,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Latent Variable Models (Dimensionality Reduction)</span>
+            <span>Latent Variable Models (Dimensionality Reduction)</span>
           </li>
         </ul>
       </td>
@@ -298,7 +309,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Math Lab</span>
+            <span>Math Lab</span>
           </li>
         </ul>
       </td>
@@ -308,7 +319,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Latent Variable Models (Clustering)</span>
+            <span>Latent Variable Models (Clustering)</span>
           </li>
         </ul>
       </td>
@@ -320,7 +331,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Latent Variable Models (Clustering)</span>
+            <span>Latent Variable Models (Clustering)</span>
           </li>
         </ul>
       </td>
@@ -330,7 +341,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Code Lab</span>
+            <span>Code Lab</span>
           </li>
         </ul>
       </td>
@@ -340,7 +351,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Ethics Case Study</span>
+            <span>Ethics Case Study</span>
           </li>
         </ul>
       </td>
@@ -352,7 +363,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Time-Series (Dynamical Systems)</span>
+            <span>Time-Series (Dynamical Systems)</span>
           </li>
         </ul>
       </td>
@@ -362,7 +373,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Code Lab</span>
+            <span>Code Lab</span>
           </li>
         </ul>
       </td>
@@ -372,7 +383,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Time-Series (Dynamical Systems)</span>
+            <span>Time-Series (Dynamical Systems)</span>
           </li>
         </ul>
       </td>
@@ -384,7 +395,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Bayesian Inference</span>
+            <span>Bayesian Inference</span>
           </li>
         </ul>
       </td>
@@ -394,7 +405,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Math+Code Lab</span>
+            <span>Math+Code Lab</span>
           </li>
         </ul>
       </td>
@@ -404,7 +415,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Bayesian Inference</span>
+            <span>Bayesian Inference</span>
           </li>
         </ul>
       </td>
@@ -416,7 +427,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Ethics Case Study</span>
+            <span>Ethics Case Study</span>
           </li>
         </ul>
       </td>
@@ -446,7 +457,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Ethics: ML and Society</span>
+            <span>Ethics: ML and Society</span>
           </li>
         </ul>
       </td>
@@ -456,7 +467,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Special Topics</span>
+            <span>Special Topics</span>
           </li>
         </ul>
       </td>
@@ -466,7 +477,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Special Topics</span>
+            <span>Special Topics</span>
           </li>
         </ul>
       </td>
@@ -478,7 +489,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span> Final Project Presentations</span>
+            <span>Final Project Presentations</span>
           </li>
         </ul>
       </td>
