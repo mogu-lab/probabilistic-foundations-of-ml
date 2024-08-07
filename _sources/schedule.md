@@ -103,6 +103,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
+          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Joint Probability (Discrete)</span>
           </li>
@@ -124,6 +128,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">18</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Maximum Likelihood: Theory</span>
@@ -155,6 +163,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
+          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Maximum Likelihood: Code</span>
           </li>
@@ -175,6 +187,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
+          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Optimization</span>
           </li>
@@ -186,6 +202,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">30</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Probability (Continuous)</span>
@@ -207,6 +227,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
+          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>The Ethics of Learning from Data</span>
           </li>
@@ -218,6 +242,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">07</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Regression</span>
@@ -247,6 +275,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
+          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Classification</span>
           </li>
@@ -267,6 +299,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">16</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Neural Networks</span>
@@ -289,6 +325,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">21</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Model Selection &amp; Evaluation</span>
@@ -321,6 +361,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">28</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Gaussian Mixture Models (Clustering)</span>
@@ -362,6 +406,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
+          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Factor Analysis (Dimensionality Reduction)</span>
           </li>
@@ -396,6 +444,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">11</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Bayesian Inference: Prior &amp; Posterior</span>
@@ -436,6 +488,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">18</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Bayesian Inference: Posterior Predictive</span>
