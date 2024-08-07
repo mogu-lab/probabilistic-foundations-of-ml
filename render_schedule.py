@@ -1,7 +1,16 @@
+import markdown
 import yaml
 import dominate
 import dominate.tags as tags
+from dominate.util import raw
 from scripts.generate_base_schedule import DISPLAY_DAYS, CLASS_DAYS 
+
+
+def convert_md_to_html_if_multiline(txt):
+    if '\n' not in txt:
+        return txt
+
+    return raw(markdown.markdown(txt))
 
 
 def main():
@@ -48,22 +57,22 @@ def main():
                     if pre_class is not None:
                         with tags.li():
                             tags.span('Pre-Class:', cls='tag preclass_tag')
-                            tags.span(' ' + pre_class)
-                        
+                            tags.span(convert_md_to_html_if_multiline(pre_class))
+
                     if topic is not None:
                         with tags.li():
                             tags.span('Topic:', cls='tag topic_tag')
-                            tags.span(' ' + topic)
+                            tags.span(convert_md_to_html_if_multiline(topic))
 
                     if due is not None:
                         with tags.li():
                             tags.span('Due:', cls='tag due_tag')
-                            tags.span(' ' + due)
+                            tags.span(convert_md_to_html_if_multiline(due))
                         
                     if released is not None:
                         with tags.li():
                             tags.span('Released:', cls='tag released_tag')
-                            tags.span(' ' + released)
+                            tags.span(convert_md_to_html_if_multiline(released))
                     
                     
     with open('schedule_pre.md', 'r') as f:
