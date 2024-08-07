@@ -1,19 +1,19 @@
-# The Ethics of Uncertainty and Interpretability in Human/AI Systems
+# The Ethics of Uncertainty and Interpretability in Human-AI Systems
 
 **Context:** When considering AI systems in sociotechnical contexts, it's important to consider the ways in which AI will be used---that is, the human-AI collaboration. So far, we've hinted that both interpretability and uncertainty are important for building ethical, fair, and trustworthy systems. 
 
 **Challenge:** As we will see, human-AI collaboration doesn't always work as intended. As a result, it's important to devote as much to studying human-AI collaboration as to the development of AI systems alone. 
 
 **Outline:** 
-1. What do we need for effective Human/AI collaborations?
-2. Challenges with current Human/AI collaboration practices
+1. What do we need for effective Human-AI collaborations?
+2. Challenges with current Human-AI collaboration practices
 
 
 
-## What do we need for effective Human/AI collaborations?
+## What do we need for effective Human-AI collaborations?
 
 
-````{admonition} Exercise: Effective Human/AI Collaboration
+````{admonition} Exercise: Effective Human-AI Collaboration
 **Part 1:** Read, *[Clinical AI tools must convey predictive uncertainty for each individual patient](https://www.nature.com/articles/s41591-023-02562-7)*. 
 * Why does the author advocate for uncertainty? 
 * How does the author envision using uncertainty (epistemic, aleatoric, and conformal) in clinical settings?
@@ -25,10 +25,10 @@
 ````
 
 
-## Challenges with current Human/AI collaboration practices
+## Challenges with current Human-AI collaboration practices
 
 
-````{admonition} Exercise: Challenges in Human/AI Collaboration
+````{admonition} Exercise: Challenges in Human-AI Collaboration
 **Part 1:** Read, *[Explaining Models: An Empirical Study of How Explanations Impact Fairness Judgment](https://arxiv.org/pdf/1901.07694)*. 
 * Why do the authors argue interpretability is important for ensuring fairness?
 * What are the different notions of fairness discussed in the paper?
