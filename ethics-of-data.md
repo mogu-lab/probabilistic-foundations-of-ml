@@ -61,5 +61,6 @@ All three questions are fundamentally concerned with *representation*. Data offe
 ````
 
 <br/>
-**Acknowledgements:** This chapter draws on [FASPE 2024](https://www.faspe-ethics.org/). 
+
+**Acknowledgements.** This chapter draws on [FASPE 2024](https://www.faspe-ethics.org/). 
 
