@@ -39,6 +39,7 @@ pip install -r requirements.txt
 2. Ask student to duplicate homework project as private
 3. Rename project "Homework N: FIRST-NAME LAST-NAME"
 4. Click share, and invite `yy109@wellesley.edu` with edit access
+5. To download a PDF version of your notebook, follow [these instructions](https://deepnote.com/docs/export-pdf)
 
 
 ## Additional Readings
