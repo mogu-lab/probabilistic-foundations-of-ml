@@ -12,10 +12,10 @@
 ## Homeworks
 
 **Downloading the Homeworks.**
-1. Log into DeepNote using your Wellesley College email. 
+1. Log into [DeepNote](https://deepnote.com/) using your Wellesley College email. 
 2. Go to homework link.
 3. Duplicate the homework as *private*. You can do this by clicking on the "..." on the top right corner of the screen, and selected "Duplicate project". When the dialog box pops up, make sure to click the 'make private' button.
-4. After the project has been duplicated. Rename it to say: `HW#N: FIRST LAST`, where `#N` is the homework number, and `FIRST` and `LAST` are your first and last names.
+4. After the project has been duplicated. Rename it to say: `HW-N: FIRST LAST`, where `N` is the homework number, and `FIRST` and `LAST` are your first and last names.
 
 **Submitting Homeworks.**
 1. Follow [these instructions](https://deepnote.com/docs/export-pdf) to download a PDF of your notebook.
