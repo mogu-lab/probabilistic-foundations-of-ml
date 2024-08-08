@@ -43,7 +43,7 @@ Since this course is new, please expect that the schedule will change to accomod
             <span><ul>
 <li>Read <a href="https://medium.com/bucknell-hci/the-fear-of-publicly-not-knowing-239e1b7a39f3">The Fear of Publicly Not Knowing</a></li>
 <li>Read the course syllabus</li>
-<li><a href="/instructions">Join the course on Gradescope</a></li>
+<li><a href="/cs349-fall-2024/instructions">Join the course on Gradescope</a></li>
 <li>Answer the syllabus survey on Gradescope by <strong>5pm the day before</strong>---it's <strong>graded</strong>.</li>
 </ul></span>
           </li>
