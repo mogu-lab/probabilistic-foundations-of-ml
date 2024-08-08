@@ -5,6 +5,15 @@ Since this course is new, please expect that the schedule will change to accomod
 ```
 
 
+**Office Hours:**
+* Yaniv Yacoby: TBD
+* Caroline Jung: TBD
+* Sally Kim: TBD
+
+
+**Course Schedule:**
+
+
 
 <table class="table course_calendar">
   <tbody>
@@ -431,10 +440,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span><ul>
-<li>Lab</li>
-<li>The Ethics of Generative Models in Sociotechnical Systems</li>
-</ul></span>
+            <span>Lab and/or The Ethics of Generative Models in Sociotechnical Systems</span>
           </li>
         </ul>
       </td>
@@ -586,10 +592,6 @@ Since this course is new, please expect that the schedule will change to accomod
             <span class="tag topic_tag">Topic:</span>
             <span>Time Series (Dynamical Systems)</span>
           </li>
-          <li>
-            <span class="tag due_tag">Due:</span>
-            <span>HW7: The Ethics of Machine Learning</span>
-          </li>
         </ul>
       </td>
     </tr>
@@ -600,7 +602,11 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Final Project Presentations</span>
+            <span>Time Series (Dynamical Systems)</span>
+          </li>
+          <li>
+            <span class="tag due_tag">Due:</span>
+            <span>HW7: The Ethics of Machine Learning</span>
           </li>
         </ul>
       </td>
