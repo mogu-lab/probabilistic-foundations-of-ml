@@ -51,7 +51,7 @@ This course is currently under construction. Everything you see here is likely t
 * Wednesdays, 9:30-10:20am
 * Thursdays, 9:55-11:10am
 
-**Location:** Gray Lot Modular M212 Computer Classroom
+**Location:** Science Center Hub 401 Classroom
 
 **Prerequisites:** CS 230 and at least one of MATH 205, MATH 206, or MATH 225. Permission of the instructor is also required.
 
