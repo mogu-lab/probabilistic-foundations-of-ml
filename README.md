@@ -42,6 +42,12 @@ pip install -r requirements.txt
 5. To download a PDF version of your notebook, follow [these instructions](https://deepnote.com/docs/export-pdf)
 
 
+## Gradescope
+
+1. Give students course code (from course website)
+2. sign in with wellesley email
+
+
 ## Additional Readings
 
 Advanced Topics:
