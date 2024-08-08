@@ -64,7 +64,7 @@ def model_discrete_IHH_ER(N, data=None):
             'Condition': None,
             'Hospitalized': None,
             'Antibiotics': None,
-            'Attempts-to-Disentangle': None,
+            'Knots': None,
         }
     
     pi_day_of_week = numpyro.param(
@@ -94,10 +94,10 @@ def model_discrete_IHH_ER(N, data=None):
         constraint=C.unit_interval,        
     )
 
-    rho_attempts_to_disentangle = numpyro.param(
-        'rho_attempts_to_disentangle',
-        jnp.array([jnp.nan, 0.3]),
-        constraint=C.unit_interval,        
+    lambda_knots = numpyro.param(
+        'lambda_knots',
+        jnp.array([0.0, 3.0]),
+        constraint=C.positive,
     )
 
     with numpyro.plate('data', N):
@@ -134,15 +134,15 @@ def model_discrete_IHH_ER(N, data=None):
         chex.assert_shape(antibiotics, (N,))
 
         entangled = (condition == 2).astype('int32')
-        p_attempts_to_disentangle = D.Geometric(
-            rho_attempts_to_disentangle[entangled],
+        p_knots = D.Poisson(
+            lambda_knots[entangled],
         )
-        attempts = numpyro.sample(
-            'Attempts-to-Disentangle',
-            p_attempts_to_disentangle,
-            obs=data['Attempts-to-Disentangle']
+        knots = numpyro.sample(
+            'Knots',
+            p_knots,
+            obs=data['Knots']
         )
-        chex.assert_shape(attempts, (N,))
+        chex.assert_shape(knots, (N,))
 
 
 def generate_IHH_ER_data_discrete():
@@ -167,8 +167,8 @@ def generate_IHH_ER_data_discrete():
             exec_trace['Antibiotics']['value'],
             IDX_TO_BOOL,
         ),
-        'Attempts-to-Disentangle': (
-            exec_trace['Attempts-to-Disentangle']['value']
+        'Knots': (
+            exec_trace['Knots']['value']
         ),
     })
 
