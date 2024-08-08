@@ -9,13 +9,13 @@
 ## Grades
 
 Course grades are computed by weighing course components as follows:
-* Homeworks: $65\%$
-* In-class participation: $15\%$
-  * Asking questions in class (all questions are good questions)
-  * Answer questions in class (you're answers don't have to be right!)
+* Homeworks: $65\%$.
+* In-class participation: $15\%$.
   * Coming to class prepared, having done the pre-class work/readings
+  * Asking questions in class (*all* questions are good questions)
+  * Answering questions in class (you're answers don't have to be right!)
 * Team work: $15\%$.
-  * Creating a supportive and welcoming environment for your team
+  * Creating a supportive, inclusive and welcoming environment for your assigned team
   * Practicing good communication and active listening 
 * Class etiquette: $5\%$. This includes:
   * Coming to class on time
