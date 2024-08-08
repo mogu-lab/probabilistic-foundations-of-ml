@@ -9,9 +9,9 @@
 ## Grades
 
 Course grades are computed by weighing course components as follows:
-* Assignment work: $45\%$
-* Final project: $40\%$
-* In-class participation and exercises: $15\%$
+* Homeworks: $70\%$
+* In-class participation: $15\%$
+* Team work: $15\%$
 
 Course grade percentages are converted to letters via the table below:
 
