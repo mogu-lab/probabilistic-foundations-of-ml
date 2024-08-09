@@ -8,7 +8,7 @@ clean:
 	rm -rf _build && rm -rf __pycache__
 
 env:
-	pip freeze > requirements.txt
+	pip list --format=freeze > requirements.txt # pip freeze > requirements.txt
 
 style:
 	jupyter-book config sphinx .

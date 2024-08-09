@@ -5,17 +5,17 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 
 ## Coding
 
-**Programming Language.** The course is taught entirely in Python. To get the most out of the course, it's important you don't feel bogged down by too many syntax errors and the like so that you can focus on the concepts we introduce. If you do not have prior experience with Python, that's no problem. *Please do take the time before the start of the course to study and practice it.* For review, we recommend:
+**Programming Language: Python.** The course is taught entirely in Python. To get the most out of the course, it's important you don't feel bogged down by too many syntax errors and the like so that you can focus on the concepts we introduce. If you do not have prior experience with Python, that's no problem. *Please do take the time before the start of the course to study and practice it.* For review, we recommend:
 * Going through an online Python tutorial. For example, from this [interactive Python tutorial](https://www.learnpython.org/), review all sections under "Learn the Basics" and "Data Science Tutorials." From the "Advanced Tutorials," review "List Comprehensions" and "Lambda functions."
 * After completing the tutorial, select one or two assignments from CS230 and translate them into Python.
 
 
-**Coding Environment.** We will be using [DeepNote](https://deepnote.com/) for all assignments in the course. DeepNote is an interactive Python environment that makes it easy to write code in small pieces, and to visualize and inspect them. Further, it let's you interleave your code with notes and math. If you're familiar with Jupyter notebooks, they are just a cloud version of a Jupyter notebook. If this is new to you, no problem! To get you started, we recommend:
-* Making an account on the [DeepNote](https://deepnote.com/) website using your Wellesley email and exploring.
+**Coding Environment: DeepNote.** We will be using [DeepNote](https://deepnote.com/) for all assignments in the course. DeepNote is an interactive Python environment that makes it easy to write code in small pieces, and to visualize and inspect them. Further, it let's you interleave your code with notes and math. If you're familiar with Jupyter notebooks, they are just a cloud version of a Jupyter notebook. If this is new to you, no problem! To get you started, we recommend:
+* Making an account on the [DeepNote](https://deepnote.com/) website using your *Wellesley email* and exploring.
 * Watching/reading some online tutorials, like [this one](https://www.youtube.com/watch?v=EW4lKlUnLGU).
 * Finally try making cells that run code and ones for writing text and math. Follow [this guide](https://gtribello.github.io/mathNET/assets/notebook-writing.html) for formatting text and for writing mathematical notation---we will use this heavily in the course!
-  * The language used for formatting is called "markdown." You can find a markdown cheatsheet [here](https://www.markdownguide.org/cheat-sheet/).
-  * The language used for typesetting mathematical notation is called LaTeX (pronounced "la-tek"). If you ever forget what's the syntax for a certain math symbol, you can draw it in [this tool](https://detexify.kirelabs.org/classify.html) and it will tell you.
+  * **Markdown** is language used for formatting is called "markdown." You can find a markdown cheatsheet [here](https://www.markdownguide.org/cheat-sheet/).
+  * **Latex** (pronounced "la-tek") is the language used for typesetting mathematical notation. If you ever forget what's the syntax for a certain math symbol there are two ways for you to figure it quickly (aside from googling): (a) You can draw it in [this tool](https://detexify.kirelabs.org/classify.html) and it will tell you, or (b) you can right-click on any math on this website and select option "Show Math As"/"Copy to Clipboard", and then "TeX Command" to get the corresponding syntax. 
 
 
 **Libraries.** We will regularly use two Python libraries throughout the course: `pandas`, used for reading in `.csv` data files and manipulating them, and `matplotlib`, used for visualizations.

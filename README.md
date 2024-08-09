@@ -11,10 +11,16 @@
 
 ## Installation
 
-```
-create -n book -c conda-forge python=3.10 -y
-pip install -r requirements.txt
-```
+1. Install `micromamba` with `brew`. Initialize the shell with: `micromamba shell init -s zsh`.
+
+2. Create the environment:
+   ```
+   mm create -n book -c conda-forge python=3.10 -y
+   pip install -r requirements.txt
+   ```
+3. Activate environment: `mm activate book`
+
+**Note:** Only install packages with `pip`. Micromamba seems to store the local paths on the machine.
 
 
 ## Embedding Canva Figures
