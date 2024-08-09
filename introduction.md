@@ -123,8 +123,9 @@ Our course consists of several parts:
 ## Deconstructing the Culture of AI
 
 ````{admonition} Exercise: Ethics of Representation
+We, as a society, hold beliefs about science that may be romanticized and inaccurate. These ideas can be exclusionary in the way we define a typical scientist and how science is done. These notions about science can also become obstacles for us as a community to perform rigorous, inclusive and useful science, impede us individually in our professional growth, by contributing to unrealistic self-expectations (and therefore poor mental health), and hinder our ability to build supportive academic communities.
 
-**Part 1:** Watch [this video](https://www.youtube.com/watch?v=WNu6fRo_7fg) of Iron Man developing and debugging his suit. What societal misconceptions about computer science, engineering, and AI does this video endorse? Think both about *who* does computer science, as well as about *what's* the experience of doing computer science in real life. 
+**Part 1:** Watch [this video](https://www.youtube.com/watch?v=WNu6fRo_7fg) of Iron Man developing and debugging a new suit. What societal misconceptions about CS/engineering/AI does this video endorse? Think both about *who* does computer science, as well as about *what's* the day-to-day experience of doing CS. 
 
 **Part 2:** Below is a collection of common experiences in CS/ML classes. For each statement, write down which societal misconception or unhealthy expectation can lead to the statement. 
 * I'm worried this class will be too difficult in terms of math.
