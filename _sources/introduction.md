@@ -104,21 +104,26 @@ In contrast, the probabilistic perspective allows us to derive all of these meth
 
 ## Course Structure
 
-Our course consists of several parts:
+This course consists of several parts, outlined below. We designed the course to cover the probabilistic model paradigm quickly (parts 1-3), so we can instantiate it in a variety of ways to derive popular ML methods (parts 4-5). The idea behind this design is that it highlights how all ML methods can be unified under the same paradigm. In each part of the course, we will always:
+* **Center concrete tasks from the IHH.** This is because it's not possible to responsibly and ethically evaluate an ML model without considering the context in which it will be used.
+* **Center ethics.** As we hinted before, the course will highlight how ML systems are inherently subjective, and informed by implicit societal values and norms. Because of this, we must question the ethics implied in our goals, methods, evaluation procedures, etc. 
 
-**Part 1: Learning the Coding Framework, `Jax`.** TODO.
 
-**Part 2: Probabilistic Models.** TODO.
 
-**Part 3: Fitting Models to Data.** TODO.
+**Part 1: Introduction.** Before starting to learn ML, we'll get comfortable with `Jax`, a popular Python library for high-performance numerical computing. This library powers many ML libraries and is popular amongst ML researchers. We will use it as the basis for all code we write in the course.
 
-**Part 4: Predictive Models.** TODO.
+**Part 2: Directed Graphical Models.** We'll then shift over to learning the *language* of probabilistic models. That is, we'll learn how to specify probabilistic models (like the generative story above), using probability distributions. We will start to gain intuition for what types of models are useful for which tasks. Will do all of this in `NumPyro`, a probabilistic programming language. `NumPyro` will allow us to translate our generative story directly into code we can run. 
 
-**Part 5: Generative Models.** TODO.
+**Part 3: Frequentist Learning.** Using the language we developed in the previous part, we will now introduce our first model-fitting algorithm. With the language to express models *and* an algorithm to fit models to data, we will next begin to explore different types of commonly used ML models: predictive and generative models. 
 
-**Part 6: Special Topics.** TODO.
+**Part 4: Predictive Models.** The first model class we'll explore is predictive models. As the name suggests, these models are designed to make predictions (like in the dose / blood pressure example), and represent "supervised learning." We will also learn how make our models expressive using tools from Deep Learning (specifically, neural networks). 
 
-**Centering Ethics.** TODO.
+**Part 5: Generative Models.** The second model class we'll explore is generative models. As the name suggests, these models can generate realistic-looking synthetic data (like those text-to-image models you may have played with). 
+
+**Part 6: Bayesian Inference.** Now that we've instantiated the probabilistic ML paradigm a number of times, we'll introduce a second model-fitting algorithm. This model-fitting algorithm will allow us to quantify uncertainty. 
+
+**Part 7: Special Topics.** Finally, we will connect the topics covered in class to current probabilistic ML research. 
+
 
 
 
@@ -140,4 +145,6 @@ We, as a society, hold beliefs about science that may be romanticized and inaccu
 **Part 3:** Individually and as a community, how can we address these common challenges?
 ````
 
+
+**Acknowledgements.** This section is adapted from [Yaniv Yacoby's offering of CS290 at Harvard](https://arxiv.org/pdf/2208.12650). 
 

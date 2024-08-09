@@ -419,8 +419,8 @@ document.write(`
 <h2><span class="section-number">1.2. </span>What is Probabilistic ML?<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>In a loose sense, there are two main paradigms to ML. There’s what we’ll call here the <em>optimization perspective</em> and the <em>probabilistic perspective</em>. These two perspectives aren’t mutually exclusive—there are ML methods that can be described by both—but there are also methods that uniquely belong to each. Even more importantly, each accompanies a specific way of thinking.</p>
 <p><strong>The Optimization Perspective.</strong> In the optimization perspective, we formalize our goal into a <em>loss</em> or <em>objective</em> function. For example, suppose we’re given a data set, <span class="math notranslate nohighlight">\((x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)\)</span>, in which <span class="math notranslate nohighlight">\(x\)</span> is the dose of medication and <span class="math notranslate nohighlight">\(y\)</span> is the resulting blood pressure. Our goal is to learn to predict the <span class="math notranslate nohighlight">\(y\)</span>’s from the <span class="math notranslate nohighlight">\(x\)</span>’s. That is, we want to learn a function <span class="math notranslate nohighlight">\(f\)</span> that, given a value of <span class="math notranslate nohighlight">\(x\)</span> will return <span class="math notranslate nohighlight">\(y\)</span>. We can encode our goal into the following loss function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1a27b8c8-47e3-491b-8cd6-f0e7665e80ac">
-<span class="eqno">(1.1)<a class="headerlink" href="#equation-1a27b8c8-47e3-491b-8cd6-f0e7665e80ac" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e9cb7dab-72c0-4b91-8c76-63b06fd5a09d">
+<span class="eqno">(1.1)<a class="headerlink" href="#equation-e9cb7dab-72c0-4b91-8c76-63b06fd5a09d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{loss} = \underbrace{\frac{1}{N}\sum\limits_{n=1}^N}_{\text{average}} \text{ } \underbrace{| y_n - f(x_n) |}_{\text{error}}
 \end{align}\]</div>
 <p>This function computes the average error between the predictions, <span class="math notranslate nohighlight">\(f(x_n)\)</span>, and the data <span class="math notranslate nohighlight">\(y_n\)</span>. Then by finding a predictor <span class="math notranslate nohighlight">\(f\)</span> that <em>minimizes</em> our loss, we find a predictor that makes accurate predictions on our data. We then hope that our <span class="math notranslate nohighlight">\(f\)</span> will continue to make accurate predictions for future data points. The name of the game behind the optimization perspective is coming up with a loss function that encodes your goals.</p>
@@ -459,14 +459,18 @@ document.write(`
 </section>
 <section id="course-structure">
 <h2><span class="section-number">1.3. </span>Course Structure<a class="headerlink" href="#course-structure" title="Permalink to this heading">#</a></h2>
-<p>Our course consists of several parts:</p>
-<p><strong>Part 1: Learning the Coding Framework, <code class="docutils literal notranslate"><span class="pre">Jax</span></code>.</strong> TODO.</p>
-<p><strong>Part 2: Probabilistic Models.</strong> TODO.</p>
-<p><strong>Part 3: Fitting Models to Data.</strong> TODO.</p>
-<p><strong>Part 4: Predictive Models.</strong> TODO.</p>
-<p><strong>Part 5: Generative Models.</strong> TODO.</p>
-<p><strong>Part 6: Special Topics.</strong> TODO.</p>
-<p><strong>Centering Ethics.</strong> TODO.</p>
+<p>This course consists of several parts, outlined below. We designed the course to cover the probabilistic model paradigm quickly (parts 1-3), so we can instantiate it in a variety of ways to derive popular ML methods (parts 4-5). The idea behind this design is that it highlights how all ML methods can be unified under the same paradigm. In each part of the course, we will always:</p>
+<ul class="simple">
+<li><p><strong>Center concrete tasks from the IHH.</strong> This is because it’s not possible to responsibly and ethically evaluate an ML model without considering the context in which it will be used.</p></li>
+<li><p><strong>Center ethics.</strong> As we hinted before, the course will highlight how ML systems are inherently subjective, and informed by implicit societal values and norms. Because of this, we must question the ethics implied in our goals, methods, evaluation procedures, etc.</p></li>
+</ul>
+<p><strong>Part 1: Introduction.</strong> Before starting to learn ML, we’ll get comfortable with <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, a popular Python library for high-performance numerical computing. This library powers many ML libraries and is popular amongst ML researchers. We will use it as the basis for all code we write in the course.</p>
+<p><strong>Part 2: Directed Graphical Models.</strong> We’ll then shift over to learning the <em>language</em> of probabilistic models. That is, we’ll learn how to specify probabilistic models (like the generative story above), using probability distributions. We will start to gain intuition for what types of models are useful for which tasks. Will do all of this in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, a probabilistic programming language. <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> will allow us to translate our generative story directly into code we can run.</p>
+<p><strong>Part 3: Frequentist Learning.</strong> Using the language we developed in the previous part, we will now introduce our first model-fitting algorithm. With the language to express models <em>and</em> an algorithm to fit models to data, we will next begin to explore different types of commonly used ML models: predictive and generative models.</p>
+<p><strong>Part 4: Predictive Models.</strong> The first model class we’ll explore is predictive models. As the name suggests, these models are designed to make predictions (like in the dose / blood pressure example), and represent “supervised learning.” We will also learn how make our models expressive using tools from Deep Learning (specifically, neural networks).</p>
+<p><strong>Part 5: Generative Models.</strong> The second model class we’ll explore is generative models. As the name suggests, these models can generate realistic-looking synthetic data (like those text-to-image models you may have played with).</p>
+<p><strong>Part 6: Bayesian Inference.</strong> Now that we’ve instantiated the probabilistic ML paradigm a number of times, we’ll introduce a second model-fitting algorithm. This model-fitting algorithm will allow us to quantify uncertainty.</p>
+<p><strong>Part 7: Special Topics.</strong> Finally, we will connect the topics covered in class to current probabilistic ML research.</p>
 </section>
 <section id="deconstructing-the-culture-of-ai">
 <h2><span class="section-number">1.4. </span>Deconstructing the Culture of AI<a class="headerlink" href="#deconstructing-the-culture-of-ai" title="Permalink to this heading">#</a></h2>
@@ -484,6 +488,7 @@ document.write(`
 </ul>
 <p><strong>Part 3:</strong> Individually and as a community, how can we address these common challenges?</p>
 </div>
+<p><strong>Acknowledgements.</strong> This section is adapted from <a class="reference external" href="https://arxiv.org/pdf/2208.12650" rel="noopener noreferrer" target="_blank">Yaniv Yacoby’s offering of CS290 at Harvard</a>.</p>
 </section>
 </section>
 
