@@ -54,7 +54,17 @@ This function computes the average error between the predictions, $f(x_n)$, and 
 **The Probabilistic Perspective.** In the probabilistic perspective, we take a different approach. Instead of directly writing down a loss function that encodes our goal, we formalize our beliefs about the data into a "story" of how the data was generated. As an example, consider the model that predicts blood pressure given a dose of medication. For this model, our story can be something like:
 1. Measure the dose, $x$, and give it to the patient.
 2. Due to the medicine, the patient's true blood pressure is now $\mu(x)$. Notice that $\mu(x)$ is a function of $x$, since it depends on the dose. 
-3. We measure the patient's blood pressure. Since the device's sensors aren't perfect, we assume the *measured* blood pressure, $y$, is near the *true* blood pressure, $\mu(x)$. Specifically, we assume it's $\pm \sigma$ around $\mu(x)$, with a higher probability of being closer to $\mu(x)$. 
+3. We measure the patient's blood pressure. Since the device's sensors aren't perfect, we assume the *measured* blood pressure, $y$, is near the *true* blood pressure, $\mu(x)$. Specifically, we assume it's $\pm \sigma$ around $\mu(x)$, with a higher probability of being closer to $\mu(x)$.
+
+```{figure} _static/figs/example_regression_intro.png
+---
+width: 300px
+name: intro-story-regression
+align: center
+---
+
+A visual illustration of the generative story.
+```
 
 This story describes how the data is generated. If we were to write it with more mathematical specificity, as we will learn to do in this course, this story is a *probabilistic model*. 
 
