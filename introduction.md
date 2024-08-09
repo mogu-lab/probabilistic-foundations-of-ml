@@ -112,14 +112,6 @@ Our course consists of several parts:
 
 
 
-## Expectations
-
-**What you can expect from us.** TODO.
-
-**What we expect from you.** TODO.
-
-
-
 ## Deconstructing the Culture of AI
 
 ````{admonition} Exercise: Ethics of Representation
