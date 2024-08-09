@@ -12,6 +12,9 @@ You've been hired to join the machine learning (ML) team at the Intergalactic Hy
 **About.** The IHH is a research and teaching hospital located in the far corner of the universe. It serves a large number of intergalactic beings in the area. Like many modern hospitals, it collects large amounts of data about its patients (with their consent, of course), with goal of leveraging this data to improve patient care. Unfortunately, doctors are incredibly busy focusing on the patients; when a new patient arrives, they don't have time to inform their care based on the data they have. That is, they don't have time to comb through all previously collected data, find similar patients, and determine how care for previous patients informs care for new patients. Moreover, they don't have time to look at population-level trends or use data to research new treatment methods.
 
 
+<img src="_static/figs/ihh.png" width="300px" />
+
+
 **The ML Team.** As a result, the IHH has created a new ML team---the first of its kind! And they have hired you to join them. The goal of the team is to assist IHH researchers and clinicians in:
 * Answering scientific questions, like better understanding the course of certain diseases.
 * Develop predictive models to identify patients at risk of certain diseases. 
