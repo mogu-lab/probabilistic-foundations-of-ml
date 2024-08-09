@@ -58,7 +58,7 @@ This function computes the average error between the predictions, $f(x_n)$, and 
 
 ```{figure} _static/figs/example_regression_intro.png
 ---
-width: 300px
+width: 400px
 name: intro-story-regression
 align: center
 ---
