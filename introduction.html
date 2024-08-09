@@ -371,8 +371,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-role-at-the-intergalactic-hypothetical-hospital-ihh">1.1. Your Role at the Intergalactic Hypothetical Hospital (IHH)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1.2. What is Probabilistic ML?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-structure">1.3. Course Structure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expectations">1.4. Expectations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deconstructing-the-culture-of-ai">1.5. Deconstructing the Culture of AI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deconstructing-the-culture-of-ai">1.4. Deconstructing the Culture of AI</a></li>
 </ul>
             </nav>
         </div>
@@ -392,7 +391,7 @@ document.write(`
 </div>
 <section id="your-role-at-the-intergalactic-hypothetical-hospital-ihh">
 <h2><span class="section-number">1.1. </span>Your Role at the Intergalactic Hypothetical Hospital (IHH)<a class="headerlink" href="#your-role-at-the-intergalactic-hypothetical-hospital-ihh" title="Permalink to this heading">#</a></h2>
-<p><strong>About.</strong> The IHH is a research and teaching hospital located in the far corner of the universe. It serves a large number of intergalactic beings in the area. Like many modern hospitals, it collects large amounts of data about its patients (with their consent, of course), with goal of leveraging this data to improve patient care. Unfortunately, doctors are incredibly busy focusing on the patients; when a new patient arrives, they don’t have time to inform their care based on the data they have. That is, they don’t have time to comb through all previously collected data, find similar patients, and determine how care for previous patients informs care for new patients. Moreover, they don’t have time to look at population-level trends or use data to research new treatment methods.</p>
+<p><strong>About.</strong> The IHH is a research and teaching hospital located in the far corner of the universe. It serves a large number of intergalactic beings in the area. Like many modern hospitals, it collects large amounts of data about its patients (with their consent, of course), with the goal of leveraging this data to improve patient care. Unfortunately, doctors are incredibly busy focusing on the patients; when a new patient arrives, they don’t have time to inform their care based on the data they have. That is, they don’t have time to comb through all previously collected data, find similar patients, and determine how care for previous patients informs care for new patients. Moreover, they don’t have time to look at population-level trends or use data to research new treatment methods.</p>
 <center>
     <img src="_static/figs/ihh.png" width="300px" />
 </center>
@@ -409,7 +408,7 @@ document.write(`
 </ul>
 <p><strong>Your Role.</strong> Your role at the IHH requires you to consider three aspects of ML method application and development:</p>
 <ol class="arabic simple">
-<li><p><strong>Safety.</strong> Patient safety is everything. As such, the ML methods you develop must be accurate; an incorrect prediction may cause patients harm. Moreover, in cases where its not possible to make accurate predictions, your ML methods must indicate to its users the limits of their knowledge (i.e. they must quantify uncertainty). For example, if a patient arrives at the IHH whose profile is different than all previous patients your ML has seen, your model should <em>flag it</em> for careful clinician screening.</p></li>
+<li><p><strong>Safety.</strong> Patient safety is everything. As such, the ML methods you develop must be accurate; an incorrect prediction may cause patients harm. Moreover, in cases where it’s not possible to make accurate predictions, your ML methods must indicate to its users the limits of their knowledge (i.e. they must quantify uncertainty). For example, if a patient arrives at the IHH whose profile is different than all previous patients your ML has seen, your model should <em>flag it</em> for careful clinician screening.</p></li>
 <li><p><strong>Validity.</strong> The models you develop must be scientifically plausible; otherwise, IHH clinicians won’t be able to use them to advance clinical science.</p></li>
 <li><p><strong>Ethics.</strong> Whenever computerized systems interact with humans, we have to proactively think of ethical challenges we will face; for example, what if our ML methods are less accurate for one group of patients? When things go wrong, who is held responsible?</p></li>
 </ol>
@@ -420,8 +419,8 @@ document.write(`
 <h2><span class="section-number">1.2. </span>What is Probabilistic ML?<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>In a loose sense, there are two main paradigms to ML. There’s what we’ll call here the <em>optimization perspective</em> and the <em>probabilistic perspective</em>. These two perspectives aren’t mutually exclusive—there are ML methods that can be described by both—but there are also methods that uniquely belong to each. Even more importantly, each accompanies a specific way of thinking.</p>
 <p><strong>The Optimization Perspective.</strong> In the optimization perspective, we formalize our goal into a <em>loss</em> or <em>objective</em> function. For example, suppose we’re given a data set, <span class="math notranslate nohighlight">\((x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)\)</span>, in which <span class="math notranslate nohighlight">\(x\)</span> is the dose of medication and <span class="math notranslate nohighlight">\(y\)</span> is the resulting blood pressure. Our goal is to learn to predict the <span class="math notranslate nohighlight">\(y\)</span>’s from the <span class="math notranslate nohighlight">\(x\)</span>’s. That is, we want to learn a function <span class="math notranslate nohighlight">\(f\)</span> that, given a value of <span class="math notranslate nohighlight">\(x\)</span> will return <span class="math notranslate nohighlight">\(y\)</span>. We can encode our goal into the following loss function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-14aa84d8-3c23-4c33-b02a-d596e5f3d818">
-<span class="eqno">(1.1)<a class="headerlink" href="#equation-14aa84d8-3c23-4c33-b02a-d596e5f3d818" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ad104432-7521-4ea0-91d4-cef6c0f2fa12">
+<span class="eqno">(1.1)<a class="headerlink" href="#equation-ad104432-7521-4ea0-91d4-cef6c0f2fa12" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{loss} = \underbrace{\frac{1}{N}\sum\limits_{n=1}^N}_{\text{average}} \text{ } \underbrace{| y_n - f(x_n) |}_{\text{error}}
 \end{align}\]</div>
 <p>This function computes the average error between the predictions, <span class="math notranslate nohighlight">\(f(x_n)\)</span>, and the data <span class="math notranslate nohighlight">\(y_n\)</span>. Then by finding a predictor <span class="math notranslate nohighlight">\(f\)</span> that <em>minimizes</em> our loss, we find a predictor that makes accurate predictions on our data. We then hope that our <span class="math notranslate nohighlight">\(f\)</span> will continue to make accurate predictions for future data points. The name of the game behind the optimization perspective is coming up with a loss function that encodes your goals.</p>
@@ -433,7 +432,7 @@ document.write(`
 </ol>
 <p>This story describes how the data is generated. If we were to write it with more mathematical specificity, as we will learn to do in this course, this story is a <em>probabilistic model</em>.</p>
 <p>Notice that there are a few missing pieces in the story. First, we didn’t say what <span class="math notranslate nohighlight">\(\mu\)</span> is—just that it’s a function. Second, we didn’t say what <span class="math notranslate nohighlight">\(\sigma\)</span> is. Using algorithms from statistics, we will fit the model to data and estimate these missing pieces. Some of these algorithms will end up minimizing some loss function (like in the optimization perspective), and some will not. Even if we end up with a loss function, the <em>process</em> that led us to this objective function will have a very specific flavor and philosophical underpinning—it will always be concerned with probability distributions in some way.</p>
-<p>Now, let’s us highlight some of the advantages of the paradigm.</p>
+<p>Now, let’s highlight some of the advantages of the paradigm.</p>
 <p><strong>Advantage 1: Distributions <span class="math notranslate nohighlight">\(\rightarrow\)</span> Generative Models and Uncertainty Quantification.</strong> In many ways, this perspective has enabled the AI-boom we’ve seen recently. You may be familiar with diffusion models, for example—models that can convert text into high-resolution images, generate new musical compositions, etc. These models rely on the probabilistic perspective. This is because these models learn the <em>distribution</em> of the data they are given. Similarly, towards the end of the course, we’ll cover models capable of quantifying uncertainty (they will tell us when they are unsure about a prediction)—these models also rely on the probabilistic perspective.</p>
 <p><strong>Advantage 2: Unified Framework <span class="math notranslate nohighlight">\(\rightarrow\)</span> Create/Analyze New ML Methods.</strong> You may have heard of different “types” of ML algorithms, like supervised ML and unsupervised ML (no worries if you haven’t—the details aren’t important):</p>
 <figure class="align-center" id="types-of-ml">
@@ -463,16 +462,11 @@ document.write(`
 <p><strong>Part 6: Special Topics.</strong> TODO.</p>
 <p><strong>Centering Ethics.</strong> TODO.</p>
 </section>
-<section id="expectations">
-<h2><span class="section-number">1.4. </span>Expectations<a class="headerlink" href="#expectations" title="Permalink to this heading">#</a></h2>
-<p><strong>What you can expect from us.</strong> TODO.</p>
-<p><strong>What we expect from you.</strong> TODO.</p>
-</section>
 <section id="deconstructing-the-culture-of-ai">
-<h2><span class="section-number">1.5. </span>Deconstructing the Culture of AI<a class="headerlink" href="#deconstructing-the-culture-of-ai" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">1.4. </span>Deconstructing the Culture of AI<a class="headerlink" href="#deconstructing-the-culture-of-ai" title="Permalink to this heading">#</a></h2>
 <div class="admonition-exercise-ethics-of-representation admonition">
 <p class="admonition-title">Exercise: Ethics of Representation</p>
-<p>We, as a society, hold beliefs about science that may be romanticized and inaccurate. These ideas can be exclusionary in the way we define a typical scientist and how science is done. These notions about science can also become obstacles for us as a community to perform rigorous, inclusive and useful science, impede us individually in our professional growth, by contributing to unrealistic self-expectations (and therefore poor mental health), and hinder our ability to build supportive academic communities.</p>
+<p>We, as a society, hold beliefs about science that may be romanticized and inaccurate. These ideas can be exclusionary in the way we define a typical scientist and how science is done. These notions about science can also become obstacles for us as a community to perform rigorous, inclusive, and useful science, impede us individually in our professional growth, by contributing to unrealistic self-expectations (and therefore poor mental health), and hinder our ability to build supportive academic communities.</p>
 <p><strong>Part 1:</strong> Watch <a class="reference external" href="https://www.youtube.com/watch?v=WNu6fRo_7fg" rel="noopener noreferrer" target="_blank">this video</a> of Iron Man developing and debugging a new suit. What societal misconceptions about CS/engineering/AI does this video endorse? Think both about <em>who</em> does computer science, as well as about <em>what’s</em> the day-to-day experience of doing CS.</p>
 <p><strong>Part 2:</strong> Below is a collection of common experiences in CS/ML classes. For each statement, write down which societal misconception or unhealthy expectation can lead to the statement.</p>
 <ul class="simple">
@@ -557,8 +551,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-role-at-the-intergalactic-hypothetical-hospital-ihh">1.1. Your Role at the Intergalactic Hypothetical Hospital (IHH)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1.2. What is Probabilistic ML?</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#course-structure">1.3. Course Structure</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expectations">1.4. Expectations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deconstructing-the-culture-of-ai">1.5. Deconstructing the Culture of AI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deconstructing-the-culture-of-ai">1.4. Deconstructing the Culture of AI</a></li>
 </ul>
   </nav></div>
 
