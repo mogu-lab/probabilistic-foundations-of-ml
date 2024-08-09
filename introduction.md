@@ -9,7 +9,7 @@ You've been hired to join the machine learning (ML) team at the Intergalactic Hy
 
 ## Your Role at the Intergalactic Hypothetical Hospital (IHH)
 
-**About.** The IHH is a research and teaching hospital located in the far corner of the universe. It serves a large number of intergalactic beings in the area. Like many modern hospitals, it collects large amounts of data about its patients (with their consent, of course), with goal of leveraging this data to improve patient care. Unfortunately, doctors are incredibly busy focusing on the patients; when a new patient arrives, they don't have time to inform their care based on the data they have. That is, they don't have time to comb through all previously collected data, find similar patients, and determine how care for previous patients informs care for new patients. Moreover, they don't have time to look at population-level trends or use data to research new treatment methods.
+**About.** The IHH is a research and teaching hospital located in the far corner of the universe. It serves a large number of intergalactic beings in the area. Like many modern hospitals, it collects large amounts of data about its patients (with their consent, of course), with the goal of leveraging this data to improve patient care. Unfortunately, doctors are incredibly busy focusing on the patients; when a new patient arrives, they don't have time to inform their care based on the data they have. That is, they don't have time to comb through all previously collected data, find similar patients, and determine how care for previous patients informs care for new patients. Moreover, they don't have time to look at population-level trends or use data to research new treatment methods.
 
 
 <center>
@@ -31,7 +31,7 @@ The challenges they encounter in their data are unique, so as a result, you may 
 
 
 **Your Role.** Your role at the IHH requires you to consider three aspects of ML method application and development:
-1. **Safety.** Patient safety is everything. As such, the ML methods you develop must be accurate; an incorrect prediction may cause patients harm. Moreover, in cases where its not possible to make accurate predictions, your ML methods must indicate to its users the limits of their knowledge (i.e. they must quantify uncertainty). For example, if a patient arrives at the IHH whose profile is different than all previous patients your ML has seen, your model should *flag it* for careful clinician screening.
+1. **Safety.** Patient safety is everything. As such, the ML methods you develop must be accurate; an incorrect prediction may cause patients harm. Moreover, in cases where it's not possible to make accurate predictions, your ML methods must indicate to its users the limits of their knowledge (i.e. they must quantify uncertainty). For example, if a patient arrives at the IHH whose profile is different than all previous patients your ML has seen, your model should *flag it* for careful clinician screening.
 2. **Validity.** The models you develop must be scientifically plausible; otherwise, IHH clinicians won't be able to use them to advance clinical science.
 3. **Ethics.** Whenever computerized systems interact with humans, we have to proactively think of ethical challenges we will face; for example, what if our ML methods are less accurate for one group of patients? When things go wrong, who is held responsible?
 
@@ -60,7 +60,7 @@ This story describes how the data is generated. If we were to write it with more
 
 Notice that there are a few missing pieces in the story. First, we didn't say what $\mu$ is---just that it's a function. Second, we didn't say what $\sigma$ is. Using algorithms from statistics, we will fit the model to data and estimate these missing pieces. Some of these algorithms will end up minimizing some loss function (like in the optimization perspective), and some will not. Even if we end up with a loss function, the *process* that led us to this objective function will have a very specific flavor and philosophical underpinning---it will always be concerned with probability distributions in some way. 
 
-Now, let's us highlight some of the advantages of the paradigm.
+Now, let's highlight some of the advantages of the paradigm.
 
 
 **Advantage 1: Distributions $\rightarrow$ Generative Models and Uncertainty Quantification.** In many ways, this perspective has enabled the AI-boom we've seen recently. You may be familiar with diffusion models, for example---models that can convert text into high-resolution images, generate new musical compositions, etc. These models rely on the probabilistic perspective. This is because these models learn the *distribution* of the data they are given. Similarly, towards the end of the course, we'll cover models capable of quantifying uncertainty (they will tell us when they are unsure about a prediction)---these models also rely on the probabilistic perspective. 
@@ -115,7 +115,7 @@ Our course consists of several parts:
 ## Deconstructing the Culture of AI
 
 ````{admonition} Exercise: Ethics of Representation
-We, as a society, hold beliefs about science that may be romanticized and inaccurate. These ideas can be exclusionary in the way we define a typical scientist and how science is done. These notions about science can also become obstacles for us as a community to perform rigorous, inclusive and useful science, impede us individually in our professional growth, by contributing to unrealistic self-expectations (and therefore poor mental health), and hinder our ability to build supportive academic communities.
+We, as a society, hold beliefs about science that may be romanticized and inaccurate. These ideas can be exclusionary in the way we define a typical scientist and how science is done. These notions about science can also become obstacles for us as a community to perform rigorous, inclusive, and useful science, impede us individually in our professional growth, by contributing to unrealistic self-expectations (and therefore poor mental health), and hinder our ability to build supportive academic communities.
 
 **Part 1:** Watch [this video](https://www.youtube.com/watch?v=WNu6fRo_7fg) of Iron Man developing and debugging a new suit. What societal misconceptions about CS/engineering/AI does this video endorse? Think both about *who* does computer science, as well as about *what's* the day-to-day experience of doing CS. 
 
