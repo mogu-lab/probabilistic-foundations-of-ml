@@ -5,7 +5,7 @@
 **Challenge:** As before, nothing about the technical materials we've presented so far can point us in the right direction. We must turn to our colleagues who study the broader sociotechnical system in which we live to help us interrogate our practice. 
 
 **Outline:** There are three questions we will focus on. 
-1. What does ML learn from data?
+1. hat conclusions can ML draw from data?
 2. Is science objective?
 3. Are data-driven systems objective? 
 
@@ -13,7 +13,7 @@ All three questions are fundamentally concerned with the ethics of applying insi
 
 
 
-## What does ML learn from data?
+## What conclusions can ML draw from data?
 
 ````{admonition} Exercise: Generalizability of ML Systems.
 Read, *[The myth of generalisability in clinical research and machine learning in health care](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7444947/pdf/main.pdf)*.
