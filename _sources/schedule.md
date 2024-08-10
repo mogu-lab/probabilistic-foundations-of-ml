@@ -129,6 +129,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Complete **all readings** listed in the corresponding chapter; prepare for class discussions.</span>
+          </li>
+          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>The Ethics of Data</span>
           </li>
@@ -238,7 +242,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+            <span>Complete **all readings** listed in the corresponding chapter; prepare for class discussions.</span>
           </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
@@ -520,6 +524,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Complete **all readings** listed in the corresponding chapter; prepare for class discussions.</span>
+          </li>
+          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>The Ethics of Uncertainty and Interpretability in Human-AI Systems</span>
           </li>
@@ -569,6 +577,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">02</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Complete **all readings** listed in the corresponding chapter; prepare for class discussions.</span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>The Ethics of Machine Learning: A View from History</span>
