@@ -35,10 +35,23 @@ The challenges they encounter in their data are unique, so as a result, you may 
 2. **Validity.** The models you develop must be scientifically plausible; otherwise, IHH clinicians won't be able to use them to advance clinical science.
 3. **Ethics.** Whenever computerized systems interact with humans, we have to proactively think of ethical challenges we will face; for example, what if our ML methods are less accurate for one group of patients? When things go wrong, who is held responsible?
 
-How can we address these challenges? You will use a specific paradigm of ML---the *probabilistic perspective*. This perspective provides us with tools to begin thinking about these questions. But as you will see, this paradigm won't be enough; some of the questions you will wrestle with are multi-faceted, open questions. To address these difficult questions, you will need a diversity of perspectives. 
+How can we address these challenges? You will use a specific paradigm of ML---the *probabilistic perspective*. This perspective provides us with tools to begin thinking about these questions. 
 
 
-**Diversity of backgrounds, identities, and lived experiences.** The IHH's hiring practice values a diversity of backgrounds, identities, and lived experiences. Your collaborators on the ML team, as well as at the IHH as a whole, will provide you with important perspectives to consider as you reason about the safety, validity, and ethics of your ML methods. Your team's diversity is your biggest asset---use it! 
+**Diversity of backgrounds, identities, and lived experiences.** But as you will see, this paradigm won't be enough. On its own, it will not give us safe, valid, and ethical ML systems to use. Model development and application requires us to consider not just the technical components, but also the social components surrounding the technology. We call the overall system a *sociotechnical system*. 
+
+```{figure} _static/figs/sociotechnical-system.png
+---
+width: 500px
+name: sociotechnical-system
+align: center
+---
+
+Components of a Sociotechnical System.
+```
+
+Developing safe, valid, and ethical ML systems is a multi-faceted, open challenge---one that requires a diversity of perspectives. Luckily, the IHH's hiring practice values a diversity of backgrounds, identities, and lived experiences. *This is our biggest asset.*
+
 
 
 ## What is Probabilistic ML?
