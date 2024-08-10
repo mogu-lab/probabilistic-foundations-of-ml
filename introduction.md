@@ -96,7 +96,7 @@ name: sketchgan
 align: center
 ---
 
-Example of a Generative AI that generates a photo-realistic image from a sketch. Figure taken from [this website](https://www.casualganpapers.com/few-shot-user-guided-gan-domain-adaptation/Sketch-Your-Own-GAN-explained.html).
+Example of a Generative AI that generates a photo-realistic image from a sketch, taken from [this website](https://www.casualganpapers.com/few-shot-user-guided-gan-domain-adaptation/Sketch-Your-Own-GAN-explained.html).
 ```
 
 
