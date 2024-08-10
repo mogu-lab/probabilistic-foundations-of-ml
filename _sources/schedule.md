@@ -130,7 +130,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Complete **all readings** listed in the corresponding chapter; prepare for class discussions.</span>
+            <span><ul>
+<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
+<li>Answer the corresponding questions to prepare for class discussions.</li>
+</ul></span>
           </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
@@ -242,7 +245,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Complete **all readings** listed in the corresponding chapter; prepare for class discussions.</span>
+            <span><ul>
+<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
+<li>Answer the corresponding questions to prepare for class discussions.</li>
+</ul></span>
           </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
@@ -363,6 +369,13 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">24</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span><ul>
+<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
+<li>Answer the corresponding questions to prepare for class discussions.</li>
+</ul></span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>The Ethics of Predictive Models in Sociotechnical Systems</span>
@@ -525,7 +538,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Complete **all readings** listed in the corresponding chapter; prepare for class discussions.</span>
+            <span><ul>
+<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
+<li>Answer the corresponding questions to prepare for class discussions.</li>
+</ul></span>
           </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
@@ -579,7 +595,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Complete **all readings** listed in the corresponding chapter; prepare for class discussions.</span>
+            <span><ul>
+<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
+<li>Answer the corresponding questions to prepare for class discussions.</li>
+</ul></span>
           </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
@@ -591,6 +610,13 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_day">04</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span><ul>
+<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
+<li>Answer the corresponding questions to prepare for class discussions.</li>
+</ul></span>
+          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>The Ethics of Machine Learning: A View from History</span>
