@@ -413,21 +413,22 @@ document.write(`
 <li><p><strong>Ethics.</strong> Whenever computerized systems interact with humans, we have to proactively think of ethical challenges we will face; for example, what if our ML methods are less accurate for one group of patients? When things go wrong, who is held responsible?</p></li>
 </ol>
 <p>How can we address these challenges? You will use a specific paradigm of ML—the <em>probabilistic perspective</em>. This perspective provides us with tools to begin thinking about these questions.</p>
-<p><strong>Diversity of backgrounds, identities, and lived experiences.</strong> But as you will see, this paradigm won’t be enough. On its own, it will not give us safe, valid, and ethical ML systems to use. Model development and application requires us to consider not just the technical components, but also the social components surrounding the technology. We call the overall system a <em>sociotechnical system</em>.</p>
-<figure class="align-center" id="sociotechnical-system">
-<a class="reference internal image-reference" href="_images/sociotechnical-system.png"><img alt="_images/sociotechnical-system.png" src="_images/sociotechnical-system.png" style="width: 500px;" /></a>
-<figcaption>
-<p><span class="caption-number">Fig. 1.1 </span><span class="caption-text">Components of a Sociotechnical System.</span><a class="headerlink" href="#sociotechnical-system" title="Permalink to this image">#</a></p>
-</figcaption>
-</figure>
+<p><strong>Diversity of backgrounds, identities, and lived experiences.</strong> But as you will see, this paradigm won’t be enough. On its own, it will not give us safe, valid, and ethical ML systems to use. Model development and application requires us to consider not just the technical components, but also the social components surrounding the technology. We call the overall system a <em>sociotechnical system</em>:</p>
+<div class="canva-centered-embedding">
+  <div class="canva-iframe-container">
+    <iframe loading="lazy" class="canva-iframe"
+      src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNeSJW7Mk&#x2F;rP-g5in9AGP2MJmrOydpqw&#x2F;view?embed">
+    </iframe>
+  </div>
+</div>
 <p>Developing safe, valid, and ethical ML systems is a multi-faceted, open challenge—one that requires a diversity of perspectives. Luckily, the IHH’s hiring practice values a diversity of backgrounds, identities, and lived experiences. <em>This is our biggest asset.</em></p>
 </section>
 <section id="id1">
 <h2><span class="section-number">1.2. </span>What is Probabilistic ML?<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>In a loose sense, there are two main paradigms to ML. There’s what we’ll call here the <em>optimization perspective</em> and the <em>probabilistic perspective</em>. These two perspectives aren’t mutually exclusive—there are ML methods that can be described by both—but there are also methods that uniquely belong to each. Even more importantly, each accompanies a specific way of thinking.</p>
 <p><strong>The Optimization Perspective.</strong> In the optimization perspective, we formalize our goal into a <em>loss</em> or <em>objective</em> function. For example, suppose we’re given a data set, <span class="math notranslate nohighlight">\((x_1, y_1), (x_2, y_2), \dots, (x_N, y_N)\)</span>, in which <span class="math notranslate nohighlight">\(x\)</span> is the dose of medication and <span class="math notranslate nohighlight">\(y\)</span> is the resulting blood pressure. Our goal is to learn to predict the <span class="math notranslate nohighlight">\(y\)</span>’s from the <span class="math notranslate nohighlight">\(x\)</span>’s. That is, we want to learn a function <span class="math notranslate nohighlight">\(f\)</span> that, given a value of <span class="math notranslate nohighlight">\(x\)</span> will return <span class="math notranslate nohighlight">\(y\)</span>. We can encode our goal into the following loss function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5422f311-57bd-4f6c-a02a-c6a1559550bd">
-<span class="eqno">(1.1)<a class="headerlink" href="#equation-5422f311-57bd-4f6c-a02a-c6a1559550bd" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-09e55389-fd0f-4f50-a0eb-2fd6d9fc43a3">
+<span class="eqno">(1.1)<a class="headerlink" href="#equation-09e55389-fd0f-4f50-a0eb-2fd6d9fc43a3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{loss} = \underbrace{\frac{1}{N}\sum\limits_{n=1}^N}_{\text{average}} \text{ } \underbrace{| y_n - f(x_n) |}_{\text{error}}
 \end{align}\]</div>
 <p>This function computes the average error between the predictions, <span class="math notranslate nohighlight">\(f(x_n)\)</span>, and the data <span class="math notranslate nohighlight">\(y_n\)</span>. Then by finding a predictor <span class="math notranslate nohighlight">\(f\)</span> that <em>minimizes</em> our loss, we find a predictor that makes accurate predictions on our data. We then hope that our <span class="math notranslate nohighlight">\(f\)</span> will continue to make accurate predictions for future data points. The name of the game behind the optimization perspective is coming up with a loss function that encodes your goals.</p>
@@ -440,7 +441,7 @@ document.write(`
 <figure class="align-center" id="intro-story-regression">
 <a class="reference internal image-reference" href="_images/example_regression_intro.png"><img alt="_images/example_regression_intro.png" src="_images/example_regression_intro.png" style="width: 400px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.2 </span><span class="caption-text">A visual illustration of the generative story.</span><a class="headerlink" href="#intro-story-regression" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 1.1 </span><span class="caption-text">A visual illustration of the generative story.</span><a class="headerlink" href="#intro-story-regression" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>This story describes how the data is generated. If we were to write it with more mathematical specificity, as we will learn to do in this course, this story is a <em>probabilistic model</em>.</p>
@@ -451,7 +452,7 @@ document.write(`
 <figure class="align-center" id="types-of-ml">
 <a class="reference internal image-reference" href="_images/types-of-ml.png"><img alt="_images/types-of-ml.png" src="_images/types-of-ml.png" style="width: 100%;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1.3 </span><span class="caption-text">Types of ML methods, adapted from <a class="reference external" href="https://resources.experfy.com/ai-ml/coding-deep-learning-for-beginners-types-of-machine-learning/" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#types-of-ml" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 1.2 </span><span class="caption-text">Types of ML methods, adapted from <a class="reference external" href="https://resources.experfy.com/ai-ml/coding-deep-learning-for-beginners-types-of-machine-learning/" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#types-of-ml" title="Permalink to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Supervised ML typically refers to predictive methods—methods that predict a “label” <span class="math notranslate nohighlight">\(y\)</span> from an input <span class="math notranslate nohighlight">\(x\)</span> (as we did in our blood pressure example). The label “supervises” the method to give us the desired output. In contrast, unsupervised ML are only given inputs <span class="math notranslate nohighlight">\(x\)</span> and are asked to predict some label with useful properties. In this sense, they are “unsupervised.” For example, given a collection of patients’ medical histories as inputs, <span class="math notranslate nohighlight">\(x\)</span>, we may want to cluster similar patients. We can then see if groups of similar patients benefit from similar treatments, etc.</p>

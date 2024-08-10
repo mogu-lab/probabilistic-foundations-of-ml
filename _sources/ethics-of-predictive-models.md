@@ -2,7 +2,15 @@
 
 **Contexts:** So far, we've focused on gaining intuition for qualitative metrics of model performance. We've seen that no single metric can paint a full picture of a model's fit. And that multiple metrics can provide contradictory information---a model can be "good" according to one metric by "bad" according to another. Most importantly, we've seen that no metric can be meaningful without its context---in some contexts, false negatives are more tolerable than false positives, and in others its the opposite. 
 
-However, our analysis of ML models *should not stop here*. For us to responsibly develop and use ML (or any technological system), it's our responsibility not just to think about the technology, but also about their *sociotechnical context*---the software, hardware, data, model, people, affected communities, legal frameworks, business incentives, etc. that it will shape (or that will be shaped by its use). 
+However, our analysis of ML models *should not stop here*. For us to responsibly develop and use ML (or any technological system), it's our responsibility not just to think about the technology, but also about their *sociotechnical context*---the technology, data, model, users, affected communities, legal frameworks, business incentives, etc. that it will shape (or that will be shaped by its use):
+
+<div class="canva-centered-embedding">
+  <div class="canva-iframe-container">
+    <iframe loading="lazy" class="canva-iframe"
+      src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNeSJW7Mk&#x2F;rP-g5in9AGP2MJmrOydpqw&#x2F;view?embed">
+    </iframe>
+  </div>
+</div>
 
 **Challenge:** What should we consider when evaluating an ML system in its sociotechnical context? There are many facets to consider. We will now introduce a framework for conducting a *broader impact analysis*. This framework can serve as a starting point for thinking about ML in sociotechnical contexts. 
 
