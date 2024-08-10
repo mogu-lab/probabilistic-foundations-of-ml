@@ -1,4 +1,4 @@
-# What is Probabilistic ML?
+# Probabilistic ML: What is it? Why use it?
 
 
 ```{admonition} Congratulations!
@@ -84,9 +84,9 @@ Notice that there are a few missing pieces in the story. First, we didn't say wh
 
 Next, let's highlight some of the advantages of the paradigm.
 
-## Why Use Probabilistic ML?
 
-Probabilistic ML offers us several advantages.
+
+## Why Use Probabilistic ML?
 
 
 **Advantage 1: Distributions $\rightarrow$ Uncertainty Quantification and Generative Models.** In safety-critical applications of ML, uncertainty matters just as much as accuracy. The probabilistic perspective will allow us to capture the uncertainty of our method's predictions (they will tell us when they are unsure about a prediction). What is uncertainty exactly? and how will we quantify it? Stick around to find out. 
