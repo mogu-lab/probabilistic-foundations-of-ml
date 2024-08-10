@@ -86,6 +86,17 @@ Now, let's highlight some of the advantages of the paradigm.
 
 **Advantage 1: Distributions $\rightarrow$ Generative Models and Uncertainty Quantification.** In many ways, this perspective has enabled the AI-boom we've seen recently. You may be familiar with diffusion models, for example---models that can convert text into high-resolution images, generate new musical compositions, etc. These models rely on the probabilistic perspective. This is because these models learn the *distribution* of the data they are given. Similarly, towards the end of the course, we'll cover models capable of quantifying uncertainty (they will tell us when they are unsure about a prediction)---these models also rely on the probabilistic perspective. 
 
+```{figure} _static/figs/sketchgan.gif
+---
+width: 100%
+name: sketchgan
+align: center
+---
+
+Example of a Generative AI that generates a photo-realistic image from a sketch. Figure taken from [this website](https://www.casualganpapers.com/few-shot-user-guided-gan-domain-adaptation/Sketch-Your-Own-GAN-explained.html).
+```
+
+
 **Advantage 2: Unified Framework $\rightarrow$ Create/Analyze New ML Methods.** You may have heard of different "types" of ML algorithms, like supervised ML and unsupervised ML (no worries if you haven't---the details aren't important):
 
 ```{figure} _static/figs/types-of-ml.png
