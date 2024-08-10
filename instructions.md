@@ -1,4 +1,4 @@
-# Instructions
+# How to Submit
 
 
 ## Gradescope
