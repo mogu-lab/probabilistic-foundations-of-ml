@@ -5,7 +5,7 @@
 However, our analysis of ML models *should not stop here*. For us to responsibly develop and use ML (or any technological system), it's our responsibility not just to think about the technology, but also about their *sociotechnical context*---the technology, data, model, users, affected communities, legal frameworks, business incentives, etc. that it will shape (or that will be shaped by its use):
 
 <div class="canva-centered-embedding">
-  <div class="canva-iframe-container" style="max-width: 700px;">
+  <div class="canva-iframe-container" style="max-width: none;">
     <iframe loading="lazy" class="canva-iframe"
       src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNeSJW7Mk&#x2F;rP-g5in9AGP2MJmrOydpqw&#x2F;view?embed">
     </iframe>

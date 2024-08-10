@@ -41,7 +41,7 @@ How can we address these challenges? You will use a specific paradigm of ML---th
 **Diversity of backgrounds, identities, and lived experiences.** But as you will see, this paradigm won't be enough. On its own, it will not give us safe, valid, and ethical ML systems to use. Model development and application requires us to consider not just the technical components, but also the social components surrounding the technology. We call the overall system a *sociotechnical system*: 
 
 <div class="canva-centered-embedding">
-  <div class="canva-iframe-container" style="max-width: 700px;">
+  <div class="canva-iframe-container" style="max-width: none;">
     <iframe loading="lazy" class="canva-iframe"
       src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNeSJW7Mk&#x2F;rP-g5in9AGP2MJmrOydpqw&#x2F;view?embed">
     </iframe>
@@ -69,7 +69,7 @@ This function computes the average error between the predictions, $f(x_n)$, and 
 
 ```{figure} _static/figs/example_regression_intro.png
 ---
-width: 400px
+width: 500px
 name: intro-story-regression
 align: center
 ---
@@ -84,7 +84,10 @@ Notice that there are a few missing pieces in the story. First, we didn't say wh
 Now, let's highlight some of the advantages of the paradigm.
 
 
-**Advantage 1: Distributions $\rightarrow$ Generative Models and Uncertainty Quantification.** In many ways, this perspective has enabled the AI-boom we've seen recently. You may be familiar with diffusion models, for example---models that can convert text into high-resolution images, generate new musical compositions, etc. These models rely on the probabilistic perspective. This is because these models learn the *distribution* of the data they are given. Similarly, towards the end of the course, we'll cover models capable of quantifying uncertainty (they will tell us when they are unsure about a prediction)---these models also rely on the probabilistic perspective. 
+**Advantage 1: Distributions $\rightarrow$ Uncertainty Quantification and Generative Models.** In safety-critical applications of ML, uncertainty matters just as much as accuracy. The probabilistic perspective will allow us to capture the uncertainty of our method's predictions (they will tell us when they are unsure about a prediction). What is uncertainty exactly? and how will we quantify it? Stick around to find out. 
+
+Next, the probabilistic perspective will allow us to develop *generative models*; for example, models that can convert text into high-resolution images, generate new musical compositions, etc. These models are probabilistic because they learn the *distribution* of the data they are given. 
+
 
 ```{figure} _static/figs/sketchgan.gif
 ---
@@ -95,6 +98,8 @@ align: center
 
 Example of a Generative AI that generates a photo-realistic image from a sketch. Figure taken from [this website](https://www.casualganpapers.com/few-shot-user-guided-gan-domain-adaptation/Sketch-Your-Own-GAN-explained.html).
 ```
+
+
 
 
 **Advantage 2: Unified Framework $\rightarrow$ Create/Analyze New ML Methods.** You may have heard of different "types" of ML algorithms, like supervised ML and unsupervised ML (no worries if you haven't---the details aren't important):
@@ -121,7 +126,6 @@ In contrast, the probabilistic perspective allows us to derive all of these meth
 **Advantage 3: Explicit Modeling Assumptions $\rightarrow$ Highlights Subjectivity.** While we'd like to think of ML systems as data-driven wizardry---you just give it data and it does the "right thing"---we'll show in this course that *this is a myth*. It's not theoretically possible to build such a system; all systems make assumptions. For safety-critical applications, like the ones at the IHH, it's important that these assumptions are *explicit*. This is another strength of the probabilistic paradigm. In expressing our beliefs about the data via *generative story*, we list all assumptions we've made about the data. This will allow us to better interrogate our assumptions when our method behaves poorly (e.g. when our method is inaccurate, unfair, over-confident, etc.). 
 
 
-**Advantage 4: Uncertainty Quantification $\rightarrow$ Safety-Critical Applications.** In safety-critical applications of ML, uncertainty matters just as much as accuracy. The probabilistic perspective will allow us to capture the uncertainty of our method's predictions. What is uncertainty exactly? and how will we quantify it? Stick around to find out. 
 
 
 ## Course Structure
