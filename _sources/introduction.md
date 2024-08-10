@@ -1,5 +1,6 @@
 # What is Probabilistic ML?
 
+
 ```{admonition} Congratulations!
 :class: tip
 
@@ -81,7 +82,11 @@ This story describes how the data is generated. If we were to write it with more
 
 Notice that there are a few missing pieces in the story. First, we didn't say what $\mu$ is---just that it's a function. Second, we didn't say what $\sigma$ is. Using algorithms from statistics, we will fit the model to data and estimate these missing pieces. Some of these algorithms will end up minimizing some loss function (like in the optimization perspective), and some will not. Even if we end up with a loss function, the *process* that led us to this objective function will have a very specific flavor and philosophical underpinning---it will always be concerned with probability distributions in some way. 
 
-Now, let's highlight some of the advantages of the paradigm.
+Next, let's highlight some of the advantages of the paradigm.
+
+## Why Use Probabilistic ML?
+
+Probabilistic ML offers us several advantages.
 
 
 **Advantage 1: Distributions $\rightarrow$ Uncertainty Quantification and Generative Models.** In safety-critical applications of ML, uncertainty matters just as much as accuracy. The probabilistic perspective will allow us to capture the uncertainty of our method's predictions (they will tell us when they are unsure about a prediction). What is uncertainty exactly? and how will we quantify it? Stick around to find out. 

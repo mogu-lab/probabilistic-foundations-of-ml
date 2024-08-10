@@ -1,6 +1,6 @@
 # The Ethics of Predictive Models in Sociotechnical Systems
 
-**Contexts:** So far, we've focused on gaining intuition for qualitative metrics of model performance. We've seen that no single metric can paint a full picture of a model's fit. And that multiple metrics can provide contradictory information---a model can be "good" according to one metric by "bad" according to another. Most importantly, we've seen that no metric can be meaningful without its context---in some contexts, false negatives are more tolerable than false positives, and in others its the opposite. 
+**Contexts:** So far, we've focused on gaining intuition for qualitative metrics of model performance. We've seen that no single metric can paint a full picture of a model's fit. And that multiple metrics can provide contradictory information---a model can be "good" according to one metric by "bad" according to another. Most importantly, we've seen that no metric can be meaningful without its context---in some contexts, false negatives are more tolerable than false positives, and in others, it's the opposite. 
 
 However, our analysis of ML models *should not stop here*. For us to responsibly develop and use ML (or any technological system), it's our responsibility not just to think about the technology, but also about their *sociotechnical context*---the technology, data, model, users, affected communities, legal frameworks, business incentives, etc. that it will shape (or that will be shaped by its use):
 
