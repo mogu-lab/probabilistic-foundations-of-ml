@@ -41,7 +41,7 @@ How can we address these challenges? You will use a specific paradigm of ML---th
 **Diversity of backgrounds, identities, and lived experiences.** But as you will see, this paradigm won't be enough. On its own, it will not give us safe, valid, and ethical ML systems to use. Model development and application requires us to consider not just the technical components, but also the social components surrounding the technology. We call the overall system a *sociotechnical system*: 
 
 <div class="canva-centered-embedding">
-  <div class="canva-iframe-container">
+  <div class="canva-iframe-container" style="max-width: 700px;">
     <iframe loading="lazy" class="canva-iframe"
       src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAGNeSJW7Mk&#x2F;rP-g5in9AGP2MJmrOydpqw&#x2F;view?embed">
     </iframe>
