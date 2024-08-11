@@ -9,13 +9,12 @@
 ## Goals
 
 Our goal is that at the end of this course, you will be able to:
-* Formalize assumptions about an observed data-set into a statistical model.
+* Formalize assumptions about an observed data-set into a probabilistic model.
 * Perform statistical inference for statistical models in a probabilistic programming language.
 * Evaluate models in the context of their downstream task by relating human-useful properties to metrics (and understanding their strengths/shortcomings).
 * Abstractly reason/intuit about properties of models and different types of inference methods.
-* Map complex, state-of-the-art models/inference methods back to simpler versions covered in class.
-* Perform a broader impact analysis.
-* Engage with Probabilistic ML research.
+* Evaluate ML systems in their sociotechnical context.
+* Apply critical lenses to the development and applications of ML systems.
 
 
 
