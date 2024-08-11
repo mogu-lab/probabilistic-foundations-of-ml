@@ -14,7 +14,7 @@ Our goal is that at the end of this course, you will be able to:
 * Evaluate models in the context of their downstream task by relating human-useful properties to metrics (and understanding their strengths/shortcomings).
 * Abstractly reason/intuit about properties of models and different types of inference methods.
 * Evaluate ML systems in their sociotechnical context.
-* Apply critical lenses to the development and applications of ML systems.
+* Apply critical lenses to the development and applications of current ML systems.
 
 
 
