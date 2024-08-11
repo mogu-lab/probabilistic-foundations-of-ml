@@ -54,16 +54,16 @@ def main():
                     if special is not None:
                         tags.li(tags.span(special, cls='day_note'))
 
-                    if pre_class is not None:
-                        with tags.li():
-                            tags.span('Pre-Class:', cls='tag preclass_tag')
-                            tags.span(convert_md_to_html_if_multiline(pre_class))
-
                     if topic is not None:
                         with tags.li():
                             tags.span('Topic:', cls='tag topic_tag')
                             tags.span(convert_md_to_html_if_multiline(topic))
 
+                    if pre_class is not None:
+                        with tags.li():
+                            tags.span('Pre-Class:', cls='tag preclass_tag')
+                            tags.span(convert_md_to_html_if_multiline(pre_class))
+                            
                     if due is not None:
                         with tags.li():
                             tags.span('Due:', cls='tag due_tag')
