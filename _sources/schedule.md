@@ -39,19 +39,19 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag topic_tag">Topic:</span>
+            <span><ul>
+<li>What is Probabilistic ML?</li>
+<li>Vectorization</li>
+</ul></span>
+          </li>
+          <li>
             <span class="tag preclass_tag">Pre-Class:</span>
             <span><ul>
 <li>Read <a href="https://medium.com/bucknell-hci/the-fear-of-publicly-not-knowing-239e1b7a39f3">The Fear of Publicly Not Knowing</a></li>
 <li>Read the course syllabus</li>
 <li><a href="/cs349-fall-2024/submission-instructions">Join the course on Gradescope</a></li>
 <li>Answer the syllabus survey on Gradescope by <strong>5pm the day before</strong>---it's <strong>graded</strong>.</li>
-</ul></span>
-          </li>
-          <li>
-            <span class="tag topic_tag">Topic:</span>
-            <span><ul>
-<li>What is Probabilistic ML?</li>
-<li>Vectorization</li>
 </ul></span>
           </li>
           <li>
@@ -65,12 +65,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Probability (Discrete)</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
@@ -85,12 +85,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Conditional Probability (Discrete)</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -113,12 +113,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Joint Probability (Discrete)</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -129,15 +129,15 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag topic_tag">Topic:</span>
+            <span>The Ethics of Data</span>
+          </li>
+          <li>
             <span class="tag preclass_tag">Pre-Class:</span>
             <span><ul>
 <li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
 <li>Answer the corresponding questions to prepare for class discussions.</li>
 </ul></span>
-          </li>
-          <li>
-            <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Data</span>
           </li>
         </ul>
       </td>
@@ -146,12 +146,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Maximum Likelihood: Theory</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
@@ -180,12 +180,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Maximum Likelihood: Code</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -204,12 +204,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Optimization</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -220,12 +220,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Probability (Continuous)</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -244,15 +244,15 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag topic_tag">Topic:</span>
+            <span>The Ethics of Learning from Data</span>
+          </li>
+          <li>
             <span class="tag preclass_tag">Pre-Class:</span>
             <span><ul>
 <li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
 <li>Answer the corresponding questions to prepare for class discussions.</li>
 </ul></span>
-          </li>
-          <li>
-            <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Learning from Data</span>
           </li>
         </ul>
       </td>
@@ -263,12 +263,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Regression</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
@@ -295,12 +295,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Classification</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -320,12 +320,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Neural Networks</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -346,12 +346,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Model Selection &amp; Evaluation</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -370,15 +370,15 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag topic_tag">Topic:</span>
+            <span>The Ethics of Predictive Models in Sociotechnical Systems</span>
+          </li>
+          <li>
             <span class="tag preclass_tag">Pre-Class:</span>
             <span><ul>
 <li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
 <li>Answer the corresponding questions to prepare for class discussions.</li>
 </ul></span>
-          </li>
-          <li>
-            <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Predictive Models in Sociotechnical Systems</span>
           </li>
         </ul>
       </td>
@@ -389,12 +389,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Gaussian Mixture Models (Clustering)</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
@@ -433,12 +433,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Factor Analysis (Dimensionality Reduction)</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -469,12 +469,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Bayesian Inference: Prior &amp; Posterior</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
@@ -513,12 +513,12 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-          <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Bayesian Inference: Posterior Predictive</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -537,15 +537,15 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag topic_tag">Topic:</span>
+            <span>The Ethics of Uncertainty and Interpretability in Human-AI Systems</span>
+          </li>
+          <li>
             <span class="tag preclass_tag">Pre-Class:</span>
             <span><ul>
 <li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
 <li>Answer the corresponding questions to prepare for class discussions.</li>
 </ul></span>
-          </li>
-          <li>
-            <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Uncertainty and Interpretability in Human-AI Systems</span>
           </li>
         </ul>
       </td>
@@ -594,15 +594,15 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag topic_tag">Topic:</span>
+            <span>The Ethics of Machine Learning: A View from History</span>
+          </li>
+          <li>
             <span class="tag preclass_tag">Pre-Class:</span>
             <span><ul>
 <li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
 <li>Answer the corresponding questions to prepare for class discussions.</li>
 </ul></span>
-          </li>
-          <li>
-            <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Machine Learning: A View from History</span>
           </li>
         </ul>
       </td>
@@ -611,15 +611,15 @@ Since this course is new, please expect that the schedule will change to accomod
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
           <li>
+            <span class="tag topic_tag">Topic:</span>
+            <span>The Ethics of Machine Learning: A View from History</span>
+          </li>
+          <li>
             <span class="tag preclass_tag">Pre-Class:</span>
             <span><ul>
 <li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
 <li>Answer the corresponding questions to prepare for class discussions.</li>
 </ul></span>
-          </li>
-          <li>
-            <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Machine Learning: A View from History</span>
           </li>
         </ul>
       </td>
