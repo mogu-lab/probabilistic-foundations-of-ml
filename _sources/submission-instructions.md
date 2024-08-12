@@ -22,3 +22,6 @@
 2. Navigate to the course's Gradescope and submit the PDF there.
 
 
+**Including Graphics in DeepNote.** For some of the assignments, you'll have to draw figures (by hand, in google slides, or in some other way). To include these figures in a DeepNote notebook, follow these steps:
+1. Upload your image to the `figs` directory of the notebook.
+2. In a markdown cell, write `<img src="figs/YOUR-IMAGE" />`. 
