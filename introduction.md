@@ -4,7 +4,7 @@
 ```{admonition} Congratulations!
 :class: tip
 
-You've been hired to join the machine learning (ML) team at the Intergalactic Hypothetical Hospital (IHH), where you'll be leveraging routinely collected medical data to help improve treatment for beings across the galaxy. 
+You've been hired to join the machine learning team at the Intergalactic Hypothetical Hospital (IHH), where you'll be leveraging routinely collected medical data to help improve treatment for beings across the galaxy. 
 ```
 
 
@@ -19,20 +19,20 @@ You've been hired to join the machine learning (ML) team at the Intergalactic Hy
 
 
 
-**The ML Team.** As a result, the IHH has created a new ML team---the first of its kind! And they have hired you to join them. The goal of the team is to assist IHH researchers and clinicians in:
+**The Machine Learning (ML) Team.** As a result, the IHH has created a new ML team---the first of its kind! And they have hired you to join them. The goal of the team is to assist IHH researchers and clinicians in:
 * Answering scientific questions, like better understanding the course of certain diseases.
 * Develop predictive models to identify patients at risk of certain diseases. 
 
 The challenges they encounter in their data are unique, so as a result, you may have to develop *new ML methods* to address their unique problems. 
 
 
-**What is ML?** Broadly speaking, ML is a paradigm of AI that allows a computer to learn patterns from examples. In contrast, traditionally AI focused more on algorithmic/case-based reasoning. Now, the two terms are used more interchangeably. Nonetheless, let's illustrate the difference.
-* **AI via algorithmic/case-cased reasoning.** This paradigm is typically applied to problems where we have a good understanding of the mechanics. For example, suppose you wanted to play a game of tic-tac-toe against your computer. You can enumerate all possible courses of the game. You can program the computer to look at all possible future courses, and only choose ones in which it will win/tie. 
-* **ML via extracting patterns from examples.** This paradigm is typically applied to problems in which we don't have as good of an understanding---problems for which we cannot write down if-else rules, telling the computer what to do. In these cases, it's easier to provide the computer with examples---inputs and outputs---and have the computer "figure out" how to map the inputs to the outputs. As in the case of the IHH, imagine you are testing the effect of a new medication. You want to predict a patient's blood pressure as a function of the medication's dose. It would be hard for you to write down precise rules (e.g. if dose is $x$, then blood pressure is $y$), since the biology underlying the medication is complicated, and influenced by each patient's specific physiology (i.e. each patient reacts differently to the medication).
+**What is ML?** Broadly speaking, ML is a paradigm of Artificial Intelligence (AI) that allows a computer to learn patterns from examples. In contrast, traditionally AI focused more on algorithmic/case-based reasoning. Now, the two terms are used more interchangeably. Nonetheless, let's illustrate the difference.
+* **AI via algorithmic/case-based reasoning.** This paradigm is typically applied to problems where we have a good understanding of the mechanics. For example, suppose you wanted to play a game of tic-tac-toe against your computer. You can enumerate all possible courses of the game. You can program the computer to look at all possible future courses, and only choose ones in which it will win/tie. 
+* **AI via extracting patterns from examples.** This paradigm is typically applied to problems in which we don't have as good of an understanding---problems for which we cannot write down if-else rules, telling the computer what to do. In these cases, it's easier to provide the computer with examples---inputs and outputs---and have the computer "figure out" how to map the inputs to the outputs. As in the case of the IHH, imagine you are testing the effect of a new medication. You want to predict a patient's blood pressure as a function of the medication's dose. It would be hard for you to write down precise rules (e.g. if dose is $x$, then blood pressure is $y$), since the biology underlying the medication is complicated, and influenced by each patient's specific physiology (i.e. each patient reacts differently to the medication).
 
 
 **Your Role.** Your role at the IHH requires you to consider three aspects of ML method application and development:
-1. **Safety.** Patient safety is everything. As such, the ML methods you develop must be accurate; an incorrect prediction may cause patients harm. Moreover, in cases where it's not possible to make accurate predictions, your ML methods must indicate to its users the limits of their knowledge (i.e. they must quantify uncertainty). For example, if a patient arrives at the IHH whose profile is different than all previous patients your ML has seen, your model should *flag it* for careful clinician screening.
+1. **Safety.** Patient safety is everything. As such, the ML methods you develop must be accurate; an incorrect prediction may cause patients harm. Moreover, in cases where it's not possible to make accurate predictions, your ML methods must indicate to its users the limits of their knowledge (i.e. they must quantify uncertainty). For example, if a patient arrives at the IHH whose profile is different than all previous patients your ML method has seen, it should *flag it* for careful clinician screening.
 2. **Validity.** The models you develop must be scientifically plausible; otherwise, IHH clinicians won't be able to use them to advance clinical science.
 3. **Ethics.** Whenever computerized systems interact with humans, we have to proactively think of ethical challenges we will face; for example, what if our ML methods are less accurate for one group of patients? When things go wrong, who is held responsible?
 
@@ -166,7 +166,7 @@ We, as a society, hold beliefs about science that may be romanticized and inaccu
 ````{admonition} Exercise: Societal Misconceptions about AI 
 **Part 1:** Watch [this video](https://www.youtube.com/watch?v=WNu6fRo_7fg) of Iron Man developing and debugging a new suit. What societal misconceptions about CS/engineering/AI does this video endorse? Think both about *who* does computer science, as well as about *what's* the day-to-day experience of doing CS. 
 
-**Part 2:** Below is a collection of common experiences in CS/ML classes. For each statement, write down which societal misconception or unhealthy expectation can lead to the statement. 
+**Part 2:** Below is a collection of *common, reasonable, and expected* experiences in CS/AI/ML classes---you may find yourselves relating to these (the course staff certainly did!). In addition to representing a common, valid experience, each statement is further endorsed by common societal misconceptions. Can you identify the misconceptions behind each statement?
 * I'm worried this class will be too difficult in terms of math.
 * I'm worried this class will be too difficult in terms of coding.
 * I'm worried I don't have the right background for the class.
