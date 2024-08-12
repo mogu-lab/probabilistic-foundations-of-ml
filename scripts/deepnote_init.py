@@ -49,17 +49,23 @@ def download_files_from_github(user_name, repo_name, paths, skip_downloaded=True
         open(file_info['path'] , 'wb').write(r.content)
 
 
-# Load data
-print('Loading Data:')
-os.makedirs('data', exist_ok=True)
-download_directory_from_github(
-    USER_NAME, REPO_NAME, 'data', skip_downloaded=False,
-)
+def main():
+    # Load data
+    print('Loading Data:')
+    os.makedirs('data', exist_ok=True)
+    download_directory_from_github(
+        USER_NAME, REPO_NAME, 'data', skip_downloaded=False,
+    )
+    
+    # Load helper Python files
+    print('Loading helper Python files:')
+    download_files_from_github(
+        USER_NAME, REPO_NAME, ['cs349.py', 'utils.py'], skip_downloaded=False,
+    )
 
-# Load helper Python files
-print('Loading helper Python files:')
-download_files_from_github(
-    USER_NAME, REPO_NAME, ['cs349.py', 'utils.py'], skip_downloaded=False,
-)
+    print('Done.')
 
-print('Done.')
+
+if __name__ == '__main__':
+    main()
+
