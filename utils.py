@@ -47,6 +47,12 @@ def convert_day_of_week_to_int(d):
     ])
 
 
+def convert_condition_to_int(c):
+    return convert_categorical_to_int(c, [
+        'High Fever', 'Broken Limb', 'Entangled Antennas', 'Allergic Reaction', 'Intoxication',
+    ])
+
+
 ###############################################################################
 # Utiliites for Units on Predictive Models
 ###############################################################################
