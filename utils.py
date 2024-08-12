@@ -27,30 +27,38 @@ from cs349 import *
 jax.config.update('jax_enable_x64', True)
 
 
-
 ###############################################################################
 # Utiliites for Units on Directed Graphical Models
 ###############################################################################
 
+DAYS_OF_WEEK = [
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+]
 
-def convert_categorical_to_int(d, categories):
+CONDITIONS = [
+    'High Fever', 'Broken Limb', 'Entangled Antennas', 'Allergic Reaction', 'Intoxication',
+]
+
+def convert_categorical_to_int(cs, categories):
     r = 0
-    for idx, day in enumerate(categories):
-        r += (d == day) * idx
+    for idx, c in enumerate(categories):
+        r += (cs == c) * idx
 
     return r
 
 
 def convert_day_of_week_to_int(d):
-    return convert_categorical_to_int(d, [
-        'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
-    ])
+    '''
+    For use in the joint probability unit: converts days of the week to integers
+    '''
+    return convert_categorical_to_int(d, DAYS_OF_WEEK)
 
 
 def convert_condition_to_int(c):
-    return convert_categorical_to_int(c, [
-        'High Fever', 'Broken Limb', 'Entangled Antennas', 'Allergic Reaction', 'Intoxication',
-    ])
+    '''
+    For use in the joint probability unit: converts conditions to integers
+    '''
+    return convert_categorical_to_int(c, CONDITIONS)
 
 
 ###############################################################################
