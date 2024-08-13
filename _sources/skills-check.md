@@ -38,6 +38,15 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 \log x^y &= y \cdot \log x
 \end{align*}
 
+**Indicator Variables.** We will use indicator variables:
+\begin{align*}
+\mathbb{I}(\text{condition}) &= \begin{cases}
+1 & \text{if the condition is true}
+0 & \text{otherwise}
+\end{cases}
+\end{align*}
+For example, $\mathbb{I}(A = a)$ will evaluate to 1 only when $A = a$. 
+
 **Univariate Calculus.** Derivatives, integrals, and limits (all in 1-dimension) will appear in some of the derivations. We will not ask you to do these by hand, but we expect you to know what they mean, conceptually and intuitively. To review these concepts, we recommend:
 * TODO
 
