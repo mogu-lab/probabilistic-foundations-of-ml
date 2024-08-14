@@ -178,6 +178,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="submission-instructions.html">How to Submit</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-1-bfc8535d-2173-4e4e-a63f-54ef7951809c/notebook/HW-8934a5f1724e404d9b837700ee4ab787" rel="noopener noreferrer" target="_blank">Homework 1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-2-e446a02b-ec5c-431a-bc44-78ed5325b944/notebook/HW-e0d4ae65eef94c8c8837dbb966f68ed5" rel="noopener noreferrer" target="_blank">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-3-e63adfcd-95ed-4b0d-b6c8-badf159dd229/notebook/HW-d7cf899f1c9943aba860c6db880110b5" rel="noopener noreferrer" target="_blank">Homework 3</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="nav bd-sidenav">
@@ -415,7 +416,7 @@ document.write(`
 <p>Demonstrate empirically that continuous distributions do not have valid PMFs via the following procedure:</p>
 <ol class="arabic simple">
 <li><p>Sample 10,000 values from a Uniform distribution on the range <span class="math notranslate nohighlight">\([0, 1]\)</span> (using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>). This will draw samples on the range <span class="math notranslate nohighlight">\([0, 1]\)</span> with equal probability.</p></li>
-<li><p>Count the number of samples that exactly equal <span class="math notranslate nohighlight">\(0.5\)</span>. How</p></li>
+<li><p>Count the number of samples that exactly equal <span class="math notranslate nohighlight">\(0.5\)</span>. How many samples did you count?</p></li>
 </ol>
 </div>
 <p><strong>Cumulative Density Function (CDF):</strong> As we showed, we can’t use the frequency of a continuous RV as its probability. But we <em>can</em> ask a different question: what’s the probability that a continuous RV is smaller than or equal to some value. This is called the CDF, which we will denote using <span class="math notranslate nohighlight">\(F\)</span>. What’s interesting about the CDF is that it abides by our intuition of probability as frequencies; we can empirically estimate the CDF by counting all samples for which the variable is <span class="math notranslate nohighlight">\(\leq\)</span> our value of interest. Next, we will use the CDF to define the “continuous RV version” of the PMF. Before moving on, however, let’s illustrate this by continuing with our example of IHH ER patient height.</p>
@@ -466,8 +467,8 @@ document.write(`
 </div></blockquote>
 <p>Using our new fact, let’s set up the problem differently. Instead of trying to directly compute the probability of <span class="math notranslate nohighlight">\(R = r\)</span> (which is always 0), let’s compute the probability that <span class="math notranslate nohighlight">\(R\)</span> is <em>super close to</em> <span class="math notranslate nohighlight">\(r\)</span>. We can do this by making up a variable, <span class="math notranslate nohighlight">\(\epsilon\)</span>, that is very small, and computing how the CDF changes from <span class="math notranslate nohighlight">\(F_R(r - \epsilon)\)</span> to <span class="math notranslate nohighlight">\(F_R(r)\)</span>. In other words, we want the instantaneous rate-of-change from <span class="math notranslate nohighlight">\(F_R(r - \epsilon)\)</span> to <span class="math notranslate nohighlight">\(F_R(r)\)</span>, since this rate-of-chance can be thought of as “the inclusion of <span class="math notranslate nohighlight">\(r\)</span>”.</p>
 <p>Now, the instantaneous rate-of-change is also known as the derivative. Thus, we define the PDF as the derivative of the CDF:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-75c9a5c3-447c-4563-8f28-422363559349">
-<span class="eqno">(11.1)<a class="headerlink" href="#equation-75c9a5c3-447c-4563-8f28-422363559349" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f9567fed-a8b1-4f77-89d2-bdb21f237f60">
+<span class="eqno">(11.1)<a class="headerlink" href="#equation-f9567fed-a8b1-4f77-89d2-bdb21f237f60" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_R(r) &amp;= \frac{d F_R(r)}{d r}.
 \end{align}\]</div>
 <p><strong>Properties of PDFs:</strong> Let <span class="math notranslate nohighlight">\(R\)</span> be a continuous RV with PDF <span class="math notranslate nohighlight">\(p_R(\cdot)\)</span>, defined on the sample-space <span class="math notranslate nohighlight">\(S\)</span>.</p>
@@ -512,7 +513,7 @@ p_R(r) &amp;= \frac{d F_R(r)}{d r}.
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Truncated_normal_distribution" rel="noopener noreferrer" target="_blank">Truncated Normal</a></p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Laplace_distribution" rel="noopener noreferrer" target="_blank">Laplace</a></p></li>
 </ul>
-<p><strong>Part 1:</strong> For each of the distributions above, plot its PDF. Play with the parameters of each distribution—how does each affect the shape of the distribution? Summarize what you learn.</p>
+<p><strong>Part 1:</strong> For each of the distributions above, plot its PDF (using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>). Play with the parameters of each distribution—how does each affect the shape of the distribution? Summarize what you learn.</p>
 <p><strong>Part 2:</strong> Answer the following questions:</p>
 <ol class="arabic simple">
 <li><p>You’re modeling the distribution of heights in the US. Which of the above distributions would you choose and why?</p></li>
@@ -655,7 +656,7 @@ p_R(r) &amp;= \frac{d F_R(r)}{d r}.
 <ul class="simple">
 <li><p>Visualize the marginals, <span class="math notranslate nohighlight">\(p_C(\cdot)\)</span> and <span class="math notranslate nohighlight">\(p_A(\cdot)\)</span>.</p></li>
 <li><p>Visualize the conditional <span class="math notranslate nohighlight">\(p_{A | C}(\cdot | c)\)</span> for every value of <span class="math notranslate nohighlight">\(c\)</span>.</p></li>
-<li><p>Can you visualize <span class="math notranslate nohighlight">\(p_{C | A}(c | a)\)</span>? Explain.</p></li>
+<li><p>Can you visualize <span class="math notranslate nohighlight">\(p_{C | A}(c | a)\)</span>? Explain what makes this challenging.</p></li>
 </ul>
 <p><strong>Part 2:</strong> Based on the visualizations, which of the following factorizations of the joint would you prefer to use? And which distributions would you use for each component in the factorization? Explain.</p>
 <div class="amsmath math notranslate nohighlight">
@@ -663,7 +664,7 @@ p_R(r) &amp;= \frac{d F_R(r)}{d r}.
 p_{A, C}(a, c) &amp;= p_{A | C}(a | c) \cdot p_C(c) \quad \text{(Option 1)} \\
 p_{A, C}(a, c) &amp;= p_{C | A}(c | a) \cdot p_A(a) \quad \text{(Option 2)}
 \end{align*}\]</div>
-<p><em>Hint: Think of which of the distributions already covered in the course would you use for each component of the joint distribution.</em></p>
+<p><em>Hint: Think of which of the distributions already covered in the course you would use for each component of the joint distribution.</em></p>
 <p><strong>Part 3:</strong> Draw a directed graphical model for the joint data likelihood. Write down the log of the joint data likelihood (the joint probability of all <span class="math notranslate nohighlight">\(N\)</span> observations). Both should explicitly depict the parameters of the model that you’d like to learn.</p>
 <p><strong>Part 4:</strong> Implement your model in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>. Perform the MLE on your model.</p>
 <p><strong>Part 5:</strong> Verify your model learned the data distribution well by plotting each component of your joint distribution against the empirical distribution of the data.</p>
