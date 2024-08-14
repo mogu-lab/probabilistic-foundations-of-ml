@@ -97,7 +97,7 @@ def model_discrete_IHH_ER(N, data=None):
     lambda_knots = numpyro.param(
         'lambda_knots',
         jnp.array([0.0, 3.0]),
-        constraint=C.positive,
+        constraint=C.nonnegative,
     )
 
     with numpyro.plate('data', N):
