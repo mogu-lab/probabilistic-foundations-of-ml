@@ -36,7 +36,7 @@ DAYS_OF_WEEK = [
 ]
 
 CONDITIONS = [
-    'High Fever', 'Broken Limb', 'Entangled Antennas', 'Allergic Reaction', 'Intoxication',
+    'Entangled Antennas', 'Allergic Reaction', 'Intoxication', 'High Fever', 'Broken Limb', 
 ]
 
 def convert_categorical_to_int(cs, categories):
