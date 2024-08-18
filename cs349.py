@@ -100,7 +100,11 @@ def cs349_bayesian_inference(model, key, num_warmup, num_samples, *args, **kwarg
     '''
     
     mcmc = numpyro.infer.MCMC(
-        numpyro.infer.NUTS(model), 
+        numpyro.infer.NUTS(
+            model,
+            max_tree_depth=10,
+            target_accept_prob=0.6,
+        ), 
         num_warmup=num_warmup, 
         num_samples=num_samples,
     )

@@ -37,7 +37,7 @@ For some of the assignments, you'll have to draw figures (by hand, in google sli
 
 The benefit of working in DeepNote is that no student should have installation issues---the environment is uniform for all students, and we've already taken care to ensure everything works. Students who prefer to complete the assignments locally on their own machines can follow the instructions here. However, we note that we unfortunately cannot help troubleshoot installation issues.
 
-1. Create a virtual python environment with python $3.10$. We recommend using micromamba for this.
+1. Create a virtual python environment with python $3.10$. We recommend using [Micromamba](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html) for this.
 2. Then run the following commands in your terminal:
 ```
 # Install Python packages
