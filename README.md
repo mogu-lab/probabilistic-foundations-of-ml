@@ -37,7 +37,7 @@
   </div>
 </div>
 ```
-
+4. All figures are in [this directory](https://www.canva.com/folder/FAFIo00ejB4). 
 
 ## DeepNote Setup
 
@@ -48,10 +48,7 @@
 5. To download a PDF version of your notebook, follow [these instructions](https://deepnote.com/docs/export-pdf)
 
 
-## Gradescope
 
-1. Give students course code (from course website)
-2. sign in with wellesley email
 
 
 ## Additional Readings
