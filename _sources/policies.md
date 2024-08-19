@@ -21,7 +21,7 @@
   * Coming to class on time
   * Not using phones in class
   * Using laptops only for note-taking / necessary in-class exercises
-  * Respectful engagement with the TAs and course instructor
+  * Respectful engagement with the peers, TAs, and course instructors
 
 
 **Letter Grades.** Course grade percentages are converted to letters via the table below:
@@ -40,8 +40,6 @@
 | $< 60.0\%$ | F |
 
 
-In case the average grade in the class is lower than expected, we may raise everyone's grades. We will **never** lower grades.
-
 Recall that the minimum grade to earn credit under credit/no credit grading is C. The minimum grade to pass and earn credit under normal letter grading is D.
 
 
@@ -51,7 +49,20 @@ Recall that the minimum grade to earn credit under credit/no credit grading is C
 
 ## Late Policy
 
-TODO.
+**Deadlines.** The assignment due dates are listed in the course schedule. Please read the due dates carefully, since often assignments are due the **night before their listing**. 
+
+
+**Late Passes.** From our experience, we know that it's difficult to learn new material in class while working on homework on older material. Because of this, we specifically designed the class so that homework topics are always current with the class material. We expect that this will help everyone stay on top of the material. However, for this design to work, we ask for your help in ensuring you don't fall behind. Come talk to us if you have questions or concerns!
+
+We nonetheless offer every student **3 x 24-hour late passes**.
+* Each late pass may be applied to delay one assignment deadline by 24 hours within the semester.
+* Any number of available passes may be applied to any assignment deadline. No work is accepted past the end of final exam period, regardless of available late passes.
+* Late passes are not transferable, reusable, or divisible.
+* After your late pass budget is exhausted, each additional 24-hour delay in assignment submission is assessed a late penalty that subtracts 10% of the maximum assignment grade from your awarded grade on that assignment.
+* To use a late day, you must fill out [this form](https://forms.gle/hSsEcrQ1ahyJiMVm9) **before the assignment deadline**.
+
+**Extenuating Circumstances.** In cases of extenuating circumstances, please reach out to your instructor *and* [class dean](https://www1.wellesley.edu/advising/classdeans) so we can, together, work out alternative arrangements.
+
 
 
 
@@ -61,7 +72,8 @@ TODO.
 
 **Collaboration.** We would like students to be able to work together and learn from each other. As such, we designed the course to include substantial collaborative work. Please follow the guidelines below to ensure everyone has the opportunity to learn. In the homework, we labeled problems as "collaborative" or "individual."
 * On problems labeled as "collaborative," we expect discussions with your peers will enrich your learning experience. Please limit your discussions to **one peer per problem**. Please use these opportunities to highlight points of disagreement and discuss them (you need not write the same answers!). For such problems that involve math and coding, you can white-board the math together, and you can pair program together. However, we expect you and your collaborator *contribute equally*---that is, you cannot just copy your peer's answers. Finally, everyone must write up the solutions individually. 
-* On problems labeled as "individual," we expect you to do the work on your own. You may discuss the high-level ideas with your peers, but you cannot share math or code. 
+* On problems labeled as "individual," we expect you to do the work **on your own**. You may discuss the high-level ideas with your peers, but you cannot share math or code. 
+* Lastly, on all problems you collaborated with a peer, be sure to *acknowledge them**.
 
 
 **Use of Generative AI.** You are free to use generative AI for the following use cases (assuming you understand that it may be incorrect/misleading):
@@ -77,7 +89,7 @@ To make sure the use of Generative AI does not compromise your learning experien
 
 ## Accessibility and Disability
 
-**Disability Services.** Every student has a right to full access in this course. If you need any accommodations for CS 349, please contact Wellesley’s Disability Services. You should request accommodations **as early as possible**, since some situations can require significant time for accommodation design. If you need immediate accommodations, please arrange an appointment with the course instructor as soon as possible.
+**Disability Services.** Every student has a right to full access in this course. If you need any accommodations for CS 349, please contact Wellesley’s Disability Services. You should request accommodations **as early as possible**, since some situations can require significant time for accommodation design. If you need immediate accommodations, please arrange an appointment with the course instructor as soon as possible. 
 
 **Unsure about your need for accomodations?** If you are unsure but suspect you may have an undocumented need for accommodations, you are encouraged to contact Disability Services. They can provide assistance including screening and referral for assessments. Disability Services can be reached at `disabilityservices@wellesley.edu`, at `781-283-2434`, or by [scheduling an appointment online](https://www.wellesley.edu/disability).
 
