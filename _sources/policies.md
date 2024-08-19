@@ -34,6 +34,8 @@ We nonetheless offer every student **3 x 24-hour late passes**.
 * On problems labeled as "individual," we expect you to do the work **on your own**. You may discuss the high-level ideas with your peers, but you cannot share math or code. 
 * Lastly, on all problems you collaborated with a peer, be sure to *acknowledge them**.
 
+In addition to the technical parts of the homework, *you will also be graded on your ability to work with peers*; in every assignment, we will ask you questions about your team work practices. 
+
 
 **Use of Generative AI.** You are free to use generative AI for the following use cases (assuming you understand that it may be incorrect/misleading):
 * You can test your knowledge of the material.
