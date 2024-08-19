@@ -1,4 +1,4 @@
-\import argparse
+import argparse
 from collections import defaultdict
 import os
 import glob
@@ -320,6 +320,8 @@ def generate_IHH_CGLF_data_regression():
     df.index.name = 'Patient ID'
     df.to_csv(os.path.join(DATA_DIR, 'IHH-CTR-CGLF-regression-augmented.csv'))
 
+    df.sample(20, random_state=0).to_csv(os.path.join(DATA_DIR, 'IHH-CTR-CGLF-regression-subsampled.csv'))
+    
     df.drop(columns=['Age']).to_csv(
         os.path.join(DATA_DIR, 'IHH-CTR-CGLF-regression.csv'),
     )    
