@@ -66,7 +66,7 @@ Since a large part of this course requires students to work in groups, in alignm
 **Experiment and tinker.** Learning requires that you form your own mental model of the material, and your own intuition for how things work. One effective way to do this is through play---if you're not sure what would happen if you tweak a piece of code, a parameter of an ML model, etc. try it! 
 
 
-
+**Stay ontop of the material.** You will be given class-time to start working on homework together with your peers. This is to ensure everyone can find their bearing---if there's something that confuses you, this is a great time to ask! We recommend you finish working on the problems you started in class *before the next class*. Since every class builds on all previous classes, this will ensure you're up to speed.
 
 
 **Ready to take CS 349?** Fasten your seatbelts---*it's going to be an adventure!*
