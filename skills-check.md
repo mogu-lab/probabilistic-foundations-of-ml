@@ -41,7 +41,7 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 **Indicator Variables.** We will use indicator variables:
 \begin{align*}
 \mathbb{I}(\text{condition}) &= \begin{cases}
-1 & \text{if the condition is true}
+1 & \text{if the condition is true} \\
 0 & \text{otherwise}
 \end{cases}
 \end{align*}
