@@ -1,13 +1,6 @@
 
 # Probabilistic Foundations of Machine Learning (CS349), Fall 2024
 
-## TODOs
-
-1. Improve explanation of CDF
-2. Add exercises for Bayesian prior + posterior unit
-3. Add tutorial on calculus to skills check
-
-
 
 ## Installation
 
