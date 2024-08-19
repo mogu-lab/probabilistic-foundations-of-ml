@@ -5,9 +5,10 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 
 ## Coding
 
-**Programming Language: Python.** The course is taught entirely in Python. To get the most out of the course, it's important you don't feel bogged down by too many syntax errors and the like so that you can focus on the concepts we introduce. If you do not have prior experience with Python, that's no problem. *Please do take the time before the start of the course to study and practice it.* For review, we recommend:
-* Going through an online Python tutorial. For example, from this [interactive Python tutorial](https://www.learnpython.org/), review all sections under "Learn the Basics" and "Data Science Tutorials." From the "Advanced Tutorials," review "List Comprehensions" and "Lambda functions."
-* After completing the tutorial, select one or two assignments from CS230 and translate them into Python.
+**Programming Language: Python.** The course is taught entirely in Python. To get the most out of the course, it's important you don't feel bogged down by too many syntax errors and the like so that you can focus on the concepts we introduce. If you do not have prior experience with Python, that's no problem. *Please do take the time before the start of the course to study and practice it.* For review, we recommend going through an online Python tutorial. For example, from this [interactive Python tutorial](https://www.learnpython.org/),
+* Review all sections under "Learn the Basics" and "Data Science Tutorials."
+* Review "List Comprehensions" and "Lambda functions" from the "Advanced Tutorials." 
+
 
 
 **Libraries.** We will regularly use two Python libraries throughout the course: `pandas`, used for reading in `.csv` data files and manipulating them, and `matplotlib`, used for visualizations.
