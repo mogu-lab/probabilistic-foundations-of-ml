@@ -9,7 +9,7 @@
 
 
 
-## Downloading the Homeworks
+## Downloading the Homework
 
 1. Log into [DeepNote](https://deepnote.com/) using your Wellesley College email. 
 2. Go to homework link.
@@ -18,7 +18,7 @@
 
 
 
-## Submitting Homeworks
+## Submitting Homework
 
 1. Follow [these instructions](https://deepnote.com/docs/export-pdf) to download a PDF of your notebook.
 2. Navigate to the course's Gradescope and submit the PDF there.

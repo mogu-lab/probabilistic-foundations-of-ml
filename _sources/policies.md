@@ -8,22 +8,23 @@
 
 ## Grades
 
-Course grades are computed by weighing course components as follows:
-* Homeworks: $65\%$.
+**Course Components.** Course grades are computed by weighing course components as follows:
+* Homework: $65\%$.
 * In-class participation: $15\%$.
   * Coming to class prepared, having done the pre-class work/readings
   * Asking questions in class (*all* questions are good questions)
   * Answering questions in class (you're answers don't have to be right!)
-* Team work: $15\%$.
+* Team Work: $15\%$.
   * Creating a supportive, inclusive and welcoming environment for your assigned team
   * Practicing good communication and active listening 
-* Class etiquette: $5\%$. This includes:
+* Course Etiquette: $5\%$. This includes:
   * Coming to class on time
   * Not using phones in class
-  * Using laptops only note-taking / necessary in-class exercises
+  * Using laptops only for note-taking / necessary in-class exercises
+  * Respectful engagement with the TAs and course instructor
 
 
-Course grade percentages are converted to letters via the table below:
+**Letter Grades.** Course grade percentages are converted to letters via the table below:
 
 | **Percentage** | **Letter Grade** |
 |---|---|
@@ -44,17 +45,33 @@ In case the average grade in the class is lower than expected, we may raise ever
 Recall that the minimum grade to earn credit under credit/no credit grading is C. The minimum grade to pass and earn credit under normal letter grading is D.
 
 
+**Extra Credit.** Problems labeled "extra credit" will be factored in at the end of the semester. We do not disclose a priori how these will affect your grade. 
+
 
 
 ## Late Policy
 
-TODO
+TODO.
+
 
 
 
 ## Honor Code and Collaboration/Resource Policies
 
-TODO
+
+**Collaboration.** We would like students to be able to work together and learn from each other. As such, we designed the course to include substantial collaborative work. Please follow the guidelines below to ensure everyone has the opportunity to learn. In the homework, we labeled problems as "collaborative" or "individual."
+* On problems labeled as "collaborative," we expect discussions with your peers will enrich your learning experience. Please limit your discussions to **one peer per problem**. Please use these opportunities to highlight points of disagreement and discuss them (you need not write the same answers!). For such problems that involve math and coding, you can white-board the math together, and you can pair program together. However, we expect you and your collaborator *contribute equally*---that is, you cannot just copy your peer's answers. Finally, everyone must write up the solutions individually. 
+* On problems labeled as "individual," we expect you to do the work on your own. You may discuss the high-level ideas with your peers, but you cannot share math or code. 
+
+
+**Use of Generative AI.** You are free to use generative AI for the following use cases (assuming you understand that it may be incorrect/misleading):
+* You can test your knowledge of the material.
+* Use it as an aid to understanding concepts from class.
+
+To make sure the use of Generative AI does not compromise your learning experience, **do not** use it to:
+* Generate code of any kind.
+* Solve problems of on your homework.
+* Summarize assigned readings.
 
 
 
