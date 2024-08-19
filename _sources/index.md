@@ -1,8 +1,5 @@
 # Probabilistic Foundations of ML
 
-```{warning}
-This course is currently under construction. Everything you see here is likely to change!
-```
 
 
 <table style="width: 100%; text-align: center;">
