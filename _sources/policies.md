@@ -45,10 +45,11 @@ To make sure the use of Generative AI does not compromise your learning experien
 * Summarize assigned readings.
 
 
+
 ## Grades
 
 **Course Components.** Course grades are computed by weighing course components as follows:
-* Homework: $65\%$.
+* Homework: $65\%$. Homework assignments are long, but you will be given time to work on them **in class, with your peers.** 
 * In-class participation: $15\%$.
   * Coming to class prepared, having done the pre-class work/readings
   * Asking questions in class (*all* questions are good questions)
