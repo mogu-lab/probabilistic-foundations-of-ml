@@ -10,17 +10,19 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 * After completing the tutorial, select one or two assignments from CS230 and translate them into Python.
 
 
-**Coding Environment: DeepNote.** We will be using [DeepNote](https://deepnote.com/) for all assignments in the course. DeepNote is an interactive Python environment that makes it easy to write code in small pieces, and to visualize and inspect them. Further, it let's you interleave your code with notes and math. If you're familiar with Jupyter notebooks, they are just a cloud version of a Jupyter notebook. If this is new to you, no problem! To get you started, we recommend:
+**Libraries.** We will regularly use two Python libraries throughout the course: `pandas`, used for reading in `.csv` data files and manipulating them, and `matplotlib`, used for visualizations.
+* To learn `pandas`, you can find lots of tutorials online. For example you may find the first two lessons from [this tutorial](https://www.kaggle.com/learn/pandas) helpful.
+* Similarly, [this tutorial](https://www.w3schools.com/python/matplotlib_getting_started.asp) will walk you through how to use `matplotlib`.
+
+
+## Coding Environment: DeepNote
+
+We will be using [DeepNote](https://deepnote.com/) for all assignments in the course. DeepNote is an interactive Python environment that makes it easy to write code in small pieces, and to visualize and inspect them. Further, it let's you interleave your code with notes and math. If you're familiar with Jupyter notebooks, they are just a cloud version of a Jupyter notebook. If this is new to you, no problem! To get you started, we recommend:
 * Making an account on the [DeepNote](https://deepnote.com/) website using your *Wellesley email* and exploring.
 * Watching/reading some online tutorials, like [this one](https://www.youtube.com/watch?v=EW4lKlUnLGU).
 * Finally try making cells that run code and ones for writing text and math. Follow [this guide](https://gtribello.github.io/mathNET/assets/notebook-writing.html) for formatting text and for writing mathematical notation---we will use this heavily in the course!
   * **Markdown** is language used for formatting is called "markdown." You can find a markdown cheatsheet [here](https://www.markdownguide.org/cheat-sheet/).
   * **Latex** (pronounced "la-tek") is the language used for typesetting mathematical notation. If you ever forget what's the syntax for a certain math symbol there are two ways for you to figure it quickly (aside from googling): (a) You can draw it in [this tool](https://detexify.kirelabs.org/classify.html) and it will tell you, or (b) you can right-click on any math on this website and select option "Show Math As"/"Copy to Clipboard", and then "TeX Command" to get the corresponding syntax. 
-
-
-**Libraries.** We will regularly use two Python libraries throughout the course: `pandas`, used for reading in `.csv` data files and manipulating them, and `matplotlib`, used for visualizations.
-* To learn `pandas`, you can find lots of tutorials online. For example you may find the first two lessons from [this tutorial](https://www.kaggle.com/learn/pandas) helpful.
-* Similarly, [this tutorial](https://www.w3schools.com/python/matplotlib_getting_started.asp) will walk you through how to use `matplotlib`.
 
 
 
@@ -47,8 +49,11 @@ This course assumes knowledge of the topics and skills listed below. Although yo
 \end{align*}
 For example, $\mathbb{I}(A = a)$ will evaluate to 1 only when $A = a$. 
 
-**Univariate Calculus.** Derivatives, integrals, and limits (all in 1-dimension) will appear in some of the derivations. We will not ask you to do these by hand, but we expect you to know what they mean, conceptually and intuitively. To review these concepts, we recommend:
-* TODO
+**Single Variable Calculus.** Derivatives, integrals, and limits (all in 1-dimension) will appear in some of the derivations. We will not ask you to do these by hand, but we expect you to know what they mean, conceptually and intuitively. To review these concepts, we recommend reading Chapters 3, 4, 8, 16, and 20 from [this tutorial](https://www.elevri.com/courses/calculus).
 
-**Probability and Statistics.** Although the course introduces a *probabilistic* paradigm of ML, we do not assume *any* prior knowledge of probability and statistics. All necessary topics from these subjects will be introduced as needed in the course.
+
+
+## Probability and Statistics
+
+Although the course introduces a *probabilistic* paradigm of ML, *we do not assume *any prior knowledge of probability and statistics*. All necessary topics from these subjects will be introduced as needed in the course.
 
