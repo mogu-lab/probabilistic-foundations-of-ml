@@ -375,7 +375,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differences-between-continuous-and-discrete-probability">11.1. Differences Between Continuous and Discrete Probability</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-discrete-continuous-models">11.2. MLE for Discrete-Continuous Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expectations">11.2. Expectations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-discrete-continuous-models">11.3. MLE for Discrete-Continuous Models</a></li>
 </ul>
             </nav>
         </div>
@@ -471,8 +472,8 @@ document.write(`
 </div></blockquote>
 <p>Using our new fact, let’s set up the problem differently. Instead of trying to directly compute the probability of <span class="math notranslate nohighlight">\(R = r\)</span> (which is always 0), let’s compute the probability that <span class="math notranslate nohighlight">\(R\)</span> is <em>super close to</em> <span class="math notranslate nohighlight">\(r\)</span>. We can do this by making up a variable, <span class="math notranslate nohighlight">\(\epsilon\)</span>, that is very small, and computing how the CDF changes from <span class="math notranslate nohighlight">\(F_R(r - \epsilon)\)</span> to <span class="math notranslate nohighlight">\(F_R(r)\)</span>. In other words, we want the instantaneous rate-of-change from <span class="math notranslate nohighlight">\(F_R(r - \epsilon)\)</span> to <span class="math notranslate nohighlight">\(F_R(r)\)</span>, since this rate-of-chance can be thought of as “the inclusion of <span class="math notranslate nohighlight">\(r\)</span>”.</p>
 <p>Now, the instantaneous rate-of-change is also known as the derivative. Thus, we define the PDF as the derivative of the CDF:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ec88b15d-1f7e-426e-a3ee-9c8dc8bb57d7">
-<span class="eqno">(11.1)<a class="headerlink" href="#equation-ec88b15d-1f7e-426e-a3ee-9c8dc8bb57d7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-dd069ec0-3196-469f-8979-0ad4016909a4">
+<span class="eqno">(11.1)<a class="headerlink" href="#equation-dd069ec0-3196-469f-8979-0ad4016909a4" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_R(r) &amp;= \frac{d F_R(r)}{d r}.
 \end{align}\]</div>
 <p><strong>Properties of PDFs:</strong> Let <span class="math notranslate nohighlight">\(R\)</span> be a continuous RV with PDF <span class="math notranslate nohighlight">\(p_R(\cdot)\)</span>, defined on the sample-space <span class="math notranslate nohighlight">\(S\)</span>.</p>
@@ -527,8 +528,67 @@ p_R(r) &amp;= \frac{d F_R(r)}{d r}.
 <p><em>Hint: On each Wikipedia page, there’s a panel on the right side that summarizes the properties of the distribution (e.g. its support, PDF, example plots, etc.)—all of the information you need is there.</em></p>
 </div>
 </section>
+<section id="expectations">
+<h2><span class="section-number">11.2. </span>Expectations<a class="headerlink" href="#expectations" title="Permalink to this heading">#</a></h2>
+<p>An expectation, or expected value, is a fancy name for an <em>average</em> (or <em>mean</em>). As you may have noticed, the parameters for several of the distributions above control their mean (e.g. for a Gaussian and Laplace). This is useful for modeling since it allows us to specify what the model should do “on average.” Expectations will also keep popping up in later derivations—so what are they exactly?</p>
+<p><strong>Approximating Expectations.</strong> Given samples from an RV, you likely know how to compute the average: you add up all of the samples and divide by the total number of samples. For example, let <span class="math notranslate nohighlight">\(N\)</span> be an RV representing the number of presents a person gets for their birthday. You can approximate the expectation/average, by:</p>
+<ol class="arabic simple">
+<li><p>Randomly selecting <span class="math notranslate nohighlight">\(S\)</span> individuals from the population</p></li>
+<li><p>Asking each for the number of presents they got, <span class="math notranslate nohighlight">\(n_s\)</span>,</p></li>
+<li><p>Computing the average via,</p></li>
+</ol>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\underbrace{\mathbb{E}_{n \sim p_N(\cdot)} [n]}_{\text{fancy notation}} &amp;\approx \underbrace{\frac{1}{S} \sum_{s=1}^S n_s}_{\text{average}}, \text{ where, } n_s \sim p_N(\cdot).
+\end{align*}\]</div>
+<p>You can expect that for a large <span class="math notranslate nohighlight">\(S\)</span>, this approximation will be close to the true average.</p>
+<p>In the fancy notation above,</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbb{E}\)</span> denotes “expectation.”</p></li>
+<li><p>The subscript, <span class="math notranslate nohighlight">\(n \sim p_N(\cdot)\)</span>, denotes the random variable we’re drawing. In this case, it’s the number of birthday presents.</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span>, surrounded by the brackets, is the thing we’re averaging. If we knew each present cost 10 USD, and if we wanted to approximate the average cost, we can replace <span class="math notranslate nohighlight">\(n\)</span> with <span class="math notranslate nohighlight">\(10.0 \cdot n\)</span>.</p></li>
+</ul>
+<p><strong>Defining Expectations.</strong> Suppose we have a <em>discrete</em> RV, <span class="math notranslate nohighlight">\(A\)</span>, with PMF <span class="math notranslate nohighlight">\(p_A(\cdot)\)</span>, and that we want to compute the expected value of <span class="math notranslate nohighlight">\(f(a)\)</span>, where <span class="math notranslate nohighlight">\(a \sim p_A(\cdot)\)</span>. Then:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-322bcf3f-8a83-451a-b1c0-5500b104a322">
+<span class="eqno">(11.2)<a class="headerlink" href="#equation-322bcf3f-8a83-451a-b1c0-5500b104a322" title="Permalink to this equation">#</a></span>\[\begin{align}
+\mathbb{E}_{a \sim p_A(\cdot)} [f(a)] &amp;= \sum_{a \in S} p_A(a) \cdot f(a).
+\end{align}\]</div>
+<p>If <span class="math notranslate nohighlight">\(A\)</span> were a <em>continuous</em> RV, we replace the sum in the above definition with an integral:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-f8e2ab3e-0009-45d7-8a37-c873bf77a0e9">
+<span class="eqno">(11.3)<a class="headerlink" href="#equation-f8e2ab3e-0009-45d7-8a37-c873bf77a0e9" title="Permalink to this equation">#</a></span>\[\begin{align}
+\mathbb{E}_{a \sim p_A(\cdot)} [f(a)] &amp;= \int_{a \in S} p_A(a) \cdot f(a) \cdot da.
+\end{align}\]</div>
+<p>So where did these formulas come from? And how do they relate to our approximation? Let’s return to our birthday present example. We re-order our samples, <span class="math notranslate nohighlight">\(n_s\)</span>, in ascending order, from least to most number of birthday presents, and see the following pattern:</p>
+<ul class="simple">
+<li><p>2 people received 0 presents</p></li>
+<li><p>3 people received 1 present</p></li>
+<li><p>4 people received 2 presents</p></li>
+<li><p>1 person received 3 presents</p></li>
+<li><p>0 people received 4 or more presents</p></li>
+</ul>
+<p>Plugging this into our approximation formula above, we have:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\mathbb{E}_{n \sim p_N(\cdot)} [n] &amp;= \sum_{n=1}^\infty p_N(n) \cdot n \\
+&amp;\approx \frac{1}{S} \sum_{s=1}^S n_s \\
+&amp;= \frac{1}{S} ( 0 + 0 + 1 + 1 + 1 + 2 + 2 + 2 + 2 + 3 + 0 \cdot 4 ) 
+\end{align*}\]</div>
+<p>We can then aggregate the numbers as follows, and distribute the division by <span class="math notranslate nohighlight">\(S\)</span>:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+&amp;= \frac{1}{S} ( 2 \cdot 0 + 3 \cdot 1 + 4 \cdot 2 + 1 \cdot 3 + 0 \cdot 4 ) \\
+&amp;= \frac{2}{S} \cdot 0 + \frac{3}{S} \cdot 1 + \frac{4}{S} \cdot 2 + \frac{1}{S} \cdot 3 + \frac{0}{S} \cdot 4 
+\end{align*}\]</div>
+<p>More abstractly, when <span class="math notranslate nohighlight">\(S\)</span> is large, we can write this as:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+&amp;= \sum_{n=1}^\infty \frac{\text{\# of people who got $n$ presents}}{\text{\# of people sampled}} \cdot n \\
+&amp;= \sum_{n=1}^\infty p_N(n) \cdot n
+\end{align*}\]</div>
+<p>which is our definition of expectation.</p>
+</section>
 <section id="mle-for-discrete-continuous-models">
-<h2><span class="section-number">11.2. </span>MLE for Discrete-Continuous Models<a class="headerlink" href="#mle-for-discrete-continuous-models" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">11.3. </span>MLE for Discrete-Continuous Models<a class="headerlink" href="#mle-for-discrete-continuous-models" title="Permalink to this heading">#</a></h2>
 <p>You’ve recently been contacted by researchers at the IHH’s Center for Telekinesis Research (CTR). The researchers at the IHH’s CTR study the propensity of intergalactic beings for telekinesis—the ability of moving physical objects with their mind (how cool!). At the moment, they are interested in understanding how different physiological conditions affect a being’s telekinetic abilities (measured as a real number, with larger numbers indicating heightened telekinetic abilities). They have collected the following data sets and would like your help in analyzing it. Let’s load it and have a look!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -749,7 +809,8 @@ p_{A, C}(a, c) &amp;= p_{C | A}(c | a) \cdot p_A(a) \quad \text{(Option 2)}
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differences-between-continuous-and-discrete-probability">11.1. Differences Between Continuous and Discrete Probability</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-discrete-continuous-models">11.2. MLE for Discrete-Continuous Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expectations">11.2. Expectations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mle-for-discrete-continuous-models">11.3. MLE for Discrete-Continuous Models</a></li>
 </ul>
   </nav></div>
 
