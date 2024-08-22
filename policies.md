@@ -30,9 +30,9 @@ We nonetheless offer every student **3 x 24-hour late passes**.
 
 
 **Collaboration.** We would like students to be able to work together and learn from each other. As such, we designed the course to include substantial collaborative work. Please follow the guidelines below to ensure everyone has the opportunity to learn. In the homework, we labeled problems as "collaborative" or "individual."
-* On problems labeled as "collaborative," we expect discussions with your peers will enrich your learning experience. Please limit your discussions to **one peer per problem**. Please use these opportunities to highlight points of disagreement and discuss them (you need not write the same answers!). For such problems that involve math and coding, you can white-board the math together, and you can pair program together. However, we expect you and your collaborator *contribute equally*---that is, you cannot just copy your peer's answers. Finally, everyone must write up the solutions individually. 
-* On problems labeled as "individual," we expect you to do the work **on your own**. You may discuss the high-level ideas with your peers, but you cannot share math or code. 
-* Lastly, on all problems you collaborated with a peer, be sure to *acknowledge them**.
+* On problems labeled as "collaborative," we expect discussions with your peers will enrich your learning experience. Please use these opportunities to highlight points of disagreement and discuss them (you need not write the same answers!). For such problems that involve math and coding, you can white-board the math together, and you can pair program together. However, we expect you and your collaborator *contribute equally*---that is, you cannot just copy your peer's answers. Finally, everyone must write up the solutions individually. 
+* On problems labeled as "individual," we expect you to do the work **on your own**---you may not discuss the problems with your peers.
+* Lastly, on all problems you collaborated with a peer, be sure to **acknowledge them** (i.e. write who you worked with).
 
 In addition to the technical parts of the homework, *you will also be graded on your ability to work with peers*; in every assignment, we will ask you questions about your team work practices. 
 
@@ -46,6 +46,8 @@ To make sure the use of Generative AI does not compromise your learning experien
 * Solve problems of on your homework.
 * Summarize assigned readings.
 
+
+**Honor Code.** We consider violations of this collaboration policy as honor code violations. If you find yourself for whatever reason (stress, mental health, life circumstances, etc.) thinking about violating these policies, *please come talk to us before you do*---we want to help you feel happy and proud of your learning and growth. 
 
 
 ## Grades
