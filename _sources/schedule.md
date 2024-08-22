@@ -90,7 +90,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW1: Vectorization (by midnight the night before)</span>
+            <span>HW1: Vectorization (by midnight the <strong>night before</strong>)</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
@@ -165,7 +165,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW2: Directed Graphical Models (by midnight the night before)</span>
+            <span>HW2: Directed Graphical Models (by midnight the <strong>night before</strong>)</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
@@ -272,7 +272,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW3: Frequentist Learning</span>
+            <span>HW3: Frequentist Learning (by midnight the <strong>night before</strong>)</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
@@ -398,7 +398,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW4: Predictive Models (by midnight the night before)</span>
+            <span>HW4: Predictive Models (by midnight the <strong>night before</strong>)</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
@@ -478,7 +478,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW5: Generative Models (by midnight the night before)</span>
+            <span>HW5: Generative Models (by midnight the <strong>night before</strong>)</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
@@ -561,7 +561,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW6: Bayesian Inference (by midnight the night before)</span>
+            <span>HW6: Bayesian Inference (by midnight the <strong>night before</strong>)</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
