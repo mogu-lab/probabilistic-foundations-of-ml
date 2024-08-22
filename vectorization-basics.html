@@ -404,6 +404,22 @@ document.write(`
 <p>This portion of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> introduces its main building block: multi-dimensional arrays. Unlike other similar libraries that offer similar array-based framework (e.g. <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>), <code class="docutils literal notranslate"><span class="pre">Jax</span></code> has some features that will make it possible for us to efficiently build and train ML models. Specifically, it will allow us to easily and accurately (no approximations!) compute gradients of functions written in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> calls, which will become useful for training models (though more on that at a much later part of the course).</p>
 <p><strong>Array operations: the building blocks behind ML code.</strong> You may be wondering, why do we need arrays for ML? This is because, as you will see throughout this course, all of the code we will write can be conveniently expressed in terms of array operations. <code class="docutils literal notranslate"><span class="pre">Jax</span></code> will make these fast for us so we can spend more time thinking and less time waiting for your code to run. It’s therefore important that we re-learn how to <em>think</em> and how to <em>write</em> algorithms in terms of array operations.</p>
 <p><strong>Vectorization: a paradigm shift.</strong> Vanilla Python code is slow, and for many practical purposes, that’s not a problem. For training ML models, however, it does become a problem. Unlike in previous classes you may have taken, where you were encouraged to write loops, if/else-expressions, and more, in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> we’ll take a different paradigm: we will avoid writing loops and if/else-expressions. By this, we don’t mean that you completely let go of all your previous coding knowledge. It will come in handy when reading in data, creating visualizations, etc. But for the compute-heavy part of your code, we will rely on <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls to do the work for us. This practice—of avoiding writing loops and if/else-expressions in the compute-heavy part of the code—is known as <em>vectorization</em>. Vectorization in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> is implemented to be very, very fast under the hood.</p>
+<p><strong>Idea:</strong> The idea behind vectorization is to expend more <em>memory</em> than typically needed in order to rely on the <code class="docutils literal notranslate"><span class="pre">Jax</span></code> internals to do its magic. For example, suppose we wanted to compute the sum of squares:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+0^2 + 1^2 + 2^2 + 3^2 + 4^4 + \dots + (N - 1)^2 = \sum\limits_{n=0}^{N-1} n^2,
+\end{align*}\]</div>
+<p>The typical, loop-based way to implement this would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">+=</span> <span class="n">n</span> <span class="o">**</span> <span class="mf">2.0</span>
+</pre></div>
+</div>
+<p>In contrast, in the vectorized paradigm, we will create an array, <span class="math notranslate nohighlight">\([0, 1, 2, \dots, N-1]\)</span>, using up space to store <span class="math notranslate nohighlight">\(N\)</span> elements, instead of just <code class="docutils literal notranslate"><span class="pre">total</span></code>. Then, we’ll use <code class="docutils literal notranslate"><span class="pre">Jax</span></code> operations to square and sum the elements of the array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is <em>much</em> faster than our original loop-based implementation. We’ll introduce all of the <code class="docutils literal notranslate"><span class="pre">Jax</span></code> library calls below so you can begin writing vectorized code.</p>
 <p><strong>Outline:</strong></p>
 <ol class="arabic simple">
 <li><p>We’ll introduce the basics of <code class="docutils literal notranslate"><span class="pre">Jax</span></code></p></li>
@@ -576,7 +592,9 @@ An array of floats has dtype: float32
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>From 0 to 10 in increments of 1: [0. 1. 2. 3. 4. 5. 6. 7. 8. 9.]
-From 4 to 20 in increments of 5: [ 4.  9. 14. 19.]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>From 4 to 20 in increments of 5: [ 4.  9. 14. 19.]
 </pre></div>
 </div>
 </div>
@@ -607,7 +625,9 @@ From 4 to 20 in increments of 5: [ 4.  9. 14. 19.]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.reshape(3, 4) =
-[[ 0  1  2  3]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0  1  2  3]
  [ 4  5  6  7]
  [ 8  9 10 11]]
 </pre></div>
@@ -733,9 +753,7 @@ b = [0. 1. 2. 3.]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10 * sin(a) = [ 9.129453  -9.880316   7.4511313 -2.6237485]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a &lt; 35      = [ True  True False False]
+a &lt; 35      = [ True  True False False]
 </pre></div>
 </div>
 </div>
@@ -751,9 +769,7 @@ b = [0. 1. 2. 3.]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a - b = [20. 29. 38. 47.]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a * b = [  0.  30.  80. 150.]
+a * b = [  0.  30.  80. 150.]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>b / a = [0.         0.03333334 0.05       0.06      ]
@@ -775,9 +791,7 @@ b = [0. 1. 2. 3.]
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a       = [0. 1. 2. 3. 4.]
 a.sum() = 10.0
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min() = 0.0
+a.min() = 0.0
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.max() = 4.0
@@ -819,9 +833,7 @@ a.sum() = 10.0
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.sum(axis=0) = [12. 15. 18. 21.]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a.min(axis=1) = [0. 4. 8.]
+a.min(axis=1) = [0. 4. 8.]
 </pre></div>
 </div>
 </div>
@@ -903,10 +915,10 @@ a.sum() = 10.0
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything until the 5th index           = [0 1 2 3 4]
 Everything from the 5th index onwards    = [5 6 7 8 9]
+Everything between the 2nd and 6th index = [2 3 4 5]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything between the 2nd and 6th index = [2 3 4 5]
-Everything except the last element       = [0 1 2 3 4 5 6 7 8]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything except the last element       = [0 1 2 3 4 5 6 7 8]
 </pre></div>
 </div>
 </div>
@@ -958,7 +970,9 @@ Everything except the last element       = [0 1 2 3 4 5 6 7 8]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything from the 3th index onwards =
-[[ 9 10 11]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 9 10 11]
  [12 13 14]]
 </pre></div>
 </div>
@@ -988,9 +1002,7 @@ Everything except the last element       = [0 1 2 3 4 5 6 7 8]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Everything except the last element =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0  1  2]
+[[ 0  1  2]
  [ 3  4  5]
  [ 6  7  8]
  [ 9 10 11]]
@@ -1027,9 +1039,7 @@ Everything except the last element       = [0 1 2 3 4 5 6 7 8]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Example: slicing each axis differently =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2]
+[[1 2]
  [4 5]
  [7 8]]
 </pre></div>
@@ -1045,9 +1055,7 @@ Everything except the last element       = [0 1 2 3 4 5 6 7 8]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Example: slicing only the second axis =
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1  2]
+[[ 1  2]
  [ 4  5]
  [ 7  8]
  [10 11]
