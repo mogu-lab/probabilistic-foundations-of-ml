@@ -16,7 +16,7 @@
 
 ````{admonition} Exercise: Background on Eugenics
 **Part 1:** Read, *[Eugenics and Scientific Racism](https://www.genome.gov/about-genomics/fact-sheets/Eugenics-and-Scientific-Racism)*.
-* What was the goal of eugenics / scientific racism?
+* What is the goal of eugenics / scientific racism?
 * What form did eugenics take in the US? In Nazi Germany?
 * Who participated in the eugenics movement?
 
