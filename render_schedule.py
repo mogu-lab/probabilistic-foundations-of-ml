@@ -7,8 +7,13 @@ from scripts.generate_base_schedule import DISPLAY_DAYS, CLASS_DAYS
 
 
 def convert_md_to_html_if_multiline(txt):
+    html = markdown.markdown(txt)
     if '\n' not in txt:
-        return txt
+        assert(html[:3] == '<p>')
+        assert(html[-4:] == '</p>')
+        
+        # remove <p> tag        
+        return raw(html[3:-4])
 
     return raw(markdown.markdown(txt))
 
