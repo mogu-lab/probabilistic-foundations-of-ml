@@ -56,5 +56,5 @@ For example, $\mathbb{I}(A = a)$ will evaluate to 1 only when $A = a$.
 
 ## Probability and Statistics
 
-Although the course introduces a *probabilistic* paradigm of ML, *we do not assume *any prior knowledge of probability and statistics*. All necessary topics from these subjects will be introduced as needed in the course.
+Although the course introduces a *probabilistic* paradigm of ML, *we do not assume any prior knowledge of probability and statistics*. All necessary topics from these subjects will be introduced as needed in the course.
 
