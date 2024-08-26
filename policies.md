@@ -22,7 +22,7 @@ We nonetheless offer every student **3 x 24-hour late passes**.
 
 **Extenuating Circumstances.** In cases of extenuating circumstances, please reach out to your instructor *and* [class dean](https://www1.wellesley.edu/advising/classdeans) so we can, together, work out alternative arrangements.
 
-
+**Missing Class.** If you know you will need to miss class due to illness or family emergency, let the course instructor know. Together, we can figure out how to proceed. 
 
 
 
@@ -62,10 +62,12 @@ To make sure the use of Generative AI does not compromise your learning experien
   * Creating a supportive, inclusive and welcoming environment for your assigned team
   * Practicing good communication and active listening 
 * Course Etiquette: $5\%$. This includes:
-  * Coming to class on time
-  * Not using phones in class
-  * Using laptops only for note-taking / necessary in-class exercises
+  * Coming to class *on time*
+  * Not using phones in class (and keeping phones on "Do Not Disturb" mode)
+  * Using laptops *only* for note-taking / necessary in-class exercises
   * Respectful engagement with the peers, TAs, and course instructors
+
+
 
 
 **Letter Grades.** Course grade percentages are converted to letters via the table below:
@@ -87,13 +89,13 @@ To make sure the use of Generative AI does not compromise your learning experien
 Recall that the minimum grade to earn credit under credit/no credit grading is C. The minimum grade to pass and earn credit under normal letter grading is D.
 
 
-**Extra Credit.** Problems labeled "extra credit" will be factored in at the end of the semester. We do not disclose a priori how these will affect your grade. 
+**Extra Credit.** Problems labeled "extra credit" will be factored in at the end of the semester. We do not disclose a priori how these will affect your grade, though you can expect they will be especially helpful for students on the border between two grades.
 
 
 
 ## Accessibility and Disability
 
-**Disability Services.** Every student has a right to full access in this course. If you need any accommodations for CS 349, please contact Wellesley’s Disability Services. You should request accommodations **as early as possible**, since some situations can require significant time for accommodation design. If you need immediate accommodations, please arrange an appointment with the course instructor as soon as possible. 
+**Disability Services.** Every student has a right to full access in this course. If you need any accommodations, please contact Wellesley’s Disability Services. You should request accommodations **as early as possible**, since some situations can require significant time for accommodation design. If you need immediate accommodations, please arrange an appointment with the course instructor as soon as possible. 
 
 **Unsure about your need for accomodations?** If you are unsure but suspect you may have an undocumented need for accommodations, you are encouraged to contact Disability Services. They can provide assistance including screening and referral for assessments. Disability Services can be reached at `disabilityservices@wellesley.edu`, at `781-283-2434`, or by [scheduling an appointment online](https://www.wellesley.edu/disability).
 
@@ -111,7 +113,7 @@ Wellesley College considers diversity essential to educational excellence, and w
 
 If you or someone you know has experienced discrimination or harassment, support is available to you:
 * **Confidential Reporting:** Students can report their experiences to [Health Services](https://www.wellesley.edu/healthservice) (`781-283-2810`); [Stone Center Counseling Service](https://www.wellesley.edu/counseling) (`781-283-2839`); or [Religious and Spiritual Life](https://www.wellesley.edu/campuslife/community/religiousandspirituallife) (`781-283-2685`). *These offices are not required to report allegations of sexual misconduct to the College.*
-* **Non-Confidential Reporting:** You can let your CS 349 instructor know. As faculty, we are obligated to report allegations of sex-based discrimination to the [Non-discrimination/Title IX Office](https://www.wellesley.edu/administration/offices/titleix).
+* **Non-Confidential Reporting:** You can let your instructor know. As faculty, we are obligated to report allegations of sex-based discrimination to the [Non-discrimination/Title IX Office](https://www.wellesley.edu/administration/offices/titleix).
   * You can report directly to the [Non-discrimination/Title IX Office](https://www.wellesley.edu/administration/offices/titleix) (`781-283-2451`) to receive support, and to learn more about your options for a response by the College or about reporting to a different institution.
   * You can report to the [Wellesley College Police Department](https://www.wellesley.edu/police) (Emergency: `781-283-5555`, Non-emergency: `781-283-2121`) if you believe a crime has been committed, or if there is an immediate safety risk.
 
