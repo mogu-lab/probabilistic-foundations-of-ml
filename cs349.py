@@ -24,6 +24,10 @@ def cs349_sample_generative_process(model, key, *args, num_samples=None, **kwarg
         key: a random generator key
         num_samples: number of samples to draw from the model
         *args, **kwargs: captures all arguments your model takes in
+
+    Note: 
+        What are *args and **kwargs? See this tutorial:
+        https://www.digitalocean.com/community/tutorials/how-to-use-args-and-kwargs-in-python-3
         
     Returns: A dictionary of samples    
     '''
@@ -56,6 +60,10 @@ def cs349_mle(model, optimizer, key, num_steps, *args, **kwargs):
         key: a random generator key
         num_steps: the number of iterations of gradient descent 
         *args, **kwargs: captures all arguments your model takes in
+
+    Note: 
+        What are *args and **kwargs? See this tutorial:
+        https://www.digitalocean.com/community/tutorials/how-to-use-args-and-kwargs-in-python-3
     
     Returns: An object containing,
         model_mle: The model with parameters fixed those that maximize the likelihood
@@ -95,6 +103,10 @@ def cs349_bayesian_inference(model, key, num_warmup, num_samples, *args, **kwarg
         num_samples: number of samples to return
         *args, **kwargs: captures all arguments your model takes in
 
+    Note: 
+        What are *args and **kwargs? See this tutorial:
+        https://www.digitalocean.com/community/tutorials/how-to-use-args-and-kwargs-in-python-3
+    
     Returns:
         Posterior samples
     '''
@@ -125,6 +137,10 @@ def cs349_sample_predictive(model, key, posterior_samples, *args, **kwargs):
         posterior_samles: samples from the posterior
         *args, **kwargs: captures all arguments your model takes in
 
+    Note: 
+        What are *args and **kwargs? See this tutorial:
+        https://www.digitalocean.com/community/tutorials/how-to-use-args-and-kwargs-in-python-3
+
     Returns:
         The model's joint data log-likelihood
     '''
@@ -146,6 +162,10 @@ def cs349_joint_data_log_likelihood(model, *args, **kwargs):
         model: a function representing a numpyro model
         *args, **kwargs: captures all arguments your model takes in
 
+    Note: 
+        What are *args and **kwargs? See this tutorial:
+        https://www.digitalocean.com/community/tutorials/how-to-use-args-and-kwargs-in-python-3
+    
     Returns:
         The model's joint data log-likelihood
     '''
@@ -185,40 +205,6 @@ def cs349_load_trained_numpyro_model(fname):
         r = dill.load(f)
 
     return H.substitute(r['model'], data=r['parameters'])
-    
-
-'''
-# IGNORE!
-def cs349_mle_discrete_lvm(model, optimizer, key, num_steps, *args, latent_variables=[], **kwargs):
-    key_init, key_opt = jrandom.split(key, 2)
-    
-    global_model = H.block(
-        H.seed(
-            F.config_enumerate(model), 
-            key_init,
-        ), 
-        hide=latent_variables,
-    )
-
-    global_guide = numpyro.infer.autoguide.AutoDelta(global_model)
-        
-    svi = numpyro.infer.SVI(
-        global_model, global_guide, optimizer, loss=numpyro.infer.TraceEnum_ELBO(),
-        )
-    
-        svi_result = svi.run(key_opt, num_steps, *args, **kwargs)
-        print('Done.')
-    
-    params = svi_result.params    
-    result = argparse.Namespace(
-        model_mle=H.substitute(model, data=params), 
-        parameters_mle=params,
-        losses=svi_result.losses,
-        log_likelihood=-svi_result.losses,        
-    )
-
-    return result
-'''
 
 
 def cs349_mle_continuous_lvm(model, optimizer, key, num_steps, *args, **kwargs):
@@ -258,3 +244,37 @@ def cs349_mle_continuous_lvm(model, optimizer, key, num_steps, *args, **kwargs):
     )
 
     return result
+
+
+'''
+# IGNORE!
+def cs349_mle_discrete_lvm(model, optimizer, key, num_steps, *args, latent_variables=[], **kwargs):
+    key_init, key_opt = jrandom.split(key, 2)
+    
+    global_model = H.block(
+        H.seed(
+            F.config_enumerate(model), 
+            key_init,
+        ), 
+        hide=latent_variables,
+    )
+
+    global_guide = numpyro.infer.autoguide.AutoDelta(global_model)
+        
+    svi = numpyro.infer.SVI(
+        global_model, global_guide, optimizer, loss=numpyro.infer.TraceEnum_ELBO(),
+        )
+    
+        svi_result = svi.run(key_opt, num_steps, *args, **kwargs)
+        print('Done.')
+    
+    params = svi_result.params    
+    result = argparse.Namespace(
+        model_mle=H.substitute(model, data=params), 
+        parameters_mle=params,
+        losses=svi_result.losses,
+        log_likelihood=-svi_result.losses,        
+    )
+
+    return result
+'''
