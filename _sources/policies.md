@@ -93,6 +93,14 @@ Recall that the minimum grade to earn credit under credit/no credit grading is C
 
 
 
+## Equipment
+
+**Textbook.** Unfortunately, most textbooks on probabilistic machine learning are not taught from a liberal arts perspective. As such, there's no assigned textbook for the class. Instead, we developed these course materials especially for the liberal arts context. 
+
+**Laptop.** You will need a laptop for the class. If you don't own a laptop, please reach out to [Wellesley's long-term laptop loan program](https://www1.wellesley.edu/lts/techsupport/borrowequip) to request one. If you run into any trouble there, let the instructor know.
+
+
+
 ## Accessibility and Disability
 
 **Disability Services.** Every student has a right to full access in this course. If you need any accommodations, please contact Wellesley’s Disability Services. You should request accommodations **as early as possible**, since some situations can require significant time for accommodation design. If you need immediate accommodations, please arrange an appointment with the course instructor as soon as possible. 
