@@ -102,6 +102,10 @@ Recall that the minimum grade to earn credit under credit/no credit grading is C
 **Laptop.** You will need a laptop for the class. If you don't own a laptop, please reach out to [Wellesley's long-term laptop loan program](https://www1.wellesley.edu/lts/techsupport/borrowequip) to request one. If you run into any trouble there, let the instructor know.
 
 
+## Computer Science Department Guidelines
+
+All members of this course's community---students and course staff---are expected to follow the [CS department guidelines](https://docs.google.com/document/d/1c8f8XsU1PlKnTT5wvnbDX_vFG16-JbYGjQb_M0G2Lko/edit?usp=sharing), which are designed to create a positive and productive learning environment. These guidelines emphasize respect, integrity, inclusivity, and transparency, ensuring that our department prepares students to lead in a world shaped by computation and data. For a detailed description of these principles and guidelines on attendance, timeliness, respect for others, exam policies, and how to share your thoughts with us, please refer to the [guidelines](https://docs.google.com/document/d/1c8f8XsU1PlKnTT5wvnbDX_vFG16-JbYGjQb_M0G2Lko/edit?usp=sharing).
+
 
 ## Accessibility and Disability
 
