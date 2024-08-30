@@ -20,7 +20,7 @@
 * What form did eugenics take in the US? In Nazi Germany?
 * Who participated in the eugenics movement?
 
-**Part 2:** From, *[The Mismeasure of Man](http://tankona.free.fr/gould1981.pdf)*, read "The allure of numbers" and "Masters of craniometry: Paul Broca and his school" from Chapter 3 (trigger warning: offensive, discriminatory language). 
+**Part 2:** From, *[The Mismeasure of Man](http://tankona.free.fr/gould1981.pdf)*, read "The allure of numbers" and "Masters of craniometry: Paul Broca and his school" from Chapter 3 (content warning: offensive, discriminatory language). 
 * What's the "allure of numbers"?
 * What does the author mean by "Science is rooted in creative interpretation"? Provide an example (of the "numbers," interpretation, and theory). 
 * What were some of the things Francis Galton quantified? What are some fallacies of conclusions he might draw from his data?
@@ -46,7 +46,7 @@ However, here, we argue that dismissing eugenics as bad science is irresponsible
 
 
 ````{admonition} Exercise: The Development of Modern Statistics
-**Part 1:** Read, *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)* (trigger warning: offensive discriminatory language). 
+**Part 1:** Read, *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)* (content warning: offensive discriminatory language). 
 * In what ways does the author claim eugenics shaped statistics?
 * Who were Galton, Pearson, and Fisher? 
 * Which statistical tools did each develop? And what purpose was each developed for?
