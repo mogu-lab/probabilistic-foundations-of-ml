@@ -8,14 +8,14 @@
 
 ## Late Policy
 
-**Deadlines.** The assignment due dates are listed in the course schedule. Please read the due dates carefully, since often assignments are due the **night before their listing**. 
+**Deadlines.** The assignment due dates are listed in the course schedule. Please read the due dates carefully, since assignments are often due the **night before their listing**. 
 
 
 **Late Passes.** From our experience, we know that it's difficult to learn new material in class while working on homework on older material. Because of this, we specifically designed the class so that homework topics are always current with the class material. We expect that this will help everyone stay on top of the material. However, for this design to work, we ask for your help in ensuring you don't fall behind. Come talk to us if you have questions or concerns!
 
 We nonetheless offer every student **3 x 24-hour late passes**.
 * Each late pass may be applied to delay one assignment deadline by 24 hours within the semester.
-* Any number of available passes may be applied to any assignment deadline. No work is accepted past the end of final exam period, regardless of available late passes.
+* Any number of available passes may be applied to any assignment deadline. No work is accepted past the end of the final exam period, regardless of available late passes.
 * Late passes are not transferable, reusable, or divisible.
 * After your late pass budget is exhausted, each additional 24-hour delay in assignment submission is assessed a late penalty that subtracts 10% of the maximum assignment grade from your awarded grade on that assignment.
 * To use a late day, you must fill out [this form](https://forms.gle/hSsEcrQ1ahyJiMVm9) **before the assignment deadline**.
@@ -30,21 +30,23 @@ We nonetheless offer every student **3 x 24-hour late passes**.
 
 
 **Collaboration.** We would like students to be able to work together and learn from each other. As such, we designed the course to include substantial collaborative work. Please follow the guidelines below to ensure everyone has the opportunity to learn. In the homework, we labeled problems as "collaborative" or "individual."
-* On problems labeled as "collaborative," we expect discussions with your peers will enrich your learning experience. Please use these opportunities to highlight points of disagreement and discuss them (you need not write the same answers!). For such problems that involve math and coding, you can white-board the math together, and you can pair program together. However, we expect you and your collaborator *contribute equally*---that is, you cannot just copy your peer's answers. Finally, everyone must write up the solutions individually. 
+* On problems labeled as "collaborative," we expect discussions with your peers will enrich your learning experience. Please use these opportunities to highlight points of disagreement and discuss them (you need not write the same answers!). For such problems that involve math and coding, you can whiteboard the math together, and you can pair-program together. However, we expect you and your collaborator *contribute equally*---that is, you cannot just copy your peer's answers. Finally, everyone must write up the solutions individually. 
 * On problems labeled as "individual," we expect you to do the work **on your own**---you may not discuss the problems with your peers.
 * Lastly, on all problems you collaborated with a peer, be sure to **acknowledge them** (i.e. write who you worked with).
 
-In addition to the technical parts of the homework, *you will also be graded on your ability to work with peers*; in every assignment, we will ask you questions about your team work practices. 
+In addition to the technical parts of the homework, *you will also be graded on your ability to work with peers*; in every assignment, we will ask you questions about your teamwork practices. 
 
 
-**Use of Generative AI.** You are free to use generative AI for the following use cases (assuming you understand that it may be incorrect/misleading):
+**Use of Generative AI.** You are free to use generative AI (e.g. ChatGPT, Gemini, etc.) for the following use cases (knowing that it may be incorrect/misleading):
 * You can test your knowledge of the material.
 * Use it as an aid to understanding concepts from class.
 
 To make sure the use of Generative AI does not compromise your learning experience, **do not** use it to:
 * Generate code of any kind.
-* Solve problems of on your homework.
+* Solve problems on your homework.
 * Summarize assigned readings.
+
+*If you're unsure whether how you want to use generative AI, please ask the instructor before using it!*
 
 
 **Honor Code.** We consider violations of this collaboration policy as honor code violations. If you find yourself for whatever reason (stress, mental health, life circumstances, etc.) thinking about violating these policies, *please come talk to us before you do*---we want to help you feel happy and proud of your learning and growth. 
@@ -57,9 +59,9 @@ To make sure the use of Generative AI does not compromise your learning experien
 * In-class participation: $15\%$.
   * Coming to class prepared, having done the pre-class work/readings
   * Asking questions in class (*all* questions are good questions)
-  * Answering questions in class (you're answers don't have to be right!)
+  * Answering questions in class (your answers don't have to be right!)
 * Team Work: $15\%$.
-  * Creating a supportive, inclusive and welcoming environment for your assigned team
+  * Creating a supportive, inclusive, and welcoming environment for your assigned team
   * Practicing good communication and active listening 
 * Course Etiquette: $5\%$. This includes:
   * Coming to class *on time*
@@ -91,6 +93,18 @@ Recall that the minimum grade to earn credit under credit/no credit grading is C
 
 **Extra Credit.** Problems labeled "extra credit" will be factored in at the end of the semester. We do not disclose a priori how these will affect your grade, though you can expect they will be especially helpful for students on the border between two grades.
 
+
+
+## Equipment
+
+**Textbook.** Unfortunately, most textbooks on probabilistic machine learning are not taught from a liberal arts perspective. As such, there's no assigned textbook for the class. Instead, we developed these course materials especially for the liberal arts context. 
+
+**Laptop.** You will need a laptop for the class. If you don't own a laptop, please reach out to [Wellesley's long-term laptop loan program](https://www1.wellesley.edu/lts/techsupport/borrowequip) to request one. If you run into any trouble there, let the instructor know.
+
+
+## Computer Science Department Guidelines
+
+All members of this course's community---students and course staff---are expected to follow the [CS department guidelines](https://docs.google.com/document/d/1c8f8XsU1PlKnTT5wvnbDX_vFG16-JbYGjQb_M0G2Lko/edit?usp=sharing), which are designed to create a positive and productive learning environment. These guidelines emphasize respect, integrity, inclusivity, and transparency, ensuring that our department prepares students to lead in a world shaped by computation and data. For a detailed description of these principles and guidelines on attendance, timeliness, respect for others, exam policies, and how to share your thoughts with us, please refer to the [guidelines](https://docs.google.com/document/d/1c8f8XsU1PlKnTT5wvnbDX_vFG16-JbYGjQb_M0G2Lko/edit?usp=sharing).
 
 
 ## Accessibility and Disability

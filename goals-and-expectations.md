@@ -28,10 +28,10 @@ We're here because we care about your experiences as students and as individuals
 
 **We have high expectations for you to be thoughtful and engaged.** We expect you to be thoughtful in your engagement with the course materials and in your interaction with your peers. Substantial amounts of research have shown that [Computer Science programs can create cultures of isolation and impostorism](https://courses.cs.washington.edu/courses/cse590e/02sp/defensive_20climate.pdf), in which students feel judged for common struggles many experience, instead of coming together to support one another. We ask you to be thoughtful in how you validate your peer's identities and create a safe and supportive space for everyone.
 
-**We want you to find meaning in the course, and we want you succeed.** As in the liberal arts tradition, in addition to providing you with practical skills, we want this course to offer you *new lenses* with which to engage with the world; we want this course to be *personally meaningful* to you, to shape the way you think and engage with *societal issues* you see around you. 
+**We want you to find meaning in the course, and we want you to succeed.** As in the liberal arts tradition, in addition to providing you with practical skills, we want this course to offer you *new lenses* with which to engage with the world; we want this course to be *personally meaningful* to you, to shape the way you think and engage with *societal issues* you see around you. 
 
 **We designed this course *especially* for the Wellesley context.** We therefore designed the course based on several guiding principles.
-* **Math, statistics, and computer science can all be intimidating, and they shouldn't be.** In fact, in recent years, [math anxiety](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6345718/) has gained attention as a phenomenon that needs to be understood and addressed in STEM education. It is important for us to challenge exclusionary definitions of what science is and who can practice it to create a supportive space for learning. None of these subjects require inborn abilities to succeed. We will therefore normalize the (very normal) struggles of learning this material in the class. 
+* **Math, statistics, and computer science can all be intimidating, and they shouldn't be.** In fact, in recent years, [math anxiety](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6345718/) has gained attention as a phenomenon that needs to be understood and addressed in STEM education. It is important for us to challenge exclusionary definitions of what science is and who can practice it to create a supportive space for learning. None of these subjects require inborn abilities to succeed. We will therefore normalize the (very normal) struggles of learning this material in class. 
 * **Math, statistics, and computer science were invented by humans and are therefore shaped by human values.** We encourage you to question all course content, its history, its implicit values, its benefit to society, and more. We will create dedicated time and space for doing exactly this.
 * **We tend to remember things we experience.** We believe people learn best by hands on practice, and by trial and error. We have therefore designed the class to be interactive. Further, we believe that knowledge is best learned with peers in societally meaningful contexts; we therefore incorporate lots of opportunities to engage with your peers in the class and to think about the techniques we introduce in a real-like context.
 * **All math and theory we introduce will be practically useful.** We designed the course so it is always clear *why* math/theory is introduced, and how it is practically relevant. 
@@ -54,19 +54,19 @@ Since a large part of this course requires students to work in groups, in alignm
 ## How to Succeed in CS 349?
 
 
-**Come to class and participate.** While thorough, the course materials is *not a substitute* for the classroom experience. We expect you to attend all classroom sessions (class is *mandatory*), engage with the lecture components and with your peers in the in-class exercises. 
+**Come to class and participate.** While thorough, the course materials is *not a substitute* for the classroom experience. We expect you to attend all classroom sessions (class is *mandatory*), and engage with the lecture components and with your peers in the in-class exercises. 
 
 
-**Attending office hours is an expected and normal part of the learning experience.** Moreover, office hours are an opportunity for you *take ownership of your own learning experience*---to ask questions you that will help you better understand the material, connect it to topics you personally care about, etc. We expect to see you at office hours regularly, asking questions, engaging with the materials, and supporting your peers. 
+**Attending office hours is an expected and normal part of the learning experience.** Moreover, office hours are an opportunity for you to *take ownership of your own learning experience*---to ask questions you that will help you better understand the material, connect it to topics you personally care about, etc. We expect to see you at office hours regularly, asking questions, engaging with the materials, and supporting your peers. 
 
 
-**Embrace confusion.** Confusion may be uncomfortable; it may cause us to doubt whether we have the skills necessary to make it through the course. It is therefore our mission to help you find ways to embrace confusion *productively*, because without it, there's no learning. 
+**Embrace confusion.** Confusion may be uncomfortable; it may cause us to doubt whether we have the skills necessary to make it through the course. It is, therefore, our mission to help you find ways to embrace confusion *productively*, because without it, there's no learning. 
 
 
-**Experiment and tinker.** Learning requires that you form your own mental model of the material, and your own intuition for how things work. One effective way to do this is through play---if you're not sure what would happen if you tweak a piece of code, a parameter of an ML model, etc. try it! 
+**Experiment and tinker.** Learning requires that you form your own mental model of the material and your own intuition for how things work. One effective way to do this is through play---if you're not sure what would happen if you tweak a piece of code, a parameter of an ML model, etc. try it! 
 
 
-**Stay ontop of the material.** You will be given class-time to start working on homework together with your peers. This is to ensure everyone can find their bearing---if there's something that confuses you, this is a great time to ask! We recommend you finish working on the problems you started in class *before the next class*. Since every class builds on all previous classes, this will ensure you're up to speed.
+**Stay on top of the material.** You will be given class time to start working on homework together with your peers. This is to ensure everyone can find their bearing---if there's something that confuses you, this is a great time to ask! We recommend you finish working on the problems you started in class *before the next class*. Since every class builds on all previous classes, this will ensure you're up to speed.
 
 
 **Ready to take CS 349?** Fasten your seatbelts---*it's going to be an adventure!*
