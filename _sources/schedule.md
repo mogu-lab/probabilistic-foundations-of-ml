@@ -490,7 +490,7 @@ Since this course is new, please expect that the schedule will change to accomod
           <li>
             <span class="tag extracredit_tag">Extra-Credit:</span>
             <span><ul>
-<li>Attend talk by Dr. Safiya Noble, <a href="https://www1.wellesley.edu/newhouse/events/node/207351">Algorithms of Oppression</a>.</li>
+<li>Attend the talk by Dr. Safiya Noble, <a href="https://www1.wellesley.edu/newhouse/events/node/207351">Algorithms of Oppression</a>.</li>
 <li>Talk is at 5-6:30pm @ Tishman Commons.</li>
 <li>Submit a reflection on it on Gradescope.</li>
 </ul></span>
