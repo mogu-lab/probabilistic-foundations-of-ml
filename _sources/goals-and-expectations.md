@@ -57,7 +57,7 @@ Since a large part of this course requires students to work in groups, in alignm
 **Come to class and participate.** While thorough, the course materials is *not a substitute* for the classroom experience. We expect you to attend all classroom sessions (class is *mandatory*), and engage with the lecture components and with your peers in the in-class exercises. 
 
 
-**Attending office hours is an expected and normal part of the learning experience.** Moreover, office hours are an opportunity for you *take ownership of your own learning experience*---to ask questions you that will help you better understand the material, connect it to topics you personally care about, etc. We expect to see you at office hours regularly, asking questions, engaging with the materials, and supporting your peers. 
+**Attending office hours is an expected and normal part of the learning experience.** Moreover, office hours are an opportunity for you to *take ownership of your own learning experience*---to ask questions you that will help you better understand the material, connect it to topics you personally care about, etc. We expect to see you at office hours regularly, asking questions, engaging with the materials, and supporting your peers. 
 
 
 **Embrace confusion.** Confusion may be uncomfortable; it may cause us to doubt whether we have the skills necessary to make it through the course. It is, therefore, our mission to help you find ways to embrace confusion *productively*, because without it, there's no learning. 
