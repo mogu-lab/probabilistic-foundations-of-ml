@@ -2,6 +2,11 @@
 # Probabilistic Foundations of Machine Learning (CS349), Fall 2024
 
 
+## License
+
+Probabilistic Foundations of Machine Learning (c) 2024 by [Yaniv Yacoby](https://yanivyacoby.github.io/) is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1).
+
+
 ## Installation
 
 1. Install `micromamba` with `brew`. Initialize the shell with: `micromamba shell init -s zsh`.
@@ -37,10 +42,8 @@
 1. Add student to workspace as editor
 2. Ask student to duplicate homework project as private
 3. Rename project "Homework N: FIRST-NAME LAST-NAME"
-4. Click share, and invite `yy109@wellesley.edu` with edit access
+4. Click share, and invite instructor with edit access
 5. To download a PDF version of your notebook, follow [these instructions](https://deepnote.com/docs/export-pdf)
-
-
 
 
 
