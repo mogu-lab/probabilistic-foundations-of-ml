@@ -172,6 +172,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="policies.html">Course Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="skills-check.html">Skills Check</a></li>
 <li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule &amp; Office Hours</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1XIXrrxbGOOB4RXg9psBlQhegtKrmEKwsUQi5zWSLii8/edit?usp=sharing" rel="noopener noreferrer" target="_blank">Found a Typo?</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
 <ul class="nav bd-sidenav">
@@ -394,6 +395,11 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
 <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matplotlib is building the font cache; this may take a moment.
 </pre></div>
 </div>
 </div>
@@ -642,13 +648,13 @@ document.write(`
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6bf4aa70-88ef-4bf8-bac1-91b80e47f830">
-<span class="eqno">(14.1)<a class="headerlink" href="#equation-6bf4aa70-88ef-4bf8-bac1-91b80e47f830" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5d7c84fb-5179-4829-bb13-86732816deda">
+<span class="eqno">(14.1)<a class="headerlink" href="#equation-5d7c84fb-5179-4829-bb13-86732816deda" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ddf1b020-adef-4552-af7d-e286c05e83f1">
-<span class="eqno">(14.2)<a class="headerlink" href="#equation-ddf1b020-adef-4552-af7d-e286c05e83f1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e422dd12-341d-4be8-8dbf-1e98bd012ca6">
+<span class="eqno">(14.2)<a class="headerlink" href="#equation-e422dd12-341d-4be8-8dbf-1e98bd012ca6" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
@@ -687,8 +693,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <ul>
 <li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noopener noreferrer" target="_blank">here</a>).</p></li>
 <li><p>Age spans a larger range than dose: age spans a range of roughly 0 to 100, whereas dose spans a range of roughly 0 to 1. Because of this disparity, gradient descent may find your optimization tricky. A learning rate that’s appropriate for updating the coefficients of age may be too large for the dose and vice versa. Because of this, we recommend using the following functional form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-83708ede-9de5-4ddf-95aa-8d87c9d33ae0">
-<span class="eqno">(14.3)<a class="headerlink" href="#equation-83708ede-9de5-4ddf-95aa-8d87c9d33ae0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-069640f1-4beb-4bc6-a026-2c6550201ddb">
+<span class="eqno">(14.3)<a class="headerlink" href="#equation-069640f1-4beb-4bc6-a026-2c6550201ddb" title="Permalink to this equation">#</a></span>\[\begin{align}
     f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_d, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}{100} + \theta_d \cdot d_n + \theta_i,
     \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a_n\)</span> is age with slope <span class="math notranslate nohighlight">\(\theta_a\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span> is dose with slope <span class="math notranslate nohighlight">\(\theta_d\)</span>, and <span class="math notranslate nohighlight">\(\theta_i\)</span> is the intercept. Notice that we divide <span class="math notranslate nohighlight">\(a_n\)</span> by <span class="math notranslate nohighlight">\(100\)</span> to account for this difference in range.</p>
