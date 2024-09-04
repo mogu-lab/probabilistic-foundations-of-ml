@@ -20,8 +20,9 @@
 
 ## Submitting Homework
 
-1. Follow [these instructions](https://deepnote.com/docs/export-pdf) to download a PDF of your notebook.
-2. Navigate to the course's Gradescope and submit the PDF there.
+1. Run the notebook from start to finish (with no interruptions) so we can see the output of every cell.
+2. Follow [these instructions](https://deepnote.com/docs/export-pdf) to download a PDF of your notebook.
+3. Navigate to the course's Gradescope and submit the PDF there.
 
 
 
