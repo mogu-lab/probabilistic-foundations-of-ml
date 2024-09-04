@@ -74,7 +74,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Probability (Discrete)</span>
+            <span>Probability (Discrete) [<a href="https://docs.google.com/presentation/d/1m6y_Xk3_eBTEnUdF3asnvjtPRpJl-W8FeNgHUewwOEk/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
