@@ -4,17 +4,22 @@
 Since this course is new, please expect that the schedule will change to accomodate your learning!
 ```
 
+## Office Hours
 
-**Office Hours:**
-* Yaniv Yacoby:
+**Yaniv Yacoby:**
+* Regular office hour times: TBD
+* Individual office hours [by appointment](https://calendly.com/yanivyacoby/office-hours). If these times do not work for you, email me!
+* Special office hours:
   * Wednesday Sept 4, 10:30-12:00pm @ Science Center W126
   * Friday Sept 6, 2:30-4pm @ Science Center W126
-  * Recurring office hours: TBD
-* Caroline Jung: TBD
-* Sally Kim: TBD
+  
+**Caroline Jung:** TBD
+
+**Sally Kim:** TBD
 
 
-**Course Schedule:**
+
+## Course Schedule
 
 
 
