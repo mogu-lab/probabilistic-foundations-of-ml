@@ -6,8 +6,6 @@
   * Wednesdays 10:30-11:30am @ Science Center W126
   * Thursdays 6-7pm @ Science Center W126
 * Individual office hours [by appointment](https://calendly.com/yanivyacoby/office-hours). If these times do not work for you, email me!
-* *Special office hours: (first week only)*
-  * Friday Sept 6, 2:30-4pm @ Science Center W126
   
 **Caroline Jung:**
 * Tuesdays 7-8pm @ TBD
