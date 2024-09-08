@@ -72,7 +72,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Conditional Probability (Discrete)</span>
+            <span>Conditional Probability (Discrete) [<a href="https://docs.google.com/presentation/d/1yxFS5phpi8wSOTcaAcR1Sn5Dmp6_H4-sItZgeZTmED4/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
