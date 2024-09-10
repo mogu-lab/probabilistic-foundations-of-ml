@@ -46,7 +46,7 @@ To make sure the use of Generative AI does not compromise your learning experien
 * Solve problems on your homework.
 * Summarize assigned readings.
 
-*If you're unsure whether how you want to use generative AI, please ask the instructor before using it!*
+*If you're unsure whether your use of generative AI is acceptable for the course, please ask the instructor **before** using it!*
 
 
 **Honor Code.** We consider violations of this collaboration policy as honor code violations. If you find yourself for whatever reason (stress, mental health, life circumstances, etc.) thinking about violating these policies, *please come talk to us before you do*---we want to help you feel happy and proud of your learning and growth. 
