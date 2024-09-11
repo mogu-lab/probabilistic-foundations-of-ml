@@ -122,6 +122,10 @@ Since this course is new, please expect that the schedule will change to accomod
             <span class="tag topic_tag">Topic:</span>
             <span>Lab</span>
           </li>
+          <li>
+            <span class="tag due_tag">Due:</span>
+            <span>HW2 Checkpoint: Finish all parts of HW2 up to and including joint probability. Submit it on gradescope.</span>
+          </li>
         </ul>
       </td>
       <td class="normalday">
@@ -555,7 +559,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Guest Lecture</span>
+            <span>Guest Lecture: Prof. <a href="https://www.cs.cornell.edu/~emmapierson/">Emma Pierson</a>, who develops ML methods to study inequality and healthcare.</span>
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
