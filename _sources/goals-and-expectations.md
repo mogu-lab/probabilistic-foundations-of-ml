@@ -18,7 +18,7 @@ Our goal is that at the end of this course, you will be able to:
 
 
 
-## What You Should Know About Us (the Course Staff)
+## What You Should Know About the Course Staff
 
 We're here because we care about your experiences as students and as individuals. So what does that mean? It means that...
 
