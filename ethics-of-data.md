@@ -38,7 +38,7 @@ All three questions are fundamentally concerned with *representation*. Data offe
 
 
 ````{admonition} Exercise: Data Neutrality 
-**Part 1:** From the book, *[Invisible Women: Data Bias in a World Designed for Men](https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=nlebk&AN=2030243&authtype=shib&site=eds-live&scope=site&custid=s8895369)*, read *Chapter 10: The Drugs Don't Work* (content warning in 2nd paragraph---invasive, involuntary medical procedure). Then answer the following questions:
+**Part 1:** From the book, *[Invisible Women: Data Bias in a World Designed for Men](https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=nlebk&AN=2030243&authtype=shib&site=eds-live&scope=site&custid=s8895369)*, read *Chapter 10: The Drugs Don't Work*. **Content Warning:** the 2nd paragraph of the reading includes an invasive, gendered, medical violence---please skip. Then answer the following questions:
 * What factors lead to the exclusion of female health data?
 * What are the consequences of excluding female participants from medical research?
 * Given what you read, are there any other groups of people you now suspect are excluded from medical research? What makes you suspect this? 

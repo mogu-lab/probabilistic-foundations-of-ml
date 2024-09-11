@@ -20,7 +20,9 @@
 * What form did eugenics take in the US? In Nazi Germany?
 * Who participated in the eugenics movement?
 
-**Part 2:** From, *[The Mismeasure of Man](http://tankona.free.fr/gould1981.pdf)*, read "The allure of numbers" and "Masters of craniometry: Paul Broca and his school" from Chapter 3 (content warning: offensive, discriminatory language). 
+**Part 2:** From, *[The Mismeasure of Man](http://tankona.free.fr/gould1981.pdf)*, read "The allure of numbers" and "Masters of craniometry: Paul Broca and his school" from Chapter 3. **Content Warning:** This text provides a criticism of eugenics. It does so using *dated* language and by explicitly referencing elitist, white supremacist ideas and visualizations. 
+
+Then, answer:
 * What's the "allure of numbers"?
 * What does the author mean by "Science is rooted in creative interpretation"? Provide an example (of the "numbers," interpretation, and theory). 
 * What were some of the things Francis Galton quantified? What are some fallacies of conclusions he might draw from his data?

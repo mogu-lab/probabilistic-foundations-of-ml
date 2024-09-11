@@ -14,9 +14,11 @@
 ## Broader Impact Analysis
 
 ````{admonition} Exercise: Conduct a Broader Impact Analysis
-Read one of the following:
-* [Stable Bias: Evaluating Societal Representations in Diffusion Models](https://arxiv.org/pdf/2303.11408)
-* [Humans are Biased; Generative AI is Even Worse. Stable Diffusion’s text-to-image model amplifies stereotypes about race and gender---here's why that matters](https://www.bloomberg.com/graphics/2023-generative-ai-bias/) (content warning: model outputs that reinforce stereotypes). 
+In this exercise, we'll be looking at the ways in which Generative AI models reproduce and reinforce systemic racism, sexism, etc. These readings show that, the biases exhibited by these models are *even worse* than the biases we see in real life. For example, the portion of doctors identifying as women is already significantly smaller than the portion of doctors identifying as men. However, when asked to generate portraits of doctors, AI will generate portraits in which gender proportions are even more skewed. 
+
+Read **one** of the following:
+* [Stable Bias: Evaluating Societal Representations in Diffusion Models](https://arxiv.org/pdf/2303.11408).
+* [Humans are Biased; Generative AI is Even Worse. Stable Diffusion’s text-to-image model amplifies stereotypes about race and gender---here's why that matters](https://www.bloomberg.com/graphics/2023-generative-ai-bias/). **Content Warning:** In contrast to the other reading, this reading presents the topic using visualizations that may be viscerally triggering. 
 
 Then answer these questions:
 * Conduct a broader impact analysis of the technology described (text-to-image stable diffusion models).
