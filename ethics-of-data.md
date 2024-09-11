@@ -38,7 +38,7 @@ All three questions are fundamentally concerned with *representation*. Data offe
 
 
 ````{admonition} Exercise: Data Neutrality 
-**Part 1:** From the book, *[Invisible Women: Data Bias in a World Designed for Men](https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=nlebk&AN=2030243&authtype=shib&site=eds-live&scope=site&custid=s8895369)*, read *Chapter 10: The Drugs Don't Work*. **Content Warning:** The 2nd paragraph of the reading describes invasive, gendered, medical violence---please skip. Additionally, the language in the book often conflates gender with sex (e.g. "female" with "women"). 
+**Part 1:** From the book, *[Invisible Women: Data Bias in a World Designed for Men](https://search.ebscohost.com/login.aspx?direct=true&AuthType=ip,sso&db=nlebk&AN=2030243&authtype=shib&site=eds-live&scope=site&custid=s8895369)*, read *Chapter 10: The Drugs Don't Work*. **Content Warning:** The 2nd paragraph of the reading describes invasive, gendered, medical violence---please skip it. Additionally, the language in the book often conflates gender with sex (e.g. "female" with "women"). 
 
 Then answer the following questions:
 * What factors lead to the exclusion of female health data?
