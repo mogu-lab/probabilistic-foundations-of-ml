@@ -18,7 +18,7 @@ In this exercise, we'll be looking at the ways in which Generative AI models rep
 
 Read **one** of the following:
 * [Stable Bias: Evaluating Societal Representations in Diffusion Models](https://arxiv.org/pdf/2303.11408).
-* [Humans are Biased; Generative AI is Even Worse. Stable Diffusion’s text-to-image model amplifies stereotypes about race and gender---here's why that matters](https://www.bloomberg.com/graphics/2023-generative-ai-bias/). **Content Warning:** In contrast to the other reading, this reading presents the topic using visualizations that may be viscerally triggering. 
+* [Humans are Biased; Generative AI is Even Worse. Stable Diffusion’s text-to-image model amplifies stereotypes about race and gender---here's why that matters](https://www.bloomberg.com/graphics/2023-generative-ai-bias/). **Content Warning:** In contrast to the other reading, this reading presents the topic using AI-generated visualizations of racist, sexist stereotypes that may be viscerally triggering.
 
 Then answer these questions:
 * Conduct a broader impact analysis of the technology described (text-to-image stable diffusion models).

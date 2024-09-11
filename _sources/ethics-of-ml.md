@@ -48,7 +48,7 @@ However, here, we argue that dismissing eugenics as bad science is irresponsible
 
 
 ````{admonition} Exercise: The Development of Modern Statistics
-**Part 1:** Read, *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)* (content warning: offensive discriminatory language). 
+**Part 1:** Read, *[How Eugenics Shaped Statistics](https://nautil.us/how-eugenics-shaped-statistics-238014/)*. **Content Warning:** As the name suggests, this article describes how eugenics and statistics co-shaped one another. It explicitly references white supremacist language. 
 * In what ways does the author claim eugenics shaped statistics?
 * Who were Galton, Pearson, and Fisher? 
 * Which statistical tools did each develop? And what purpose was each developed for?
