@@ -95,8 +95,9 @@ Since a large part of this course requires students to work in groups, in alignm
 
 
 
-<br/>
 
 
-**Acknowledgements.** This page draws on [CS 240's syllabus](https://cs.wellesley.edu/~cs240/s24/about/), and Evan Peck's [What I want you to know about me as your professor](https://medium.com/bucknell-hci/what-i-want-you-to-know-about-me-as-your-professor-58c9c2e91e33). The community guidlines for ethics discussions draw on those written by Professor [Tavi Gonzalez](https://www.wellesley.edu/people/octavio-gonzalez). 
+## Acknowledgements
+
+This page draws on [CS 240's syllabus](https://cs.wellesley.edu/~cs240/s24/about/), and Evan Peck's [What I want you to know about me as your professor](https://medium.com/bucknell-hci/what-i-want-you-to-know-about-me-as-your-professor-58c9c2e91e33). The community guidlines for ethics discussions draw on those written by Professor [Tavi Gonzalez](https://www.wellesley.edu/people/octavio-gonzalez). 
 
