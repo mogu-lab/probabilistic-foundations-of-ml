@@ -124,7 +124,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW2 Checkpoint: Finish all parts of HW2 up to and including joint probability. Submit it on gradescope.</span>
+            <span>HW2 Checkpoint: Finish all parts of HW2 up to (and not including) "Joint distributions as Generative Models". Submit it on gradescope.</span>
           </li>
         </ul>
       </td>
