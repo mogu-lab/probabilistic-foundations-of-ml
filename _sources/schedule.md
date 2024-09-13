@@ -139,8 +139,9 @@ Since this course is new, please expect that the schedule will change to accomod
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
             <span><ul>
+<li>Read the "Community Guidelines for Ethics Discussions," under "Goals and Expectations."</li>
 <li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
-<li>Answer the corresponding questions to prepare for class discussions.          </li>
+<li>Answer the corresponding questions to prepare for class discussions.</li>
 </ul></span>
           </li>
         </ul>
