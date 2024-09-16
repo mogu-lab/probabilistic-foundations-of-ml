@@ -23,7 +23,7 @@
 1. Run the notebook from start to finish (with no interruptions) so we can see the output of every cell.
 2. Download the `.ipynb` file of your notebook from DeepNote.
 3. Navigate to the course's Gradescope and submit it there.
-4. Check to make sure that, in your submission, all cells have been run and all images you included are visible.
+4. Check to make sure that, in your submission, all cells have been run and all images you included are visible. Homework problems that do not include the output of the code **will not be given credit**. 
 
 
 
