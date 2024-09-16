@@ -13,7 +13,7 @@
 
 **Sally Kim:** 
 * Wednesday 6-7pm @ Science Center H303
-* ~~Thursdays 7-8pm @ Science Center H303~~ Monday September 16, from 7-8pm @ TBD replacing Thursday September 19
+* <s>Thursdays 7-8pm @ Science Center H303</s> Monday September 16, from 7-8pm @ TBD replacing Thursday September 19
 
 
 
