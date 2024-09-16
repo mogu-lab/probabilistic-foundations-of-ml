@@ -2,7 +2,7 @@
 # Probabilistic Foundations of Machine Learning (CS349), Fall 2024
 
 
-## License
+## License 
 
 Probabilistic Foundations of Machine Learning (c) 2024 by [Yaniv Yacoby](https://yanivyacoby.github.io/) is licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1).
 
