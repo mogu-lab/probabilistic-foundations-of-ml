@@ -134,7 +134,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Data</span>
+            <span>The Ethics of Data [<a href="https://docs.google.com/presentation/d/1No6V9NfSbcYlA7zCPS_gZg9lYPv3AjAdwW8BG2Oreww/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
