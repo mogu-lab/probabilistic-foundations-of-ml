@@ -30,8 +30,9 @@
 ## Including Graphics in DeepNote
 
 For some of the assignments, you'll have to draw figures (by hand, in google slides, or in some other way). To include these figures in a DeepNote notebook, follow these steps:
-1. Upload your image to the `figs` directory of the notebook.
-2. In a markdown cell, write `<img src="figs/YOUR-IMAGE" />`.
+1. Upload your image to `figs` directory in DeepNote.
+2. Make sure to include this import statement: `from IPython.display import Image`.
+3. In a *code* cell, write `Image('figs/FILENAME')`.
 
 
 
