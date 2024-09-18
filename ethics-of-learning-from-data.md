@@ -5,7 +5,7 @@
 **Challenge:** As before, nothing about the technical materials we've presented so far can point us in the right direction. We must turn to our colleagues who study the broader sociotechnical system in which we live to help us interrogate our practice. 
 
 **Outline:** There are three questions we will focus on. 
-1. hat conclusions can ML draw from data?
+1. What conclusions can ML draw from data?
 2. Is science objective?
 3. Are data-driven systems objective? 
 
