@@ -98,6 +98,11 @@ Recall that the minimum grade to earn credit under credit/no credit grading is C
 
 
 
+## Email Policy
+
+In general, answering homework questions over email is challenging---it require much more time and effort than answering the same question during office hours. As such, please ask the course staff homework questions during office hours. Of course, if there are extenuating circumstances (e.g. family emergency causing you to leave campus, sickness, etc.), you can email us with your homework questions. 
+
+
 ## Equipment
 
 **Textbook.** Unfortunately, most textbooks on probabilistic machine learning are not taught from a liberal arts perspective. As such, there's no assigned textbook for the class. Instead, we developed these course materials especially for the liberal arts context. 
