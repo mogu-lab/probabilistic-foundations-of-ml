@@ -594,8 +594,8 @@ document.write(`
 <p>As with (non-conditional) discrete probability, the statistical language—terminology and notation—we introduce here will allow us to precisely specify to a computer how to model our data. In the future, we will translate statements in this language directly into code that a computer can run.</p>
 <p><strong>Concept.</strong> Conditional probabilities allow us to ask questions of the form, “given that <span class="math notranslate nohighlight">\(A\)</span> is true, what’s the probability of <span class="math notranslate nohighlight">\(B\)</span>?”. Although simple, this idea is actually quite powerful; all <em>predictive models</em> you may have heard of (e.g. regression, classification, etc.) are formulated using <em>conditional distributions</em>. To see what we mean, let’s start with an example.</p>
 <p><strong>Example.</strong> Suppose you’re working at the IHH ER, and you want to <em>predict</em> what is the probability that the next patient comes in with <code class="docutils literal notranslate"><span class="pre">Condition</span> <span class="pre">==</span> <span class="pre">&quot;Intoxication&quot;</span></code>. Given previously collected data, you can estimate this probability by counting the number of patients for which <code class="docutils literal notranslate"><span class="pre">Condition</span> <span class="pre">==</span> <span class="pre">&quot;Intoxication&quot;</span></code> and dividing by the total number of patients:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-126c0cb6-9d82-45c5-8145-635dbef392b4">
-<span class="eqno">(5.1)<a class="headerlink" href="#equation-126c0cb6-9d82-45c5-8145-635dbef392b4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5109f54d-8b1f-4f1b-a30e-27aee6fba6af">
+<span class="eqno">(5.1)<a class="headerlink" href="#equation-5109f54d-8b1f-4f1b-a30e-27aee6fba6af" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Probability of intoxication} = \frac{\text{Number of patients with intoxication}}{\text{Total number of patients}}
 \end{align}\]</div>
 <p>We’ll call this probability the “naive predictor.” Now, let’s compute this naive predictor on our IHH ER data:</p>
@@ -617,8 +617,8 @@ document.write(`
 </div>
 <p>However, you also know that even in far reaches of the outer universe, beings work Mondays through Fridays, taking Saturdays and Sundays off. Therefore, you suspect intoxication may be more likely to occur on weekends. You decide to check whether your intuition is true here. If it’s true, will you improve your ability to predict how likely the next patient is to come with intoxication?</p>
 <p>We can modify the naive predictor above as follows to condition on the day of the week:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eabb0897-a772-43df-9fb6-4072485b0f29">
-<span class="eqno">(5.2)<a class="headerlink" href="#equation-eabb0897-a772-43df-9fb6-4072485b0f29" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a0638c0e-392a-4c8b-8dbf-667b7460b9fd">
+<span class="eqno">(5.2)<a class="headerlink" href="#equation-a0638c0e-392a-4c8b-8dbf-667b7460b9fd" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Probability of intoxication given day $d$} = \frac{\text{Number of patients with intoxication on day $d$}}{\text{Total number of patients on day $d$}}
 \end{align}\]</div>
 <div class="cell docutils container">
@@ -680,18 +680,18 @@ document.write(`
 <p><strong>Probability Mass Function (PMF):</strong> The PMF is, again, that of the variable to the left of the vertical line. What makes a conditional probability different from a non-conditional distribution, however, is that the parameter of the distribution is now a <em>function of the condition</em>.</p>
 <blockquote>
 <div><p>In our example, the PMF is that of a Bernoulli random variable (since <span class="math notranslate nohighlight">\(I\)</span> can only take on two values). Since it’s a <em>conditional</em> distribution, it’s parameter depends on the condition (the day <span class="math notranslate nohighlight">\(D = d\)</span>). We can write this as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ede75fb1-8e09-430e-a9e9-968ab92724d5">
-<span class="eqno">(5.3)<a class="headerlink" href="#equation-ede75fb1-8e09-430e-a9e9-968ab92724d5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1f5594be-b78c-4554-8ae0-87124191c92b">
+<span class="eqno">(5.3)<a class="headerlink" href="#equation-1f5594be-b78c-4554-8ae0-87124191c92b" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(\cdot | d) = \mathrm{Ber}(\rho(d)),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d7d804aa-1c37-4870-9e30-3b41010b763a">
-<span class="eqno">(5.4)<a class="headerlink" href="#equation-d7d804aa-1c37-4870-9e30-3b41010b763a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-276096a6-1c71-4c17-9f6e-59c03ff8c8d0">
+<span class="eqno">(5.4)<a class="headerlink" href="#equation-276096a6-1c71-4c17-9f6e-59c03ff8c8d0" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i | d) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - i}}_{\text{Bernoulli PMF (see Wikipedia)}},
 \end{align}\]</div>
 <p>and where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2fa1ffe8-eedc-468c-8b5f-e4cb277e3b7a">
-<span class="eqno">(5.5)<a class="headerlink" href="#equation-2fa1ffe8-eedc-468c-8b5f-e4cb277e3b7a" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
+<div class="amsmath math notranslate nohighlight" id="equation-2db760b9-3de6-4f70-a121-3bcc45a3ad63">
+<span class="eqno">(5.5)<a class="headerlink" href="#equation-2db760b9-3de6-4f70-a121-3bcc45a3ad63" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
 0.1 &amp; \text{if $d$ is weekday} \\
 0.4 &amp; \text{if $d$ is weekend} 
 \end{cases} 
@@ -749,8 +749,8 @@ p_{I | D}(i | d) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - 
 </div>
 </div>
 <p>Now, let’s instantiate the simplest discrete distribution we know, the Bernoulli distribution, to describe the naive predictor from earlier.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ba3d6f1b-97c6-4f68-a7f4-6fd11ce9b33f">
-<span class="eqno">(5.6)<a class="headerlink" href="#equation-ba3d6f1b-97c6-4f68-a7f4-6fd11ce9b33f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8efcea3e-a036-48cc-b505-7a07d26f9ab0">
+<span class="eqno">(5.6)<a class="headerlink" href="#equation-8efcea3e-a036-48cc-b505-7a07d26f9ab0" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_I(i) &amp;= \mathrm{Ber}(\rho) = \rho^i \cdot (1 - \rho)^{1 - i}
 \end{align}\]</div>
 <p>Recall that a Bernoulli distribution takes in just one parameter, <span class="math notranslate nohighlight">\(\rho \in [0, 1]\)</span>, which determines the probability of sampling <span class="math notranslate nohighlight">\(I = 1\)</span> vs. <span class="math notranslate nohighlight">\(I = 0\)</span> (or Yes vs. No). Here let’s instantiate the Bernoulli distribution with <span class="math notranslate nohighlight">\(\rho = 0.2\)</span>.</p>
