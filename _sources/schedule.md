@@ -200,7 +200,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Optimization</span>
+            <span>Optimization [<a href="https://docs.google.com/presentation/d/10cLFIkW--90s9ByqZsK3cO6AyUn6K1TC2MM9p1PBwEk/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
