@@ -7,7 +7,7 @@ import math
 import glob
 
 import matplotlib
-import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 100
+import matplotlib.pyplot as plt; plt.rcParams['figure.dpi'] = 200
 from mpl_toolkits.axes_grid1 import ImageGrid
 import matplotlib.animation
 from IPython.display import HTML
