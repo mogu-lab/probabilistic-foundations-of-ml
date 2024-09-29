@@ -330,6 +330,10 @@ Since this course is new, please expect that the schedule will change to accomod
             <span class="tag preclass_tag">Pre-Class:</span>
             <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
+          <li>
+            <span class="tag due_tag">Due:</span>
+            <span>Checkpoint 4.1 (by midnight the <strong>night before</strong>)</span>
+          </li>
         </ul>
       </td>
       <td class="normalday">
@@ -382,6 +386,10 @@ Since this course is new, please expect that the schedule will change to accomod
 <li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
 <li>Answer the corresponding questions to prepare for class discussions.</li>
 </ul></span>
+          </li>
+          <li>
+            <span class="tag due_tag">Due:</span>
+            <span>Checkpoint 4.2 (by midnight the <strong>night before</strong>)</span>
           </li>
         </ul>
       </td>
