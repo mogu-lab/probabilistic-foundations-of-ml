@@ -26,11 +26,12 @@
 3. Navigate to the course's Gradescope and submit it there.
 
 **Checking.** Check to make sure that, in your *Gradescope* submission,
-1. The `.ipynb` is rendered by Gradescope (and that it's not "too big" to be shown).
+1. The `.ipynb` is rendered by Gradescope (and that it's not "too big" to be shown). 
 1. All cells have been run and their output is visible.
 2. All images you included are showing.
 
-Homework problems that do not include the output of the code **will be given zero credit**. 
+Homework problems that do not include the output of the code, as described above, create substantial additional work for us to grade, and **will therefore be given zero credit**.
+
 
 
 ## Including Graphics in DeepNote
