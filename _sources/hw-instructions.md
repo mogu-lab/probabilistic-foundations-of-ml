@@ -26,9 +26,11 @@
 3. Navigate to the course's Gradescope and submit it there.
 
 **Checking.** Check to make sure that, in your *Gradescope* submission,
-1. The `.ipynb` is rendered by Gradescope, and that it's not "too big" to be shown. If it's too big to be shown, you may need to compress your images as per the instructions below.
-1. All cells have been run and their output is visible.
-2. All images you included are showing.
+1. The `.ipynb` is rendered by Gradescope, and that it's not "too big" to be shown. If it's too big to be previewed, try:
+  * Compressing the images you added as per the instructions below
+  * Decreasing the number in `plt.rcParams['figure.dpi'] = 100` at the top of your notebook, e.g. to 50.
+2. All cells have been run and their output is visible.
+3. All images you included are showing.
 
 Homework problems that do not include the output of the code, as described above, create substantial additional work for us to grade, and **will therefore be given zero credit**.
 
