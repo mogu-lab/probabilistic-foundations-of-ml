@@ -267,7 +267,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Regression</span>
+            <span>Regression [<a href="https://docs.google.com/presentation/d/1NgM-OBUMTjPqKKKDkthjSXZSjyY7L4u3QL0biuLCTAo/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
