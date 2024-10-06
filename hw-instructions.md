@@ -30,15 +30,7 @@
 2. All cells have been run and their output is visible.
 3. All images you included are showing.
 4. You included the notebook for **every** checkpoint.
-5. Your markdown text / math is not illegible because it was all put on the same line. If you run into this issue, try using new lines and the `&ensp;` character as follows:
-
-```latex
-Step 1: stuff
-
-Step 2: stuff
-    &ensp;&ensp;Step 2a: stuff
-    &ensp;&ensp;Step 2b: stuff
-```
+5. Your markdown text / math is not illegible because it was all put on the same line. 
 
 Homework problems that do not include the output of the code, as described above, create substantial additional work for us to grade, and **will therefore be given zero credit**.
 
