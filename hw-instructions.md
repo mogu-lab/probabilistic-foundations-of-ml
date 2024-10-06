@@ -23,13 +23,22 @@
 **Uploading.**
 1. Run each notebook from start to finish (with no interruptions) so we can see the output of every cell.
 2. Download the `.ipynb` files of your notebooks from DeepNote.
-3. Navigate to the course's Gradescope and submit them there.
+3. Navigate to the course's Gradescope and submit them there (please **only** submit the `.ipynb` files).
 
 **Checking.** Check to make sure that, in your *Gradescope* submission,
 1. The `.ipynb` is rendered by Gradescope, and that it's not "too big" to be shown. If it's too big to be previewed, try compressing the images (see instructions below), and/or decreasing the number in `plt.rcParams['figure.dpi'] = 100` at the top of your notebook, e.g. to 50.
 2. All cells have been run and their output is visible.
 3. All images you included are showing.
 4. You included the notebook for **every** checkpoint.
+5. Your markdown text / math is not illegible because it was all put on the same line. If you run into this issue, try using new lines and the `&ensp;` character as follows:
+
+```latex
+Step 1: stuff
+
+Step 2: stuff
+    &ensp;&ensp;Step 2a: stuff
+    &ensp;&ensp;Step 2b: stuff
+```
 
 Homework problems that do not include the output of the code, as described above, create substantial additional work for us to grade, and **will therefore be given zero credit**.
 
