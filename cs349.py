@@ -12,7 +12,6 @@ import jax.random as jrandom
 import jax.numpy as jnp
 import numpyro
 import numpyro.handlers as H
-import numpyro.contrib.funsor as F
 
 
 def cs349_sample_generative_process(model, key, *args, num_samples=None, **kwargs):
