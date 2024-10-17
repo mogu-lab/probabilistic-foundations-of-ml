@@ -23,14 +23,14 @@
 **Uploading.**
 1. Run each notebook from start to finish (with no interruptions) so we can see the output of every cell.
 2. Download the `.ipynb` files of your notebooks from DeepNote.
-3. Navigate to the course's Gradescope and submit them there (please **only** submit the `.ipynb` files).
+3. Using [this tool](https://www.convert.ploomber.io/pdf?converter=nbconvert-webpdf), convert your `.ipynb` files to `.pdf` files (make sure the "WebPDF" format is selected).
+4. Navigate to the course's Gradescope and submit them there (please **only** submit the `.pdf` files).
 
 **Checking.** Check to make sure that, in your *Gradescope* submission,
-1. The `.ipynb` is rendered by Gradescope, and that it's not "too big" to be shown. If it's too big to be previewed, try compressing the images (see instructions below), and/or decreasing the number in `plt.rcParams['figure.dpi'] = 100` at the top of your notebook, e.g. to 50.
-2. All cells have been run and their output is visible.
-3. All images you included are showing.
-4. You included the notebook for **every** checkpoint.
-5. Your markdown text / math is not illegible because it was all put on the same line. 
+1. All cells have been run and their output is visible.
+2. All images you included are showing.
+3. You included the notebook for **every** checkpoint.
+4. Your markdown text / math is not illegible because it was all put on the same line. 
 
 Homework problems that do not include the output of the code, as described above, create substantial additional work for us to grade, and **will therefore be given zero credit**.
 
@@ -39,10 +39,9 @@ Homework problems that do not include the output of the code, as described above
 ## Including Graphics in DeepNote
 
 For some of the assignments, you'll have to draw figures (by hand, in google slides, or in some other way). To include these figures in a DeepNote notebook, follow these steps:
-1. Compress your image by converting them to `.jpeg` and using [this website](https://imagecompressor.com/). 
-2. Upload your compressed image to the `figs` directory in DeepNote.
-3. Make sure this import statement is included: `from IPython.display import Image`.
-4. In a *code* cell, write `Image('figs/FILENAME')`.
+1. Upload your image to the `figs` directory in DeepNote.
+2. Make sure this import statement is included: `from IPython.display import Image`.
+3. In a *code* cell, write `Image('figs/FILENAME')`.
 
 
 
