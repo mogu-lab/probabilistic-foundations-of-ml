@@ -95,7 +95,7 @@ Since a large part of this course requires students to work in groups, in alignm
 
 
 
-## Feedback
+## Your Feedback Matters to Us
 
 We **deeply care** about your experience in the course and therefore **value your feedback**. There are several ways to provide us with feedback:
 1. **Come talk to us!** We know that no course caters perfectly for all students' learning styles; we will therefore **not be offended** if something isn't working for you. And if there's something we can do to improve your experience, we'd love to know about it!
