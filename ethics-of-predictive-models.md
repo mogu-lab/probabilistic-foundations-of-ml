@@ -74,7 +74,7 @@ For the article you chose, imagine you are the engineer who developed the techno
 
 ## The need for Explainable AI (XAI)
 
-````{admonition} Exercise: Explainable AI
+````{admonition} Exercise: Explainable AI (XAI)
 Read, *[Explainability for artificial intelligence
 in healthcare: a multidisciplinary perspective](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7706019/pdf/12911_2020_Article_1332.pdf)*.
 * What's the technological perspective?
