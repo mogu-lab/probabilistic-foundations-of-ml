@@ -25,7 +25,7 @@ However, our analysis of ML models *should not stop here*. For us to responsibly
 **Part A: Assessing Impact.** 
 1. Identify the stakeholders and context:
     * Who are the users?
-    * Who are the affected communities (are these the users)?
+    * Who are the affected communities (are these just the users)?
     * What is the relationship between the users and the affected communities? What are the power structures that relate users to affected communities?
     * What is the historical/cultural context of the type of task your tech performs (i.e. what is the relationship between what you are trying to accomplish, with respect to the users and affected communities, and the historical experience of these groups of people with past technologies that aimed to accomplish similar tasks)?
 2. What are the potential benefits of your technology?
