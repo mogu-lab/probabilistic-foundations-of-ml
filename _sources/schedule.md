@@ -453,7 +453,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>Checkpoint 5.1 (by midnight the <strong>night before</strong>)</span>
+            <span>Checkpoint 5.1 and 5.3 (by midnight the <strong>night before</strong>)</span>
           </li>
         </ul>
       </td>
