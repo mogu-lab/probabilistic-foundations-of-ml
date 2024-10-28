@@ -433,7 +433,11 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Lab</span>
+            <span>Factor Analysis (Dimensionality Reduction)</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
@@ -445,11 +449,11 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Factor Analysis (Dimensionality Reduction)</span>
+            <span>Lab</span>
           </li>
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
+            <span class="tag due_tag">Due:</span>
+            <span>Checkpoint 5.1 (by midnight the <strong>night before</strong>)</span>
           </li>
         </ul>
       </td>
@@ -469,7 +473,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Lab and/or The Ethics of Generative Models in Sociotechnical Systems</span>
+            <span>The Ethics of Generative Models in Sociotechnical Systems</span>
           </li>
         </ul>
       </td>
