@@ -492,7 +492,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Bayesian Inference: Prior &amp; Posterior</span>
+            <span>Bayesian Models: Prior &amp; Posterior</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -504,7 +504,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
-            <span>HW6: Bayesian Inference</span>
+            <span>HW6: Bayesian Models</span>
           </li>
           <li>
             <span class="tag extracredit_tag">Extra-Credit:</span>
@@ -544,7 +544,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Bayesian Inference: Posterior Predictive</span>
+            <span>Bayesian Models: Posterior Predictive</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -595,7 +595,7 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW6: Bayesian Inference (by midnight the <strong>night before</strong>)</span>
+            <span>HW6: Bayesian Models (by midnight the <strong>night before</strong>)</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
