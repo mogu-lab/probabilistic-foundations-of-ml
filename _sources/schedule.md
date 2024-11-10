@@ -492,7 +492,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Bayesian Models: Prior &amp; Posterior</span>
+            <span>Bayesian Models: Priors &amp; Posteriors [<a href="https://docs.google.com/presentation/d/1RFg6u5Gbv-UAni7rU9fSh5firCMByx9KYFGc1Jseyuo/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -509,9 +509,9 @@ Since this course is new, please expect that the schedule will change to accomod
           <li>
             <span class="tag extracredit_tag">Extra-Credit:</span>
             <span><ul>
-<li>Attend the talk by Dr. Safiya Noble, <a href="https://www1.wellesley.edu/newhouse/events/node/207351">Algorithms of Oppression</a>.</li>
-<li>Talk is at 5-6:30pm @ Tishman Commons.</li>
-<li>Submit a reflection on it on Gradescope.</li>
+<li><s>Attend the talk by Dr. Safiya Noble, <a href="https://www1.wellesley.edu/newhouse/events/node/207351">Algorithms of Oppression</a></s></li>
+<li><s>Talk is at 5-6:30pm @ Tishman Commons</s></li>
+<li>Ethics discussion from 5-6:30pm @ SCI H305</li>
 </ul></span>
           </li>
         </ul>
