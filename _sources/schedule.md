@@ -532,7 +532,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Bayesian Models: Posterior Predictive</span>
+            <span>Bayesian Models: Posterior Predictive [<a href="https://docs.google.com/presentation/d/1v6B5ekkPEigvovKy1KpvBexr6_xgY8zPR5ALtNaIIhM/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
