@@ -538,10 +538,6 @@ Since this course is new, please expect that the schedule will change to accomod
             <span class="tag preclass_tag">Pre-Class:</span>
             <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
-          <li>
-            <span class="tag due_tag">Due:</span>
-            <span>Checkpoint 6.1 and 6.3 (by midnight the <strong>night before</strong>)</span>
-          </li>
         </ul>
       </td>
     </tr>
@@ -553,6 +549,10 @@ Since this course is new, please expect that the schedule will change to accomod
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Lab</span>
+          </li>
+          <li>
+            <span class="tag due_tag">Due:</span>
+            <span>Checkpoint 6.1 and 6.3 (by midnight the <strong>night before</strong>)</span>
           </li>
         </ul>
       </td>
