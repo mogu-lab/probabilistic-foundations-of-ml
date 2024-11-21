@@ -629,14 +629,11 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Machine Learning: A View from History</span>
+            <span>Variational Autoencoders (VAEs)</span>
           </li>
           <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span><ul>
-<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
-<li>Answer the corresponding questions to prepare for class discussions.</li>
-</ul></span>
+            <span class="tag due_tag">Due:</span>
+            <span>Checkpoint 7.1 (by midnight the <strong>night before</strong>)</span>
           </li>
         </ul>
       </td>
@@ -646,14 +643,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Machine Learning: A View from History</span>
-          </li>
-          <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span><ul>
-<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
-<li>Answer the corresponding questions to prepare for class discussions.</li>
-</ul></span>
+            <span>Neural Ordinary Differential Equations for Irregularly-Sampled Time Series</span>
           </li>
         </ul>
       </td>
@@ -663,7 +653,18 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Time Series (Dynamical Systems)</span>
+            <span>The Ethics of Machine Learning: A View from History</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span><ul>
+<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
+<li>Answer the corresponding questions to prepare for class discussions.</li>
+</ul></span>
+          </li>
+          <li>
+            <span class="tag due_tag">Due:</span>
+            <span>Checkpoint 7.2 (by midnight the <strong>night before</strong>)</span>
           </li>
         </ul>
       </td>
@@ -675,11 +676,18 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Time Series (Dynamical Systems)</span>
+            <span>The Ethics of Machine Learning: A View from History</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span><ul>
+<li>Complete <strong>all readings</strong> listed in the corresponding chapter.</li>
+<li>Answer the corresponding questions to prepare for class discussions.</li>
+</ul></span>
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW7: The Ethics of Machine Learning</span>
+            <span>HW7: The Ethics of Machine Learning (by midnight the <strong>night before</strong>)</span>
           </li>
         </ul>
       </td>
@@ -689,6 +697,10 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="day_note">Substitute Day (Lake Day Makeup).</span>
+          </li>
+          <li>
+            <span class="tag topic_tag">Topic:</span>
+            <span>Group Reflection</span>
           </li>
         </ul>
       </td>
