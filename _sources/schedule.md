@@ -691,13 +691,10 @@ Since this course is new, please expect that the schedule will change to accomod
           </li>
         </ul>
       </td>
-      <td class="holiday">
+      <td class="normalday">
         <span class="date_label date_label_day">11</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
-          <li>
-            <span class="day_note">Substitute Day (Lake Day Makeup).</span>
-          </li>
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Group Reflection</span>
