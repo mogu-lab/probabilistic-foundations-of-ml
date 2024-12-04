@@ -653,7 +653,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Machine Learning: A View from History</span>
+            <span>The Ethics of Machine Learning: A View from History [<a href="https://docs.google.com/presentation/d/1Ye7wZ53DavykrHnNygPlLeGUduYDoZ_6pVx4xWMBAs4/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -676,7 +676,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Machine Learning: A View from History</span>
+            <span>The Ethics of Machine Learning: A View from History [<a href="https://docs.google.com/presentation/d/1Ye7wZ53DavykrHnNygPlLeGUduYDoZ_6pVx4xWMBAs4/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
