@@ -4,7 +4,7 @@
 This course is a **permanent offering of [CS349](https://mogu-lab.github.io/cs349-fall-2024/index.html)**, offered in Fall 2024. Note the course and its prerequisites have changed a little since its first offering, so be sure to check the Wellesley Course Browser for the most up-to-date information! **Note that this website is still under construction.**
 ```
 
-**instructor:** [Yaniv Yacoby](https://yanivyacoby.github.io/) (he/him)
+**Instructor:** [Yaniv Yacoby](https://yanivyacoby.github.io/) (he/him)
 
 **Semester:** TBD
 
