@@ -1,5 +1,5 @@
 
-# Probabilistic Foundations of Machine Learning (CS345)
+# Probabilistic Foundations of Machine Learning (CS345) 
 
 
 ## License 
