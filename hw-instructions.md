@@ -53,11 +53,11 @@ The benefit of working in DeepNote is that no student should have installation i
 2. Then run the following commands in your terminal:
 ```
 # Install Python packages
-wget -O "requirements.txt" "https://raw.githubusercontent.com/mogu-lab/cs349-fall-2024/master/requirements.txt"
+wget -O "requirements.txt" "https://raw.githubusercontent.com/mogu-lab/cs345/master/requirements.txt"
 pip install -r ./requirements.txt
 
 # Get the course's helper libraries
-wget -O "deepnote_init.py" "https://raw.githubusercontent.com/mogu-lab/cs349-fall-2024/master/scripts/deepnote_init.py"
+wget -O "deepnote_init.py" "https://raw.githubusercontent.com/mogu-lab/cs345/master/scripts/deepnote_init.py"
 python deepnote_init.py
 
 # Create a directory for uploading figures

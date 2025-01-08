@@ -51,7 +51,7 @@ Since a large part of this course requires students to work in groups, in alignm
 
 
 
-## How to Succeed in CS 349?
+## How to Succeed in CS 345?
 
 
 **Come to class and participate.** While thorough, the course materials is *not a substitute* for the classroom experience. We expect you to attend all classroom sessions (class is *mandatory*), and engage with the lecture components and with your peers in the in-class exercises. 
@@ -69,7 +69,7 @@ Since a large part of this course requires students to work in groups, in alignm
 **Stay on top of the material.** You will be given class time to start working on homework together with your peers. This is to ensure everyone can find their bearing---if there's something that confuses you, this is a great time to ask! We recommend you finish working on the problems you started in class *before the next class*. Since every class builds on all previous classes, this will ensure you're up to speed.
 
 
-**Ready to take CS 349?** Fasten your seatbelts---*it's going to be an adventure!*
+**Ready to take CS 345?** Fasten your seatbelts---*it's going to be an adventure!*
 
 ```{image} img/banner.png
 :alt: Cats eating popcorn
