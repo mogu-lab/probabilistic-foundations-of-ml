@@ -12,9 +12,16 @@ This course is a **permanent offering of [CS349](https://mogu-lab.github.io/cs34
 
 **Description:** In recent years, Machine Learning has enabled applications that were previously not thought possible—from systems that propose novel drugs or generate new art/music, to systems that accurately and reliably predict outcomes of medical interventions in real-time. But what has enabled these developments? Faster computing hardware, large amounts of data, and the Probabilistic paradigm of Machine Learning (ML), a paradigm that casts recent advances in ML, like neural networks, into a statistical learning framework. In this course, we introduce the foundational concepts behind this paradigm—statistical model specification, and statistical learning and inference—focusing on connecting theory with real-world applications and hands-on practice. While expanding our methodological toolkit, we will simultaneously introduce critical perspectives to examine the ethics of ML within sociotechnical systems. This course lays the foundation for advanced study and research in ML. Topics include: directed graphical models, deep Bayesian regression/classification, generative models (latent variable models) for clustering, dimensionality reduction, and time-series forecasting. Students will get hands-on experience building models for specific tasks, most taken from healthcare contexts, using NumPyro, a Python-based probabilistic programming language. 
 
-**Meeting Times:** TBD
+**Meeting Times:** 
+* Mondays, 8:30-9:45am
+* Wednesdays, 8:30-9:20am
+* Thursdays, 8:30-9:45am
 
 **Location:** TBD
+
+**Max Enrollment:** 18
+
+**Distributions:** Data Literacy, and Mathematical Modeling and Problem Solving.
 
 **Prerequisites:**
 1. At least **one** of: CS244, CS305, CS344, STAT260, STAT318, MIT6.390, or the QAI Summer Program.
