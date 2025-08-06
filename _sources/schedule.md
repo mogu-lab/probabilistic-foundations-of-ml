@@ -506,14 +506,6 @@ Since this course is new, please expect that the schedule will change to accomod
             <span class="tag released_tag">Released:</span>
             <span>HW6: Bayesian Models</span>
           </li>
-          <li>
-            <span class="tag extracredit_tag">Extra-Credit:</span>
-            <span><ul>
-<li><s>Attend the talk by Dr. Safiya Noble, <a href="https://www1.wellesley.edu/newhouse/events/node/207351">Algorithms of Oppression</a></s></li>
-<li><s>Talk is at 5-6:30pm @ Tishman Commons</s></li>
-<li>Ethics discussion from 5-6:30pm @ SCI H305</li>
-</ul></span>
-          </li>
         </ul>
       </td>
       <td class="normalday">
@@ -537,6 +529,15 @@ Since this course is new, please expect that the schedule will change to accomod
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
             <span>Read corresponding chapter; prepare questions to ask in class.</span>
+          </li>
+          <li>
+            <span class="tag extracredit_tag">Extra-Credit:</span>
+            <span><ul>
+<li>Attend the talk by Prof. <a href="https://lindseydcameron.com">Lindsey Cameron</a></li>
+<li>Time: November 14 at TBD</li>
+<li>Location: TBD</li>
+<li>Answer reflection quetsions on Gradescope</li>
+</ul></span>
           </li>
         </ul>
       </td>
