@@ -13,6 +13,16 @@
 > Unfortunately, given the amount of interest in the class, we cannot allow you to audit.
 
 
+**Can I take the class credit/non?**
+
+> Technically, you can, but we **strongly advise against it.** This is because CS 345 is extremely cumulative---every concept you learn will be used repeatedly after its introduced. Thus, as an example, if you chose to only complete 80% of HW2, chances are you will not be able to complete HW3 (or complete very little of it), and so on.
+
+
+**Should I take more than 4 classes in total when taking CS 345?**
+
+> Technically, you can, but we **strongly advise against it.** CS 345 is a challenging and time-consuming class. We are *confident* you can be successful in it and enjoy it, so long as you have enough *time* dedicated to it. 
+
+
 **What kind of healthcare context will be used in the class?**
 
 >Since acquiring access to real healthcare data-sets in the context of a class is tricky, we will instead use data from the "Intergalactic Hypothetical Hospital," a hospital we made up especially for this class, where we will be analyzing data to improve medical care for intergalactic beings.
