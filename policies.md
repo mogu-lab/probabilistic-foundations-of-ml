@@ -60,7 +60,7 @@ To make sure the use of Generative AI does not compromise your learning experien
 **Course Components.** Course grades are computed by weighing course components as follows:
 * Homework: $75\%$.
   * Homework assignments are long, but you will be given time to work on them **in class, with your peers.**
-  * Each homework grade is computed as the *minimum* of the grades earned on the methodological component and your ethics component. That is, if you scored 95% on your methodological component and 100% on your ethics component, your homework grade will be 95%. The purpose of this grading scheme is to ensure all students prioritize *both* the methodology *and* the ethics.
+  * Each homework grade is computed as the *minimum* of the grades earned on the methodological component and your ethics component. That is, if you scored 95% on your methodological component and 97% on your ethics component, your homework grade will be 95%. The purpose of this grading scheme is to ensure all students prioritize *both* the methodology *and* the ethics.
 * In-class participation: $10\%$.
   * Coming to class prepared, having done the pre-class work/readings
   * Asking questions in class (*all* questions are good questions)
