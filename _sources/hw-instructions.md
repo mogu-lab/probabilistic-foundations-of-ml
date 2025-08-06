@@ -5,7 +5,7 @@
 ## Joining the Class on Gradescope
 
 1. Create an account on [Gradescope](https://www.gradescope.com/) using your *Wellesley College* email.
-2. Join the course using the entry code `J776Z8`.
+2. Join the course using the entry code `B3G2B5`.
 
 
 
