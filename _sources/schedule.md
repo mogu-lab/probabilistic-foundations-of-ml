@@ -16,7 +16,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </thead>
     <tr class="col_headers light_row">
       <td class="holiday new_month">
-        <span class="date_label date_label_day">02</span>
+        <span class="date_label date_label_day">01</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -25,7 +25,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">04</span>
+        <span class="date_label date_label_day">03</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -51,7 +51,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">05</span>
+        <span class="date_label date_label_day">04</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -67,7 +67,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">09</span>
+        <span class="date_label date_label_day">08</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -89,7 +89,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">11</span>
+        <span class="date_label date_label_day">10</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -99,7 +99,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">12</span>
+        <span class="date_label date_label_day">11</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -115,7 +115,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">16</span>
+        <span class="date_label date_label_day">15</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -129,7 +129,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">18</span>
+        <span class="date_label date_label_day">17</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -147,7 +147,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">19</span>
+        <span class="date_label date_label_day">18</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -171,7 +171,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">23</span>
+        <span class="date_label date_label_day">22</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -185,7 +185,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">25</span>
+        <span class="date_label date_label_day">24</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -195,7 +195,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">26</span>
+        <span class="date_label date_label_day">25</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -211,7 +211,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">30</span>
+        <span class="date_label date_label_day">29</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -229,7 +229,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday new_month">
-        <span class="date_label date_label_day">02</span>
+        <span class="date_label date_label_day">01</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -239,7 +239,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">03</span>
+        <span class="date_label date_label_day">02</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -262,7 +262,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">07</span>
+        <span class="date_label date_label_day">06</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -284,7 +284,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">09</span>
+        <span class="date_label date_label_day">08</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -294,7 +294,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">10</span>
+        <span class="date_label date_label_day">09</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -310,16 +310,16 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="holiday">
-        <span class="date_label date_label_day">14</span>
+        <span class="date_label date_label_day">13</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
-            <span class="day_note">Indigenous Peoples’ Day: no classes.</span>
+            <span class="day_note">Indigenous Peoples' Day: no classes.</span>
           </li>
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">16</span>
+        <span class="date_label date_label_day">15</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -337,7 +337,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">17</span>
+        <span class="date_label date_label_day">16</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -349,7 +349,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">21</span>
+        <span class="date_label date_label_day">20</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -363,7 +363,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">23</span>
+        <span class="date_label date_label_day">22</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -373,7 +373,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">24</span>
+        <span class="date_label date_label_day">23</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -396,7 +396,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">28</span>
+        <span class="date_label date_label_day">27</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -418,7 +418,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">30</span>
+        <span class="date_label date_label_day">29</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -428,7 +428,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">31</span>
+        <span class="date_label date_label_day">30</span>
         <span class="date_label date_label_month">October</span>
         <ul class="day_agenda">
           <li>
@@ -444,7 +444,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday new_month">
-        <span class="date_label date_label_day">04</span>
+        <span class="date_label date_label_day">03</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -458,7 +458,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">06</span>
+        <span class="date_label date_label_day">05</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -468,7 +468,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">07</span>
+        <span class="date_label date_label_day">06</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -487,7 +487,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">11</span>
+        <span class="date_label date_label_day">10</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -517,7 +517,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">13</span>
+        <span class="date_label date_label_day">12</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -527,7 +527,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">14</span>
+        <span class="date_label date_label_day">13</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -543,7 +543,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">18</span>
+        <span class="date_label date_label_day">17</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -557,7 +557,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">20</span>
+        <span class="date_label date_label_day">19</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -567,7 +567,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">21</span>
+        <span class="date_label date_label_day">20</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -586,12 +586,12 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">25</span>
+        <span class="date_label date_label_day">24</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Guest Lecture: Prof. <a href="https://www.cs.cornell.edu/~emmapierson/">Emma Pierson</a>, who develops ML methods to study inequality and healthcare.</span>
+            <span>Guest Lecture</span>
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
@@ -604,7 +604,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="holiday">
-        <span class="date_label date_label_day">27</span>
+        <span class="date_label date_label_day">26</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -613,7 +613,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="holiday">
-        <span class="date_label date_label_day">28</span>
+        <span class="date_label date_label_day">27</span>
         <span class="date_label date_label_month">November</span>
         <ul class="day_agenda">
           <li>
@@ -624,7 +624,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday new_month">
-        <span class="date_label date_label_day">02</span>
+        <span class="date_label date_label_day">01</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
           <li>
@@ -638,17 +638,17 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">04</span>
+        <span class="date_label date_label_day">03</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Neural Ordinary Differential Equations for Irregularly-Sampled Time Series</span>
+            <span>Special Topics</span>
           </li>
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">05</span>
+        <span class="date_label date_label_day">04</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
           <li>
@@ -671,7 +671,7 @@ Since this course is new, please expect that the schedule will change to accomod
     </tr>
     <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">09</span>
+        <span class="date_label date_label_day">08</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
           <li>
@@ -692,7 +692,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="normalday">
-        <span class="date_label date_label_day">11</span>
+        <span class="date_label date_label_day">10</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
           <li>
@@ -702,7 +702,7 @@ Since this course is new, please expect that the schedule will change to accomod
         </ul>
       </td>
       <td class="holiday readingperiod">
-        <span class="date_label date_label_day">12</span>
+        <span class="date_label date_label_day">11</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda">
           <li>
@@ -712,18 +712,22 @@ Since this course is new, please expect that the schedule will change to accomod
       </td>
     </tr>
     <tr class="col_headers light_row">
+      <td class="holiday readingperiod">
+        <span class="date_label date_label_day">15</span>
+        <span class="date_label date_label_month">December</span>
+        <ul class="day_agenda">
+          <li>
+            <span class="day_note">Final Exam Period Begins.</span>
+          </li>
+        </ul>
+      </td>
       <td class="normalday readingperiod">
-        <span class="date_label date_label_day">16</span>
+        <span class="date_label date_label_day">17</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda"></ul>
       </td>
       <td class="normalday readingperiod">
         <span class="date_label date_label_day">18</span>
-        <span class="date_label date_label_month">December</span>
-        <ul class="day_agenda"></ul>
-      </td>
-      <td class="normalday readingperiod">
-        <span class="date_label date_label_day">19</span>
         <span class="date_label date_label_month">December</span>
         <ul class="day_agenda"></ul>
       </td>
