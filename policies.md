@@ -18,7 +18,7 @@ We nonetheless offer every student **3 x 24-hour late passes**.
 * Any number of available passes may be applied to any assignment deadline. No work is accepted past the end of the final exam period, regardless of available late passes.
 * Late passes are not transferable, reusable, or divisible.
 * After your late pass budget is exhausted, each additional 24-hour delay in assignment submission is assessed a late penalty that subtracts 10% of the maximum assignment grade from your awarded grade on that assignment.
-* To use a late day, you must fill out [this form](https://forms.gle/hSsEcrQ1ahyJiMVm9) **before the assignment deadline**.
+* To use a late day, you must fill out [this form](https://docs.google.com/forms/d/e/1FAIpQLSdd3QL7xho43DfZMmp8y9gXX5ZrqMvCde_dY1dGlSdrE7j4GQ/viewform?usp=dialog) **before the assignment deadline**.
 
 Note: late passes **cannot be used for checkpoint** submissions. 
 
