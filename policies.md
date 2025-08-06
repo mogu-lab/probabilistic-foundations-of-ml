@@ -93,6 +93,8 @@ To make sure the use of Generative AI does not compromise your learning experien
 | $\geq 60.0\%$ | D |
 | $< 60.0\%$ | F |
 
+We reserve the right to adjust these grade boundaries when computing your **final** grades to **bump your grades up**.
+
 
 Recall that the minimum grade to earn credit under credit/no credit grading is C. The minimum grade to pass and earn credit under normal letter grading is D.
 
@@ -108,9 +110,9 @@ In general, answering homework questions over email is challenging---it require 
 
 ## Equipment
 
-**Textbook.** Unfortunately, most textbooks on probabilistic machine learning are not taught from a liberal arts perspective. As such, there's no assigned textbook for the class. Instead, we developed these course materials especially for the liberal arts context. 
+**Textbook.** Unfortunately, most textbooks on probabilistic machine learning are not taught from a liberal arts perspective. As such, there's no assigned textbook for the class. *Instead, we developed these course materials especially for the liberal arts context.*
 
-**Laptop.** You will need a laptop for the class. If you don't own a laptop, please reach out to [Wellesley's long-term laptop loan program](https://www1.wellesley.edu/lts/techsupport/borrowequip) to request one. If you run into any trouble there, let the instructor know.
+**Laptop.** You will need a laptop for the class. If you don't own a laptop, please reach out to [Wellesley's long-term laptop loan program](https://www1.wellesley.edu/lts/techsupport/borrowequip) to request one. If you run into any trouble there, please let the instructor know.
 
 
 ## Computer Science Department Guidelines
