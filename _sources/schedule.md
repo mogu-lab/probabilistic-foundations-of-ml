@@ -31,7 +31,7 @@ Since this course is new, please expect that the schedule will change to accomod
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span><ul>
-<li>What is Probabilistic ML? [<a href="https://docs.google.com/presentation/d/1m5IyBVjHDEhiC2ACk7x8vph5VDkc3wjxlWQGOimvcZk/edit?usp=sharing">slides</a>]</li>
+<li>What is Probabilistic ML? [<a href="https://docs.google.com/presentation/d/12dm5N-1UiB73Lqk_4QSHTHnWnPDcytIhmCwq-F7Bxuo/edit?usp=sharing">slides</a>]</li>
 <li>Vectorization</li>
 </ul></span>
           </li>
@@ -56,7 +56,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Probability (Discrete) [<a href="https://docs.google.com/presentation/d/1m6y_Xk3_eBTEnUdF3asnvjtPRpJl-W8FeNgHUewwOEk/edit?usp=sharing">slides</a>]</span>
+            <span>Probability (Discrete) [<a href="https://docs.google.com/presentation/d/1-sFZ53bSaIw8MeasMErfK2boRRJ5ymYtqCqNYp1BXn0/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -72,7 +72,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Conditional Probability (Discrete) [<a href="https://docs.google.com/presentation/d/1yxFS5phpi8wSOTcaAcR1Sn5Dmp6_H4-sItZgeZTmED4/edit?usp=sharing">slides</a>]</span>
+            <span>Conditional Probability (Discrete) [<a href="https://docs.google.com/presentation/d/1VBx1e5JuMcvcQaoDYUlRUdZk3mzFjAwAiRMigB823v4/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -104,7 +104,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Joint Probability (Discrete) [<a href="https://docs.google.com/presentation/d/1lRw_vfL7QpAmIdq2JP2fFNzqgEFFSJwypKq-rCtDTGc/edit?usp=sharing">slides</a>]</span>
+            <span>Joint Probability (Discrete) [<a href="https://docs.google.com/presentation/d/1RI11DaA9UwM0EOBiEURUoI2W-9Gd5RUwhJAIi4eolNs/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -134,7 +134,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Data [<a href="https://docs.google.com/presentation/d/1No6V9NfSbcYlA7zCPS_gZg9lYPv3AjAdwW8BG2Oreww/edit?usp=sharing">slides</a>]</span>
+            <span>The Ethics of Data [<a href="https://docs.google.com/presentation/d/1z0btRmPqJo_LcLET1Q3F8yuas1U7E3hldJE8TYC6MbY/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -152,7 +152,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Maximum Likelihood: Theory [<a href="https://docs.google.com/presentation/d/1cF9jBronnqq4dJOXBI5MthGDg7BPeBIi87f6vjOx2cg/edit?usp=sharing">slides</a>]</span>
+            <span>Maximum Likelihood: Theory [<a href="https://docs.google.com/presentation/d/1U71N7OYHlLjQeC4VSMciu1mPOUgOysi4kcXc3UPvDjk/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -176,7 +176,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Maximum Likelihood: Code [<a href="https://docs.google.com/presentation/d/1lN3--6nTEHj1LVVm9-uQ4TZip0Ls0Cejac9syQS0tpg/edit?usp=sharing">slides</a>]</span>
+            <span>Maximum Likelihood: Code [<a href="https://docs.google.com/presentation/d/1_YuhMoViySureG068w36mS3DeIQisadTlxRUKHdONN0/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -200,7 +200,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Optimization [<a href="https://docs.google.com/presentation/d/10cLFIkW--90s9ByqZsK3cO6AyUn6K1TC2MM9p1PBwEk/edit?usp=sharing">slides</a>]</span>
+            <span>Optimization [<a href="https://docs.google.com/presentation/d/1kP46TPrzoM2itKM5hNKE18Kfl7P6eOsmltHCP2kA1qE/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -216,7 +216,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Probability (Continuous) [<a href="https://docs.google.com/presentation/d/1_W5DWXcnl_Kd89i-0NkocLcqMQyNImC5VZxlEBxYHkU/edit?usp=sharing">slides</a>]</span>
+            <span>Probability (Continuous) [<a href="https://docs.google.com/presentation/d/1TjmwQhPNnqNWbjYMrYTZe1cNokm8D0IEt8hUsKLTSXg/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -244,7 +244,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Learning from Data [<a href="https://docs.google.com/presentation/d/1m5uScOPV91e4Tt-1XS00rmhlCYwSbI4XYgFxE-YQZyE/edit?usp=sharing">slides</a>]</span>
+            <span>The Ethics of Learning from Data [<a href="https://docs.google.com/presentation/d/1YgdwT-NXqsn0kbK8Gvc8Lsp33QeqVeLYVxzruwdmsIU/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -267,7 +267,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Regression [<a href="https://docs.google.com/presentation/d/1NgM-OBUMTjPqKKKDkthjSXZSjyY7L4u3QL0biuLCTAo/edit?usp=sharing">slides</a>]</span>
+            <span>Regression [<a href="https://docs.google.com/presentation/d/1SWmIccvKGUJq5B-ZtT7LcNvg-4fU7zgp6PUhTAr27gg/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -299,7 +299,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Classification [<a href="https://docs.google.com/presentation/d/1WvFdEHRjqC5RAzhyfM-k0x_7upQp4FgPtDftu5p_oeE/edit?usp=sharing">slides</a>]</span>
+            <span>Classification [<a href="https://docs.google.com/presentation/d/17ret7jhZ_SCJ55jN3pxYJ9uZCnngrsgWqrlhbnj9kyE/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -324,7 +324,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Neural Networks [<a href="https://docs.google.com/presentation/d/1S4axmoXmqRtkiSM0oNQv9t_7A4ZP33Y_7qVBra576Pw/edit?usp=sharing">slides</a>]</span>
+            <span>Neural Networks [<a href="https://docs.google.com/presentation/d/1Vx47JvK_9yE58niOxrvh6bMkR48f0YKe7AGpiaYTcyo/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -354,7 +354,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Model Selection &amp; Evaluation [<a href="https://docs.google.com/presentation/d/1KdnL2hnpShUmmxQZLJas-3BPcjBi6Qd8kqv-8IkSL7A/edit?usp=sharing">slides</a>]</span>
+            <span>Model Selection &amp; Evaluation [<a href="https://docs.google.com/presentation/d/1LGtce4096YA_PhZCKY-SPIInmuiN4av1XMJkaUzy1yY/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -378,7 +378,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Predictive Models in Sociotechnical Systems [<a href="https://docs.google.com/presentation/d/124LEXzJg9Clmw2oJkETdjp98H53j4AxZlbV51HYby98/edit?usp=sharing">slides</a>]</span>
+            <span>The Ethics of Predictive Models in Sociotechnical Systems [<a href="https://docs.google.com/presentation/d/11kIDf1jBUrAMD1xwlOyFObriPbxTzMvJSJ1vUXSFjig/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -401,7 +401,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Gaussian Mixture Models (Clustering) [<a href="https://docs.google.com/presentation/d/1E4wxY37s2SSEA8WXss_GMgu-hgyT5ttBYTYzvFSiWto/edit?usp=sharing">slides</a>]</span>
+            <span>Gaussian Mixture Models (Clustering) [<a href="https://docs.google.com/presentation/d/1Vpr-FbNa9I14K5j3bktcuRM_aJDKy5KtScplFa6T2Ew/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -433,7 +433,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Factor Analysis (Dimensionality Reduction) [<a href="https://docs.google.com/presentation/d/1YVUM-87U58oC_0N_NY7Hv_mo9AEr71VP0rwzuIJSHFU/edit?usp=sharing">slides</a>]</span>
+            <span>Factor Analysis (Dimensionality Reduction) [<a href="https://docs.google.com/presentation/d/1PcX_i6a__By40BB2-udb1wRgPgpW7z2hMdqiSf_H7jg/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -492,7 +492,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Bayesian Models: Priors &amp; Posteriors [<a href="https://docs.google.com/presentation/d/1RFg6u5Gbv-UAni7rU9fSh5firCMByx9KYFGc1Jseyuo/edit?usp=sharing">slides</a>]</span>
+            <span>Bayesian Models: Priors &amp; Posteriors [<a href="https://docs.google.com/presentation/d/1Q3Gepq-S2tbFYtxdAqrRqZCykvtDv8_VnFZ62MyQn_0/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -524,7 +524,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Bayesian Models: Posterior Predictive [<a href="https://docs.google.com/presentation/d/1v6B5ekkPEigvovKy1KpvBexr6_xgY8zPR5ALtNaIIhM/edit?usp=sharing">slides</a>]</span>
+            <span>Bayesian Models: Posterior Predictive [<a href="https://docs.google.com/presentation/d/1NTByyWkycaBWhUbkSrjFBueWvv3gKJafuAXbbmDr3g4/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -573,7 +573,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Uncertainty and Interpretability in Human-AI Systems [<a href="https://docs.google.com/presentation/d/13pNfPRAssP7lTuxEV-TA9g5rR2Rstnj6wbfE2FBiGz4/edit?usp=sharing">slides</a>]</span>
+            <span>The Ethics of Uncertainty and Interpretability in Human-AI Systems [<a href="https://docs.google.com/presentation/d/1JVEn6o7QxuD2RZsXzSzTmDPV2sIYkAZc6qiPsYtSNWg/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -654,7 +654,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Machine Learning: A View from History (Part 1) [<a href="https://docs.google.com/presentation/d/1Ye7wZ53DavykrHnNygPlLeGUduYDoZ_6pVx4xWMBAs4/edit?usp=sharing">slides</a>]</span>
+            <span>The Ethics of Machine Learning: A View from History (Part 1) [<a href="https://docs.google.com/presentation/d/14Cjr83OxHSLiav-eI9DsIi7R1pZ5V0l6j_ZEXwRI5Mg/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -677,7 +677,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>The Ethics of Machine Learning: A View from History (Part 2) [<a href="https://docs.google.com/presentation/d/1U7Z8k1ultt0ThUHwL8opN9FJfRTTb2RpAoTmcg8WrDQ/edit?usp=sharing">slides</a>]</span>
+            <span>The Ethics of Machine Learning: A View from History (Part 2) [<a href="https://docs.google.com/presentation/d/1Jig99jUkXXvvfEIr1fihabVAhXdoEpc5WrOglQzhSoc/edit?usp=share_link">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -698,7 +698,7 @@ Since this course is new, please expect that the schedule will change to accomod
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Group Reflection [<a href="https://docs.google.com/presentation/d/1N2BTiMohPmDNQUbf_dvJNipf2eNbAVhSDLE8VFr6JQg/edit?usp=sharing">slides</a>]</span>
+            <span>Group Reflection [<a href="https://docs.google.com/presentation/d/1d3iN28L-lwzDaWewPxvIpx2JX0Oq0u0MY9IuIOEcqfE/edit?usp=share_link">slides</a>]</span>
           </li>
         </ul>
       </td>
