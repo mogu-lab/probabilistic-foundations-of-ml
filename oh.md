@@ -3,5 +3,7 @@
 
 **Yaniv Yacoby:** TBD
   
-**TAs:** TBD
+**Annie Chen (TA):** TBD
+
+**Genesis Hang (TA):** TBD
 
