@@ -6,7 +6,7 @@ This course is a **permanent offering of [CS349](https://mogu-lab.github.io/cs34
 
 **Instructor:** [Yaniv Yacoby](https://yanivyacoby.github.io/) (he/they)
 
-**Semester:** TBD
+**Semester:** Fall 2025
 
 **Course Number:** CS 345 @ <img alt="Wellesley College" class="only-light" style="display: inline;" height=15 src="img/wc-name-logo-blue.png" /><img alt="Wellesley College" class="only-dark" style="display: inline;" height=15 src="img/wc-name-logo-white.png" />
 
@@ -17,9 +17,7 @@ This course is a **permanent offering of [CS349](https://mogu-lab.github.io/cs34
 * Wednesdays, 8:30-9:20am
 * Thursdays, 8:30-9:45am
 
-**Location:** TBD
-
-**Max Enrollment:** 18
+**Location:** SCI H402
 
 **Distributions:** Data Literacy, and Mathematical Modeling and Problem Solving.
 
@@ -28,3 +26,4 @@ This course is a **permanent offering of [CS349](https://mogu-lab.github.io/cs34
 2. At least **one** of: MATH 205, MATH 206, MATH 220, or MATH 225.
 3. Comfort in Python.
 4. Permission of the instructor.
+
