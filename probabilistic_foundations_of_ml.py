@@ -1,5 +1,5 @@
 ###############################################################################
-# Functions for Fitting NumPyro Models in CS349. DO NOT EDIT.
+# Functions for Fitting NumPyro Models. DO NOT EDIT.
 # Version 0
 ###############################################################################
 
@@ -14,7 +14,7 @@ import numpyro
 import numpyro.handlers as H
 
 
-def cs349_sample_generative_process(model, key, *args, num_samples=None, **kwargs):
+def sample_generative_process(model, key, *args, num_samples=None, **kwargs):
     '''
     A function to sample from a simple numpyro model.
 
@@ -49,7 +49,7 @@ def cs349_sample_generative_process(model, key, *args, num_samples=None, **kwarg
     return jax.vmap(sample_once)(jrandom.split(key, num_samples))
 
 
-def cs349_mle(model, optimizer, key, num_steps, *args, **kwargs):
+def mle(model, optimizer, key, num_steps, *args, **kwargs):
     '''
     A function to perform MLE on a simple numpyro model.
 
@@ -91,7 +91,7 @@ def cs349_mle(model, optimizer, key, num_steps, *args, **kwargs):
     return result
 
 
-def cs349_bayesian_inference(model, key, num_warmup, num_samples, *args, **kwargs):
+def bayesian_inference(model, key, num_warmup, num_samples, *args, **kwargs):
     '''
     A function that performs Bayesian inference on a given model
 
@@ -126,7 +126,7 @@ def cs349_bayesian_inference(model, key, num_warmup, num_samples, *args, **kwarg
     return samples
 
 
-def cs349_sample_predictive(model, key, posterior_samples, *args, **kwargs):
+def sample_predictive(model, key, posterior_samples, *args, **kwargs):
     '''
     A function that feeds samples from the posterior through the model again, useful for predictions
 
@@ -153,7 +153,7 @@ def cs349_sample_predictive(model, key, posterior_samples, *args, **kwargs):
     return predictive(key, *args, **kwargs)
     
 
-def cs349_joint_data_log_likelihood(model, *args, **kwargs):
+def joint_data_log_likelihood(model, *args, **kwargs):
     '''
     A function that computes a fitted model's joint data log-likelihood
 
@@ -172,7 +172,7 @@ def cs349_joint_data_log_likelihood(model, *args, **kwargs):
     
 
 
-def cs349_save_trained_numpyro_model(model, parameters, fname):
+def save_trained_numpyro_model(model, parameters, fname):
     '''
     A function to save a numpyro model to a file
 
@@ -190,7 +190,7 @@ def cs349_save_trained_numpyro_model(model, parameters, fname):
         ), f)
 
         
-def cs349_load_trained_numpyro_model(fname):
+def load_trained_numpyro_model(fname):
     '''
     A function to load a numpyro model from a file
 
@@ -206,7 +206,7 @@ def cs349_load_trained_numpyro_model(fname):
     return H.substitute(r['model'], data=r['parameters'])
 
 
-def cs349_mle_continuous_lvm(model, optimizer, key, num_steps, *args, **kwargs):
+def mle_continuous_lvm(model, optimizer, key, num_steps, *args, **kwargs):
     '''
     A function to perform MLE on a numpyro model with continuous latent variables.
     Note: this function assumes NO DISCRETE latent variables.
@@ -247,7 +247,7 @@ def cs349_mle_continuous_lvm(model, optimizer, key, num_steps, *args, **kwargs):
 
 '''
 # IGNORE!
-def cs349_mle_discrete_lvm(model, optimizer, key, num_steps, *args, latent_variables=[], **kwargs):
+def mle_discrete_lvm(model, optimizer, key, num_steps, *args, latent_variables=[], **kwargs):
     key_init, key_opt = jrandom.split(key, 2)
     
     global_model = H.block(

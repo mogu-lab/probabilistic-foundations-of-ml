@@ -1,5 +1,5 @@
 ###############################################################################
-# CS349 DeepNote Setup. DO NOT EDIT.
+# CS345 DeepNote Setup. DO NOT EDIT.
 # Version 0
 ###############################################################################
 
@@ -9,7 +9,7 @@ import requests
 
 
 USER_NAME = 'mogu-lab'
-REPO_NAME = 'cs349-fall-2024'
+REPO_NAME = 'cs345'
 
 
 def download_directory_from_github(user_name, repo_name, path, skip_downloaded=True):
@@ -60,7 +60,7 @@ def main():
     # Load helper Python files
     print('Loading helper Python files:')
     download_files_from_github(
-        USER_NAME, REPO_NAME, ['cs349.py', 'utils.py'], skip_downloaded=False,
+        USER_NAME, REPO_NAME, ['pfml.py', 'utils.py'], skip_downloaded=False,
     )
 
     print('Done.')

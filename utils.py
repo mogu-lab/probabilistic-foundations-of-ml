@@ -1,5 +1,5 @@
 ###############################################################################
-# Helper Functions for CS349 Assignments. DO NOT EDIT.
+# Helper Functions for Assignments. DO NOT EDIT.
 # Version 0
 ###############################################################################
 
@@ -21,7 +21,7 @@ import numpyro.distributions.constraints as C
 import numpyro.distributions as D
 import chex
 
-from cs349 import *
+import probabilistic_foundations_of_ml as pfml
 
 
 jax.config.update('jax_enable_x64', True)
@@ -92,7 +92,7 @@ def plot_classifier_of_control_vs_age_and_dose(
         jnp.linspace(0.0, 1.0, num_grid),
     )
 
-    samples = cs349_sample_generative_process(
+    samples = pfml.sample_generative_process(
         fitted_model, 
         jrandom.PRNGKey(seed=0), 
         num_grid ** 2.0, 
@@ -148,7 +148,7 @@ def plot_classifier_of_control_vs_age_and_dose(
 def load_all_regression_models_of_comfort_vs_intensity():
     models = []
     for fname in sorted(glob.glob('data/regression_model_eval_metrics_*.dill')):
-        models.append(cs349_load_trained_numpyro_model(fname))
+        models.append(pfml.load_trained_numpyro_model(fname))
 
     return models
     
@@ -175,7 +175,7 @@ def plot_regression_model_of_comfort_vs_intensity(
         data['Intensity'].min(), data['Intensity'].max(), 200,
     )[..., None]
     
-    samples = cs349_sample_generative_process(
+    samples = pfml.sample_generative_process(
         fitted_model, key, len(test_x), test_x,
     )
 
@@ -321,7 +321,7 @@ def animate_latent_space_path(result, z1, z2, num_points=50, speed=10):
     For use in the factor analysis unit: animates a path in the latent space
 
     Arguments:
-        result: what's returned by the function, cs349_mle_continuous_lvm
+        result: what's returned by the function, pfml.mle_continuous_lvm
         z1: a starting coordinate in the latent space 
         z2: an ending coordinate in the latent space
         num_points: number of points connecting z1 to z2
@@ -346,7 +346,7 @@ def animate_latent_space_path(result, z1, z2, num_points=50, speed=10):
     z_path = z1[None, ...] * rho + z2[None, ...] * (1.0 - rho)
 
     # Decode the latent variables along the path
-    path = cs349_sample_generative_process(
+    path = pfml.sample_generative_process(
         H.condition(result.model_mle, data=dict(z=z_path)), 
         jrandom.PRNGKey(seed=0), 
         N=z_path.shape[0], 

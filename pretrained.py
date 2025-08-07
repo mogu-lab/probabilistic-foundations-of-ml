@@ -11,7 +11,7 @@ import jax.random as jrandom
 import numpyro
 
 from utils import *
-from cs349 import *
+import probabilistic_foundations_of_ml as pfml
 
 
 DATA_DIR = 'data'
@@ -75,7 +75,7 @@ def fit_and_save_regression_eval_metrics_models():
     def fit_helper(model, key):
         optimizer = numpyro.optim.Adam(step_size=0.01)
     
-        result = cs349_mle(
+        result = pfml.mle(
             model,
             optimizer, 
             key, 
@@ -147,7 +147,7 @@ def fit_and_save_regression_eval_metrics_models():
         result = fit_helper(model, key)
         results.append(result)
         
-        cs349_save_trained_numpyro_model(
+        pfml.save_trained_numpyro_model(
             result.model_mle,
             result.parameters_mle,
             os.path.join(
@@ -162,7 +162,7 @@ def fit_and_save_regression_eval_metrics_models():
     parameters = copy.deepcopy(r.parameters_mle)    
     parameters['std_dev'] *= 2.0
 
-    cs349_save_trained_numpyro_model(
+    pfml.save_trained_numpyro_model(
         model1,
         parameters,
         os.path.join(
@@ -174,7 +174,7 @@ def fit_and_save_regression_eval_metrics_models():
     parameters = copy.deepcopy(r.parameters_mle)    
     parameters['std_dev'] /= 2.0
     
-    cs349_save_trained_numpyro_model(
+    pfml.save_trained_numpyro_model(
         model1,
         parameters,
         os.path.join(
@@ -192,7 +192,7 @@ def fit_and_save_regression_eval_metrics_models():
         parameters,
     )
     
-    cs349_save_trained_numpyro_model(
+    pfml.save_trained_numpyro_model(
         model1,
         parameters,
         os.path.join(
