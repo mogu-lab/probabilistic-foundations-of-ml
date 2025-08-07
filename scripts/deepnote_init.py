@@ -60,7 +60,10 @@ def main():
     # Load helper Python files
     print('Loading helper Python files:')
     download_files_from_github(
-        USER_NAME, REPO_NAME, ['pfml.py', 'utils.py'], skip_downloaded=False,
+        USER_NAME,
+        REPO_NAME,
+        ['probabilistic_foundations_of_ml.py', 'utils.py'],
+        skip_downloaded=False,
     )
 
     print('Done.')
