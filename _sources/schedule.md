@@ -124,7 +124,7 @@ We may adapt the course schedule to accomodate your learning!
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW2 Checkpoint. Submit it on gradescope on midnight the night before.</span>
+            <span>Checkpoint 2.1 (by midnight the <strong>night before</strong>)</span>
           </li>
         </ul>
       </td>
