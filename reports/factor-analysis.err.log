@@ -1,0 +1,60 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/nbclient/client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 166, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/nbclient/client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/nbclient/client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/nbclient/client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# Define random generator keys for sampling
+key = jrandom.PRNGKey(seed=0)
+key_z, key_x = jrandom.split(key, 2)
+
+# Choose number of samples to draw
+N = 500
+
+# Draw samples of the latent variable
+z = p_z.sample(key_z, (N,))
+
+# Decode them
+mu = decoder(z)
+
+# Define and sample from the conditional distribution of X given Z
+# Notice that we didn't use D.MultivariateNormal -- we'll explain why below
+p_x_given_z = D.Normal(mu, 0.1 * jnp.ones(2)).to_event(1)
+x = p_x_given_z.sample(key_x)
+
+# Plot
+fig = plt.figure(figsize=(5, 5))
+
+plt.scatter(mu[:, 0], mu[:, 1], label=r'$f(\cdot; W)$')
+plt.scatter(x[:, 0], x[:, 1], color='red', alpha=0.5, label=r'$x_n$')
+
+plt.xlabel(r'$x_1$')
+plt.ylabel(r'$x_2$')
+plt.title('Samples from Factor Analysis Model')
+plt.legend()
+plt.tight_layout()
+plt.show()
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[6], line 2[0m
+[1;32m      1[0m [38;5;66;03m# Define random generator keys for sampling[39;00m
+[0;32m----> 2[0m key [38;5;241m=[39m [43mjrandom[49m[38;5;241m.[39mPRNGKey(seed[38;5;241m=[39m[38;5;241m0[39m)
+[1;32m      3[0m key_z, key_x [38;5;241m=[39m jrandom[38;5;241m.[39msplit(key, [38;5;241m2[39m)
+[1;32m      5[0m [38;5;66;03m# Choose number of samples to draw[39;00m
+
+[0;31mNameError[0m: name 'jrandom' is not defined
+

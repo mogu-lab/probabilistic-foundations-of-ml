@@ -181,9 +181,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-1-bfc8535d-2173-4e4e-a63f-54ef7951809c/notebook/HW-8934a5f1724e404d9b837700ee4ab787" rel="noopener noreferrer" target="_blank">Homework 1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-2-e446a02b-ec5c-431a-bc44-78ed5325b944/notebook/HW-e0d4ae65eef94c8c8837dbb966f68ed5" rel="noopener noreferrer" target="_blank">Homework 2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-3-e63adfcd-95ed-4b0d-b6c8-badf159dd229/notebook/HW-d7cf899f1c9943aba860c6db880110b5" rel="noopener noreferrer" target="_blank">Homework 3</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-3-Duplicate-13550281-1783-4c0f-9e4d-db658979f189/notebook/HW-1c6ec4a219eb4c018efdc7c00cb7a573" rel="noopener noreferrer" target="_blank">Homework 4</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-5-3fd551a8-7800-4c08-be37-a6da0cd7feea/notebook/HW-8186135b40b24b6681e4aa1776a03a38" rel="noopener noreferrer" target="_blank">Homework 5</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-6-1d3afd95-3a00-43da-b224-10a9f2471c00/notebook/HW-b4822083e1ee499588f34648df70d623" rel="noopener noreferrer" target="_blank">Homework 6</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noopener noreferrer" target="_blank">Homework 7</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
@@ -395,7 +392,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
 <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span> 
-<span class="kn">from</span> <span class="nn">cs349</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">probabilistic_foundations_of_ml</span> <span class="k">as</span> <span class="nn">pfml</span>
 </pre></div>
 </div>
 </div>
@@ -411,23 +408,23 @@ document.write(`
 <h2><span class="section-number">9.1. </span>The Data Generating Process<a class="headerlink" href="#the-data-generating-process" title="Permalink to this heading">#</a></h2>
 <p>In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions. In these functions, we describe the model’s “generative process”—or, a procedure we use to sample the observed data. You just learned how to represent a whole data set using a model (using the plate notation above). We will therefore walk through a specific example that we will then code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Suppose we want to model the joint distribution of the day-of-the-week, <span class="math notranslate nohighlight">\(D\)</span>, and whether a patient is intoxicated, <span class="math notranslate nohighlight">\(I\)</span>. We can do this via the model,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-61d7432c-ef23-4825-9bef-83eee6a83370">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-61d7432c-ef23-4825-9bef-83eee6a83370" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-48c8fd84-6f6e-447d-872e-bd8e4680ea4e">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-48c8fd84-6f6e-447d-872e-bd8e4680ea4e" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi).
 \end{align}\]</div>
 <p>In this model,</p>
 <ul class="simple">
 <li><p><em>Marginal:</em> <span class="math notranslate nohighlight">\(p_D(\cdot; \pi)\)</span> is a distribution over the days of the week. We will therefore define it to be a Categorical distribution:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-ecd23206-24c7-4f49-863b-f7b72907e96f">
-<span class="eqno">(9.2)<a class="headerlink" href="#equation-ecd23206-24c7-4f49-863b-f7b72907e96f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ca8ca586-5016-4844-8a0e-9d932dabe6b9">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-ca8ca586-5016-4844-8a0e-9d932dabe6b9" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi).
 \end{align}\]</div>
 <ul class="simple">
 <li><p><em>Conditional:</em> <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d_n; \rho)\)</span> is the probability that a patient arrives at the ER with intoxication given that <span class="math notranslate nohighlight">\(D = d_n\)</span>. Since “intoxication” is a binary outcome, we will model it using a Bernoulli. However, recall that the probability of intoxication <em>changes with the day of the week</em>—on some days, we’re more likely to treat patients with intoxication. The parameter of the Bernoulli distribution therefore needs to change depending on the day of the week. We therefore define:</p></li>
 </ul>
-<div class="amsmath math notranslate nohighlight" id="equation-9ccefb63-be48-4e61-8d73-29bcc2c8983a">
-<span class="eqno">(9.3)<a class="headerlink" href="#equation-9ccefb63-be48-4e61-8d73-29bcc2c8983a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-62fa89e8-5ec0-4c14-950c-e93cb847f957">
+<span class="eqno">(9.3)<a class="headerlink" href="#equation-62fa89e8-5ec0-4c14-950c-e93cb847f957" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 \end{align}\]</div>
 <p><strong>Valid Parameter Values:</strong> Since each entry of <span class="math notranslate nohighlight">\(\rho\)</span> represents a Bernoulli distribution, each entry must be on between 0 and 1 (i.e. on the “unit interval”). And since <span class="math notranslate nohighlight">\(\pi\)</span> represents a Categorical distribution, its entries must sum to 1 (a fancy name of this is that <span class="math notranslate nohighlight">\(\pi\)</span> lies on a “simplex”). We note this briefly because we will have to communicate to <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> the valid values these parameters may take on (but don’t worry, this isn’t hard to do).</p>
@@ -543,13 +540,13 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 </div>
-<p><strong>Sampling from the Model:</strong> We created a helper function for you, <code class="docutils literal notranslate"><span class="pre">cs349_sample_generative_process</span></code>, to sample from this model. The function takes in a <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> model, a random generator key, and then all arguments your model takes in (in this case, <code class="docutils literal notranslate"><span class="pre">N,</span> <span class="pre">d=None,</span> <span class="pre">i=None</span></code>). Note that we haven’t fit the model yet to the data.</p>
+<p><strong>Sampling from the Model:</strong> We created a helper function for you, <code class="docutils literal notranslate"><span class="pre">pfml.sample_generative_process</span></code>, to sample from this model. The function takes in a <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> model, a random generator key, and then all arguments your model takes in (in this case, <code class="docutils literal notranslate"><span class="pre">N,</span> <span class="pre">d=None,</span> <span class="pre">i=None</span></code>). Note that we haven’t fit the model yet to the data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># Number of samples to generate</span>
 <span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Random generator key to use</span>
 
-<span class="n">cs349_sample_generative_process</span><span class="p">(</span><span class="n">model_of_intoxication_and_day</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">pfml</span><span class="o">.</span><span class="n">sample_generative_process</span><span class="p">(</span><span class="n">model_of_intoxication_and_day</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -564,8 +561,8 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <p><strong>Performing the MLE:</strong> We will now perform the MLE using another helper function we’ve created. Recall that the MLE for this model is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e2ef012f-aa5d-48cf-88ea-32b1e445ccad">
-<span class="eqno">(9.4)<a class="headerlink" href="#equation-e2ef012f-aa5d-48cf-88ea-32b1e445ccad" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3b3e4f94-fc3e-4de2-a7ad-64dd4dc6d837">
+<span class="eqno">(9.4)<a class="headerlink" href="#equation-3b3e4f94-fc3e-4de2-a7ad-64dd4dc6d837" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi^\text{MLE}, \rho^\text{MLE} &amp;= \mathrm{argmax}_{\pi, \rho} \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \log \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \sum\limits_{n=1}^N \log p_{I | D}(i_n | d_n; \rho) + \log p_D(d_n; \pi)
@@ -749,7 +746,7 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </table>
 </div></div></div>
 </div>
-<p>Next, we introduce a helper function, <code class="docutils literal notranslate"><span class="pre">cs349_mle</span></code>, for performing the MLE. This function takes in:</p>
+<p>Next, we introduce a helper function, <code class="docutils literal notranslate"><span class="pre">pfml.mle</span></code>, for performing the MLE. This function takes in:</p>
 <ul class="simple">
 <li><p>A <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> model.</p></li>
 <li><p>An optimizer—this is what will do the maximization. We’ll cover optimization at a later chapter. For now, you can just treat them as black boxes.</p></li>
@@ -781,7 +778,7 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <span class="n">key_optimizer</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># Perform MLE!</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">cs349_mle</span><span class="p">(</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pfml</span><span class="o">.</span><span class="n">mle</span><span class="p">(</span>
     <span class="n">model_of_intoxication_and_day</span><span class="p">,</span> 
     <span class="n">optimizer</span><span class="p">,</span> 
     <span class="n">key_optimizer</span><span class="p">,</span>
@@ -797,22 +794,22 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1000 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:27,  1.97it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:45,  1.90it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|█▉        | 195/1000 [00:00&lt;00:01, 427.18it/s, init loss: 26390.5733, avg. loss [101-150]: 23982.6927]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 21%|██        | 209/1000 [00:00&lt;00:01, 444.99it/s, init loss: 26390.5733, avg. loss [151-200]: 23682.9217]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|████      | 400/1000 [00:00&lt;00:00, 814.04it/s, init loss: 26390.5733, avg. loss [351-400]: 23362.6612]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 41%|████      | 411/1000 [00:00&lt;00:00, 811.91it/s, init loss: 26390.5733, avg. loss [351-400]: 23362.6612]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 61%|██████    | 607/1000 [00:00&lt;00:00, 1133.07it/s, init loss: 26390.5733, avg. loss [551-600]: 23337.1126]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 62%|██████▏   | 618/1000 [00:00&lt;00:00, 1125.48it/s, init loss: 26390.5733, avg. loss [551-600]: 23337.1126]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 80%|████████  | 803/1000 [00:00&lt;00:00, 1352.82it/s, init loss: 26390.5733, avg. loss [751-800]: 23335.6070]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 83%|████████▎ | 828/1000 [00:00&lt;00:00, 1380.30it/s, init loss: 26390.5733, avg. loss [751-800]: 23335.6070]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:01&lt;00:00, 996.48it/s, init loss: 26390.5733, avg. loss [951-1000]: 23335.5544]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:01&lt;00:00, 989.48it/s, init loss: 26390.5733, avg. loss [951-1000]: 23335.5544]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -823,7 +820,7 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 </div>
-<p>The object returned to us by <code class="docutils literal notranslate"><span class="pre">cs349_mle</span></code> contains several useful components:</p>
+<p>The object returned to us by <code class="docutils literal notranslate"><span class="pre">pfml.mle</span></code> contains several useful components:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">result.model_mle</span></code> is the <em>fitted</em> model. We’ll need this to sample from the model.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">result.parameters_mle</span></code> are the parameters of the fitted model.</p></li>
@@ -935,7 +932,7 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># Number of samples to generate</span>
 <span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Random generator key to use</span>
 
-<span class="n">cs349_sample_generative_process</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">model_mle</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">pfml</span><span class="o">.</span><span class="n">sample_generative_process</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">model_mle</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

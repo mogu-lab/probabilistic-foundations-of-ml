@@ -181,9 +181,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-1-bfc8535d-2173-4e4e-a63f-54ef7951809c/notebook/HW-8934a5f1724e404d9b837700ee4ab787" rel="noopener noreferrer" target="_blank">Homework 1</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-2-e446a02b-ec5c-431a-bc44-78ed5325b944/notebook/HW-e0d4ae65eef94c8c8837dbb966f68ed5" rel="noopener noreferrer" target="_blank">Homework 2</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-3-e63adfcd-95ed-4b0d-b6c8-badf159dd229/notebook/HW-d7cf899f1c9943aba860c6db880110b5" rel="noopener noreferrer" target="_blank">Homework 3</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-3-Duplicate-13550281-1783-4c0f-9e4d-db658979f189/notebook/HW-1c6ec4a219eb4c018efdc7c00cb7a573" rel="noopener noreferrer" target="_blank">Homework 4</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-5-3fd551a8-7800-4c08-be37-a6da0cd7feea/notebook/HW-8186135b40b24b6681e4aa1776a03a38" rel="noopener noreferrer" target="_blank">Homework 5</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs349-fall-2024-58c90300-f234-48b8-b622-52f4f8ec88e0/project/Homework-6-1d3afd95-3a00-43da-b224-10a9f2471c00/notebook/HW-b4822083e1ee499588f34648df70d623" rel="noopener noreferrer" target="_blank">Homework 6</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noopener noreferrer" target="_blank">Homework 7</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
@@ -400,6 +397,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
 <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">probabilistic_foundations_of_ml</span> <span class="k">as</span> <span class="nn">pfml</span>
 </pre></div>
 </div>
 </div>
@@ -674,8 +672,8 @@ document.write(`
 <li><p><strong>Posterior Update:</strong> Post observing data, we <em>update</em> our beliefs about <span class="math notranslate nohighlight">\(\theta\)</span>. We do this by computing <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>. Observing data will help us reduce the initial uncertainty from the prior, honing in on a set of parameters that could explain the data well. As we show in a bit, this posterior update will depend on both the prior and the likelihood distributions.</p></li>
 </ol>
 <p><strong>Bayesian Models.</strong> By having a prior distribution <span class="math notranslate nohighlight">\(\theta\)</span> to encode our beliefs, we now treat <span class="math notranslate nohighlight">\(\theta\)</span> as a <em>random variable</em>. This means that our generative process will now include an additional line, in which we sample <span class="math notranslate nohighlight">\(\theta\)</span> from the prior. For example, for Bayesian regression, our generative process is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c1bcd822-78ab-42c2-9ecd-04b0dbe0c244">
-<span class="eqno">(21.1)<a class="headerlink" href="#equation-c1bcd822-78ab-42c2-9ecd-04b0dbe0c244" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-df3e51f6-2e21-4e6a-aab7-d8a4f37ab603">
+<span class="eqno">(21.1)<a class="headerlink" href="#equation-df3e51f6-2e21-4e6a-aab7-d8a4f37ab603" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;\sim p_\theta(\cdot) \quad (\text{prior}) \\
 y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta) = \mathcal{N}(\mu(x_n; \theta), \sigma^2) \quad (\text{likelihood}) \\
 \end{align}\]</div>
@@ -690,8 +688,8 @@ y_n | x_n, \theta &amp;\sim p_{Y | X}(\cdot | x_n, \theta) = \mathcal{N}(\mu(x_n
 <p>Before defining <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, let’s walk through an example to show you what this process looks like.</p>
 <p><strong>Illustration: Bayesian Regression.</strong> Let’s see what the Bayesian modeling paradigm looks like for regression, visually. We’ll use the generative process from above, setting <span class="math notranslate nohighlight">\(\sigma\)</span> as a constant (so we can ignore it). We’ve picked an expressive function, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>, that will be fun to visualize—its details aren’t important.</p>
 <p>Given our generative process, our goal is to sample the posterior,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-21732125-307c-44ea-973d-bb75554c7032">
-<span class="eqno">(21.2)<a class="headerlink" href="#equation-21732125-307c-44ea-973d-bb75554c7032" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-26ade3e5-1746-4c04-bfb7-9ef004ced18f">
+<span class="eqno">(21.2)<a class="headerlink" href="#equation-26ade3e5-1746-4c04-bfb7-9ef004ced18f" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\theta | \mathcal{D}) &amp;= p(\theta | x_1, \dots, x_N, y_1, \dots, y_n).
 \end{align}\]</div>
 <p>For intuition, we can visualize posterior samples <span class="math notranslate nohighlight">\(\theta \sim p(\theta | \mathcal{D})\)</span> by plotting the <em>functions</em> they represent, <span class="math notranslate nohighlight">\(\mu(x_n; \theta)\)</span>. The plot below shows samples from the posterior as the number of points, <span class="math notranslate nohighlight">\(N\)</span>, increases.</p>
@@ -708,25 +706,25 @@ p(\theta | \mathcal{D}) &amp;= p(\theta | x_1, \dots, x_N, y_1, \dots, y_n).
 <h2><span class="section-number">21.4. </span>Model-Fitting via Bayes’ Rule<a class="headerlink" href="#model-fitting-via-bayes-rule" title="Permalink to this heading">#</a></h2>
 <p><strong>Bayes’ Rule.</strong> But what is <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, exactly? How can we possibly write down a distribution of models that fit the data well by hand? To avoid specifying this distribution by hand, we will use <em>Baye’s rule</em> to write down <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span> in terms of what we already know how to specify: the joint data likelihood, <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, and the prior.</p>
 <p>Let’s derive Bayes’ rule in general before applying it to our problem. Recall from the chapter on joint probability that a joint distribution over two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, can be factorized as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e7f12422-8474-485d-860f-a1f1d6aa07ca">
-<span class="eqno">(21.3)<a class="headerlink" href="#equation-e7f12422-8474-485d-860f-a1f1d6aa07ca" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4f7f8f83-5a30-49b8-b392-e7397ee4149d">
+<span class="eqno">(21.3)<a class="headerlink" href="#equation-4f7f8f83-5a30-49b8-b392-e7397ee4149d" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{B | A}(b | a) \cdot p_A(a) \quad (\text{Option 1}) \\
 &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad (\text{Option 2})
 \end{align}\]</div>
 <p>This means we can also equate the two factorizations:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4d8df105-c89c-436a-bb8d-a8278949f025">
-<span class="eqno">(21.4)<a class="headerlink" href="#equation-4d8df105-c89c-436a-bb8d-a8278949f025" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0ad48a8d-803a-4330-a9fb-3eb99c4a326f">
+<span class="eqno">(21.4)<a class="headerlink" href="#equation-0ad48a8d-803a-4330-a9fb-3eb99c4a326f" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) \cdot p_A(a) &amp;= p_{A | B}(a | b) \cdot p_B(b)
 \end{align}\]</div>
 <p>Diving both sides by <span class="math notranslate nohighlight">\(p_A(a)\)</span>, we get:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0573249a-d5d8-4638-8f86-266c57bc9431">
-<span class="eqno">(21.5)<a class="headerlink" href="#equation-0573249a-d5d8-4638-8f86-266c57bc9431" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c8b2f797-a3d3-4a10-a260-eddca18ff555">
+<span class="eqno">(21.5)<a class="headerlink" href="#equation-c8b2f797-a3d3-4a10-a260-eddca18ff555" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text{(Bayes' Rule)}
 \end{align}\]</div>
 <p>This is Bayes’ rule. What’s cool about it is that relates <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> to <span class="math notranslate nohighlight">\(p_{A | B}(a | b)\)</span>.</p>
 <p><strong>Bayesian Inference.</strong> Using Bayes’ rule in the context of our problem, let’s treat <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> <em>and</em> <span class="math notranslate nohighlight">\(\theta\)</span> as random variables. We can now relate <span class="math notranslate nohighlight">\(p(\theta | \mathcal{D})\)</span>, which we don’t know how to specify, to <span class="math notranslate nohighlight">\(p(\mathcal{D} | \theta)\)</span>, which we do know how to specify:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6bc2a766-2045-4e5f-9592-18463936bc53">
-<span class="eqno">(21.6)<a class="headerlink" href="#equation-6bc2a766-2045-4e5f-9592-18463936bc53" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fff6008b-1910-4d46-acb9-99723cbc9131">
+<span class="eqno">(21.6)<a class="headerlink" href="#equation-fff6008b-1910-4d46-acb9-99723cbc9131" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{p(\theta | \mathcal{D})}_{\text{posterior}} &amp;= \frac{\overbrace{p(\mathcal{D} | \theta)}^{\text{likelihood}} \cdot \overbrace{p(\theta)}^{\text{prior}}}{\underbrace{p(\mathcal{D})}_{\text{normalizing const.}}}
 \end{align}\]</div>
 <p>When used as a model-fitting paradigm, each term in Bayes’ rule has a special name. We’ll now define each:</p>
@@ -734,8 +732,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <li><p><strong>Likelihood:</strong> This is the data joint likelihood, which we’ve previously maximized as part of the MLE.</p>
 <blockquote>
 <div><p>For example, suppose we’re fitting a linear regression model to predict an intergalactic being’s glow given age. Our model is then:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-11d77c89-c068-4586-ba58-5f36c1844d77">
-<span class="eqno">(21.7)<a class="headerlink" href="#equation-11d77c89-c068-4586-ba58-5f36c1844d77" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d17807ad-e694-4bea-8610-232364487d7c">
+<span class="eqno">(21.7)<a class="headerlink" href="#equation-d17807ad-e694-4bea-8610-232364487d7c" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D} | \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n | \theta) \\
     &amp;= \prod\limits_{n=1}^N p_{Y | X}(y_n | x_n, \theta) \\
     &amp;= \prod\limits_{n=1}^N \mathcal{N}(y_n | \underbrace{\theta_0 + \theta_1 \cdot x_n}_{\mu(x_n; \theta)}, \sigma^2)
@@ -747,8 +745,8 @@ p_{B | A}(b | a) &amp;= \frac{p_{A | B}(a | b) \cdot p_B(b)}{p_A(a)} \quad \text
 <blockquote>
 <div><p>Continuing with the above example, we know that in general, glow decreases with age. We can encode this belief into the inductive bias of the model by selecting an appropriate prior distribution—one for which the slope, <span class="math notranslate nohighlight">\(\theta_1\)</span>, is likely negative. As an example, we could select, <span class="math notranslate nohighlight">\(\mathcal{N}(-1, 0.1)\)</span>. In this way, <span class="math notranslate nohighlight">\(\theta_1\)</span> is most likely to be near <span class="math notranslate nohighlight">\(-1\)</span>. We can similarly encode our belief into the intercept, <span class="math notranslate nohighlight">\(\theta_0\)</span>, saying we believe it should be positive: <span class="math notranslate nohighlight">\(\mathcal{N}(1, 0.1)\)</span>.
 Putting these together, we get the following prior distribution over our model parameters:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a4f301ea-227d-499f-9d40-1f0ba52755c7">
-<span class="eqno">(21.8)<a class="headerlink" href="#equation-a4f301ea-227d-499f-9d40-1f0ba52755c7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-575fa75e-9503-4d5c-8151-23defa4b0102">
+<span class="eqno">(21.8)<a class="headerlink" href="#equation-575fa75e-9503-4d5c-8151-23defa4b0102" title="Permalink to this equation">#</a></span>\[\begin{align}
     p_\theta(\cdot) = p_{\theta_1}(\cdot) \cdot p_{\theta_0}(\cdot) = \mathcal{N}(-1, 0.1) \cdot \mathcal{N}(1, 0.1)
     \end{align}\]</div>
 </div></blockquote>
@@ -756,8 +754,8 @@ Putting these together, we get the following prior distribution over our model p
 </li>
 <li><p><strong>Posterior:</strong> This is the distribution of interest. It’s called a posterior because it determines the distribution of likely models, <span class="math notranslate nohighlight">\(\theta\)</span>, <em>after having observed data</em>. The posterior balances information from both the prior and the likelihood.</p></li>
 <li><p><strong>Normalizing Constant:</strong> This is a constant that turns the whole fraction into a valid probability density function (i.e. a function that integrates to 1). To compute <span class="math notranslate nohighlight">\(p(\mathcal{D})\)</span>, we use the law of total probability:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-750a69ca-317c-4364-9ecc-7f76523950e8">
-<span class="eqno">(21.9)<a class="headerlink" href="#equation-750a69ca-317c-4364-9ecc-7f76523950e8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d7cabc48-cf16-4ea0-8a1c-486f8dee5dbc">
+<span class="eqno">(21.9)<a class="headerlink" href="#equation-d7cabc48-cf16-4ea0-8a1c-486f8dee5dbc" title="Permalink to this equation">#</a></span>\[\begin{align}
     p(\mathcal{D}) &amp;= \int\limits \underbrace{p(\mathcal{D} | \theta) \cdot p(\theta)}_{\text{numerator of Bayes' rule}} d\theta
     \end{align}\]</div>
 <p>Notice that the law of total probability tells us to integrate the numerator of Bayes’ rule over the support of <span class="math notranslate nohighlight">\(\theta\)</span>. In doing so, when we divide by it, the whole fraction integrates to <span class="math notranslate nohighlight">\(1\)</span>. In general, marginalizing out a variable via the law of total probability is intractable—there’s no analytic solution to it, and approximating it is computationally too expensive. For now, we won’t worry about how to compute this integral (or how to <em>avoid</em> computing it).</p>
@@ -799,7 +797,7 @@ Putting these together, we get the following prior distribution over our model p
 </div>
 </div>
 </div>
-<p>In the above model, we use <code class="docutils literal notranslate"><span class="pre">numpyro.deterministic</span></code>. Notice how <code class="docutils literal notranslate"><span class="pre">cs349_sample_generative_process</span></code> returns variables created with <code class="docutils literal notranslate"><span class="pre">numpyro.param</span></code> and <code class="docutils literal notranslate"><span class="pre">numpyro.sample</span></code>? Recall that <code class="docutils literal notranslate"><span class="pre">numpyro.deterministic</span></code>, allows you to save all other variables. In this case, since we’re interested in visualizing <em>epistemic uncertainty</em>, we want to visualize <span class="math notranslate nohighlight">\(\mu(\cdot; \theta)\)</span>. This new primitive allows us to save it. When calling <code class="docutils literal notranslate"><span class="pre">cs349_sample_generative_process</span></code>, we’ll now be able to see a new variable called <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
+<p>In the above model, we use <code class="docutils literal notranslate"><span class="pre">numpyro.deterministic</span></code>. Notice how <code class="docutils literal notranslate"><span class="pre">pfml.sample_generative_process</span></code> returns variables created with <code class="docutils literal notranslate"><span class="pre">numpyro.param</span></code> and <code class="docutils literal notranslate"><span class="pre">numpyro.sample</span></code>? Recall that <code class="docutils literal notranslate"><span class="pre">numpyro.deterministic</span></code>, allows you to save all other variables. In this case, since we’re interested in visualizing <em>epistemic uncertainty</em>, we want to visualize <span class="math notranslate nohighlight">\(\mu(\cdot; \theta)\)</span>. This new primitive allows us to save it. When calling <code class="docutils literal notranslate"><span class="pre">pfml.sample_generative_process</span></code>, we’ll now be able to see a new variable called <code class="docutils literal notranslate"><span class="pre">mu</span></code>.</p>
 <p>For completeness, let’s also fit the non-Bayesian model using the MLE to our IHH data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -812,7 +810,7 @@ Putting these together, we get the following prior distribution over our model p
 <span class="n">key_optimizer</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># Fit the model via the MLE</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">cs349_mle</span><span class="p">(</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pfml</span><span class="o">.</span><span class="n">mle</span><span class="p">(</span>
     <span class="n">univariate_linear_regression</span><span class="p">,</span> 
     <span class="n">optimizer</span><span class="p">,</span> 
     <span class="n">key_optimizer</span><span class="p">,</span> 
@@ -825,58 +823,21 @@ Putting these together, we get the following prior distribution over our model p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/10000 [00:00&lt;?, ?it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/10000 [00:00&lt;30:46,  5.42it/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  7%|▋         | 715/10000 [00:00&lt;00:02, 3116.84it/s, init loss: 566.6539, avg. loss [1-500]: -229.7082]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 14%|█▍        | 1449/10000 [00:00&lt;00:01, 4737.08it/s, init loss: 566.6539, avg. loss [501-1000]: -382.8964]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 22%|██▏       | 2160/10000 [00:00&lt;00:01, 5575.88it/s, init loss: 566.6539, avg. loss [1501-2000]: -382.8964]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 28%|██▊       | 2841/10000 [00:00&lt;00:01, 5988.61it/s, init loss: 566.6539, avg. loss [2001-2500]: -382.8964]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 36%|███▌      | 3568/10000 [00:00&lt;00:01, 6403.75it/s, init loss: 566.6539, avg. loss [3001-3500]: -382.8932]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 43%|████▎     | 4285/10000 [00:00&lt;00:00, 6643.49it/s, init loss: 566.6539, avg. loss [3501-4000]: -382.8933]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|████▉     | 4971/10000 [00:00&lt;00:00, 6561.63it/s, init loss: 566.6539, avg. loss [4001-4500]: -382.8935]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 57%|█████▋    | 5688/10000 [00:00&lt;00:00, 6744.93it/s, init loss: 566.6539, avg. loss [5001-5500]: -382.8949]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 64%|██████▍   | 6416/10000 [00:01&lt;00:00, 6904.81it/s, init loss: 566.6539, avg. loss [5501-6000]: -382.8953]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 71%|███████▏  | 7141/10000 [00:01&lt;00:00, 7006.79it/s, init loss: 566.6539, avg. loss [6501-7000]: -382.8937]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 79%|███████▊  | 7870/10000 [00:01&lt;00:00, 7089.61it/s, init loss: 566.6539, avg. loss [7001-7500]: -382.8939]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 86%|████████▌ | 8596/10000 [00:01&lt;00:00, 7137.58it/s, init loss: 566.6539, avg. loss [8001-8500]: -382.8939]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 93%|█████████▎| 9326/10000 [00:01&lt;00:00, 7186.14it/s, init loss: 566.6539, avg. loss [8501-9000]: -382.8938]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 10000/10000 [00:01&lt;00:00, 6307.21it/s, init loss: 566.6539, avg. loss [9501-10000]: -382.8936]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done.
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">7</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">step_size</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># Pick a random generator seed for the optimizer</span>
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">key_optimizer</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="c1"># Fit the model via the MLE</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="n">result</span> <span class="o">=</span> <span class="n">pfml</span><span class="o">.</span><span class="n">mle</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">univariate_linear_regression</span><span class="p">,</span> 
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">optimizer</span><span class="p">,</span> 
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">y</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Telekinetic-Ability&#39;</span><span class="p">]),</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;jrandom&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -888,7 +849,7 @@ Putting these together, we get the following prior distribution over our model p
 <span class="n">x_test</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
 <span class="c1"># Make predictions</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">cs349_sample_generative_process</span><span class="p">(</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">pfml</span><span class="o">.</span><span class="n">sample_generative_process</span><span class="p">(</span>
     <span class="n">result</span><span class="o">.</span><span class="n">model_mle</span><span class="p">,</span> 
     <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> 
     <span class="nb">len</span><span class="p">(</span><span class="n">x_test</span><span class="p">),</span> 
@@ -938,7 +899,7 @@ Putting these together, we get the following prior distribution over our model p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/34f2ceb1d8622b97bf57cf85a55c162e0ff4c1765c02797abd8158fed3255aa7.png" src="_images/34f2ceb1d8622b97bf57cf85a55c162e0ff4c1765c02797abd8158fed3255aa7.png" />
+<img alt="_images/22f2d4ece2efe6ffa4a10e91df30cbf0c019cc9663d3360380cdc28bf6461e60.png" src="_images/22f2d4ece2efe6ffa4a10e91df30cbf0c019cc9663d3360380cdc28bf6461e60.png" />
 </div>
 </div>
 <p>As you can see, our gradient optimizer converged, and our model fits the data as well as any linear model can fit a non-linear trend.</p>
@@ -987,7 +948,7 @@ Putting these together, we get the following prior distribution over our model p
 </section>
 <section id="bayesian-inference-in-numpyro">
 <h2><span class="section-number">21.6. </span>Bayesian Inference in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#bayesian-inference-in-numpyro" title="Permalink to this heading">#</a></h2>
-<p><strong>Posterior Sampling.</strong> Now that we have our Bayesian model, let’s fit it by sampling from the posterior. We will do this using a helper function we’ve created, <code class="docutils literal notranslate"><span class="pre">cs349_bayesian_inference</span></code>. This function uses a class of algorithm called <em>Markov Chain Monte Carlo</em> (MCMC). We will not get into how such algorithms work, but there are a few things you should know about them:</p>
+<p><strong>Posterior Sampling.</strong> Now that we have our Bayesian model, let’s fit it by sampling from the posterior. We will do this using a helper function we’ve created, <code class="docutils literal notranslate"><span class="pre">pfml.bayesian_inference</span></code>. This function uses a class of algorithm called <em>Markov Chain Monte Carlo</em> (MCMC). We will not get into how such algorithms work, but there are a few things you should know about them:</p>
 <ol class="arabic simple">
 <li><p>They are iterative.</p></li>
 <li><p>Given an infinite number of iterations, they will eventually draw samples from the model’s posterior.</p></li>
@@ -1004,7 +965,7 @@ Putting these together, we get the following prior distribution over our model p
 <p>Putting all of this together, we get:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">posterior_samples</span> <span class="o">=</span> <span class="n">cs349_bayesian_inference</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">posterior_samples</span> <span class="o">=</span> <span class="n">pfml</span><span class="o">.</span><span class="n">bayesian_inference</span><span class="p">(</span>
     <span class="n">univariate_bayesian_linear_regression</span><span class="p">,</span> 
     <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> 
     <span class="mi">20000</span><span class="p">,</span> 
@@ -1013,6 +974,11 @@ Putting these together, we get the following prior distribution over our model p
     <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]),</span> 
     <span class="n">y</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Telekinetic-Ability&#39;</span><span class="p">]),</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sample: 100%|█████████████████████████████████████████████████| 25000/25000 [00:02&lt;00:00, 10689.18it/s, 3 steps of size 4.04e-01. acc. prob=0.93]
 </pre></div>
 </div>
 </div>
@@ -1052,21 +1018,21 @@ Putting these together, we get the following prior distribution over our model p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8d82b4ab163854a1a3b8653caca2e734721f3f734913920820c8f3af674a6feb.png" src="_images/8d82b4ab163854a1a3b8653caca2e734721f3f734913920820c8f3af674a6feb.png" />
+<img alt="_images/d77ffce21ebb9f6ee75fe83a27c8d6477ac063235f838c68c8e214bfdabbb3ae.png" src="_images/d77ffce21ebb9f6ee75fe83a27c8d6477ac063235f838c68c8e214bfdabbb3ae.png" />
 </div>
 </div>
 <p>Looking at the above distribution, you can see that the slope and intercept are <em>negatively correlated</em>; as slope increases, the intercept decreases. But in the prior, we sampled the slope and intercept from two <em>independent</em> Gaussians—how come they are correlated in the posterior? This is because once we observe data, we the posterior hones in on models that fit the data well. As a result, if the slope increases, the intercept has to decrease to maintain good fit (and vice versa).</p>
-<p><strong>Predicting from Posterior Samples.</strong> Looking at <code class="docutils literal notranslate"><span class="pre">posterior_samples</span></code>, notice that the shape of <code class="docutils literal notranslate"><span class="pre">mu</span></code> is the number of samples by number of training points. However, we would like to make predictions for non-training points. How can we do that? Using another helper function we’ve created: <code class="docutils literal notranslate"><span class="pre">cs349_sample_predictive</span></code>. This function takes in:</p>
+<p><strong>Predicting from Posterior Samples.</strong> Looking at <code class="docutils literal notranslate"><span class="pre">posterior_samples</span></code>, notice that the shape of <code class="docutils literal notranslate"><span class="pre">mu</span></code> is the number of samples by number of training points. However, we would like to make predictions for non-training points. How can we do that? Using another helper function we’ve created: <code class="docutils literal notranslate"><span class="pre">pfml.sample_predictive</span></code>. This function takes in:</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> model.</p></li>
 <li><p>A random generator key.</p></li>
-<li><p>The posterior samples, returned from <code class="docutils literal notranslate"><span class="pre">cs349_bayesian_inference</span></code>.</p></li>
+<li><p>The posterior samples, returned from <code class="docutils literal notranslate"><span class="pre">pfml.bayesian_inference</span></code>.</p></li>
 <li><p>Arguments needed for the model. In this case, the arguments are the test points.</p></li>
 </ul>
 <p>The functions will then apply posterior samples to the new test inputs, giving us a collection of <code class="docutils literal notranslate"><span class="pre">mu</span></code>s.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictive_samples</span> <span class="o">=</span> <span class="n">cs349_sample_predictive</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictive_samples</span> <span class="o">=</span> <span class="n">pfml</span><span class="o">.</span><span class="n">sample_predictive</span><span class="p">(</span>
     <span class="n">univariate_bayesian_linear_regression</span><span class="p">,</span> 
     <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
     <span class="n">posterior_samples</span><span class="p">,</span>
@@ -1117,7 +1083,7 @@ Putting these together, we get the following prior distribution over our model p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/adf3eddd49e437d9f7246b4e146d5df4639e7f698e56f95df6f795fddac13ade.png" src="_images/adf3eddd49e437d9f7246b4e146d5df4639e7f698e56f95df6f795fddac13ade.png" />
+<img alt="_images/d27842178cb92b3fb18c38463e0093db0142b8ef9e193cf56bb5e2cd5dbd1127.png" src="_images/d27842178cb92b3fb18c38463e0093db0142b8ef9e193cf56bb5e2cd5dbd1127.png" />
 </div>
 </div>
 <p>As you can see from the figure, we have a distribution over different linear functions that fit our data best. Of course, none of them are particularly good, since the model is non-linear. But in the region where we have less data (age <span class="math notranslate nohighlight">\(&gt; 80\)</span>), the model is more uncertain.</p>
