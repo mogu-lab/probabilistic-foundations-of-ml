@@ -39,16 +39,19 @@ Note: late passes **cannot be used for checkpoint** submissions.
 In addition to the technical parts of the homework, *you will also be graded on your ability to work with peers*; in every assignment, we will ask you questions about your teamwork practices. 
 
 
-**Use of Generative AI.** You are free to use generative AI (e.g. ChatGPT, Gemini, etc.) for the following use cases (knowing that it may be incorrect/misleading):
-* You can test your knowledge of the material.
-* Use it as an aid to understanding concepts from class.
+**Use of Generative AI.**
+The world is adapting to pedagogy in the age of Generative AI.
+In the meantime, we ask you to follow the following guidelines:
+* You are **allowed** to use generative AI (e.g. ChatGPT, Gemini, etc.) for the following use cases (knowing that it may be incorrect/misleading):
+  * You can test your knowledge of the material.
+  * Use it as an aid to understanding concepts from class.
 
-Note, however, that for these use cases, you **may not paste in course material and homework.** This is because the course materials were created by the instructor and are a violation of their copyright.
+  > Note, however, that for these use cases, you **may not paste in course material and homework.** This is because the course materials were created by the instructor and are a violation of their copyright.
 
-Next, to make sure the use of Generative AI does not compromise your learning experience, **do not** use it to:
-* Generate code of any kind.
-* Solve problems on your homework.
-* Summarize assigned readings.
+* To make sure the use of Generative AI does not compromise your learning experience, you are **not allowed** use it to:
+  * Generate code of any kind.
+  * Solve problems on your homework.
+  * Summarize assigned readings.
 
 *If you're unsure whether your use of generative AI is acceptable for the course, please ask the instructor **before** using it!*
 
