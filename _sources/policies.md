@@ -43,7 +43,9 @@ In addition to the technical parts of the homework, *you will also be graded on 
 * You can test your knowledge of the material.
 * Use it as an aid to understanding concepts from class.
 
-To make sure the use of Generative AI does not compromise your learning experience, **do not** use it to:
+Note, however, that for these use cases, you **may not paste in course material and homework.** This is because the course materials were created by the instructor and are a violation of their copyright.
+
+Next, to make sure the use of Generative AI does not compromise your learning experience, **do not** use it to:
 * Generate code of any kind.
 * Solve problems on your homework.
 * Summarize assigned readings.
