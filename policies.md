@@ -56,7 +56,7 @@ In the meantime, we ask you to follow the guidelines below:
 * Most importantly, if you're unsure whether your use of generative AI is acceptable for the course, please *ask the instructor **before** using it!*
 
 
-**DeepNote.** DeepNote comes with generative AI built in. Please **disable it**, following [these instructions](https://deepnote.com/docs/deepnote-ai).
+**Disabling Generative AI in DeepNote.** DeepNote comes with generative AI built in. Please **disable it**, following [these instructions](https://deepnote.com/docs/deepnote-ai).
 
 **Honor Code.** We consider violations of this collaboration policy as honor code violations. If you find yourself for whatever reason (stress, mental health, life circumstances, etc.) thinking about violating these policies, *please come talk to us before you do*---we want to help you feel happy and proud of your learning and growth. 
 
