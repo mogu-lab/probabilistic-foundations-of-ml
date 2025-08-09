@@ -41,7 +41,7 @@ In addition to the technical parts of the homework, *you will also be graded on 
 
 **Use of Generative AI.**
 The world is adapting to pedagogy in the age of Generative AI.
-In the meantime, we ask you to follow the following guidelines:
+In the meantime, we ask you to follow the guidelines below: 
 * You are **allowed** to use generative AI (e.g. ChatGPT, Gemini, etc.) for the following use cases (knowing that it may be incorrect/misleading):
   * You can test your knowledge of the material.
   * Use it as an aid to understanding concepts from class.
@@ -53,7 +53,8 @@ In the meantime, we ask you to follow the following guidelines:
   * Solve problems on your homework.
   * Summarize assigned readings.
 
-*If you're unsure whether your use of generative AI is acceptable for the course, please ask the instructor **before** using it!*
+* Most importantly, if you're unsure whether your use of generative AI is acceptable for the course, please *ask the instructor **before** using it!*
+
 
 **DeepNote.** DeepNote comes with generative AI built in. Please **disable it**, following [these instructions](https://deepnote.com/docs/deepnote-ai).
 
