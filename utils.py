@@ -14,6 +14,7 @@ from IPython.display import HTML
 from sklearn.inspection import DecisionBoundaryDisplay
 import jax
 import jax.numpy as jnp
+import jax.random as jrandom
 import jax.example_libraries.stax as stax
 
 # For loading pre-trained models
