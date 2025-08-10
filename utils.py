@@ -18,6 +18,7 @@ import jax.random as jrandom
 import jax.example_libraries.stax as stax
 
 # For loading pre-trained models
+import numpyro
 import numpyro.distributions.constraints as C
 import numpyro.distributions as D
 import chex
