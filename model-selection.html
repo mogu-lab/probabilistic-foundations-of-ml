@@ -559,87 +559,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">plot_all_regression_models_of_comfort_vs_intensity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">models</span><span class="p">)</span>
-
-<span class="nn">File ~/work/cs345/cs345/utils.py:222,</span> in <span class="ni">plot_all_regression_models_of_comfort_vs_intensity</span><span class="nt">(data, models)</span>
-<span class="g g-Whitespace">    </span><span class="mi">217</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">218</span>     <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">cols</span><span class="p">,</span> <span class="mf">3.5</span> <span class="o">*</span> <span class="n">rows</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-<span class="g g-Whitespace">    </span><span class="mi">219</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">221</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">models</span><span class="p">)):</span>
-<span class="ne">--&gt; </span><span class="mi">222</span>     <span class="n">plot_regression_model_of_comfort_vs_intensity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">224</span>     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Model </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">225</span>     <span class="k">if</span> <span class="n">idx</span> <span class="o">%</span> <span class="n">cols</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-
-<span class="nn">File ~/work/cs345/cs345/utils.py:179,</span> in <span class="ni">plot_regression_model_of_comfort_vs_intensity</span><span class="nt">(data, fitted_model, ax)</span>
-<span class="g g-Whitespace">    </span><span class="mi">173</span> <span class="n">key</span> <span class="o">=</span> <span class="n">jrandom</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">175</span> <span class="n">test_x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">176</span>     <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Intensity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Intensity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">200</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">177</span> <span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-<span class="ne">--&gt; </span><span class="mi">179</span> <span class="n">samples</span> <span class="o">=</span> <span class="n">pfml</span><span class="o">.</span><span class="n">sample_generative_process</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">180</span>     <span class="n">fitted_model</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_x</span><span class="p">),</span> <span class="n">test_x</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">181</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">183</span> <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">184</span>     <span class="n">test_x</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
-<span class="g g-Whitespace">    </span><span class="mi">185</span>     <span class="n">samples</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span> <span class="o">-</span> <span class="n">samples</span><span class="p">[</span><span class="s1">&#39;std_dev&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">2.0</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">186</span>     <span class="n">samples</span><span class="p">[</span><span class="s1">&#39;mu&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span> <span class="o">+</span> <span class="n">samples</span><span class="p">[</span><span class="s1">&#39;std_dev&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">2.0</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">187</span>     <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$95\%$ of Samples&#39;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">188</span> <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">189</span> <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">190</span>     <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Intensity&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Comfort&#39;</span><span class="p">],</span>
-<span class="g g-Whitespace">    </span><span class="mi">191</span>     <span class="n">c</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span> 
-<span class="g g-Whitespace">    </span><span class="mi">192</span> <span class="p">)</span>    
-
-<span class="nn">File ~/work/cs345/cs345/probabilistic_foundations_of_ml.py:47,</span> in <span class="ni">sample_generative_process</span><span class="nt">(model, key, num_samples, *args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">44</span>     <span class="k">return</span> <span class="n">result</span>
-<span class="g g-Whitespace">     </span><span class="mi">46</span> <span class="k">if</span> <span class="n">num_samples</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">47</span>     <span class="k">return</span> <span class="n">sample_once</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">49</span> <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">sample_once</span><span class="p">)(</span><span class="n">jrandom</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">))</span>
-
-<span class="nn">File ~/work/cs345/cs345/probabilistic_foundations_of_ml.py:35,</span> in <span class="ni">sample_generative_process.&lt;locals&gt;.sample_once</span><span class="nt">(key)</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="k">def</span> <span class="nf">sample_once</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">35</span>     <span class="n">exec</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span><span class="o">.</span><span class="n">get_trace</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span>     <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">38</span>     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">exec</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/numpyro/handlers.py:171,</span> in <span class="ni">trace.get_trace</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">163</span> <span class="k">def</span> <span class="nf">get_trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">164</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">165</span><span class="sd">     Run the wrapped callable and return the recorded trace.</span>
-<span class="g g-Whitespace">    </span><span class="mi">166</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">169</span><span class="sd">     :return: `OrderedDict` containing the execution trace.</span>
-<span class="g g-Whitespace">    </span><span class="mi">170</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">171</span>     <span class="bp">self</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">172</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">trace</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/numpyro/primitives.py:105,</span> in <span class="ni">Messenger.__call__</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">103</span>     <span class="k">return</span> <span class="bp">self</span>
-<span class="g g-Whitespace">    </span><span class="mi">104</span> <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">105</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/numpyro/primitives.py:105,</span> in <span class="ni">Messenger.__call__</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">103</span>     <span class="k">return</span> <span class="bp">self</span>
-<span class="g g-Whitespace">    </span><span class="mi">104</span> <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">105</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="p">[</span><span class="o">...</span> <span class="n">skipping</span> <span class="n">similar</span> <span class="n">frames</span><span class="p">:</span> <span class="n">Messenger</span><span class="o">.</span><span class="fm">__call__</span> <span class="n">at</span> <span class="n">line</span> <span class="mi">105</span> <span class="p">(</span><span class="mi">1</span> <span class="n">times</span><span class="p">)]</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/numpyro/primitives.py:105,</span> in <span class="ni">Messenger.__call__</span><span class="nt">(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">103</span>     <span class="k">return</span> <span class="bp">self</span>
-<span class="g g-Whitespace">    </span><span class="mi">104</span> <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">105</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<span class="nn">File /Users/yanivyacoby/Documents/Repos/cs349-fall-2024/pretrained.py:129,</span> in <span class="ni">&lt;lambda&gt;</span><span class="nt">(N, x, y)</span>
-
-<span class="nn">File /Users/yanivyacoby/Documents/Repos/cs349-fall-2024/pretrained.py:112,</span> in <span class="ni">neural_network_regression_univariate</span><span class="nt">(N, x, y, hidden_layers, activation_fn)</span>
-
-<span class="ne">NameError</span>: name &#39;numpyro&#39; is not defined
-</pre></div>
-</div>
-<img alt="_images/bcd51c90ccf5f66890fbde32add05a3588f99a8167f7cfa073bb74de2e9041c8.png" src="_images/bcd51c90ccf5f66890fbde32add05a3588f99a8167f7cfa073bb74de2e9041c8.png" />
+<img alt="_images/b8ce20a34c186e11ab20e302e1db51c799b9f83ab87caa543c423949275592e5.png" src="_images/b8ce20a34c186e11ab20e302e1db51c799b9f83ab87caa543c423949275592e5.png" />
 </div>
 </div>
 <section id="preventing-over-and-under-fitting">
@@ -677,13 +597,13 @@ document.write(`
 <h2><span class="section-number">16.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Permalink to this heading">#</a></h2>
 <p><strong>A General Purpose Metric.</strong> Since so far, we fit our models by finding parameters that maximize the data log-likelihood (MLE). Can we also use log-likelihood as an evaluation metric? If we trust this metric for <em>fitting</em> our model, surely we should trust it for <em>evaluation</em> as well. And what’s nice about log-likelihood is that, unlike some of the other metrics we’ll introduce next, it’s not model-specific. We can evaluate the log-likelihood of <em>any</em> probabilistic model.</p>
 <p><strong>Log-Likelihood as an Evaluation Metric.</strong> Recall that the data log-likelihood is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c26f80f-c94a-46b3-8a5f-95203633eecc">
-<span class="eqno">(16.1)<a class="headerlink" href="#equation-2c26f80f-c94a-46b3-8a5f-95203633eecc" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3988774c-9fe1-41d7-8819-5d6f18a7fe5b">
+<span class="eqno">(16.1)<a class="headerlink" href="#equation-3988774c-9fe1-41d7-8819-5d6f18a7fe5b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \theta) &amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is our entire data set of <span class="math notranslate nohighlight">\(N\)</span> observations, each <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is an observation, and <span class="math notranslate nohighlight">\(\theta\)</span> is the model parameters. However, notice that in this definition, the data log-likelihood grows as <span class="math notranslate nohighlight">\(N\)</span> increases due to the sum. This means that, if our train, validation and test sets each have a different number of points, we cannot compare their log-likelihoods directly. To fix this problem, we instead compute the <em>average</em> log-likelihood (this is just the above equation divided by <span class="math notranslate nohighlight">\(N\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ed9de91f-09e0-43d6-9b7b-33d08ccd3b47">
-<span class="eqno">(16.2)<a class="headerlink" href="#equation-ed9de91f-09e0-43d6-9b7b-33d08ccd3b47" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a7ba4bd2-440c-404d-ad3f-5341e7bf0fa1">
+<span class="eqno">(16.2)<a class="headerlink" href="#equation-a7ba4bd2-440c-404d-ad3f-5341e7bf0fa1" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Avg. Log-Likelihood} = \frac{1}{N} \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta).
 \end{align}\]</div>
 <div class="admonition-exercise-getting-intuition-for-log-likelihood admonition">
@@ -711,14 +631,14 @@ document.write(`
 <section id="metrics-for-regression">
 <h2><span class="section-number">16.3. </span>Metrics for Regression<a class="headerlink" href="#metrics-for-regression" title="Permalink to this heading">#</a></h2>
 <p><strong>Mean Squared Error (MSE).</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, MSE, specific to regression. This metric can be used together with log-likelihood to paint a clearer picture of model fit. This is, of course, not the only evaluation metric for regression, but it’s a common one, so we’ll focus on it here. For 1-dimensional output data, the MSE is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-06a97ab7-bf21-42f6-b99d-fdf788e6b0a2">
-<span class="eqno">(16.3)<a class="headerlink" href="#equation-06a97ab7-bf21-42f6-b99d-fdf788e6b0a2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1246ed92-5207-4383-94dd-4de1d370793c">
+<span class="eqno">(16.3)<a class="headerlink" href="#equation-1246ed92-5207-4383-94dd-4de1d370793c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{MSE} &amp;= \frac{1}{N} \sum\limits_{n=1}^N (\underbrace{y_n - \widehat{y}_n}_{\text{error}})^2,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(y_n\)</span> is an observation and <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> the model’s prediction. As the name suggests, we compute the error between our model’s prediction and the observation, square it, and average. The MSE can be thought of as a measure of “spread” (or, in statistical lingo, the <em>variance</em>) of the data around the model’s prediction. Hopefully, in contrast to log-likelihood, it’s a little easier to understand, since we may have domain knowledge of what error, <span class="math notranslate nohighlight">\(y_n - \widehat{y}_n\)</span>, is considered high/low.</p>
 <p>But for a probabilistic model, what is the model’s “prediction”? In a probabilistic regression model, we have a <em>distribution</em> of outputs given inputs, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, and a distribution is <em>not</em> a single prediction. Because of this, we have to summarize the conditional distribution using a single value. Here, we will use the mean (which also happens to be the mode—or the most likely value of <span class="math notranslate nohighlight">\(y\)</span>). For our regression model, the mean of the distribion is the “trend,” so</p>
-<div class="amsmath math notranslate nohighlight" id="equation-61911137-a3e6-4222-bca4-2fdc8e26c27f">
-<span class="eqno">(16.4)<a class="headerlink" href="#equation-61911137-a3e6-4222-bca4-2fdc8e26c27f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6629f459-20e7-477a-9196-6eb2a774fdb2">
+<span class="eqno">(16.4)<a class="headerlink" href="#equation-6629f459-20e7-477a-9196-6eb2a774fdb2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{y}_n &amp;= \mu(x_n; W^\text{MLE}).
 \end{align}\]</div>
 <div class="admonition-exercise-implement-and-use-mse admonition">
@@ -737,14 +657,14 @@ document.write(`
 <section id="metrics-for-classification">
 <h2><span class="section-number">16.4. </span>Metrics for Classification<a class="headerlink" href="#metrics-for-classification" title="Permalink to this heading">#</a></h2>
 <p><strong>Accuracy.</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, accuracy, that’s specific to classification. Simply put, accuracy is the fraction of predictions the model got correct:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c044e21d-120e-477e-803c-f941b15f0da7">
-<span class="eqno">(16.5)<a class="headerlink" href="#equation-c044e21d-120e-477e-803c-f941b15f0da7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4fb8b9de-153d-49ce-8b67-7ff11ad9e23e">
+<span class="eqno">(16.5)<a class="headerlink" href="#equation-4fb8b9de-153d-49ce-8b67-7ff11ad9e23e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Accuracy} &amp;= \frac{1}{N} \underbrace{\sum\limits_{n=1}^N \mathbb{I}(y_n = \widehat{y}_n),}_{\text{count correct predictions}}
 \end{align}\]</div>
 <p>where, as before, <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> is the model’s prediction, and <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an indicator function—a function that evaluates to <span class="math notranslate nohighlight">\(1\)</span> when the condition inside is true and <span class="math notranslate nohighlight">\(0\)</span> otherwise. The sum over the indicators counts the number of correct predictions. When divided by <span class="math notranslate nohighlight">\(N\)</span>, we get the fraction of correct predictions.</p>
 <p>Just like before, a probabilistic model does not make “predictions;” it models a full distribution over outputs given inputs. We, again, have to choose how to summarize this distribution using a single value. Remember that in our classification model, <span class="math notranslate nohighlight">\(\rho(x_n)\)</span> outputted the probability of <span class="math notranslate nohighlight">\(x_n\)</span> belonging to class 1 (vs. class 0). To turn this into a prediction, we will threshold it: if <span class="math notranslate nohighlight">\(\rho(x_n) \geq 0.5\)</span>, we’ll say <span class="math notranslate nohighlight">\(x_n\)</span> belongs to class 1—otherwise, it belongs to class 0. We can formalize this using an indicator function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0e03992c-7b9a-427f-a956-5f6c51664212">
-<span class="eqno">(16.6)<a class="headerlink" href="#equation-0e03992c-7b9a-427f-a956-5f6c51664212" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2add85f1-d8cd-4e97-ade4-15d86ca95c9c">
+<span class="eqno">(16.6)<a class="headerlink" href="#equation-2add85f1-d8cd-4e97-ade4-15d86ca95c9c" title="Permalink to this equation">#</a></span>\[\begin{align}
 \widehat{y}_n &amp;= \mathbb{I}(\rho(x_n) \geq 0.5)
 \end{align}\]</div>
 <div class="admonition-exercise-the-shortcomings-of-accuracy admonition">
@@ -752,18 +672,18 @@ document.write(`
 <p><strong>Context.</strong> Since the disease is incredibly rare, occurring only in <span class="math notranslate nohighlight">\(0.1\%\)</span> of the population, doctors don’t yet know what are its causes. The doctors have managed to acquire a large fund to collect data about a large swath of the population, ranging from genetic factors to environmental factors (demographics, occupation, diet, physiology, etc.). They just finished collecting the data and have run a preliminary analysis to determine which factors contribute most.</p>
 <p><strong>Challenge.</strong> Even though their model is <span class="math notranslate nohighlight">\(99.9\%\)</span> accurate, they have found that none of the factors seem to matter to the model—how is this possible? They recruited you to help understand what’s going on with their model.</p>
 <p><strong>Part 1:</strong> You decided to inspect the parameters of the model. In the model, <span class="math notranslate nohighlight">\(1\)</span> represents having the disease and <span class="math notranslate nohighlight">\(0\)</span> represents no disease. Lucky for you, the doctors used a linear classification model (so interpreting it is possible):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-53953944-1a92-4f75-b7c5-9a04866d932a">
-<span class="eqno">(16.7)<a class="headerlink" href="#equation-53953944-1a92-4f75-b7c5-9a04866d932a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0fe02125-8b6e-48c7-9791-0bf987d9c102">
+<span class="eqno">(16.7)<a class="headerlink" href="#equation-0fe02125-8b6e-48c7-9791-0bf987d9c102" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right) 
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-59658b6f-e8f9-4f75-9fb9-822bc7141f1e">
-<span class="eqno">(16.8)<a class="headerlink" href="#equation-59658b6f-e8f9-4f75-9fb9-822bc7141f1e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fda7511a-4f96-43d4-b2f4-1fc6a485efc3">
+<span class="eqno">(16.8)<a class="headerlink" href="#equation-fda7511a-4f96-43d4-b2f4-1fc6a485efc3" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) &amp;= \mathrm{sigmoid}\left( \theta^{(0)} + \sum\limits_{d=1}^{D_x} \theta^{(d)} \cdot x_n^{(d)} \right),
 \end{align}\]</div>
 <p>where the <span class="math notranslate nohighlight">\((d)\)</span>-superscript notation represents the <span class="math notranslate nohighlight">\(d\)</span>th dimension, and <span class="math notranslate nohighlight">\(D_x\)</span> is the dimensionality of the inputs <span class="math notranslate nohighlight">\(x_n\)</span>. When inspecting the parameters, you found that,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2d6c335e-0e90-4a17-96df-fc234c0463c4">
-<span class="eqno">(16.9)<a class="headerlink" href="#equation-2d6c335e-0e90-4a17-96df-fc234c0463c4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e48056ee-1d52-481f-a2cb-8e19c4725eae">
+<span class="eqno">(16.9)<a class="headerlink" href="#equation-e48056ee-1d52-481f-a2cb-8e19c4725eae" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;= [\underbrace{-6.90675}_{\theta^{(0)}}, \underbrace{0.0, 0.0, \dots, 0.0}_{\theta^{(1)}, \dots, \theta^{(D_x)}}].
 \end{align}\]</div>
 <p>Looking at the parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, which dimensions of the input matter most?</p>
