@@ -15,7 +15,7 @@
 
 **Can I take the class credit/non?**
 
-> We **strongly advise against it.** This is because CS 345 is extremely cumulative---every concept you learn will be used repeatedly after it's introduced. As an example, if you chose to only complete 80% of HW2, chances are you will not be able to complete HW3 (or complete very little of it), and so on.
+> We **strongly advise against it.** This is because CS 345 is extremely cumulative---every concept you learn will be used repeatedly after it's introduced. As an example, if you chose to only complete 80% of HW2, chances are you will not be able to complete HW3 (or complete very little of it), and so on. Without being motivated by grades, you may find yourself falling behind, making it difficult to catch up.
 
 
 **Should I take more than 4 classes in total when taking CS 345?**
