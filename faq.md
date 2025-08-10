@@ -15,12 +15,12 @@
 
 **Can I take the class credit/non?**
 
-> Technically, you can, but we **strongly advise against it.** This is because CS 345 is extremely cumulative---every concept you learn will be used repeatedly after its introduced. Thus, as an example, if you chose to only complete 80% of HW2, chances are you will not be able to complete HW3 (or complete very little of it), and so on.
+> We **strongly advise against it.** This is because CS 345 is extremely cumulative---every concept you learn will be used repeatedly after it's introduced. As an example, if you chose to only complete 80% of HW2, chances are you will not be able to complete HW3 (or complete very little of it), and so on.
 
 
 **Should I take more than 4 classes in total when taking CS 345?**
 
-> Technically, you can, but we **strongly advise against it.** CS 345 is a challenging and time-consuming class. We are *confident* you can be successful in it and enjoy it, so long as you have enough *time* dedicated to it. 
+> We **strongly advise against it.** CS 345 is a challenging and time-consuming class. We are *confident* you can be successful in it and enjoy it, so long as you have enough *time* dedicated to it. And by this, we mean enough time to (1) spend on preparing for lectures (reading the materials before coming to class), (2) completing the homework on time, (3) attending *several* office hours per week, and (4) being a full person outside of your classes, with enough time to sleep, see friends, pursue hobbies, etc. These are all key ingredients for success and happiness in the course.
 
 
 **What kind of healthcare context will be used in the class?**
