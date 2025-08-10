@@ -23,12 +23,7 @@
 > We **strongly advise against it.** CS 345 is a challenging and time-consuming class. We are *confident* you can be successful in it and enjoy it, so long as you have enough *time* dedicated to it. And by this, we mean enough time to (1) spend on preparing for lectures (reading the materials before coming to class), (2) completing the homework on time, (3) attending *several* office hours per week, and (4) being a full person outside of your classes, with enough time to sleep, see friends, pursue hobbies, etc. These are all key ingredients for success and happiness in the course.
 
 
-**What kind of healthcare context will be used in the class?**
-
->Since acquiring access to real healthcare data-sets in the context of a class is tricky, we will instead use data from the "Intergalactic Hypothetical Hospital," a hospital we made up especially for this class, where we will be analyzing data to improve medical care for intergalactic beings.
-
-
-**Is this class better for students wishing to go to industry or grad school?**
+**Is this class better for students wishing to go to industry or graduate school?**
 
 > The course will set students up to be able to develop and interrogate probabilistic ML models, which can be helpful in both contexts.
 
@@ -57,5 +52,3 @@
 
 > The current plan is: once a year! 
   
-
-
