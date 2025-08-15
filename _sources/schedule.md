@@ -134,6 +134,16 @@ We may adapt the course schedule to accomodate your learning!
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
+            <span>Lab</span>
+          </li>
+        </ul>
+      </td>
+      <td class="normalday">
+        <span class="date_label date_label_day">18</span>
+        <span class="date_label date_label_month">September</span>
+        <ul class="day_agenda">
+          <li>
+            <span class="tag topic_tag">Topic:</span>
             <span>The Ethics of Data [<a href="https://docs.google.com/presentation/d/1z0btRmPqJo_LcLET1Q3F8yuas1U7E3hldJE8TYC6MbY/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
@@ -146,8 +156,10 @@ We may adapt the course schedule to accomodate your learning!
           </li>
         </ul>
       </td>
+    </tr>
+    <tr class="col_headers light_row">
       <td class="normalday">
-        <span class="date_label date_label_day">18</span>
+        <span class="date_label date_label_day">22</span>
         <span class="date_label date_label_month">September</span>
         <ul class="day_agenda">
           <li>
@@ -168,22 +180,6 @@ We may adapt the course schedule to accomodate your learning!
           </li>
         </ul>
       </td>
-    </tr>
-    <tr class="col_headers light_row">
-      <td class="normalday">
-        <span class="date_label date_label_day">22</span>
-        <span class="date_label date_label_month">September</span>
-        <ul class="day_agenda">
-          <li>
-            <span class="tag topic_tag">Topic:</span>
-            <span>Maximum Likelihood: Code [<a href="https://docs.google.com/presentation/d/1_YuhMoViySureG068w36mS3DeIQisadTlxRUKHdONN0/edit?usp=sharing">slides</a>]</span>
-          </li>
-          <li>
-            <span class="tag preclass_tag">Pre-Class:</span>
-            <span>Read corresponding chapter; prepare questions to ask in class.</span>
-          </li>
-        </ul>
-      </td>
       <td class="normalday">
         <span class="date_label date_label_day">24</span>
         <span class="date_label date_label_month">September</span>
@@ -200,7 +196,7 @@ We may adapt the course schedule to accomodate your learning!
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Optimization [<a href="https://docs.google.com/presentation/d/1kP46TPrzoM2itKM5hNKE18Kfl7P6eOsmltHCP2kA1qE/edit?usp=share_link">slides</a>]</span>
+            <span>Maximum Likelihood: Code [<a href="https://docs.google.com/presentation/d/1_YuhMoViySureG068w36mS3DeIQisadTlxRUKHdONN0/edit?usp=sharing">slides</a>]</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
@@ -234,7 +230,11 @@ We may adapt the course schedule to accomodate your learning!
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Lab</span>
+            <span>Optimization [<a href="https://docs.google.com/presentation/d/1kP46TPrzoM2itKM5hNKE18Kfl7P6eOsmltHCP2kA1qE/edit?usp=share_link">slides</a>]</span>
+          </li>
+          <li>
+            <span class="tag preclass_tag">Pre-Class:</span>
+            <span>Read corresponding chapter; prepare questions to ask in class.</span>
           </li>
         </ul>
       </td>
