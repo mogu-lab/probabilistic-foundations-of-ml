@@ -122,10 +122,6 @@ We may adapt the course schedule to accomodate your learning!
             <span class="tag topic_tag">Topic:</span>
             <span>Lab</span>
           </li>
-          <li>
-            <span class="tag due_tag">Due:</span>
-            <span>Checkpoint 2.1 (by midnight the <strong>night before</strong>)</span>
-          </li>
         </ul>
       </td>
       <td class="normalday">
@@ -135,6 +131,10 @@ We may adapt the course schedule to accomodate your learning!
           <li>
             <span class="tag topic_tag">Topic:</span>
             <span>Lab</span>
+          </li>
+          <li>
+            <span class="tag due_tag">Due:</span>
+            <span>Checkpoint 2.1 (by midnight the <strong>night before</strong>)</span>
           </li>
         </ul>
       </td>
