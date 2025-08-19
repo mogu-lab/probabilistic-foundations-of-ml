@@ -8,7 +8,9 @@
 
 ## Late Policy
 
-**Deadlines.** The assignment due dates are listed in the course schedule. Please read the due dates carefully, since assignments are often due the **night before their listing**. 
+**Deadlines.** The assignment due dates are listed in the course schedule. Please read the due dates carefully, since assignments are often due the **night before their listing**.
+
+**Checkpoints.** Every assignment is broken into pieces, which we expect you to submit on the due dates listed on the course schedule. These checkpoints are there to help *you*: they will help you make sure you stay on top of the material, and they will help us know if, in general, any topics need reinforcements. Checkpoints are therefore graded for *completeness*; you need to show a real attempt at solving *every problem* in the checkpoint, or indicate that you're chatted with a member of the course staff about that problem (including what you're learned from them). If we notice that students are not meeting the checkpoint deadlines, we will start grading checkpoints.
 
 
 **Late Passes.** From our experience, we know that it's difficult to learn new material in class while working on homework on older material. Because of this, we specifically designed the class so that homework topics are always current with the class material. We expect that this will help everyone stay on top of the material. However, for this design to work, we ask for your help in ensuring you don't fall behind. Come talk to us if you have questions or concerns!
