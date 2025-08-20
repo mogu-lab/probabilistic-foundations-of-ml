@@ -407,12 +407,12 @@ document.write(`
 </ul>
 <section id="differences-between-continuous-and-discrete-probability">
 <h2><span class="section-number">11.1. </span>Differences Between Continuous and Discrete Probability<a class="headerlink" href="#differences-between-continuous-and-discrete-probability" title="Permalink to this heading">#</a></h2>
-<p>Continuous probability functions the same way as discrete probability, except for a few key differences.</p>
+<p>Continuous probability distributions function the same way as discrete probability, except for a few key differences.</p>
 <p><strong>Sample Space of Support:</strong> The support of continuous probability distributions is over “uncountably infinite sets.” If you’re not familiar with this term, that’s ok! In this course, we’ll think about it more as a distribution supported over the real numbers, <span class="math notranslate nohighlight">\(\mathbb{R}\)</span> (or some subset thereof).</p>
 <blockquote>
-<div><p>Example: Let <span class="math notranslate nohighlight">\(H\)</span> be a continuous RV, describing the distribution of heights in the IHH ER. The support of <span class="math notranslate nohighlight">\(H\)</span> is the interval <span class="math notranslate nohighlight">\((0, \infty)\)</span> on the real line.</p>
+<div><p>Example: Let <span class="math notranslate nohighlight">\(H\)</span> be a continuous RV, describing the distribution of heights of patients entering the IHH ER. The support of <span class="math notranslate nohighlight">\(H\)</span> is the interval <span class="math notranslate nohighlight">\((0, \infty)\)</span> on the real line.</p>
 </div></blockquote>
-<p><strong>Probability Mass Function (PMF):</strong> Continuous probability distributions <em>DO NOT have PMFs</em>; this is because, unlike discrete distributions, we cannot think of continuous distributions in terms of frequency. Let’s illustrate this with an example.</p>
+<p><strong>No Probability Mass Function (PMF):</strong> Continuous probability distributions <em>DO NOT have PMFs</em>; this is because, unlike discrete distributions, we cannot think of continuous distributions in terms of frequency. Let’s illustrate this with an example.</p>
 <blockquote>
 <div><p>Example: Suppose we are modeling the probability of intoxication as a Bernoulli RV, <span class="math notranslate nohighlight">\(I\)</span>. If we say that the probability of intoxication (or <span class="math notranslate nohighlight">\(I=1\)</span>) is <span class="math notranslate nohighlight">\(0.5\)</span> (meaning <span class="math notranslate nohighlight">\(p_I(1) = 0.5\)</span>), meaning half of our patients will have intoxication. Such a statement about the PMF of a discrete distribution can be immediately translated into intuition about frequency. On the other hand, suppose we have a continuous RV, <span class="math notranslate nohighlight">\(H\)</span>, modeling the height of patients. How can we describe the probability that a patient is 50 inches tall (i.e. what is <span class="math notranslate nohighlight">\(p_H(50)\)</span>?). Let’s try to get some intuition. Of the patients in the data, maybe we have one that’s <span class="math notranslate nohighlight">\(50.1\)</span> inches tall, another that is <span class="math notranslate nohighlight">\(49.9\)</span>, or maybe one that’s <span class="math notranslate nohighlight">\(49.999991\)</span> inches tall—but what are the chances we will observe a patient that is <em>exactly</em> (not approximately) <span class="math notranslate nohighlight">\(50\)</span> inches tall? The answer is: zero. This is because of the arbitrary precision we have on continuous values. So if we can’t describe continuous distributions using PMFs, how else can we describe them? As you will see next, we will have to use a more circuitous route.</p>
 </div></blockquote>
@@ -472,8 +472,8 @@ document.write(`
 </div></blockquote>
 <p>Using our new fact, let’s set up the problem differently. Instead of trying to directly compute the probability of <span class="math notranslate nohighlight">\(R = r\)</span> (which is always 0), let’s compute the probability that <span class="math notranslate nohighlight">\(R\)</span> is <em>super close to</em> <span class="math notranslate nohighlight">\(r\)</span>. We can do this by making up a variable, <span class="math notranslate nohighlight">\(\epsilon\)</span>, that is very small, and computing how the CDF changes from <span class="math notranslate nohighlight">\(F_R(r - \epsilon)\)</span> to <span class="math notranslate nohighlight">\(F_R(r)\)</span>. In other words, we want the instantaneous rate-of-change from <span class="math notranslate nohighlight">\(F_R(r - \epsilon)\)</span> to <span class="math notranslate nohighlight">\(F_R(r)\)</span>, since this rate-of-chance can be thought of as “the inclusion of <span class="math notranslate nohighlight">\(r\)</span>”.</p>
 <p>Now, the instantaneous rate-of-change is also known as the derivative. Thus, we define the PDF as the derivative of the CDF:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-02c92c91-efd5-4c0f-ab45-25b84d4b1cbe">
-<span class="eqno">(11.1)<a class="headerlink" href="#equation-02c92c91-efd5-4c0f-ab45-25b84d4b1cbe" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9722d3b5-20f5-4098-b498-c106e700e93b">
+<span class="eqno">(11.1)<a class="headerlink" href="#equation-9722d3b5-20f5-4098-b498-c106e700e93b" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_R(r) &amp;= \frac{d F_R(r)}{d r}.
 \end{align}\]</div>
 <p><strong>Properties of PDFs:</strong> Let <span class="math notranslate nohighlight">\(R\)</span> be a continuous RV with PDF <span class="math notranslate nohighlight">\(p_R(\cdot)\)</span>, defined on the sample-space <span class="math notranslate nohighlight">\(S\)</span>.</p>
@@ -549,13 +549,13 @@ p_R(r) &amp;= \frac{d F_R(r)}{d r}.
 <li><p><span class="math notranslate nohighlight">\(n\)</span>, surrounded by the brackets, is the thing we’re averaging. If we knew each present cost 10 USD, and if we wanted to approximate the average cost, we can replace <span class="math notranslate nohighlight">\(n\)</span> with <span class="math notranslate nohighlight">\(10.0 \cdot n\)</span>.</p></li>
 </ul>
 <p><strong>Defining Expectations.</strong> Suppose we have a <em>discrete</em> RV, <span class="math notranslate nohighlight">\(A\)</span>, with PMF <span class="math notranslate nohighlight">\(p_A(\cdot)\)</span>, and that we want to compute the expected value of <span class="math notranslate nohighlight">\(f(a)\)</span>, where <span class="math notranslate nohighlight">\(a \sim p_A(\cdot)\)</span>. Then:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-af2f24bc-a526-45e4-8d35-6f4b1f0e669c">
-<span class="eqno">(11.2)<a class="headerlink" href="#equation-af2f24bc-a526-45e4-8d35-6f4b1f0e669c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-91cf1be4-5048-4386-be0a-6454b4cbd2ef">
+<span class="eqno">(11.2)<a class="headerlink" href="#equation-91cf1be4-5048-4386-be0a-6454b4cbd2ef" title="Permalink to this equation">#</a></span>\[\begin{align}
 \mathbb{E}_{a \sim p_A(\cdot)} [f(a)] &amp;= \sum_{a \in S} p_A(a) \cdot f(a).
 \end{align}\]</div>
 <p>If <span class="math notranslate nohighlight">\(A\)</span> were a <em>continuous</em> RV, we replace the sum in the above definition with an integral:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7882a35c-8149-440f-b4a0-b3152ec585e8">
-<span class="eqno">(11.3)<a class="headerlink" href="#equation-7882a35c-8149-440f-b4a0-b3152ec585e8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-de752f47-0977-460d-a9a6-e389f6e15016">
+<span class="eqno">(11.3)<a class="headerlink" href="#equation-de752f47-0977-460d-a9a6-e389f6e15016" title="Permalink to this equation">#</a></span>\[\begin{align}
 \mathbb{E}_{a \sim p_A(\cdot)} [f(a)] &amp;= \int_{a \in S} p_A(a) \cdot f(a) \cdot da.
 \end{align}\]</div>
 <p>So where did these formulas come from? And how do they relate to our approximation? Let’s return to our birthday present example. We re-order our samples, <span class="math notranslate nohighlight">\(n_s\)</span>, in ascending order, from least to most number of birthday presents, and see the following pattern:</p>
