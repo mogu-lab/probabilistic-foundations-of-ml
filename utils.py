@@ -21,6 +21,7 @@ import jax.example_libraries.stax as stax
 import numpyro
 import numpyro.distributions.constraints as C
 import numpyro.distributions as D
+import numpyro.handlers as H
 import chex
 
 import probabilistic_foundations_of_ml as pfml
