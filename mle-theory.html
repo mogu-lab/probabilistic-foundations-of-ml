@@ -425,38 +425,38 @@ document.write(`
 </ul>
 <p><strong>Notation for Parameters.</strong> For simplicity, we’ve omitted the notation for each distribution’s parameters from the notation so far. From now on, we’ll explicitly write out the parameters as arguments to the distribution by listing them after a <em>semi-colon</em>.</p>
 <p>Consider our running example: modeling the joint probability of a patient arriving on a specific day, <span class="math notranslate nohighlight">\(D = d\)</span>, with/without intoxication <span class="math notranslate nohighlight">\(I = i\)</span> via <span class="math notranslate nohighlight">\(p_{I, D}(i, d) = p_{I | D}(i | d) \cdot p_D(d)\)</span>. Here, <span class="math notranslate nohighlight">\(p_D(\cdot)\)</span> is a categorical, which means it relies on a parameter, <span class="math notranslate nohighlight">\(\pi\)</span>, a 7-dimensional array consisting of the probabilities of patients arriving on each day of the week. To denote this explicitly, we write:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2d70449a-a4d5-4676-bb37-e234e75aa2ca">
-<span class="eqno">(8.1)<a class="headerlink" href="#equation-2d70449a-a4d5-4676-bb37-e234e75aa2ca" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0735f377-e8f5-4797-af0e-a340c922d7a1">
+<span class="eqno">(8.1)<a class="headerlink" href="#equation-0735f377-e8f5-4797-af0e-a340c922d7a1" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi),
 \end{align}\]</div>
 <p>wherein, we explicitly write <span class="math notranslate nohighlight">\(\pi\)</span> after a semi-colon. We can then do the same for the conditional <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d)\)</span>, which relies on a parameter we’ll call <span class="math notranslate nohighlight">\(\rho\)</span>, a 7-dimensional array consisting of the probability of intoxication on each day of the week. We can denote this parameter explicitly via:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8caca0a9-5e61-4573-a13a-18d45c7f6681">
-<span class="eqno">(8.2)<a class="headerlink" href="#equation-8caca0a9-5e61-4573-a13a-18d45c7f6681" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3fcf6667-57d8-4f1b-bfd5-ed06c362ca18">
+<span class="eqno">(8.2)<a class="headerlink" href="#equation-3fcf6667-57d8-4f1b-bfd5-ed06c362ca18" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(\cdot | d; \rho) &amp;= \mathrm{Ber}(\rho_d) \\
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\rho_d\)</span> is the <span class="math notranslate nohighlight">\(d\)</span>-th element of <span class="math notranslate nohighlight">\(\rho\)</span>, representing the probability of intoxication on day <span class="math notranslate nohighlight">\(d\)</span>. (Note that previously we used <span class="math notranslate nohighlight">\(\rho(d)\)</span> instead of <span class="math notranslate nohighlight">\(\rho_d\)</span>—these are two different ways of expressing the same idea).</p>
 <p>Finally, to explicitly denote the parameters of the <em>joint</em> distribution, we will list all of them behind the semi-colon. That is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6b67ff09-926d-40ac-9552-50cc8b54c537">
-<span class="eqno">(8.3)<a class="headerlink" href="#equation-6b67ff09-926d-40ac-9552-50cc8b54c537" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f963dcf4-9b56-4e9b-9598-74511cfcd656">
+<span class="eqno">(8.3)<a class="headerlink" href="#equation-f963dcf4-9b56-4e9b-9598-74511cfcd656" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I, D}(i, d; \underbrace{\rho, \pi}_{\theta}) = p_{I | D}(\cdot | d; \rho) \cdot p_D(\cdot; \pi).
 \end{align}\]</div>
 <p>We will group them together <span class="math notranslate nohighlight">\(\theta = \{ \rho, \pi \}\)</span> and say we want to <em>learn <span class="math notranslate nohighlight">\(\theta\)</span> from the data</em>.</p>
 <p><strong>The MLE Objective.</strong>
 Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data; we will call it the <em>joint data likelihood</em>, since it is the <em>joint</em> distribution of all observations. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-47aca8c6-5904-475e-9209-ced556f77fac">
-<span class="eqno">(8.4)<a class="headerlink" href="#equation-47aca8c6-5904-475e-9209-ced556f77fac" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-75cebb5e-fe56-442b-8253-06c92b5cd2dc">
+<span class="eqno">(8.4)<a class="headerlink" href="#equation-75cebb5e-fe56-442b-8253-06c92b5cd2dc" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n)\)</span> for every <span class="math notranslate nohighlight">\(n = 1, \dots, N\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cbab7382-c433-4676-ab9b-c7fb63b78541">
-<span class="eqno">(8.5)<a class="headerlink" href="#equation-cbab7382-c433-4676-ab9b-c7fb63b78541" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a74628ff-51b2-4fd9-a681-d5f459a046b2">
+<span class="eqno">(8.5)<a class="headerlink" href="#equation-a74628ff-51b2-4fd9-a681-d5f459a046b2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ }  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
 <p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e0a420c2-d647-4802-bdf0-2cd466356604">
-<span class="eqno">(8.6)<a class="headerlink" href="#equation-e0a420c2-d647-4802-bdf0-2cd466356604" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-97bcefb6-af59-4a81-b408-ff7b7075b560">
+<span class="eqno">(8.6)<a class="headerlink" href="#equation-97bcefb6-af59-4a81-b408-ff7b7075b560" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
@@ -464,22 +464,22 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N \underbrace{p_{D, C, H, A}(d_n, c_n, h_n, a_n; \theta)}_{\text{We already know how to compute this!}}
 \end{align}\]</div>
 <p>We have now arrived at a formula for the joint distribution that we know how to compute—we’ve even written code to evaluate it in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p>
-<p><strong>Numerical Stability:</strong> Notice that since our joint is a discrete probability distribution, it outputs probabilities between 0 and 1: <span class="math notranslate nohighlight">\(p_{D, C, H, A, K}(d_n, c_n, h_n, a_n, k_n; \theta) \in [0, 1]\)</span>. In other words, it outputs <em>fractions</em>. In the above formula, we then multiply these fractions times one another <span class="math notranslate nohighlight">\(N\)</span> times. But what happens when you multiply fractions together many times? Answer: the results shrinks towards 0 very quickly (try it yourself!). This is a problem, because our computer can only represent small numbers up to a finite precision. For a large <span class="math notranslate nohighlight">\(N\)</span>, our computer will round down the answer to <span class="math notranslate nohighlight">\(0\)</span>, which will prevent us from performing the argmax. Because of this issue, we have to transform our original MLE objective into a problem that a computer can numerically solve.</p>
+<p><strong>Numerical Stability:</strong> Notice that since our joint is a discrete probability distribution, it outputs probabilities between 0 and 1: <span class="math notranslate nohighlight">\(p_{D, C, H, A}(d_n, c_n, h_n, a_n; \theta) \in [0, 1]\)</span>. In other words, it outputs <em>fractions</em>. In the above formula, we then multiply these fractions times one another <span class="math notranslate nohighlight">\(N\)</span> times. But what happens when you multiply fractions together many times? Answer: the results shrinks towards 0 very quickly (try it yourself!). This is a problem, because our computer can only represent small numbers up to a finite precision. For a large <span class="math notranslate nohighlight">\(N\)</span>, our computer will round down the answer to <span class="math notranslate nohighlight">\(0\)</span>, which will prevent us from performing the argmax. Because of this issue, we have to transform our original MLE objective into a problem that a computer can numerically solve.</p>
 <p>We do this by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability for two reasons:</p>
 <ol class="arabic simple">
 <li><p>Logs turn products into sums: <span class="math notranslate nohighlight">\(\log (x \cdot y) = \log x + \log y\)</span>. Applying this formula to our MLE objective results in a <em>sum</em> of fractions, which is numerically stable:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-36a78cc2-55e0-4bf9-9a53-8430281e2551">
-<span class="eqno">(8.7)<a class="headerlink" href="#equation-36a78cc2-55e0-4bf9-9a53-8430281e2551" title="Permalink to this equation">#</a></span>\[\begin{align}
-\log \prod\limits_{n=1}^N p_{D, C, H, A, K}(d_n, c_n, h_n, a_n, k_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A, K}(d_n, c_n, h_n, a_n, k_n; \theta)
+<div class="amsmath math notranslate nohighlight" id="equation-e41e1659-fa34-46c4-8653-67718fa435ae">
+<span class="eqno">(8.7)<a class="headerlink" href="#equation-e41e1659-fa34-46c4-8653-67718fa435ae" title="Permalink to this equation">#</a></span>\[\begin{align}
+\log \prod\limits_{n=1}^N p_{D, C, H, A}(d_n, c_n, h_n, a_n; \theta) = \sum\limits_{n=1}^N \log p_{D, C, H, A}(d_n, c_n, h_n, a_n; \theta)
 \end{align}\]</div>
 <ol class="arabic simple" start="2">
 <li><p>But by maximizing the <span class="math notranslate nohighlight">\(\log\)</span> of the joint probability instead, will we get the wrong answer? Because the <span class="math notranslate nohighlight">\(\log\)</span> function is a <em>strictly increasing function</em>, our maxima will remain in the same location. That is:</p></li>
 </ol>
-<div class="amsmath math notranslate nohighlight" id="equation-4bc827df-9fe3-4378-888c-da343ddc2886">
-<span class="eqno">(8.8)<a class="headerlink" href="#equation-4bc827df-9fe3-4378-888c-da343ddc2886" title="Permalink to this equation">#</a></span>\[\begin{align}
-\theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A, K}(d_n, c_n, h_n, a_n, k_n; \theta) \\
-&amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A, K}(d_n, c_n, h_n, a_n, k_n; \theta)
+<div class="amsmath math notranslate nohighlight" id="equation-21aa8390-260c-45a4-a024-0bfe119724c8">
+<span class="eqno">(8.8)<a class="headerlink" href="#equation-21aa8390-260c-45a4-a024-0bfe119724c8" title="Permalink to this equation">#</a></span>\[\begin{align}
+\theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \prod\limits_{n=1}^N p_{D, C, H, A}(d_n, c_n, h_n, a_n; \theta) \\
+&amp;= \mathrm{argmax}_{\theta} \sum\limits_{n=1}^N \log p_{D, C, H, A}(d_n, c_n, h_n, a_n; \theta)
 \end{align}\]</div>
 <p>To illustrate point (2), check out the graph below, which shows that the argmax of a function doesn’t change if a <span class="math notranslate nohighlight">\(\log\)</span> is applied to it.</p>
 <figure class="align-center" id="fig-invariange-of-argmax-to-log">
@@ -493,13 +493,13 @@ Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set 
 <section id="graphically-representing-i-i-d-observations-and-model-parameters">
 <h2><span class="section-number">8.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Permalink to this heading">#</a></h2>
 <p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model (DGM) representation to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-99a2616f-f9f0-49b8-87df-34364ba27012">
-<span class="eqno">(8.9)<a class="headerlink" href="#equation-99a2616f-f9f0-49b8-87df-34364ba27012" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2cfdfa0a-fb65-46a7-b96a-689a55359250">
+<span class="eqno">(8.9)<a class="headerlink" href="#equation-2cfdfa0a-fb65-46a7-b96a-689a55359250" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
 \end{align}\]</div>
 <p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in 1, \dots, N\)</span>. This gives us the following joint data likelihood:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f2b1cb33-1532-4c16-ac5a-d5d0dc73820a">
-<span class="eqno">(8.10)<a class="headerlink" href="#equation-f2b1cb33-1532-4c16-ac5a-d5d0dc73820a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-69ddc6d3-5095-4cec-b888-701bc629226b">
+<span class="eqno">(8.10)<a class="headerlink" href="#equation-69ddc6d3-5095-4cec-b888-701bc629226b" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
 &amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
@@ -526,6 +526,7 @@ p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \qua
 <p><strong>A note on conditional independence:</strong> We note that in this example model, for the IHH ER model you’ve developed, and generally for the models we consider in this class, the observations are only i.i.d given the model parameters. That is, given <span class="math notranslate nohighlight">\(\theta\)</span>, we can factorize <span class="math notranslate nohighlight">\(p(\mathcal{D}; \theta)\)</span> into <span class="math notranslate nohighlight">\(\prod_{n=1}^N p(\mathcal{D}_n; \theta)\)</span>. However, if we do not “condition” on the parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, the observations do carry knowledge about one another. That is, having observed <span class="math notranslate nohighlight">\(\mathcal{D}_1\)</span> can tell me something about <span class="math notranslate nohighlight">\(\mathcal{D}_2\)</span> because it tells me something about <span class="math notranslate nohighlight">\(\theta\)</span>, which is shared across all observations. More on that later in the course.</p>
 <div class="admonition-exercise-translate-between-dgms-and-joint-distributions admonition">
 <p class="admonition-title">Exercise: Translate between DGMs and joint distributions</p>
+<p><strong>Tip:</strong> For the problems below that contain a <strong>plate</strong>, we recommend <strong>expanding</strong> out the plate first. That is, if you have a plate of size <span class="math notranslate nohighlight">\(N\)</span>, meaning you have <span class="math notranslate nohighlight">\(N\)</span> i.i.d RVs, pick a small <span class="math notranslate nohighlight">\(N\)</span> (e.g. <span class="math notranslate nohighlight">\(N=3\)</span>) and write out what the graphical model would look like <strong>without</strong> the plate. Then, write the joint distribution for this version of the model (with <span class="math notranslate nohighlight">\(N=3\)</span>) to gain intuition. Finally, this will help you write the joint distribution for the model abstractly for any <span class="math notranslate nohighlight">\(N\)</span>.</p>
 <p><strong>Part 1:</strong> Extend the DGM for the IHH ER below to represent the joint distribution of the data. Additionally, include all parameters of all distributions.</p>
 <div class="canva-centered-embedding">
 <div class="canva-iframe-container">
