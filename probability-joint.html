@@ -412,8 +412,8 @@ document.write(`
 <p>We, again introduce the statistical language—terminology and notation—to precisely specify to a computer how to model our data. We will then translate statements in this language directly into code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> that a computer can run.</p>
 <p><strong>Concept.</strong> The concept behind a joint probability is elegant; it allows us to build complicated distributions over many variables using simple conditional and non-conditional distributions (that we already covered).</p>
 <p>We can illustrate this using an example with just two variables. Suppose you have two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>. The probability that <span class="math notranslate nohighlight">\(A = a\)</span> and <span class="math notranslate nohighlight">\(B = b\)</span> are <em>both</em> satisfied is called their <em>joint probability</em>. It is denoted by <span class="math notranslate nohighlight">\(p_{A,B}(a, b)\)</span>. This joint distribution can be <em>factorized</em> to a product of conditional and non-conditional (or “marginal”) distributions as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-53a89b9d-e13f-4a9d-98ab-093b6031c001">
-<span class="eqno">(6.1)<a class="headerlink" href="#equation-53a89b9d-e13f-4a9d-98ab-093b6031c001" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b3c49970-4df0-4561-9501-4c4a1df50ebb">
+<span class="eqno">(6.1)<a class="headerlink" href="#equation-b3c49970-4df0-4561-9501-4c4a1df50ebb" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad \text{(Option 1)} \\
 \underbrace{\phantom{p_{A, B}(a, b)}}_{\text{joint}} &amp;= \underbrace{p_{B | A}(b | a)}_{\text{conditional}} \cdot \underbrace{p_A(a)}_{\text{marginal}} \quad \text{(Option 2)}
 \end{align}\]</div>
@@ -460,31 +460,31 @@ p_{A, B}(a, b) &amp;= p_{A | B}(a | b) \cdot p_B(b) \quad \text{(Option 1)} \\
 </div><p><strong>Choice of Factorization.</strong> Lastly, notice that we have a <em>choice</em> to factorize the distribution in two ways. How do you know which one to use? Typically, we choose a factorization that is <em>intuitive to us</em> and what we can compute.</p>
 <blockquote>
 <div><p><strong>Example:</strong> Suppose you want to model the joint distribution of the day of the week, <span class="math notranslate nohighlight">\(D\)</span> and whether a patient arrive with intoxication, <span class="math notranslate nohighlight">\(I\)</span>. The joint distribution can be factorized in two ways:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca0a3ba7-28bc-4cb7-9a6d-621e00760450">
-<span class="eqno">(6.2)<a class="headerlink" href="#equation-ca0a3ba7-28bc-4cb7-9a6d-621e00760450" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a68a9cea-e402-493c-a60d-8fbefe5f32a9">
+<span class="eqno">(6.2)<a class="headerlink" href="#equation-a68a9cea-e402-493c-a60d-8fbefe5f32a9" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{D, I}(d, i) &amp;= p_{I | D}(i | d) \cdot p_D(d) \quad \text{(Option 1)} \\
 &amp;= p_{D | I}(d | i) \cdot p_I(i) \quad \text{(Option 2)} \\
 \end{align}\]</div>
 <p>Which one makes more intuitive sense? Well, it’s a little weird to try to predict the day of the week given whether a patient arrives with intoxication; we typically know what the day of the week is and we don’t need to predict it. In contrast, given the day of the week, it makes a lot of sense to wonder about the probability of a patient arriving with intoxication. As such, Option 1 makes more sense here.</p>
 </div></blockquote>
 <p><strong>Generalizing to More than Two RVs.</strong> So now we have the tools to work with joint distributions with two RVs. What do we do if we have three or more? The same ideas apply. The joint distribution for random variables <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, and <span class="math notranslate nohighlight">\(C\)</span> can be factorized in a number of ways. For example, we can condition on two variables at a time:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d2459009-85aa-40e1-8e66-7b9bddb9604d">
-<span class="eqno">(6.3)<a class="headerlink" href="#equation-d2459009-85aa-40e1-8e66-7b9bddb9604d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6d6ef605-e2ad-4613-8c8c-793a7e4148c3">
+<span class="eqno">(6.3)<a class="headerlink" href="#equation-6d6ef605-e2ad-4613-8c8c-793a7e4148c3" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B, C}(a, b, c) &amp;= p_{A | B, C}(a | b, c) \cdot p_{B, C}(b, c) \quad \text{(Option 1)} \\
 &amp;= p_{B | A, C}(b | a, c) \cdot p_{A, C}(a, c) \quad \text{(Option 2)} \\
 &amp;= p_{C | A, B}(c | a, b) \cdot p_{A, B}(a, b) \quad \text{(Option 3)}
 \end{align}\]</div>
 <p>wherein the above, we already know how to factorize <span class="math notranslate nohighlight">\(p_{B, C}(b, c)\)</span>, <span class="math notranslate nohighlight">\(p_{A, C}(a, c)\)</span>, and <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span> (since they are joint distributions with two variables).</p>
 <p>We can also condition on one variable at a time:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5e92d495-0426-43bd-a1e8-11443dc778c0">
-<span class="eqno">(6.4)<a class="headerlink" href="#equation-5e92d495-0426-43bd-a1e8-11443dc778c0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f926775d-3e86-4fc3-aa11-38240f13dba9">
+<span class="eqno">(6.4)<a class="headerlink" href="#equation-f926775d-3e86-4fc3-aa11-38240f13dba9" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B, C}(a, b, c) &amp;= p_{A, B | C}(a, b | c) \cdot p_C(c) \quad \text{(Option 1)} \\
 &amp;= p_{A, C | B}(a, c | b) \cdot p_B(b) \quad \text{(Option 2)} \\
 &amp;= p_{B, C | A}(b, c | a) \cdot p_A(a) \quad \text{(Option 3)}
 \end{align}\]</div>
 <p>And how do we further factorize distributions of the form <span class="math notranslate nohighlight">\(p_{A, B | C}(a, b | c)\)</span>? We apply the same factorization for a joint distribution with two variables, and simply add a “conditioned on <span class="math notranslate nohighlight">\(C\)</span>” to each one:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c6c82a38-23ee-4cd5-938b-26fe4e0e72e7">
-<span class="eqno">(6.5)<a class="headerlink" href="#equation-c6c82a38-23ee-4cd5-938b-26fe4e0e72e7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4be9c894-4b39-4fec-b0f0-2c53a9d50898">
+<span class="eqno">(6.5)<a class="headerlink" href="#equation-4be9c894-4b39-4fec-b0f0-2c53a9d50898" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B | C}(a, b | c) &amp;= p_{A | B, C}(a | b, c) \cdot p_{B | C}(b | c) \quad \text{(Option 1)} \\
 &amp;= p_{B | A, C}(b | a, c) \cdot p_{A | C}(a | c) \quad \text{(Option 2)} \\
 \end{align}\]</div>
@@ -496,21 +496,21 @@ p_{A, B | C}(a, b | c) &amp;= p_{A | B, C}(a | b, c) \cdot p_{B | C}(b | c) \qua
 <div><p><strong>Example:</strong> Suppose you want to model the joint distribution of: a patient’s true temperature, <span class="math notranslate nohighlight">\(T\)</span>, a thermometer’s measurement of this temprature, <span class="math notranslate nohighlight">\(M\)</span>, and the doctor’s decision whether or not the patient has fever, <span class="math notranslate nohighlight">\(F\)</span>. As we saw above, this joint distribution, <span class="math notranslate nohighlight">\(p_{F, M, T}(f, m, t)\)</span>, which has three RVs, has <em>many</em> factorizations. Most of these, however, don’t make any sense to a domain expert. That is, the doctor’s decision, <span class="math notranslate nohighlight">\(F\)</span>, is <em>only</em> based on the thermometer’s measurement, <span class="math notranslate nohighlight">\(M\)</span>; the doctor has <em>no way</em> of knowing what the patient’s actual temperature is—only its noisy observation through <span class="math notranslate nohighlight">\(M\)</span>. Thus, <span class="math notranslate nohighlight">\(F\)</span> and <span class="math notranslate nohighlight">\(T\)</span> are <em>independent</em>. Next, let’s see what this means formally.</p>
 </div></blockquote>
 <p><strong>Statistical Independence.</strong> We say two variables <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are statistically independent if their joint can be factorized to the product of their marginals:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7e4837be-e5fe-456b-8bcd-f3b4dae3361e">
-<span class="eqno">(6.6)<a class="headerlink" href="#equation-7e4837be-e5fe-456b-8bcd-f3b4dae3361e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2dbf8c7a-d620-49b1-81c2-022702e9d5b1">
+<span class="eqno">(6.6)<a class="headerlink" href="#equation-2dbf8c7a-d620-49b1-81c2-022702e9d5b1" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= p_B(b) \cdot p_A(a)
 \end{align}\]</div>
 <p>This equation implies that to sample <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> jointly, we don’t have to consider their relationship (since the conditional isn’t used)—they are entirely independent.</p>
 <p>Another way to understand this equation is by thinking its implications on the conditionals. We do this by factorizing <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span> into the product of the conditional and marginal:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5915679b-4f41-4ec3-abe4-7bd60e8ec507">
-<span class="eqno">(6.7)<a class="headerlink" href="#equation-5915679b-4f41-4ec3-abe4-7bd60e8ec507" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6426a4db-90fa-4150-81f1-38bd3b837d45">
+<span class="eqno">(6.7)<a class="headerlink" href="#equation-6426a4db-90fa-4150-81f1-38bd3b837d45" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b) &amp;= \underbrace{p_{B | A}(b | a)}_{\text{must equal } p_B(b)} \cdot p_A(a)
 \end{align}\]</div>
 <p>We then observe that <span class="math notranslate nohighlight">\(p_{B | A}(b | a)\)</span> must equal <span class="math notranslate nohighlight">\(p_B(b)\)</span> to satisfy our definition of statistical independence. And <span class="math notranslate nohighlight">\(p_{B | A}(b | a) = p_B(b)\)</span> implies that having observed <span class="math notranslate nohighlight">\(A = a\)</span> does not affect the probability of <span class="math notranslate nohighlight">\(B = b\)</span>.</p>
 <blockquote>
 <div><p><strong>Example:</strong> Returning to the above example, we know that <span class="math notranslate nohighlight">\(F\)</span> should only depend on <span class="math notranslate nohighlight">\(M\)</span>, and that <span class="math notranslate nohighlight">\(M\)</span> should only depend on <span class="math notranslate nohighlight">\(T\)</span>. That is, the doctor’s decision only depends on the thermometer’s measurement, and the thermometer only depends on the true temperature. Formally, we can say that <span class="math notranslate nohighlight">\(p_{F | M, T}(f | m, t) = p_{F | M}(f | m)\)</span>, since <span class="math notranslate nohighlight">\(F\)</span> only depends on the thermometer reading, <span class="math notranslate nohighlight">\(M = m\)</span>. Similarly, <span class="math notranslate nohighlight">\(p_{M | T, F}(m | t, f) = p_{M | T}(m | t)\)</span> since the thermometer reading only depends on the patient’s temperature, not on what the doctor might say. Using this, we can factorize the joint as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4d77ca04-8515-4d48-aa00-e6ebafe0de2c">
-<span class="eqno">(6.8)<a class="headerlink" href="#equation-4d77ca04-8515-4d48-aa00-e6ebafe0de2c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-748f2a12-1717-4142-8797-3937ed0f8c12">
+<span class="eqno">(6.8)<a class="headerlink" href="#equation-748f2a12-1717-4142-8797-3937ed0f8c12" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{F, M, T}(f, m, t) &amp;= p_{F | M, T}(f | m, t) \cdot p_{M, T}(m, t) \quad (\text{factorization of the joint}) \\
 &amp;= p_{F | M}(f | m) \cdot p_{M, T}(m, t) \quad (\text{since $F$ and $T$ are independent}) \\
 &amp;= p_{F | M}(f | m) \cdot p_{M | T}(m | t) \cdot p_T(t) \quad (\text{factorizing the joint of $M$ and $T$})
@@ -533,8 +533,8 @@ p_{F, M, T}(f, m, t) &amp;= p_{F | M, T}(f | m, t) \cdot p_{M, T}(m, t) \quad (\
 <li><p>The factor corresponding to <span class="math notranslate nohighlight">\(C\)</span> is <span class="math notranslate nohighlight">\(p_{C}(\cdot)\)</span>, since there aren’t any arrows pointing into <span class="math notranslate nohighlight">\(C\)</span>.</p></li>
 </ul>
 <p>In total, the DGM represents the following factorization:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-bd1df358-b868-427a-a907-d394b769632b">
-<span class="eqno">(6.9)<a class="headerlink" href="#equation-bd1df358-b868-427a-a907-d394b769632b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d15d14eb-abb4-4c15-84dd-959bf4e9423f">
+<span class="eqno">(6.9)<a class="headerlink" href="#equation-d15d14eb-abb4-4c15-84dd-959bf4e9423f" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B, C}(a, b, c) &amp;= p_{B | A}(b | a) \cdot p_A(a) \cdot p_C(c)
 \end{align}\]</div>
 <blockquote>
@@ -613,8 +613,8 @@ p_{A, B, C, D, E}(a, b, c, d, e) = p_{E | A, B, C, D}(e | a, b, c, d) \cdot p_{D
 <p>Let’s illustrate this with some examples.</p>
 <blockquote>
 <div><p><strong>Example 1:</strong> Consider the distribution of temperature, thermometer measurement, and doctor’s decision from the above examples:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4880c56d-9957-4d80-a5c5-29f0b476b0be">
-<span class="eqno">(6.10)<a class="headerlink" href="#equation-4880c56d-9957-4d80-a5c5-29f0b476b0be" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5c19c9b1-bbe9-4b34-838c-b6d3a06177a6">
+<span class="eqno">(6.10)<a class="headerlink" href="#equation-5c19c9b1-bbe9-4b34-838c-b6d3a06177a6" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{F, M, T}(f, m, t) &amp;= p_{F | M}(f | m) \cdot p_{M | T}(m | t) \cdot p_T(t)
 \end{align}\]</div>
 <p>Suppose we want to draw <span class="math notranslate nohighlight">\(S\)</span> samples from this joint distribution. For every <span class="math notranslate nohighlight">\(s \in \{1, \dots, S \}\)</span>, we would follow the steps below, corresponding to the <em>logic</em> behind the model. That is,</p>
@@ -627,8 +627,8 @@ p_{F, M, T}(f, m, t) &amp;= p_{F | M}(f | m) \cdot p_{M | T}(m | t) \cdot p_T(t)
 </div></blockquote>
 <blockquote>
 <div><p><strong>Example 2:</strong> Consider the distribution,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1677f63e-8f2b-4ed6-83ef-5679de60a2e6">
-<span class="eqno">(6.11)<a class="headerlink" href="#equation-1677f63e-8f2b-4ed6-83ef-5679de60a2e6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2e1c1b10-ee04-4821-87b7-e6c9c14429de">
+<span class="eqno">(6.11)<a class="headerlink" href="#equation-2e1c1b10-ee04-4821-87b7-e6c9c14429de" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B, C}(a, b, c) &amp;= p_{B | A}(b | a) \cdot p_A(a) \cdot p_C(c)
 \end{align}\]</div>
 <p>Suppose we wanted to draw <span class="math notranslate nohighlight">\(S\)</span> samples from this joint distribution. For every <span class="math notranslate nohighlight">\(s \in \{1, \dots, S \}\)</span>, we would have to:</p>
@@ -642,8 +642,8 @@ p_{A, B, C}(a, b, c) &amp;= p_{B | A}(b | a) \cdot p_A(a) \cdot p_C(c)
 </div></blockquote>
 <blockquote>
 <div><p><strong>Example 3:</strong> Consider the distribution,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2159ef93-b43e-4d2c-b915-5b1d676ea711">
-<span class="eqno">(6.12)<a class="headerlink" href="#equation-2159ef93-b43e-4d2c-b915-5b1d676ea711" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-473b54c5-bfb0-4e95-8bfd-48333b69274a">
+<span class="eqno">(6.12)<a class="headerlink" href="#equation-473b54c5-bfb0-4e95-8bfd-48333b69274a" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B, C}(a, b, c) &amp;= p_{B | A, C}(b | a, c) \cdot p_{A | C}(a | c) \cdot p_C(c)
 \end{align}\]</div>
 <p>Suppose we wanted to draw <span class="math notranslate nohighlight">\(S\)</span> samples from this joint distribution. For every <span class="math notranslate nohighlight">\(s \in \{1, \dots, S \}\)</span>, we would have to:</p>
