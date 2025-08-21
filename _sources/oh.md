@@ -9,4 +9,8 @@
 **Annie Chen (TA):** TBD
 
 **Genesis Hang (TA):** TBD
+* Tuesdays, 5-6pm @ TBD
+* Wednesdays, 3-4pm@ TBD
+
+
 
