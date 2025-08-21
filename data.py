@@ -64,7 +64,6 @@ def model_discrete_IHH_ER(N, data=None):
             'Condition': None,
             'Hospitalized': None,
             'Antibiotics': None,
-            'Knots': None,
         }
     
     pi_day_of_week = numpyro.param(
@@ -92,12 +91,6 @@ def model_discrete_IHH_ER(N, data=None):
         'pi_antibiotics_given_condition_and_hospitalized',
         jnp.array([0.0, 0.8]),
         constraint=C.unit_interval,        
-    )
-
-    lambda_knots = numpyro.param(
-        'lambda_knots',
-        jnp.array([0.0, 3.0]),
-        constraint=C.nonnegative,
     )
 
     with numpyro.plate('data', N):
@@ -133,17 +126,6 @@ def model_discrete_IHH_ER(N, data=None):
         )
         chex.assert_shape(antibiotics, (N,))
 
-        entangled = (condition == 2).astype('int32')
-        p_knots = D.Poisson(
-            lambda_knots[entangled],
-        )
-        knots = numpyro.sample(
-            'Knots',
-            p_knots,
-            obs=data['Knots']
-        )
-        chex.assert_shape(knots, (N,))
-
 
 def generate_IHH_ER_data_discrete():
     N = 10000
@@ -166,9 +148,6 @@ def generate_IHH_ER_data_discrete():
         'Antibiotics': jax_int_array_to_str_list(
             exec_trace['Antibiotics']['value'],
             IDX_TO_BOOL,
-        ),
-        'Knots': (
-            exec_trace['Knots']['value']
         ),
     })
 
