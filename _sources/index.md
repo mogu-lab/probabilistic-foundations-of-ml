@@ -1,8 +1,10 @@
 # Probabilistic Foundations of ML
 
+<!--
 ```{warning}
 This website is still under maintenance until the fall semester begins.
 ```
+-->
 
 **Instructor:** [Yaniv Yacoby](https://yanivyacoby.github.io/) (he/they)
 
