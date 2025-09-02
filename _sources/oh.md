@@ -6,6 +6,7 @@
 
 After that, my office hours will be on:
 * Wednesdays 9:30-11:00am @ SCI W126
+* Fridays 2:30-3:30 @ SCI W126 for **individual** office hours ([book via Calendly](https://calendly.com/yanivyacoby/office-hours))
 * Fridays 3:30-5pm @ SCI W126
   
 **Annie Chen (TA):** TBD
