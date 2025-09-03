@@ -10,7 +10,8 @@ After that, my office hours will be on:
 * Fridays 3:30-5pm @ SCI W126
   
 **Annie Chen (TA):** 
-* Thursdays, 1-2pm and 4-5pm @ L043
+* Thursdays, 1-2pm @ L043
+* Thursdays 4-5pm @ L039
 
 **Genesis Hang (TA):** 
 * Tuesdays, 5-6pm @ SCI L043
