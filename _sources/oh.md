@@ -9,11 +9,10 @@ After that, my office hours will be on:
 * Fridays 2:30-3:30 @ SCI W126 for **individual** office hours ([book via Calendly](https://calendly.com/yanivyacoby/office-hours))
 * Fridays 3:30-5pm @ SCI W126
   
-**Annie Chen (TA):** TBD
-* Thursdays, 1-2pm @ TBD
-* Second time + location TBD!
+**Annie Chen (TA):** 
+* Thursdays, 1-2pm and 4-5pm @ L043
 
-**Genesis Hang (TA):** TBD
+**Genesis Hang (TA):** 
 * Tuesdays, 5-6pm @ SCI L043
 * Wednesdays, 3-4pm@ SCI L043
 
