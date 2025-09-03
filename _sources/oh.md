@@ -14,8 +14,8 @@ After that, my office hours will be on:
 * Second time + location TBD!
 
 **Genesis Hang (TA):** TBD
-* Tuesdays, 5-6pm @ TBD
-* Wednesdays, 3-4pm@ TBD
+* Tuesdays, 5-6pm @ SCI L043
+* Wednesdays, 3-4pm@ SCI L043
 
 
 
