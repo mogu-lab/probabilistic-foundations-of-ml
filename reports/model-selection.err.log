@@ -1,0 +1,76 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 154, in wrapped
+    asyncio.get_running_loop()
+RuntimeError: no running event loop
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/jupyter_core/utils/__init__.py", line 158, in wrapped
+    return loop.run_until_complete(inner)
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+models = load_all_regression_models_of_comfort_vs_intensity()
+
+print('Number of models loaded:', len(models))
+------------------
+
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[3], line 1[0m
+[0;32m----> 1[0m models [38;5;241m=[39m [43mload_all_regression_models_of_comfort_vs_intensity[49m[43m([49m[43m)[49m
+[1;32m      3[0m [38;5;28mprint[39m([38;5;124m'[39m[38;5;124mNumber of models loaded:[39m[38;5;124m'[39m, [38;5;28mlen[39m(models))
+
+File [0;32m~/work/cs345/cs345/utils.py:154[0m, in [0;36mload_all_regression_models_of_comfort_vs_intensity[0;34m()[0m
+[1;32m    152[0m models [38;5;241m=[39m []
+[1;32m    153[0m [38;5;28;01mfor[39;00m fname [38;5;129;01min[39;00m [38;5;28msorted[39m(glob[38;5;241m.[39mglob([38;5;124m'[39m[38;5;124mdata/regression_model_eval_metrics_*.dill[39m[38;5;124m'[39m)):
+[0;32m--> 154[0m     models[38;5;241m.[39mappend([43mpfml[49m[38;5;241;43m.[39;49m[43mload_trained_numpyro_model[49m[43m([49m[43mfname[49m[43m)[49m)
+[1;32m    156[0m [38;5;28;01mreturn[39;00m models
+
+File [0;32m~/work/cs345/cs345/probabilistic_foundations_of_ml.py:203[0m, in [0;36mload_trained_numpyro_model[0;34m(fname)[0m
+[1;32m    193[0m [38;5;250m[39m[38;5;124;03m'''[39;00m
+[1;32m    194[0m [38;5;124;03mA function to load a numpyro model from a file[39;00m
+[1;32m    195[0m 
+[0;32m   (...)[0m
+[1;32m    199[0m [38;5;124;03mReturns: the model[39;00m
+[1;32m    200[0m [38;5;124;03m'''[39;00m
+[1;32m    202[0m [38;5;28;01mwith[39;00m [38;5;28mopen[39m(fname, [38;5;124m'[39m[38;5;124mrb[39m[38;5;124m'[39m) [38;5;28;01mas[39;00m f:        
+[0;32m--> 203[0m     r [38;5;241m=[39m [43mdill[49m[38;5;241;43m.[39;49m[43mload[49m[43m([49m[43mf[49m[43m)[49m
+[1;32m    205[0m [38;5;28;01mreturn[39;00m H[38;5;241m.[39msubstitute(r[[38;5;124m'[39m[38;5;124mmodel[39m[38;5;124m'[39m], data[38;5;241m=[39mr[[38;5;124m'[39m[38;5;124mparameters[39m[38;5;124m'[39m])
+
+File [0;32m/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/dill/_dill.py:289[0m, in [0;36mload[0;34m(file, ignore, **kwds)[0m
+[1;32m    283[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21mload[39m(file, ignore[38;5;241m=[39m[38;5;28;01mNone[39;00m, [38;5;241m*[39m[38;5;241m*[39mkwds):
+[1;32m    284[0m [38;5;250m    [39m[38;5;124;03m"""[39;00m
+[1;32m    285[0m [38;5;124;03m    Unpickle an object from a file.[39;00m
+[1;32m    286[0m 
+[1;32m    287[0m [38;5;124;03m    See :func:`loads` for keyword arguments.[39;00m
+[1;32m    288[0m [38;5;124;03m    """[39;00m
+[0;32m--> 289[0m     [38;5;28;01mreturn[39;00m [43mUnpickler[49m[43m([49m[43mfile[49m[43m,[49m[43m [49m[43mignore[49m[38;5;241;43m=[39;49m[43mignore[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwds[49m[43m)[49m[38;5;241;43m.[39;49m[43mload[49m[43m([49m[43m)[49m
+
+File [0;32m/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/dill/_dill.py:444[0m, in [0;36mUnpickler.load[0;34m(self)[0m
+[1;32m    443[0m [38;5;28;01mdef[39;00m[38;5;250m [39m[38;5;21mload[39m([38;5;28mself[39m): [38;5;66;03m#NOTE: if settings change, need to update attributes[39;00m
+[0;32m--> 444[0m     obj [38;5;241m=[39m [43mStockUnpickler[49m[38;5;241;43m.[39;49m[43mload[49m[43m([49m[38;5;28;43mself[39;49m[43m)[49m
+[1;32m    445[0m     [38;5;28;01mif[39;00m [38;5;28mtype[39m(obj)[38;5;241m.[39m[38;5;18m__module__[39m [38;5;241m==[39m [38;5;28mgetattr[39m(_main_module, [38;5;124m'[39m[38;5;124m__name__[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m__main__[39m[38;5;124m'[39m):
+[1;32m    446[0m         [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [38;5;28mself[39m[38;5;241m.[39m_ignore:
+[1;32m    447[0m             [38;5;66;03m# point obj class to main[39;00m
+
+File [0;32m/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/dill/_dill.py:434[0m, in [0;36mUnpickler.find_class[0;34m(self, module, name)[0m
+[1;32m    432[0m     [38;5;28;01mreturn[39;00m [38;5;28mtype[39m([38;5;28;01mNone[39;00m) [38;5;66;03m#XXX: special case: NoneType missing[39;00m
+[1;32m    433[0m [38;5;28;01mif[39;00m module [38;5;241m==[39m [38;5;124m'[39m[38;5;124mdill.dill[39m[38;5;124m'[39m: module [38;5;241m=[39m [38;5;124m'[39m[38;5;124mdill._dill[39m[38;5;124m'[39m
+[0;32m--> 434[0m [38;5;28;01mreturn[39;00m [43mStockUnpickler[49m[38;5;241;43m.[39;49m[43mfind_class[49m[43m([49m[38;5;28;43mself[39;49m[43m,[49m[43m [49m[43mmodule[49m[43m,[49m[43m [49m[43mname[49m[43m)[49m
+
+[0;31mModuleNotFoundError[0m: No module named 'jaxlib.xla_extension'
+
