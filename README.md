@@ -16,7 +16,7 @@ Probabilistic Foundations of Machine Learning (c) 2024 by [Yaniv Yacoby](https:/
    mm create -n book -c conda-forge python=3.10 -y
    pip install -r requirements.txt
    ```
-3. Activate environment: `mm activate book` or run `pip install -U jax numpyro chex scikit-learn pandas numpy matplotlib dill dominate pyyaml markdown Pillow jupyterlab jupyter-book sphinx-new-tab-link sphinx-proof tqdm ipdb -c https://tk.deepnote.com/constraints3.10.txt`
+3. Activate environment: `mm activate book` or run `pip install -U jax numpyro chex scikit-learn pandas numpy matplotlib dill dominate pyyaml markdown Pillow jupyterlab jupyter-book sphinx-new-tab-link sphinx-proof tqdm ipdb IProgress -c https://tk.deepnote.com/constraints3.10.txt`
 
 **Note:** Only install packages with `pip`. Micromamba seems to store the local paths on the machine.
 

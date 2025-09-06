@@ -168,8 +168,7 @@ def joint_data_log_likelihood(model, *args, **kwargs):
     Returns:
         The model's joint data log-likelihood
     '''
-    return numpyro.infer.util.log_density(model, args, kwargs, {})[0]
-    
+    return numpyro.infer.util.log_density(model, args, kwargs, {})[0]    
 
 
 def save_trained_numpyro_model(model, parameters, fname):

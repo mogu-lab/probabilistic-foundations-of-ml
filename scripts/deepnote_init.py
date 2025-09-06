@@ -54,7 +54,10 @@ def main():
     print('Loading Data:')
     os.makedirs('data', exist_ok=True)
     download_directory_from_github(
-        USER_NAME, REPO_NAME, 'data', skip_downloaded=False,
+        USER_NAME,
+        REPO_NAME,
+        'data',
+        skip_downloaded=True,
     )
     
     # Load helper Python files
