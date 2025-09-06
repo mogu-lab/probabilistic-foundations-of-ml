@@ -448,38 +448,38 @@ document.write(`
 </ul>
 <p><strong>Notation for Parameters.</strong> For simplicity, we’ve omitted the notation for each distribution’s parameters from the notation so far. From now on, we’ll explicitly write out the parameters as arguments to the distribution by listing them after a <em>semi-colon</em>.</p>
 <p>Consider our running example: modeling the joint probability of a patient arriving on a specific day, <span class="math notranslate nohighlight">\(D = d\)</span>, with/without intoxication <span class="math notranslate nohighlight">\(I = i\)</span> via <span class="math notranslate nohighlight">\(p_{I, D}(i, d) = p_{I | D}(i | d) \cdot p_D(d)\)</span>. Here, <span class="math notranslate nohighlight">\(p_D(\cdot)\)</span> is a categorical, which means it relies on a parameter, <span class="math notranslate nohighlight">\(\pi\)</span>, a 7-dimensional array consisting of the probabilities of patients arriving on each day of the week. To denote this explicitly, we write:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-adf4c012-310c-41f7-af2b-15a559e74d82">
-<span class="eqno">(8.1)<a class="headerlink" href="#equation-adf4c012-310c-41f7-af2b-15a559e74d82" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-839f9615-b9c3-4ad4-989d-34ae0488b6c4">
+<span class="eqno">(8.1)<a class="headerlink" href="#equation-839f9615-b9c3-4ad4-989d-34ae0488b6c4" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi),
 \end{align}\]</div>
 <p>wherein, we explicitly write <span class="math notranslate nohighlight">\(\pi\)</span> after a semi-colon. We can then do the same for the conditional <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d)\)</span>, which relies on a parameter we’ll call <span class="math notranslate nohighlight">\(\rho\)</span>, a 7-dimensional array consisting of the probability of intoxication on each day of the week. We can denote this parameter explicitly via:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-190a108a-c713-49b3-91d3-1522c47faa23">
-<span class="eqno">(8.2)<a class="headerlink" href="#equation-190a108a-c713-49b3-91d3-1522c47faa23" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2beca3c3-d851-4649-b4c1-1db2df6149e3">
+<span class="eqno">(8.2)<a class="headerlink" href="#equation-2beca3c3-d851-4649-b4c1-1db2df6149e3" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(\cdot | d; \rho) &amp;= \mathrm{Ber}(\rho_d) \\
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(\rho_d\)</span> is the <span class="math notranslate nohighlight">\(d\)</span>-th element of <span class="math notranslate nohighlight">\(\rho\)</span>, representing the probability of intoxication on day <span class="math notranslate nohighlight">\(d\)</span>. (Note that previously we used <span class="math notranslate nohighlight">\(\rho(d)\)</span> instead of <span class="math notranslate nohighlight">\(\rho_d\)</span>—these are two different ways of expressing the same idea).</p>
 <p>Finally, to explicitly denote the parameters of the <em>joint</em> distribution, we will list all of them behind the semi-colon. That is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1f1aa410-80a5-4b26-b1fb-a43cf7664870">
-<span class="eqno">(8.3)<a class="headerlink" href="#equation-1f1aa410-80a5-4b26-b1fb-a43cf7664870" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6e4f4ec4-9543-4a2f-b3c6-7a9885043557">
+<span class="eqno">(8.3)<a class="headerlink" href="#equation-6e4f4ec4-9543-4a2f-b3c6-7a9885043557" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I, D}(i, d; \underbrace{\rho, \pi}_{\theta}) = p_{I | D}(\cdot | d; \rho) \cdot p_D(\cdot; \pi).
 \end{align}\]</div>
 <p>We will group them together <span class="math notranslate nohighlight">\(\theta = \{ \rho, \pi \}\)</span> and say we want to <em>learn <span class="math notranslate nohighlight">\(\theta\)</span> from the data</em>.</p>
 <p><strong>The MLE Objective.</strong>
 Let <span class="math notranslate nohighlight">\(\theta\)</span> denote the set of all parameters used in our model for the IHH ER data. Using the above notation, <span class="math notranslate nohighlight">\(p(\mathcal{D}; \theta)\)</span> denotes the probability of the observed data; we will call it the <em>joint data likelihood</em>, since it is the <em>joint</em> distribution of all observations. Our goal is then to find the parameters <span class="math notranslate nohighlight">\(\theta\)</span> that maximize the probability of having observed <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c52c4ecd-470c-4c15-b69f-507ea6688105">
-<span class="eqno">(8.4)<a class="headerlink" href="#equation-c52c4ecd-470c-4c15-b69f-507ea6688105" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4c289873-9bc2-4873-a28a-6c1369c97e35">
+<span class="eqno">(8.4)<a class="headerlink" href="#equation-4c289873-9bc2-4873-a28a-6c1369c97e35" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}; \theta),
 \end{align}\]</div>
 <p>wherein “argmax” denotes the value of <span class="math notranslate nohighlight">\(\theta\)</span> that maximizes the joint probability. So what does it mean to evaluate the probability of the <em>whole data</em>, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, under our model, <span class="math notranslate nohighlight">\(p_{D, C, H, A}\)</span>? It means evaluating the <em>joint distribution of all observations</em>, <span class="math notranslate nohighlight">\(\mathcal{D}_n = (d_n, c_n, h_n, a_n)\)</span> for every <span class="math notranslate nohighlight">\(n = 1, \dots, N\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6a0b2017-3f5f-43fb-96aa-6a3ddc96c71f">
-<span class="eqno">(8.5)<a class="headerlink" href="#equation-6a0b2017-3f5f-43fb-96aa-6a3ddc96c71f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-06e9e2ce-7939-40d4-8978-f269550b3a43">
+<span class="eqno">(8.5)<a class="headerlink" href="#equation-06e9e2ce-7939-40d4-8978-f269550b3a43" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ }  p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
 <p>Now, recall that every joint distribution can be factorized into a product of conditional and marginal distributions, and that the number of possible factorizations grows unwieldy very quickly with the number of variables. Since the number of variables in this joint distribution is a function of the number of observations, <span class="math notranslate nohighlight">\(N\)</span>, which is large (e.g. thousands), we need some way to select a reasonable factorization. As typical, we are going to assume that the observations are independent, and identically distributed (i.i.d). This means that one patient coming to the ER does not tell us anything about how likely other patients are to come to the ER. Now, recall that when two RVs are independent, their joint distribution equals a product of their marginals. We can therefore factorize the joint distribution as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2058f3de-f3bf-4fb5-ba7b-8bca7f45b05b">
-<span class="eqno">(8.6)<a class="headerlink" href="#equation-2058f3de-f3bf-4fb5-ba7b-8bca7f45b05b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6bf14c37-022f-48b5-8828-81d060cd03ab">
+<span class="eqno">(8.6)<a class="headerlink" href="#equation-6bf14c37-022f-48b5-8828-81d060cd03ab" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1, \cdots, \mathcal{D}_N; \theta) \\
 &amp;= \mathrm{argmax}_{\theta} \text{ } p(\mathcal{D}_1; \theta) \cdot p(\mathcal{D}_2; \theta) \cdots p(\mathcal{D}_N; \theta) \\
@@ -513,13 +513,13 @@ To illustrate point (2), check out the graph below, which shows that the argmax 
 <section id="graphically-representing-i-i-d-observations-and-model-parameters">
 <h2><span class="section-number">8.2. </span>Graphically Representing I.I.D Observations and Model Parameters<a class="headerlink" href="#graphically-representing-i-i-d-observations-and-model-parameters" title="Link to this heading">#</a></h2>
 <p>Before implementing the MLE in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we will extend our Directed Graphical Model (DGM) representation to include i.i.d observations and model parameters. This will help us in the translation process from math to code. Suppose we have a simple joint distribution over two RVs, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, whose conditional controlled by a parameter, <span class="math notranslate nohighlight">\(\theta\)</span>, as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c415306e-a413-42fc-88f3-180d73224ffb">
-<span class="eqno">(8.7)<a class="headerlink" href="#equation-c415306e-a413-42fc-88f3-180d73224ffb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c96dff23-64f7-45b3-a04e-2dfa0844d91d">
+<span class="eqno">(8.7)<a class="headerlink" href="#equation-c96dff23-64f7-45b3-a04e-2dfa0844d91d" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{A, B}(a, b; \theta) &amp;= p_{B | A}(b | a; \theta) \cdot p_A(a)
 \end{align}\]</div>
 <p>Suppose further that we have <span class="math notranslate nohighlight">\(N\)</span> i.i.d observations from this joint distribution. That is, we have <span class="math notranslate nohighlight">\(\mathcal{D}_n = (a_n, b_n)\)</span> for <span class="math notranslate nohighlight">\(n \in 1, \dots, N\)</span>. This gives us the following joint data likelihood:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2b5977f1-be8c-4a48-b9e9-00b59d3cef9c">
-<span class="eqno">(8.8)<a class="headerlink" href="#equation-2b5977f1-be8c-4a48-b9e9-00b59d3cef9c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3d62fa31-7a86-472a-b3f9-4f3e2017df13">
+<span class="eqno">(8.8)<a class="headerlink" href="#equation-3d62fa31-7a86-472a-b3f9-4f3e2017df13" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \quad \text{since the observations are i.i.d} \\
 &amp;= \prod\limits_{n=1}^N p_{A, B}(a_n, b_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_{B | A}(b_n | a_n; \theta) \cdot p_A(a_n)
