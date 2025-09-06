@@ -562,58 +562,14 @@ document.write(`
 <p><strong>Models.</strong> In addition to the data the doctors have collected, they’ve gone ahead and fit some models to the data. They haven’t told you much about the modeling choices they made, but still want your help selecting which model best to use. Let’s load up the models:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models</span> <span class="o">=</span> <span class="n">load_all_regression_models_of_comfort_vs_intensity</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">models</span> <span class="o">=</span> <span class="n">load_all_regression_models_of_comfort_vs_intensity</span><span class="p">(</span><span class="n">deepnote</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of models loaded:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">models</span> <span class="o">=</span> <span class="n">load_all_regression_models_of_comfort_vs_intensity</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of models loaded:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">models</span><span class="p">))</span>
-
-<span class="nn">File ~/work/cs345/cs345/utils.py:154,</span> in <span class="ni">load_all_regression_models_of_comfort_vs_intensity</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">152</span> <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="g g-Whitespace">    </span><span class="mi">153</span> <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;data/regression_model_eval_metrics_*.dill&#39;</span><span class="p">)):</span>
-<span class="ne">--&gt; </span><span class="mi">154</span>     <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pfml</span><span class="o">.</span><span class="n">load_trained_numpyro_model</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">156</span> <span class="k">return</span> <span class="n">models</span>
-
-<span class="nn">File ~/work/cs345/cs345/probabilistic_foundations_of_ml.py:203,</span> in <span class="ni">load_trained_numpyro_model</span><span class="nt">(fname)</span>
-<span class="g g-Whitespace">    </span><span class="mi">193</span><span class="w"> </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="g g-Whitespace">    </span><span class="mi">194</span><span class="sd"> A function to load a numpyro model from a file</span>
-<span class="g g-Whitespace">    </span><span class="mi">195</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">199</span><span class="sd"> Returns: the model</span>
-<span class="g g-Whitespace">    </span><span class="mi">200</span><span class="sd"> &#39;&#39;&#39;</span>
-<span class="g g-Whitespace">    </span><span class="mi">202</span> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>        
-<span class="ne">--&gt; </span><span class="mi">203</span>     <span class="n">r</span> <span class="o">=</span> <span class="n">dill</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">205</span> <span class="k">return</span> <span class="n">H</span><span class="o">.</span><span class="n">substitute</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">])</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/dill/_dill.py:289,</span> in <span class="ni">load</span><span class="nt">(file, ignore, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">283</span> <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">284</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">285</span><span class="sd">     Unpickle an object from a file.</span>
-<span class="g g-Whitespace">    </span><span class="mi">286</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">287</span><span class="sd">     See :func:`loads` for keyword arguments.</span>
-<span class="g g-Whitespace">    </span><span class="mi">288</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">289</span>     <span class="k">return</span> <span class="n">Unpickler</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="n">ignore</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/dill/_dill.py:444,</span> in <span class="ni">Unpickler.load</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">443</span> <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1">#NOTE: if settings change, need to update attributes</span>
-<span class="ne">--&gt; </span><span class="mi">444</span>     <span class="n">obj</span> <span class="o">=</span> <span class="n">StockUnpickler</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">445</span>     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_main_module</span><span class="p">,</span> <span class="s1">&#39;__name__&#39;</span><span class="p">,</span> <span class="s1">&#39;__main__&#39;</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">446</span>         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ignore</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">447</span>             <span class="c1"># point obj class to main</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/dill/_dill.py:434,</span> in <span class="ni">Unpickler.find_class</span><span class="nt">(self, module, name)</span>
-<span class="g g-Whitespace">    </span><span class="mi">432</span>     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="c1">#XXX: special case: NoneType missing</span>
-<span class="g g-Whitespace">    </span><span class="mi">433</span> <span class="k">if</span> <span class="n">module</span> <span class="o">==</span> <span class="s1">&#39;dill.dill&#39;</span><span class="p">:</span> <span class="n">module</span> <span class="o">=</span> <span class="s1">&#39;dill._dill&#39;</span>
-<span class="ne">--&gt; </span><span class="mi">434</span> <span class="k">return</span> <span class="n">StockUnpickler</span><span class="o">.</span><span class="n">find_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;jaxlib.xla_extension&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of models loaded: 6
 </pre></div>
 </div>
 </div>
@@ -626,7 +582,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/07a24e6770d6593f55ae843f9af352ac0e6ee93bf07742e3ac2a520ece4203b2.png" src="_images/07a24e6770d6593f55ae843f9af352ac0e6ee93bf07742e3ac2a520ece4203b2.png" />
+<img alt="_images/f3a7d37526784c7d0f4df3dbbb6f8280092b5ca6bc93c1b7a92f5f81ef1a0275.png" src="_images/f3a7d37526784c7d0f4df3dbbb6f8280092b5ca6bc93c1b7a92f5f81ef1a0275.png" />
 </div>
 </div>
 <section id="preventing-over-and-under-fitting">
@@ -665,13 +621,13 @@ document.write(`
 <h2><span class="section-number">16.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Link to this heading">#</a></h2>
 <p><strong>A General Purpose Metric.</strong> Since so far, we fit our models by finding parameters that maximize the data log-likelihood (MLE). Can we also use log-likelihood as an evaluation metric? If we trust this metric for <em>fitting</em> our model, surely we should trust it for <em>evaluation</em> as well. And what’s nice about log-likelihood is that, unlike some of the other metrics we’ll introduce next, it’s not model-specific. We can evaluate the log-likelihood of <em>any</em> probabilistic model.</p>
 <p><strong>Log-Likelihood as an Evaluation Metric.</strong> Recall that the data log-likelihood is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cbd1fed6-3418-4043-ac74-128f201e1b85">
-<span class="eqno">(16.1)<a class="headerlink" href="#equation-cbd1fed6-3418-4043-ac74-128f201e1b85" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d1ef1afe-fff8-41ee-b38a-aea446d0c843">
+<span class="eqno">(16.1)<a class="headerlink" href="#equation-d1ef1afe-fff8-41ee-b38a-aea446d0c843" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \theta) &amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is our entire data set of <span class="math notranslate nohighlight">\(N\)</span> observations, each <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is an observation, and <span class="math notranslate nohighlight">\(\theta\)</span> is the model parameters. However, notice that in this definition, the data log-likelihood grows as <span class="math notranslate nohighlight">\(N\)</span> increases due to the sum. This means that, if our train, validation and test sets each have a different number of points, we cannot compare their log-likelihoods directly. To fix this problem, we instead compute the <em>average</em> log-likelihood (this is just the above equation divided by <span class="math notranslate nohighlight">\(N\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a8ccd4e9-aa14-46b9-ace4-60a182bc6902">
-<span class="eqno">(16.2)<a class="headerlink" href="#equation-a8ccd4e9-aa14-46b9-ace4-60a182bc6902" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e23a7867-205c-4a8e-90a0-a4c2789d8fe9">
+<span class="eqno">(16.2)<a class="headerlink" href="#equation-e23a7867-205c-4a8e-90a0-a4c2789d8fe9" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Avg. Log-Likelihood} = \frac{1}{N} \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta).
 \end{align}\]</div>
 <div class="admonition-exercise-getting-intuition-for-log-likelihood admonition">
@@ -699,14 +655,14 @@ document.write(`
 <section id="metrics-for-regression">
 <h2><span class="section-number">16.3. </span>Metrics for Regression<a class="headerlink" href="#metrics-for-regression" title="Link to this heading">#</a></h2>
 <p><strong>Mean Squared Error (MSE).</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, MSE, specific to regression. This metric can be used together with log-likelihood to paint a clearer picture of model fit. This is, of course, not the only evaluation metric for regression, but it’s a common one, so we’ll focus on it here. For 1-dimensional output data, the MSE is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5c9035f7-80b7-49db-b1c6-f43fa2e56a3c">
-<span class="eqno">(16.3)<a class="headerlink" href="#equation-5c9035f7-80b7-49db-b1c6-f43fa2e56a3c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a80c2e8e-02c8-4c39-bfe5-fc658e14ef23">
+<span class="eqno">(16.3)<a class="headerlink" href="#equation-a80c2e8e-02c8-4c39-bfe5-fc658e14ef23" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{MSE} &amp;= \frac{1}{N} \sum\limits_{n=1}^N (\underbrace{y_n - \widehat{y}_n}_{\text{error}})^2,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(y_n\)</span> is an observation and <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> the model’s prediction. As the name suggests, we compute the error between our model’s prediction and the observation, square it, and average. The MSE can be thought of as a measure of “spread” (or, in statistical lingo, the <em>variance</em>) of the data around the model’s prediction. Hopefully, in contrast to log-likelihood, it’s a little easier to understand, since we may have domain knowledge of what error, <span class="math notranslate nohighlight">\(y_n - \widehat{y}_n\)</span>, is considered high/low.</p>
 <p>But for a probabilistic model, what is the model’s “prediction”? In a probabilistic regression model, we have a <em>distribution</em> of outputs given inputs, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, and a distribution is <em>not</em> a single prediction. Because of this, we have to summarize the conditional distribution using a single value. Here, we will use the mean (which also happens to be the mode—or the most likely value of <span class="math notranslate nohighlight">\(y\)</span>). For our regression model, the mean of the distribion is the “trend,” so</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2566a42d-a344-41a9-b72c-587f99e89487">
-<span class="eqno">(16.4)<a class="headerlink" href="#equation-2566a42d-a344-41a9-b72c-587f99e89487" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7bc562ef-67b1-4a48-a8b8-494e7d073a0d">
+<span class="eqno">(16.4)<a class="headerlink" href="#equation-7bc562ef-67b1-4a48-a8b8-494e7d073a0d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{y}_n &amp;= \mu(x_n; W^\text{MLE}).
 \end{align}\]</div>
 <div class="admonition-exercise-implement-and-use-mse admonition">
@@ -725,14 +681,14 @@ document.write(`
 <section id="metrics-for-classification">
 <h2><span class="section-number">16.4. </span>Metrics for Classification<a class="headerlink" href="#metrics-for-classification" title="Link to this heading">#</a></h2>
 <p><strong>Accuracy.</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, accuracy, that’s specific to classification. Simply put, accuracy is the fraction of predictions the model got correct:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fd1eec9a-95ae-497c-8322-df02997f6969">
-<span class="eqno">(16.5)<a class="headerlink" href="#equation-fd1eec9a-95ae-497c-8322-df02997f6969" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1a66eff1-e1cb-4ef6-932f-f3d9ca1a5410">
+<span class="eqno">(16.5)<a class="headerlink" href="#equation-1a66eff1-e1cb-4ef6-932f-f3d9ca1a5410" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Accuracy} &amp;= \frac{1}{N} \underbrace{\sum\limits_{n=1}^N \mathbb{I}(y_n = \widehat{y}_n),}_{\text{count correct predictions}}
 \end{align}\]</div>
 <p>where, as before, <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> is the model’s prediction, and <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an indicator function—a function that evaluates to <span class="math notranslate nohighlight">\(1\)</span> when the condition inside is true and <span class="math notranslate nohighlight">\(0\)</span> otherwise. The sum over the indicators counts the number of correct predictions. When divided by <span class="math notranslate nohighlight">\(N\)</span>, we get the fraction of correct predictions.</p>
 <p>Just like before, a probabilistic model does not make “predictions;” it models a full distribution over outputs given inputs. We, again, have to choose how to summarize this distribution using a single value. Remember that in our classification model, <span class="math notranslate nohighlight">\(\rho(x_n)\)</span> outputted the probability of <span class="math notranslate nohighlight">\(x_n\)</span> belonging to class 1 (vs. class 0). To turn this into a prediction, we will threshold it: if <span class="math notranslate nohighlight">\(\rho(x_n) \geq 0.5\)</span>, we’ll say <span class="math notranslate nohighlight">\(x_n\)</span> belongs to class 1—otherwise, it belongs to class 0. We can formalize this using an indicator function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7defafdc-2195-421f-a14d-8ee99772e2d5">
-<span class="eqno">(16.6)<a class="headerlink" href="#equation-7defafdc-2195-421f-a14d-8ee99772e2d5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-fe2cebc1-777e-4ee6-91d4-aac7422860a2">
+<span class="eqno">(16.6)<a class="headerlink" href="#equation-fe2cebc1-777e-4ee6-91d4-aac7422860a2" title="Permalink to this equation">#</a></span>\[\begin{align}
 \widehat{y}_n &amp;= \mathbb{I}(\rho(x_n) \geq 0.5)
 \end{align}\]</div>
 <div class="admonition-exercise-the-shortcomings-of-accuracy admonition">
@@ -740,18 +696,18 @@ document.write(`
 <p><strong>Context.</strong> Since the disease is incredibly rare, occurring only in <span class="math notranslate nohighlight">\(0.1\%\)</span> of the population, doctors don’t yet know what are its causes. The doctors have managed to acquire a large fund to collect data about a large swath of the population, ranging from genetic factors to environmental factors (demographics, occupation, diet, physiology, etc.). They just finished collecting the data and have run a preliminary analysis to determine which factors contribute most.</p>
 <p><strong>Challenge.</strong> Even though their model is <span class="math notranslate nohighlight">\(99.9\%\)</span> accurate, they have found that none of the factors seem to matter to the model—how is this possible? They recruited you to help understand what’s going on with their model.</p>
 <p><strong>Part 1:</strong> You decided to inspect the parameters of the model. In the model, <span class="math notranslate nohighlight">\(1\)</span> represents having the disease and <span class="math notranslate nohighlight">\(0\)</span> represents no disease. Lucky for you, the doctors used a linear classification model (so interpreting it is possible):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-372a4a9a-eadc-4d23-bbb8-4a987351b235">
-<span class="eqno">(16.7)<a class="headerlink" href="#equation-372a4a9a-eadc-4d23-bbb8-4a987351b235" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6b8b0b8a-554e-4e27-9626-2f9a400676c3">
+<span class="eqno">(16.7)<a class="headerlink" href="#equation-6b8b0b8a-554e-4e27-9626-2f9a400676c3" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right) 
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-481d0dd6-6d38-4921-a05b-1b4a3d5a596d">
-<span class="eqno">(16.8)<a class="headerlink" href="#equation-481d0dd6-6d38-4921-a05b-1b4a3d5a596d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9b1a11f0-804c-4c2d-9016-1ca332f0a10d">
+<span class="eqno">(16.8)<a class="headerlink" href="#equation-9b1a11f0-804c-4c2d-9016-1ca332f0a10d" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) &amp;= \mathrm{sigmoid}\left( \theta^{(0)} + \sum\limits_{d=1}^{D_x} \theta^{(d)} \cdot x_n^{(d)} \right),
 \end{align}\]</div>
 <p>where the <span class="math notranslate nohighlight">\((d)\)</span>-superscript notation represents the <span class="math notranslate nohighlight">\(d\)</span>th dimension, and <span class="math notranslate nohighlight">\(D_x\)</span> is the dimensionality of the inputs <span class="math notranslate nohighlight">\(x_n\)</span>. When inspecting the parameters, you found that,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3231b447-99bc-4f07-b275-b5faf733712b">
-<span class="eqno">(16.9)<a class="headerlink" href="#equation-3231b447-99bc-4f07-b275-b5faf733712b" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ebce73ce-3cdc-4cd0-9521-f92ef54c2732">
+<span class="eqno">(16.9)<a class="headerlink" href="#equation-ebce73ce-3cdc-4cd0-9521-f92ef54c2732" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;= [\underbrace{-6.90675}_{\theta^{(0)}}, \underbrace{0.0, 0.0, \dots, 0.0}_{\theta^{(1)}, \dots, \theta^{(D_x)}}].
 \end{align}\]</div>
 <p>Looking at the parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, which dimensions of the input matter most?</p>
