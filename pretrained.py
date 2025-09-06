@@ -203,8 +203,9 @@ def fit_and_save_regression_eval_metrics_models():
     
     
 def main():
-    generate_regression_eval_metrics_data()
-    fit_and_save_regression_eval_metrics_models()
+    #generate_regression_eval_metrics_data()
+    #fit_and_save_regression_eval_metrics_models()
+    raise Exception('Do this on DeepNote to avoid dill.load errors! Then download them and store them here.')
 
 
 if __name__ == '__main__':
