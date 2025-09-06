@@ -1,16 +1,17 @@
 # Office Hours
 
-
-**Yaniv Yacoby:** I'll schedule my office hours based on a poll to ensure most of you can make it. In the **first week**, I'll have office hours at SCI W126 at:
-* Wednesday Sept 3, 9:30-11:00am
-* Friday Sept 5, 2:30-4pm
-
+**Yaniv Yacoby:** 
+* Wednesdays 9:30-11:00am @ SCI W126
+* Fridays 2:30-3:30 @ SCI W126 for **individual** office hours ([book via Calendly](https://calendly.com/yanivyacoby/office-hours))
+* Fridays 3:30-5pm @ SCI W126
   
-**Annie Chen (TA):** TBD
+**Annie Chen (TA):** 
+* Thursdays, 1-2pm @ L043
+* Thursdays 4-5pm @ L039
 
-**Genesis Hang (TA):** TBD
-* Tuesdays, 5-6pm @ TBD
-* Wednesdays, 3-4pm@ TBD
+**Genesis Hang (TA):** 
+* Tuesdays, 5-6pm @ SCI L043
+* Wednesdays, 3-4pm@ SCI L043
 
 
 
