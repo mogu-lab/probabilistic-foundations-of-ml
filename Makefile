@@ -10,5 +10,8 @@ clean:
 env:
 	pip list --format=freeze > requirements.txt # pip freeze > requirements.txt
 
+docker:
+	docker build . --platform linux/amd64 -t yanivyacoby/wellesley-cs345
+
 style:
 	jupyter-book config sphinx .

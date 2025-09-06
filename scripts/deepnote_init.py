@@ -63,7 +63,7 @@ def main():
         USER_NAME,
         REPO_NAME,
         ['probabilistic_foundations_of_ml.py', 'utils.py'],
-        skip_downloaded=False,
+        skip_downloaded=True,
     )
 
     print('Done.')

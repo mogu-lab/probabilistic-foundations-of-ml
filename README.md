@@ -47,6 +47,15 @@ Probabilistic Foundations of Machine Learning (c) 2024 by [Yaniv Yacoby](https:/
 
 
 
+## Docker
+
+1. After updating the `requirements.txt` file, run `make docker` to recreate the docker image.
+2. Then, tag the new image with a new version number: e.g., `docker tag yanivyacoby/wellesley-cs345 yanivyacoby/wellesley-cs345:v0`.
+3. Finally run push the tagged version: e.g. `docker push yanivyacoby/wellesley-cs345:v0`.
+
+
+
+
 ## Additional Readings
 
 Advanced Topics:
