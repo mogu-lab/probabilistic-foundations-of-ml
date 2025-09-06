@@ -149,6 +149,10 @@ def plot_classifier_of_control_vs_age_and_dose(
 
 
 def load_all_regression_models_of_comfort_vs_intensity(deepnote=True):
+    '''
+    Loads the models for the model selection unit.
+    If the models are to be used within DeepNote, set the flag to True.
+    '''
     prefix = 'dp_' if deepnote else ''
     
     models = []
