@@ -203,9 +203,8 @@ def fit_and_save_regression_eval_metrics_models():
     
     
 def main():
-    #generate_regression_eval_metrics_data()
-    #fit_and_save_regression_eval_metrics_models()
-    pass
+    generate_regression_eval_metrics_data()
+    fit_and_save_regression_eval_metrics_models()
 
 
 if __name__ == '__main__':
