@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-theme="light">
+<html lang="en" data-content_root="./" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>14. Classification &#8212; Probabilistic Foundations of Machine Learning (CS345)</title>
   
@@ -19,58 +18,53 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css?v=244d4a68" />
+    <link rel="stylesheet" type="text/css" href="_static/css/main.css?v=19873a65" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'classification';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs345/classification.html" />
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="15. Neural Networks" href="neural-networks.html" />
@@ -84,19 +78,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -118,12 +116,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -138,6 +144,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -145,15 +154,27 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
+  
     
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -171,18 +192,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="skills-check.html">Skills Check</a></li>
 <li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="oh.html">Office Hours</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noopener noreferrer" target="_blank">Found a Typo?</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noreferrer" target="_blank">Found a Typo?</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="hw-instructions.html">How to Download/Run/Submit</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noopener noreferrer" target="_blank">Homework 1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noopener noreferrer" target="_blank">Homework 2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noopener noreferrer" target="_blank">Homework 3</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noopener noreferrer" target="_blank">Homework 4</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noopener noreferrer" target="_blank">Homework 5</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noopener noreferrer" target="_blank">Homework 6</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noopener noreferrer" target="_blank">Homework 7</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noreferrer" target="_blank">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noreferrer" target="_blank">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noreferrer" target="_blank">Homework 3</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noreferrer" target="_blank">Homework 4</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noreferrer" target="_blank">Homework 5</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noreferrer" target="_blank">Homework 6</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noreferrer" target="_blank">Homework 7</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="nav bd-sidenav">
@@ -243,7 +264,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -252,14 +273,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -334,26 +355,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -386,15 +409,21 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="classification">
-<h1><span class="section-number">14. </span>Classification<a class="headerlink" href="#classification" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">14. </span>Classification<a class="headerlink" href="#classification" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span> 
-<span class="kn">import</span> <span class="nn">probabilistic_foundations_of_ml</span> <span class="k">as</span> <span class="nn">pfml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">probabilistic_foundations_of_ml</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pfml</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
 </div>
@@ -412,12 +441,12 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import a bunch of libraries we&#39;ll be using below</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpyro</span>
-<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
-<span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpyro</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpyro.distributions</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">D</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 
 <span class="c1"># Load the data into a pandas dataframe</span>
 <span class="n">csv_fname</span> <span class="o">=</span> <span class="s1">&#39;data/IHH-CTR-CGLF-classification.csv&#39;</span>
@@ -631,42 +660,42 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4e21fd4f632201cd40651ba5ac1095b483fb7565009d00a019d17a47acb2fd96.png" src="_images/4e21fd4f632201cd40651ba5ac1095b483fb7565009d00a019d17a47acb2fd96.png" />
+<img alt="_images/e75bc1e98ec4b55400c741cc6e56c442a96fd98c9f58f3560e890d08e0b4b320.png" src="_images/e75bc1e98ec4b55400c741cc6e56c442a96fd98c9f58f3560e890d08e0b4b320.png" />
 </div>
 </div>
 <p>Looking at the above plot, it seems like the medication has a positive affect—may of patients that seeked to regain their telekinetic control were able to regain it (i.e. many of the orange points became blue). Of course, the medication didn’t help everyone. This is precisely why it is important to understand <em>who</em> the medication will help, and with <em>what</em> probability.</p>
 <section id="the-classification-model">
-<h2><span class="section-number">14.1. </span>The Classification Model<a class="headerlink" href="#the-classification-model" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">14.1. </span>The Classification Model<a class="headerlink" href="#the-classification-model" title="Link to this heading">#</a></h2>
 <p><strong>The Model.</strong> Looking at our objective function, <span class="math notranslate nohighlight">\(\mathcal{L}(\theta)\)</span>, the only thing we need to define is <span class="math notranslate nohighlight">\(p_{Y | X}(y_n | x_n; \theta)\)</span>. Looking at the plot above, we see that <span class="math notranslate nohighlight">\(p_{Y | X}(y_n | x_n; \theta)\)</span>, should have the following form: for every point, <span class="math notranslate nohighlight">\(x_n\)</span>, it should assign a probability of being “in control.” Therefore, our model should have two parts:</p>
 <ol class="arabic simple">
 <li><p>Some way of mapping <span class="math notranslate nohighlight">\(x_n\)</span> to a probability between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> (where <span class="math notranslate nohighlight">\(1\)</span> indicates “in control”).</p></li>
 <li><p>Some way of sampling from this distribution.</p></li>
 </ol>
 <p>To capture both components, we define our model as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c0f714ca-0341-4579-b35d-650f4aca3529">
-<span class="eqno">(14.1)<a class="headerlink" href="#equation-c0f714ca-0341-4579-b35d-650f4aca3529" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-05db0488-4618-403d-bbed-ca4f565c417f">
+<span class="eqno">(14.1)<a class="headerlink" href="#equation-05db0488-4618-403d-bbed-ca4f565c417f" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5452628a-5dd5-445d-918e-ffacd49f28ef">
-<span class="eqno">(14.2)<a class="headerlink" href="#equation-5452628a-5dd5-445d-918e-ffacd49f28ef" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-af2a6149-e9c2-4ba3-be15-06b43a1dddd8">
+<span class="eqno">(14.2)<a class="headerlink" href="#equation-af2a6149-e9c2-4ba3-be15-06b43a1dddd8" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) = \mathrm{sigmoid}\left( f(x_n; \theta) \right).
 \end{align}\]</div>
 <p>What does all of this mean? It means that our generative process is as follows:</p>
 <ol class="arabic simple">
 <li><p>We’re given an input, <span class="math notranslate nohighlight">\(x_n\)</span>, from our data.</p></li>
-<li><p>We feed it through our function <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>, which outputs the probability of telekinetic control. Here, <span class="math notranslate nohighlight">\(\theta\)</span> controls the shape of this function. Because <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span> needs to output a probability, we need to ensure its output stays between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. We do this as follows: we define a function <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> that outputs real values, and then transform the output of this function into the range <span class="math notranslate nohighlight">\([0, 1]\)</span> using the sigmoid function. Check out its <a class="reference external" href="https://en.wikipedia.org/wiki/Sigmoid_function" rel="noopener noreferrer" target="_blank">Wikipedia page</a> to see what it looks like.</p></li>
+<li><p>We feed it through our function <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>, which outputs the probability of telekinetic control. Here, <span class="math notranslate nohighlight">\(\theta\)</span> controls the shape of this function. Because <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span> needs to output a probability, we need to ensure its output stays between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>. We do this as follows: we define a function <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span> that outputs real values, and then transform the output of this function into the range <span class="math notranslate nohighlight">\([0, 1]\)</span> using the sigmoid function. Check out its <a class="reference external" href="https://en.wikipedia.org/wiki/Sigmoid_function" rel="noreferrer" target="_blank">Wikipedia page</a> to see what it looks like.</p></li>
 <li><p>Finally, we sample from a Bernoulli with the probability given by <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>. This models the “noise” in the outcome; even for patients for which the medication is likely to work, the outcome is not guaranteed due to some unknown factors.</p></li>
 </ol>
 <p><strong>Expressivity.</strong> Let’s see what a classifier looks like. In the figure below, our goal is to learn a model that, given a 2-dimensional point, <span class="math notranslate nohighlight">\(x_n = (x_n^{(1)}, x_n^{(2)})\)</span>, will tell us if the point is cyan or red. The grayscale shades in the plot represent the probability of being classified as cyan, denoted by <span class="math notranslate nohighlight">\(\rho(x_n; \theta)\)</span> in the model above. As with linear vs. polynomial regression, the choice of <span class="math notranslate nohighlight">\(f(\cdot, \theta)\)</span> determines the expressivity of the model. This model shows the behavior of several different classifiers.</p>
 <figure class="align-center" id="fig-classification-example">
 <img alt="_images/example_classification.png" src="_images/example_classification.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 14.1 </span><span class="caption-text">Examples of classifiers with different choices of <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span>. Each row represents a different data set, and each column represents a different model. The grayscale colors represent the probability, <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>.</span><a class="headerlink" href="#fig-classification-example" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 14.1 </span><span class="caption-text">Examples of classifiers with different choices of <span class="math notranslate nohighlight">\(f(\cdot; \theta)\)</span>. Each row represents a different data set, and each column represents a different model. The grayscale colors represent the probability, <span class="math notranslate nohighlight">\(\rho(\cdot; \theta)\)</span>.</span><a class="headerlink" href="#fig-classification-example" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <div class="admonition-exercise-accuracy-and-uncertainty admonition">
-<p class="admonition-title">Exercise: Accuracy and Uncertainty </p>
+<p class="admonition-title">Exercise: Accuracy and Uncertainty</p>
 <p>Look at the above plot and answer these questions:</p>
 <ol class="arabic simple">
 <li><p>For the first row, rank the classifiers in order of accuracy (from most to least accurate). Then, rank the classifiers in order of certainty (from most to least)—which is most certain about its inputs? Assuming the data in the plot represents IHH medical data, which of these would you feel is safe for clinical use?</p></li>
@@ -675,23 +704,23 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 </div>
 </section>
 <section id="implementing-classification-models-in-numpyro">
-<h2><span class="section-number">14.2. </span>Implementing Classification Models in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#implementing-classification-models-in-numpyro" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">14.2. </span>Implementing Classification Models in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code><a class="headerlink" href="#implementing-classification-models-in-numpyro" title="Link to this heading">#</a></h2>
 <div class="admonition-exercise-implement-linear-classification admonition">
 <p class="admonition-title">Exercise: Implement Linear Classification</p>
 <p><strong>Part 1:</strong> Using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, implement a linear classification model. Your model should only include the conditional distribution of outputs (telekinetic control <em>after</em> medication) given the inputs (age <em>and</em> dose); it should <em>not</em> include the marginal distribution of age and dose. Your model should therefore have the following signature:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_linear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">model_linear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
 <p>Notice that here, we expect <code class="docutils literal notranslate"><span class="pre">age</span></code> and <code class="docutils literal notranslate"><span class="pre">dose</span></code> to <em>always</em> be passed in. This is because we’re not looking to learn the distribution of these variables—we’re always going to be given them.</p>
 <p>Tips:</p>
 <ul>
-<li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noopener noreferrer" target="_blank">here</a>).</p></li>
+<li><p>Instead of writing your own sigmoid function, you can <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">jax.nn</span> <span class="pre">as</span> <span class="pre">jnn</span></code> and then call <code class="docutils literal notranslate"><span class="pre">jnn.sigmoid</span></code> (you can find the documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.sigmoid.html" rel="noreferrer" target="_blank">here</a>).</p></li>
 <li><p>Age spans a larger range than dose: age spans a range of roughly 0 to 100, whereas dose spans a range of roughly 0 to 1. Because of this disparity, gradient descent may find your optimization tricky. A learning rate that’s appropriate for updating the coefficients of age may be too large for the dose and vice versa. Because of this, we recommend using the following functional form:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a275e6e7-57b2-4366-8816-268344cb3e96">
-<span class="eqno">(14.3)<a class="headerlink" href="#equation-a275e6e7-57b2-4366-8816-268344cb3e96" title="Permalink to this equation">#</a></span>\[\begin{align}
-    f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_d, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}{100} + \theta_d \cdot d_n + \theta_i,
-    \end{align}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-e973bbb0-29f3-4a43-aa50-7f9696a748ec">
+<span class="eqno">(14.3)<a class="headerlink" href="#equation-e973bbb0-29f3-4a43-aa50-7f9696a748ec" title="Permalink to this equation">#</a></span>\[\begin{align}
+f(\underbrace{a_n, d_n}_{x_n}; \underbrace{\theta_a, \theta_d, \theta_i}_{\theta}) &amp;= \theta_a \cdot \frac{a_n}{100} + \theta_d \cdot d_n + \theta_i,
+\end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a_n\)</span> is age with slope <span class="math notranslate nohighlight">\(\theta_a\)</span>, <span class="math notranslate nohighlight">\(d_n\)</span> is dose with slope <span class="math notranslate nohighlight">\(\theta_d\)</span>, and <span class="math notranslate nohighlight">\(\theta_i\)</span> is the intercept. Notice that we divide <span class="math notranslate nohighlight">\(a_n\)</span> by <span class="math notranslate nohighlight">\(100\)</span> to account for this difference in range.</p>
 </li>
 </ul>
@@ -721,7 +750,7 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 <li><p>Should fit the data better than the linear classifier from the previous exercise.</p></li>
 </ul>
 <p>Please use the function signature below and follow the same tips.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_nonlinear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">model_nonlinear_classifier</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">dose</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
@@ -735,10 +764,10 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 </div>
 </section>
 <section id="generalized-predictive-models">
-<h2><span class="section-number">14.3. </span>Generalized Predictive Models<a class="headerlink" href="#generalized-predictive-models" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">14.3. </span>Generalized Predictive Models<a class="headerlink" href="#generalized-predictive-models" title="Link to this heading">#</a></h2>
 <p>Hopefully at this point, you’re getting a feel for how to create predictive models to solve a variety of problem. Although we’ve only touched on regression (for real-valued data) and classification (for categorical data), using the tools you now have, you can make up your <em>own</em> predictive models to specifically solve problems you care about. The key is in specifying the conditional, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, which requires you to answer two questions:</p>
 <ol class="arabic simple">
-<li><p>What type of distribution is appropriate for modeling <span class="math notranslate nohighlight">\(Y\)</span>? For example, if <span class="math notranslate nohighlight">\(Y\)</span> is a real number between <span class="math notranslate nohighlight">\([0, 1]\)</span>, maybe you should use a <a class="reference external" href="https://en.wikipedia.org/wiki/Beta_distribution" rel="noopener noreferrer" target="_blank">Beta distribution</a> or a <a class="reference external" href="https://en.wikipedia.org/wiki/Kumaraswamy_distribution" rel="noopener noreferrer" target="_blank">Kumaraswamy distribution</a>? Even though we haven’t covered these distributions, by checking their Wikipedia pages, you can see that their support is <span class="math notranslate nohighlight">\([0, 1]\)</span>, and get a sense for how their shape depends on their parameters. This can help you determine if they are appropriate.</p></li>
+<li><p>What type of distribution is appropriate for modeling <span class="math notranslate nohighlight">\(Y\)</span>? For example, if <span class="math notranslate nohighlight">\(Y\)</span> is a real number between <span class="math notranslate nohighlight">\([0, 1]\)</span>, maybe you should use a <a class="reference external" href="https://en.wikipedia.org/wiki/Beta_distribution" rel="noreferrer" target="_blank">Beta distribution</a> or a <a class="reference external" href="https://en.wikipedia.org/wiki/Kumaraswamy_distribution" rel="noreferrer" target="_blank">Kumaraswamy distribution</a>? Even though we haven’t covered these distributions, by checking their Wikipedia pages, you can see that their support is <span class="math notranslate nohighlight">\([0, 1]\)</span>, and get a sense for how their shape depends on their parameters. This can help you determine if they are appropriate.</p></li>
 <li><p>How should the parameters of the distribution from (1) depend on <span class="math notranslate nohighlight">\(X\)</span>? For example, should it be a linear function? a polynomial function? a neural network function?</p></li>
 </ol>
 <div class="admonition-exercise-specifying-a-predictive-model admonition">
@@ -773,11 +802,10 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer d-print-none">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="regression.html"
@@ -797,10 +825,7 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -808,6 +833,7 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -835,6 +861,7 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -872,8 +899,8 @@ p_{Y | X}(\cdot | x_n; \theta) = \mathrm{Ber}\left( \rho(x_n; \theta) \right),
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

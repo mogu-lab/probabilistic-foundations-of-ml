@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-theme="light">
+<html lang="en" data-content_root="./" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>15. Neural Networks &#8212; Probabilistic Foundations of Machine Learning (CS345)</title>
   
@@ -19,58 +18,53 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css?v=244d4a68" />
+    <link rel="stylesheet" type="text/css" href="_static/css/main.css?v=19873a65" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'neural-networks';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs345/neural-networks.html" />
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="16. Model Selection &amp; Evaluation" href="model-selection.html" />
@@ -84,19 +78,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -118,12 +116,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -138,6 +144,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -145,15 +154,27 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
+  
     
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -171,18 +192,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="skills-check.html">Skills Check</a></li>
 <li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="oh.html">Office Hours</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noopener noreferrer" target="_blank">Found a Typo?</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noreferrer" target="_blank">Found a Typo?</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="hw-instructions.html">How to Download/Run/Submit</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noopener noreferrer" target="_blank">Homework 1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noopener noreferrer" target="_blank">Homework 2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noopener noreferrer" target="_blank">Homework 3</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noopener noreferrer" target="_blank">Homework 4</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noopener noreferrer" target="_blank">Homework 5</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noopener noreferrer" target="_blank">Homework 6</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noopener noreferrer" target="_blank">Homework 7</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noreferrer" target="_blank">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noreferrer" target="_blank">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noreferrer" target="_blank">Homework 3</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noreferrer" target="_blank">Homework 4</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noreferrer" target="_blank">Homework 5</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noreferrer" target="_blank">Homework 6</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noreferrer" target="_blank">Homework 7</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="nav bd-sidenav">
@@ -243,7 +264,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -252,14 +273,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -334,26 +355,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -388,21 +411,27 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="neural-networks">
-<h1><span class="section-number">15. </span>Neural Networks<a class="headerlink" href="#neural-networks" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">15. </span>Neural Networks<a class="headerlink" href="#neural-networks" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Context:</strong> So far, we’ve focused on translating our IHH colleague’s goals into probabilistic models, and then fitting these models to data to help them answer scientific questions. In each model’s conditional distributions, we’ve had to make two choices: what distribution to use, and how the distributions parameter should depend on the condition. For example, in regression, recall we picked the following conditional distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eba43c3c-d12e-463e-bee8-7cb7f081efd2">
-<span class="eqno">(15.1)<a class="headerlink" href="#equation-eba43c3c-d12e-463e-bee8-7cb7f081efd2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3faa2a75-232e-4e2e-8c57-886c62a2f6f9">
+<span class="eqno">(15.1)<a class="headerlink" href="#equation-3faa2a75-232e-4e2e-8c57-886c62a2f6f9" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbrace{\mu(x_n; W)}_{\text{trend}}, \underbrace{\sigma^2}_{\text{noise}} ),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> represents the “trend” of the data. We’ve had to decide whether <span class="math notranslate nohighlight">\(\mu(x_n; W)\)</span> should be linear, polynomial, or some other function. As our data grows in complexity—for example, as <span class="math notranslate nohighlight">\(x_n\)</span> becomes high-dimensional—it becomes increasingly difficult to make up functions that are, expressive, fast, and easy to code. We will show you why below.</p>
@@ -416,12 +445,12 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 <li><p>Connect the math behind neural networks to the pictures used to represent them in popular media</p></li>
 </ul>
 <section id="the-shortcomings-of-polynomials">
-<h2><span class="section-number">15.1. </span>The Shortcomings of Polynomials<a class="headerlink" href="#the-shortcomings-of-polynomials" title="Permalink to this heading">#</a></h2>
-<p><strong>The Universality of Polynomials.</strong> In both chapters about regression and classification, we observed the benefits of using non-linear functions for data with non-linear trends. In regression, we’ve focused on polynomials as our primary tool for creating non-linear functions, and for our low-dimensional data, they seemed to work great! So you may be wondering, why not apply them to high-dimensional data as well? In fact, polynomials boast a very powerful property: they are <em>universal function approximators</em>. By this, we mean that for any continuous function on some bounded interval <span class="math notranslate nohighlight">\([a, b]\)</span>, we can find a polynomial that approximates it arbitrarily well (this is known as the <a class="reference external" href="https://en.wikipedia.org/wiki/Stone%E2%80%93Weierstrass_theorem" rel="noopener noreferrer" target="_blank">Stone–Weierstrass theorem</a>). This means that for <em>any</em> data set that consists of continuous trends, <em>theoretically speaking</em>, polynomials can capture it. This is a huge deal! So let’s see how polynomials measure up against a neural network:</p>
+<h2><span class="section-number">15.1. </span>The Shortcomings of Polynomials<a class="headerlink" href="#the-shortcomings-of-polynomials" title="Link to this heading">#</a></h2>
+<p><strong>The Universality of Polynomials.</strong> In both chapters about regression and classification, we observed the benefits of using non-linear functions for data with non-linear trends. In regression, we’ve focused on polynomials as our primary tool for creating non-linear functions, and for our low-dimensional data, they seemed to work great! So you may be wondering, why not apply them to high-dimensional data as well? In fact, polynomials boast a very powerful property: they are <em>universal function approximators</em>. By this, we mean that for any continuous function on some bounded interval <span class="math notranslate nohighlight">\([a, b]\)</span>, we can find a polynomial that approximates it arbitrarily well (this is known as the <a class="reference external" href="https://en.wikipedia.org/wiki/Stone%E2%80%93Weierstrass_theorem" rel="noreferrer" target="_blank">Stone–Weierstrass theorem</a>). This means that for <em>any</em> data set that consists of continuous trends, <em>theoretically speaking</em>, polynomials can capture it. This is a huge deal! So let’s see how polynomials measure up against a neural network:</p>
 <figure class="align-center" id="fig-regression-inductive-bias-closeup">
 <img alt="_images/example_regression_inductive_bias_percent_ood_0.png" src="_images/example_regression_inductive_bias_percent_ood_0.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 15.1 </span><span class="caption-text">Examples of polynomial and neural network regression on IHH data.</span><a class="headerlink" href="#fig-regression-inductive-bias-closeup" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 15.1 </span><span class="caption-text">Examples of polynomial and neural network regression on IHH data.</span><a class="headerlink" href="#fig-regression-inductive-bias-closeup" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>As you can see, polynomial regression seems to capture the trend in these regression data sets super well—so why aren’t they as famous as neural networks? Polynomial regression actually comes with several challenges that make it inappropriate in many contexts.</p>
@@ -431,7 +460,7 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 <figure class="align-center" id="fig-regression-inductive-bias">
 <img alt="_images/example_regression_inductive_bias_percent_ood_30.png" src="_images/example_regression_inductive_bias_percent_ood_30.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 15.2 </span><span class="caption-text">A zoomed-out plot of the same models from the figure above.</span><a class="headerlink" href="#fig-regression-inductive-bias" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 15.2 </span><span class="caption-text">A zoomed-out plot of the same models from the figure above.</span><a class="headerlink" href="#fig-regression-inductive-bias" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>What’s interesting in the above plot is that the polynomial regression’s inductive bias tends towards positive or negative infinity very quickly. Looking at the math, this makes sense: a 5th or 6th-degree polynomial will include terms like <span class="math notranslate nohighlight">\(\text{age}^5\)</span>, which grow quickly with age.</p>
@@ -439,15 +468,15 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 <p><strong>Conclusion:</strong> When picking a function-class to work with (like the class of polynomials), it’s important to consider numerical stability (as well as ease of optimization). Without these properties, it doesn’t matter how expressive your function is, since you’ll never be able to practically fit it to data. Second, it’s important to think about the function class’s inductive bias, or in other words, to think about how it will generalize in regions of the space where data is scarce.</p>
 </section>
 <section id="expressive-functions-from-simple-building-blocks">
-<h2><span class="section-number">15.2. </span>Expressive Functions from Simple Building Blocks<a class="headerlink" href="#expressive-functions-from-simple-building-blocks" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">15.2. </span>Expressive Functions from Simple Building Blocks<a class="headerlink" href="#expressive-functions-from-simple-building-blocks" title="Link to this heading">#</a></h2>
 <p><strong>Idea.</strong> Instead of using polynomials, let’s see if we can build an expressive function-class, <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span>, from small building blocks. Each block will be simple and numerically stable. And when combined, will give us an expressive function, capable of adapting to any trend we observe in the data. This is the mechanism underlying neural networks.</p>
 <p>Let’s import some libraries so we can plot as we go.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">import</span> <span class="nn">jax.random</span> <span class="k">as</span> <span class="nn">jrandom</span>
-<span class="kn">import</span> <span class="nn">jax.nn</span> <span class="k">as</span> <span class="nn">jnn</span>
-<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.random</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jrandom</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpyro.distributions</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">D</span>
 </pre></div>
 </div>
 </div>
@@ -469,12 +498,12 @@ p_{Y | X}(\cdot | x_n; \underbrace{W, \sigma}_{\theta}) = \mathcal{N}( \underbra
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b1bc71888fca882eb7756c392ba0f514bfbb5b08c9c4266948b41cf178fd4d5e.png" src="_images/b1bc71888fca882eb7756c392ba0f514bfbb5b08c9c4266948b41cf178fd4d5e.png" />
+<img alt="_images/de01817af3ae189b9a51bca387968bbf0056e5d6f1b578605a01e30e01983242.png" src="_images/de01817af3ae189b9a51bca387968bbf0056e5d6f1b578605a01e30e01983242.png" />
 </div>
 </div>
 <p>We will give the sigmoid two parameters, which we will learn from data, giving us our simple building block:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-48dec17c-b63c-434d-9567-6667a46ed7ab">
-<span class="eqno">(15.2)<a class="headerlink" href="#equation-48dec17c-b63c-434d-9567-6667a46ed7ab" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-77c88ab9-bed7-4edb-8812-80c45dcb8ca2">
+<span class="eqno">(15.2)<a class="headerlink" href="#equation-77c88ab9-bed7-4edb-8812-80c45dcb8ca2" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal scale and shift}} )
 \end{align}\]</div>
 <p>Here, <span class="math notranslate nohighlight">\(b\)</span> shifts the sigmoid left/right, and <span class="math notranslate nohighlight">\(w\)</span> stretches/shrinks the overall sigmoid horizontally. Let’s see what this looks like for different choices of choices of <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
@@ -501,12 +530,12 @@ u(x; w, b) &amp;= \mathrm{sigmoid}( \underbrace{w \cdot x + b}_{\text{horizontal
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3954746727073a1e42d5ec0d9c1b02d55e33db4229cd33bbb83cc1b8cce27ccd.png" src="_images/3954746727073a1e42d5ec0d9c1b02d55e33db4229cd33bbb83cc1b8cce27ccd.png" />
+<img alt="_images/8f6de2f9f5445d063c7f60f7a8351c26b15322fe5393aaa30c34620b8eed990b.png" src="_images/8f6de2f9f5445d063c7f60f7a8351c26b15322fe5393aaa30c34620b8eed990b.png" />
 </div>
 </div>
 <p>Of course, the above example is only for a 1-dimensional input. Ideally, our function class will work for higher-dimensional inputs. We can incorporate this into our simple block as follows. We define <span class="math notranslate nohighlight">\(D_x\)</span> to be the dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, and we sum over the scaled and shifted inputs as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6e6fba59-292d-4485-8deb-274d80b7797a">
-<span class="eqno">(15.3)<a class="headerlink" href="#equation-6e6fba59-292d-4485-8deb-274d80b7797a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-657bdc65-d86e-4010-a973-7bb69425f1de">
+<span class="eqno">(15.3)<a class="headerlink" href="#equation-657bdc65-d86e-4010-a973-7bb69425f1de" title="Permalink to this equation">#</a></span>\[\begin{align}
 u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cdot x^{(d)} + b_d}_{\text{horizontal scale and shift}} \right)
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(x^{(d)}\)</span> denotes the <span class="math notranslate nohighlight">\(d\)</span>-th dimension of <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(w = \{ w_1, \dots w_d \}\)</span> and <span class="math notranslate nohighlight">\(b = \{ b_1, \dots b_d \}\)</span> have a different scale and shift for every dimension.</p>
@@ -531,17 +560,17 @@ u(x; w, b) &amp;= \mathrm{sigmoid}\left( \sum\limits_{d=1}^D \underbrace{w_d \cd
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8d8ce0f50594c113985ef89efdb350a28df23316903e2b8f210743c99f7d8c76.png" src="_images/8d8ce0f50594c113985ef89efdb350a28df23316903e2b8f210743c99f7d8c76.png" />
+<img alt="_images/04c828fb0de21f5d175556dc6231639194a8c8e8c9fbb09d02530e8ecb1234a8.png" src="_images/04c828fb0de21f5d175556dc6231639194a8c8e8c9fbb09d02530e8ecb1234a8.png" />
 </div>
 </div>
 <p>As you can see, this function already looks a lot more interesting than a sigmoid on its own. So how can we continue to expand the flexibility of our function? We can apply the same logic. That is, we can scale and shift our neurons and sum them up. In doing so, we end up with functions that are more expressive than each individual neuron. Formally, we will sum over a group of <span class="math notranslate nohighlight">\(H\)</span> of these neurons as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e818d111-ed53-4952-abb9-b5ff263546bb">
-<span class="eqno">(15.4)<a class="headerlink" href="#equation-e818d111-ed53-4952-abb9-b5ff263546bb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e0762577-c636-491e-9174-d5be8c8166a6">
+<span class="eqno">(15.4)<a class="headerlink" href="#equation-e0762577-c636-491e-9174-d5be8c8166a6" title="Permalink to this equation">#</a></span>\[\begin{align}
 f(x; W, b) &amp;= \sum\limits_{h=1}^H \underbrace{w_h^\text{out} \cdot u(x; w_h^\text{in}, b_h^\text{in}) + b_h^\text{out}}_{\text{vertical scale and shift}}
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-de5f1cef-85d7-451f-8059-697ad01c24fb">
-<span class="eqno">(15.5)<a class="headerlink" href="#equation-de5f1cef-85d7-451f-8059-697ad01c24fb" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-7a0364ab-1b2a-45c7-be6d-03105bdbabbb">
+<span class="eqno">(15.5)<a class="headerlink" href="#equation-7a0364ab-1b2a-45c7-be6d-03105bdbabbb" title="Permalink to this equation">#</a></span>\[\begin{align}
 W &amp;= \{ w_1^\text{in}, \dots, w_H^\text{in}, w_1^\text{out}, \dots, w_H^\text{out} \} \\
 b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\text{out} \}
 \end{align}\]</div>
@@ -593,7 +622,7 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e8ba6920319de16e12222493476c9340acf49a4538944c225fc7d14cd461c927.png" src="_images/e8ba6920319de16e12222493476c9340acf49a4538944c225fc7d14cd461c927.png" />
+<img alt="_images/74da5cbba0e838219e50445f4c9643eb07dd7ab2a8e95c6b225bdda62f1aec99.png" src="_images/74da5cbba0e838219e50445f4c9643eb07dd7ab2a8e95c6b225bdda62f1aec99.png" />
 </div>
 </div>
 <p>Now we’re getting wiggly! Given how many different functions <span class="math notranslate nohighlight">\(f(\cdot; W, b)\)</span> can represent, you can imagine that by learning the parameters, <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span>, from data, we can capture the data trends accurately. Moreover, notice that, unlike polynomials, there’s nothing about <span class="math notranslate nohighlight">\(f(\cdot; W, b)\)</span> that is numerically unstable. Each neuron is a sigmoid, so its range is between <span class="math notranslate nohighlight">\([0, 1]\)</span>; therefore, summing up the sigmoids together to get <span class="math notranslate nohighlight">\(f(\cdot; W, b)\)</span> doesn’t blow up like a polynomial.</p>
@@ -601,37 +630,40 @@ b &amp;= \{ b_1^\text{in}, \dots, b_H^\text{in}, b_1^\text{out}, \dots, b_H^\tex
 <p><strong>Inductive Bias of Neural Networks.</strong> Recall above, one of the main shortcomings of polynomials was their inductive bias—or the way they behave away from the data. As we moved to the left/right on the x-axis away from the data, the polynomials grew super fast! This growth is unlikely to be useful for representing many natural phenomenon. Neural networks, on the other hand, don’t exhibit this inductive bias—why? Because if we look at the sigmoid function, it’s flat on the left, and it’s flat on the right. This means that when we sum a bunch of sigmoid, the resultant function should be flat away from the data. Looking at the plot above, do you notice how the functions become flat near <span class="math notranslate nohighlight">\(x=-3.0\)</span> and <span class="math notranslate nohighlight">\(x=3.0\)</span>?</p>
 <p><strong>Combining Building Blocks via Composition.</strong> We can make the neural network we’ve created so far <em>even more expressive</em> by repeating the same idea. We treat each neural network as our new “building block.” Then, just like before, we scale and shift them, and add them up. Every repetition of this process adds another “layer” to the neural network, making it “deeper”—the number of layers is known as the <em>depth</em> of the network.</p>
 <p>We won’t notate all of this with math, because it gets cumbersome unless we introduce some additional notation (this is what we’ll do next). You can imagine though, the deeper the network, the more expressive it will be.</p>
-<p><strong>Activation Functions.</strong> Here, we chose to use a sigmoid in our neuron. There are many functions we could have used instead, each giving us different neural networks with different inductive biases. These functions are generally called “activation functions.” <a class="reference external" href="https://en.wikipedia.org/wiki/Activation_function" rel="noopener noreferrer" target="_blank">Wikipedia</a> organized a table of them, and many of them are already implemented in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> (see <a class="reference external" href="https://jax.readthedocs.io/en/latest/jax.nn.html#activation-functions" rel="noopener noreferrer" target="_blank">here</a>).</p>
+<p><strong>Activation Functions.</strong> Here, we chose to use a sigmoid in our neuron. There are many functions we could have used instead, each giving us different neural networks with different inductive biases. These functions are generally called “activation functions.” <a class="reference external" href="https://en.wikipedia.org/wiki/Activation_function" rel="noreferrer" target="_blank">Wikipedia</a> organized a table of them, and many of them are already implemented in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> (see <a class="reference external" href="https://jax.readthedocs.io/en/latest/jax.nn.html#activation-functions" rel="noreferrer" target="_blank">here</a>).</p>
 <p>The name “activation function” comes from the inspiration from neuroscience that led to neural networks.</p>
 <figure class="align-center" id="artificial-vs-biological-neuron">
-<a class="reference internal image-reference" href="https://www.researchgate.net/profile/Xianlin-Wang/publication/351372032/figure/fig4/AS:1020744041525248&#64;1620375752492/Comparison-between-biological-neuron-and-artificial-neuron-40.png"><img alt="https://www.researchgate.net/profile/Xianlin-Wang/publication/351372032/figure/fig4/AS:1020744041525248&#64;1620375752492/Comparison-between-biological-neuron-and-artificial-neuron-40.png" src="https://www.researchgate.net/profile/Xianlin-Wang/publication/351372032/figure/fig4/AS:1020744041525248&#64;1620375752492/Comparison-between-biological-neuron-and-artificial-neuron-40.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="https://www.researchgate.net/profile/Xianlin-Wang/publication/351372032/figure/fig4/AS:1020744041525248&#64;1620375752492/Comparison-between-biological-neuron-and-artificial-neuron-40.png"><img alt="https://www.researchgate.net/profile/Xianlin-Wang/publication/351372032/figure/fig4/AS:1020744041525248&#64;1620375752492/Comparison-between-biological-neuron-and-artificial-neuron-40.png" src="https://www.researchgate.net/profile/Xianlin-Wang/publication/351372032/figure/fig4/AS:1020744041525248&#64;1620375752492/Comparison-between-biological-neuron-and-artificial-neuron-40.png" style="width: 500px;" />
+</a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.3 </span><span class="caption-text">Inspiration behind the “neuron” in a neural network. Figure taken from <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/S2352012421003179" rel="noopener noreferrer" target="_blank">this paper</a>.</span><a class="headerlink" href="#artificial-vs-biological-neuron" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 15.3 </span><span class="caption-text">Inspiration behind the “neuron” in a neural network. Figure taken from <a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/S2352012421003179" rel="noreferrer" target="_blank">this paper</a>.</span><a class="headerlink" href="#artificial-vs-biological-neuron" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>As you can see from the figure, each neuron takes signals from its inputs (by summing over the scaled and shifted inputs). The sum is then passed on to the activation function, which only “activates” (or sends a non-zero value) if the sum is sufficiently large. Looking at the shape of the sigmoid activation function, for example, you can see exactly the input value for which the sigmoid would output a non-zero value. You can learn more about the connection between artificial and biological neurons <a class="reference external" href="https://s.mriquestions.com/what-is-a-neural-network.html" rel="noopener noreferrer" target="_blank">here</a>.</p>
+<p>As you can see from the figure, each neuron takes signals from its inputs (by summing over the scaled and shifted inputs). The sum is then passed on to the activation function, which only “activates” (or sends a non-zero value) if the sum is sufficiently large. Looking at the shape of the sigmoid activation function, for example, you can see exactly the input value for which the sigmoid would output a non-zero value. You can learn more about the connection between artificial and biological neurons <a class="reference external" href="https://s.mriquestions.com/what-is-a-neural-network.html" rel="noreferrer" target="_blank">here</a>.</p>
 </section>
 <section id="efficient-representations-via-matrices">
-<h2><span class="section-number">15.3. </span>Efficient Representations via Matrices<a class="headerlink" href="#efficient-representations-via-matrices" title="Permalink to this heading">#</a></h2>
-<p>So how can we code a neural network in a way that’s (a) easy to code, and (b) efficient for the computer to evaluate? We’ll now use some tricks from linear algebra—matrices—to help us out. Considerable <a class="reference external" href="https://en.wikipedia.org/wiki/Computational_complexity_of_matrix_multiplication" rel="noopener noreferrer" target="_blank">research and engineering</a> has gone into allowing your computer to multiply matrices fast. By relying on this prior work, we can implement our neural networks easily and efficiently. If you haven’t taken linear algebra before, that’s no problem. We’ll walk you through exactly the parts you need to know to implement your own neural network.</p>
+<h2><span class="section-number">15.3. </span>Efficient Representations via Matrices<a class="headerlink" href="#efficient-representations-via-matrices" title="Link to this heading">#</a></h2>
+<p>So how can we code a neural network in a way that’s (a) easy to code, and (b) efficient for the computer to evaluate? We’ll now use some tricks from linear algebra—matrices—to help us out. Considerable <a class="reference external" href="https://en.wikipedia.org/wiki/Computational_complexity_of_matrix_multiplication" rel="noreferrer" target="_blank">research and engineering</a> has gone into allowing your computer to multiply matrices fast. By relying on this prior work, we can implement our neural networks easily and efficiently. If you haven’t taken linear algebra before, that’s no problem. We’ll walk you through exactly the parts you need to know to implement your own neural network.</p>
 <p><strong>What’s a Matrix?</strong> For our purposes, you can think of a matrix as a 2-dimensional array. Here are some examples of matrices:</p>
 <figure class="align-center" id="matrix-definition">
-<a class="reference internal image-reference" href="_images/matrices.jpg"><img alt="_images/matrices.jpg" src="_images/matrices.jpg" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/matrices.jpg"><img alt="_images/matrices.jpg" src="_images/matrices.jpg" style="width: 400px;" />
+</a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.4 </span><span class="caption-text">Two matrices, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#matrix-definition" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 15.4 </span><span class="caption-text">Two matrices, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#matrix-definition" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>We say that the matrix <span class="math notranslate nohighlight">\(A\)</span> (on the left) is a 2-by-4 matrix, since it has 2 rows and 4 columns. Similarly, the matrix <span class="math notranslate nohighlight">\(B\)</span> (on the right) is a 4-by-3 matrix.</p>
 <p><strong>Matrix Multiplication.</strong> To multiply two matrices, we take each row of the first matrix and each column of the second and proceed as follows:</p>
 <figure class="align-center" id="matrices-multiplication">
-<a class="reference internal image-reference" href="_images/matrix-multiplication.jpg"><img alt="_images/matrix-multiplication.jpg" src="_images/matrix-multiplication.jpg" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/matrix-multiplication.jpg"><img alt="_images/matrix-multiplication.jpg" src="_images/matrix-multiplication.jpg" style="width: 400px;" />
+</a>
 <figcaption>
-<p><span class="caption-number">Fig. 15.5 </span><span class="caption-text">Matrix multiplication, <span class="math notranslate nohighlight">\(A \cdot B = C\)</span>, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noopener noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#matrices-multiplication" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 15.5 </span><span class="caption-text">Matrix multiplication, <span class="math notranslate nohighlight">\(A \cdot B = C\)</span>, taken from <a class="reference external" href="https://chem.libretexts.org/Courses/Centre_College/CHE_332%3A_Inorganic_Chemistry/03%3A_Molecular_Symmetry_and_Point_Groups/3.03%3A_Properties_and_Representations_of_Groups/3.3.02%3A_Matrices" rel="noreferrer" target="_blank">this website</a>.</span><a class="headerlink" href="#matrices-multiplication" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>As you can see from the figure above, the number of rows in <span class="math notranslate nohighlight">\(A\)</span> must match the number of columns in <span class="math notranslate nohighlight">\(B\)</span>. Moreover, each element <span class="math notranslate nohighlight">\(c_{i, j}\)</span> in matrix <span class="math notranslate nohighlight">\(C\)</span> represents the following <em>sum of products</em>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d70556f6-8922-4845-9a29-51b0b8519147">
-<span class="eqno">(15.6)<a class="headerlink" href="#equation-d70556f6-8922-4845-9a29-51b0b8519147" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6735afd9-b4b8-4100-b15b-5d16d8f4d9bc">
+<span class="eqno">(15.6)<a class="headerlink" href="#equation-6735afd9-b4b8-4100-b15b-5d16d8f4d9bc" title="Permalink to this equation">#</a></span>\[\begin{align}
 c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(j\)</span> indexes into each element in the row of <span class="math notranslate nohighlight">\(A\)</span> <em>and</em> the corresponding element in the column of <span class="math notranslate nohighlight">\(B\)</span>. Next, we’ll make the connection between matrices and neural networks.</p>
@@ -639,23 +671,23 @@ c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 <p><strong>Sums of Shifted and Scaled Numbers via Matrix Multiplication.</strong> You may have noticed that in our neural network math so far, there’s a pattern that keeps popping up. We keep summing over things that we’ve scaled and shifted. You can see this in the definition of a single neuron, <span class="math notranslate nohighlight">\(u(x; w, b)\)</span>, in the definition of a simple neural network, <span class="math notranslate nohighlight">\(f(x; W, b)\)</span>, as well as in the process of creating deeper networks. These sums look very much like the formula for <span class="math notranslate nohighlight">\(c_{i,j}\)</span> above. As such, we can represent this operation using <em>matrix multiplication</em>.</p>
 </section>
 <section id="id1">
-<h2><span class="section-number">15.4. </span>Neural Networks<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">15.4. </span>Neural Networks<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p><strong>A 1-Layer Neural Network.</strong> Let <span class="math notranslate nohighlight">\(D_x\)</span> be the dimension of our inputs, <span class="math notranslate nohighlight">\(x\)</span>, and let <span class="math notranslate nohighlight">\(D_y\)</span> be the dimension of our outputs, <span class="math notranslate nohighlight">\(y\)</span>. We can now rewrite our definition of a neural network using matrices. Our neural network will consist of the following recipe:</p>
 <ol class="arabic">
 <li><p><em>Scaling the inputs.</em> We scale each dimension of the inputs, <span class="math notranslate nohighlight">\(x\)</span>, by <span class="math notranslate nohighlight">\(H\)</span> different values. This can be done using a matrix <span class="math notranslate nohighlight">\(W_0\)</span> of dimensions <span class="math notranslate nohighlight">\(D_x \times H\)</span>. This gives us: <span class="math notranslate nohighlight">\(x \cdot W_0\)</span>.</p></li>
 <li><p><em>Shifting the inputs.</em> We shift each of the values from the previous steps. This can be done by adding an array/vector, <span class="math notranslate nohighlight">\(b_0\)</span> of dimension <span class="math notranslate nohighlight">\(H\)</span> to the result from the previous step: <span class="math notranslate nohighlight">\(x \cdot W_0 + b_0\)</span>. These are our scaled and shifted inputs.</p></li>
 <li><p><em>Applying the activation.</em> We apply an activation function to the result from the previous step. We can use a sigmoid like before, or any other activation function we choose. For generality, we’ll call it <span class="math notranslate nohighlight">\(g(\cdot)\)</span>. This gives us <span class="math notranslate nohighlight">\(H\)</span> different neurons: <span class="math notranslate nohighlight">\(g(x \cdot W_0 + b_0)\)</span>.</p></li>
 <li><p><em>Scaling and shifting the outputs.</em> Recall that we get expressivity by adding scaled and shifted neurons together. To do this, we’ll introduce <span class="math notranslate nohighlight">\(W_1\)</span> and <span class="math notranslate nohighlight">\(b_1\)</span>, for scaling and shifting, respectively. <span class="math notranslate nohighlight">\(W_1\)</span> has dimensions <span class="math notranslate nohighlight">\(H \times D_y\)</span> and <span class="math notranslate nohighlight">\(b_1\)</span> has dimensions <span class="math notranslate nohighlight">\(D_y\)</span>. Altogether, this gives us the following formula:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-682206f0-6f23-472e-8c0a-00acef98490c">
-<span class="eqno">(15.7)<a class="headerlink" href="#equation-682206f0-6f23-472e-8c0a-00acef98490c" title="Permalink to this equation">#</a></span>\[\begin{align}
-    f(x; \underbrace{W_0, W_1, b_0, b_1}_{\text{parameters, } \theta}) = g(x \cdot W_0 + b_0) \cdot W_1 + b_1.
-    \end{align}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-e8071041-6d40-41bd-bb0b-90b499dd92ca">
+<span class="eqno">(15.7)<a class="headerlink" href="#equation-e8071041-6d40-41bd-bb0b-90b499dd92ca" title="Permalink to this equation">#</a></span>\[\begin{align}
+f(x; \underbrace{W_0, W_1, b_0, b_1}_{\text{parameters, } \theta}) = g(x \cdot W_0 + b_0) \cdot W_1 + b_1.
+\end{align}\]</div>
 <p>The number of neurons, <span class="math notranslate nohighlight">\(H\)</span>, is called the <em>hidden dimension</em> of the neural network.</p>
 </li>
 </ol>
 <p><strong>Deeper Networks.</strong> We can extend the above network by adding as many additional layers as you like:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-acd4b03f-c527-461c-936b-b94ae1ef6b56">
-<span class="eqno">(15.8)<a class="headerlink" href="#equation-acd4b03f-c527-461c-936b-b94ae1ef6b56" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-579484e1-d967-4468-92c7-12936df22dca">
+<span class="eqno">(15.8)<a class="headerlink" href="#equation-579484e1-d967-4468-92c7-12936df22dca" title="Permalink to this equation">#</a></span>\[\begin{align}
     \text{2-layers:} &amp;\quad g( \underbrace{g(x \cdot W_0 + b_0) \cdot W_1 + b_1}_{\text{1-layer neural network}} ) \cdot W_2 + b_2 \\
     \text{3-layers:} &amp;\quad g( \underbrace{g( g(x \cdot W_0 + b_0) \cdot W_1 + b_1) \cdot W_2 + b_2)}_{\text{2-layer neural network}} \cdot W_3 + b_3 \\
     \text{4-layers:} &amp;\quad g( \underbrace{g( g( g(x \cdot W_0 + b_0) \cdot W_1 + b_1) \cdot W_2 + b_2) \cdot W_3 + b_3}_{\text{3-layer neural network}} ) \cdot W_4 + b_4 \\
@@ -672,13 +704,13 @@ c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 <p class="admonition-title">Exercise: Neural Network Regression</p>
 <p>Load in <code class="docutils literal notranslate"><span class="pre">data/IHH-CTR-CGLF-regression-augmented.csv</span></code>. Your goal is to predict telekinetic ability from age.</p>
 <p><strong>Part 1:</strong> Take your polynomial regression model, implemented for the chapter on regression. Swap out the polynomial <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span> with your implementation of a 1-layer neural network. Your neural network implementation should use the matrix formulation above. Use a sigmoid activation function. Please use the following function signature:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_neural_network_regressor</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">H</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">model_neural_network_regressor</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">H</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
 <p>Tips:</p>
 <ul>
-<li><p>To multiply matrices, use <code class="docutils literal notranslate"><span class="pre">jnp.matmul</span></code>—documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.numpy.matmul.html" rel="noopener noreferrer" target="_blank">here</a>.</p></li>
+<li><p>To multiply matrices, use <code class="docutils literal notranslate"><span class="pre">jnp.matmul</span></code>—documentation <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.numpy.matmul.html" rel="noreferrer" target="_blank">here</a>.</p></li>
 <li><p>Both your inputs and your outputs should have shape <code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">1)</span></code> for <code class="docutils literal notranslate"><span class="pre">jnp.matmul</span></code> to work correctly.</p></li>
 <li><p>Since you’re now passing in data as 2-dimensional arrays, you’ll need to use the following notation for your plate:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">plate</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">2</span><span class="p">):</span>
@@ -699,34 +731,34 @@ c_{i,k} &amp;= \sum\limits_{j=1}^4 a_{i,j} \cdot b_{j, k},
 </ul>
 <p><strong>Part 2:</strong> Fit your neural network regression model to the data using MLE using a different number of neurons, <span class="math notranslate nohighlight">\(H \in \{2, 16, 32, 64 \}\)</span>. For each value of <span class="math notranslate nohighlight">\(H\)</span>, use 3 different keys (passed into the optimizer)—this, will give you several different initializations, each yielding slightly different fits.</p>
 <p><strong>Part 3:</strong> Visualize samples from each neural network regression and each initialization against the training data. How does your network behave as you increase <span class="math notranslate nohighlight">\(H\)</span>? How are the model fits different across different initialization? For both, your answer should look both at how your model interpolates <em>and</em> extrapolates (how it fits the data, and what it does away from the data).</p>
-<p><strong>Part 4:</strong> Replace your activation function with a <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.relu.html" rel="noopener noreferrer" target="_blank">ReLU activation</a> and repeat steps (2) and (3). How does this new activation function affect the network’s fit?</p>
+<p><strong>Part 4:</strong> Replace your activation function with a <a class="reference external" href="https://jax.readthedocs.io/en/latest/_autosummary/jax.nn.relu.html" rel="noreferrer" target="_blank">ReLU activation</a> and repeat steps (2) and (3). How does this new activation function affect the network’s fit?</p>
 </div>
 <p><strong>Types of Neural Networks.</strong> In addition to the neural networked we introduced here, often called a “fully connected” or “dense” neural network, there are many other types of neural network. Each type specializes in a different data modality. To name a few, <em>Convolutional Neural Networks</em> are suitable to image data, and <em>Recurrent Neural Networks</em> are suitable for time-series data or natural language data. The recent advances in deep learning that enabled Large Language Models like ChatGPT are all due to a type of neural network called a <em>Transformer</em>. We will not get into these here. Instead, we will treat these as tools we can freely incorporate into our probabilistic models to make our models more expressive as we see fit.</p>
 </section>
 <section id="challenges-with-neural-networks">
-<h2><span class="section-number">15.5. </span>Challenges with Neural Networks<a class="headerlink" href="#challenges-with-neural-networks" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">15.5. </span>Challenges with Neural Networks<a class="headerlink" href="#challenges-with-neural-networks" title="Link to this heading">#</a></h2>
 <p><strong>Optimization.</strong> As your model becomes more expressive, optimization typically becomes more difficult. Our loss function will have many more local optima and strange geometry that make it practically impossible for an optimizer to find the global optima. For complicated models, it’s therefore important to remember the flaws of numerical optimization, and to treat optimization like a research problem. By this, we mean that when you encounter a problem—e.g. your model doesn’t optimize, your loss bounces up and down erratically, etc.—you should approach it like a scientist. You should form hypotheses about the shape of the loss function. These hypotheses should inform how you adjust your learning rate (and other optimization hyperparameters), the number of parameter initializations you try, etc. Please review the chapter on optimization for more intuition on how gradient-based optimization behaves on different loss functions.</p>
 <p>Of course, there are many ML researches working hard to try to understand these optimization challenges:</p>
 <ul class="simple">
-<li><p>The paper, <em><a class="reference external" href="https://arxiv.org/pdf/1712.09913" rel="noopener noreferrer" target="_blank">Visualizing the Loss Landscape of Neural Nets</a></em>, introduces a new way of visualizing high dimensional loss functions of neural networks, and explores how neural network architecture (or “type”) makes optimization easier or harder. This paper also led to further inspiration for more <a class="reference external" href="https://losslandscape.com/gallery/" rel="noopener noreferrer" target="_blank">artistic visualizations</a> of loss landscapes.</p></li>
-<li><p>Conventional wisdom says that it’s important to find the <em>global optima</em> for good model performance. As many papers have already shown, numerical optimizers that often get stuck in a variety of local optima actually benefit model performance. The paper <em><a class="reference external" href="https://arxiv.org/pdf/2211.15853" rel="noopener noreferrer" target="_blank">Disentangling the Mechanisms Behind Implicit Regularization in SGD</a></em> attempts to understand why.</p></li>
-<li><p>Conventional wisdom also says that when neural networks become significantly larger than what’s needed to make good predictions on the data, they overfit and become difficult to optimize. The paper, <em><a class="reference external" href="https://arxiv.org/pdf/1912.02292" rel="noopener noreferrer" target="_blank">Deep Double Descent: Where Bigger Models and More Data Hurt</a></em>, shows that, in contrast to this conventional wisdom, larger models actually perform better. This phenomenon is called “double descent”—model performance initially gets worse as the neural network becomes larger, but past a certain neural network size, it improves again.</p></li>
+<li><p>The paper, <em><a class="reference external" href="https://arxiv.org/pdf/1712.09913" rel="noreferrer" target="_blank">Visualizing the Loss Landscape of Neural Nets</a></em>, introduces a new way of visualizing high dimensional loss functions of neural networks, and explores how neural network architecture (or “type”) makes optimization easier or harder. This paper also led to further inspiration for more <a class="reference external" href="https://losslandscape.com/gallery/" rel="noreferrer" target="_blank">artistic visualizations</a> of loss landscapes.</p></li>
+<li><p>Conventional wisdom says that it’s important to find the <em>global optima</em> for good model performance. As many papers have already shown, numerical optimizers that often get stuck in a variety of local optima actually benefit model performance. The paper <em><a class="reference external" href="https://arxiv.org/pdf/2211.15853" rel="noreferrer" target="_blank">Disentangling the Mechanisms Behind Implicit Regularization in SGD</a></em> attempts to understand why.</p></li>
+<li><p>Conventional wisdom also says that when neural networks become significantly larger than what’s needed to make good predictions on the data, they overfit and become difficult to optimize. The paper, <em><a class="reference external" href="https://arxiv.org/pdf/1912.02292" rel="noreferrer" target="_blank">Deep Double Descent: Where Bigger Models and More Data Hurt</a></em>, shows that, in contrast to this conventional wisdom, larger models actually perform better. This phenomenon is called “double descent”—model performance initially gets worse as the neural network becomes larger, but past a certain neural network size, it improves again.</p></li>
 </ul>
-<p><strong>Interpretability.</strong> As models become more complicated, it also harder to intuit about their inner workings. Check out <a class="reference external" href="https://playground.tensorflow.org/#activation=sigmoid&amp;batchSize=10&amp;dataset=circle&amp;regDataset=reg-plane&amp;learningRate=0.03&amp;regularizationRate=0&amp;noise=0&amp;networkShape=8,8&amp;seed=0.63137&amp;showTestData=false&amp;discretize=false&amp;percTrainData=50&amp;x=true&amp;y=true&amp;xTimesY=false&amp;xSquared=false&amp;ySquared=false&amp;cosX=false&amp;sinX=false&amp;cosY=false&amp;sinY=false&amp;collectStats=false&amp;problem=classification&amp;initZero=false&amp;hideText=false" rel="noopener noreferrer" target="_blank">this in-browser neural network training visualization</a>. You can play with different neural network sizes, activation functions, etc. The visualizer will then show you the output of <em>every neuron</em> in the neural network. As you increase the size of your neural network, can you make sense of what each individual neuron is doing? It’s very difficult to understand neural networks by looking at their parameters… But when ML models touch human lives, we often need to understand the “reasoning” behind an ML model’s prediction. Understanding the model’s reasoning is important for several reasons:</p>
+<p><strong>Interpretability.</strong> As models become more complicated, it also harder to intuit about their inner workings. Check out <a class="reference external" href="https://playground.tensorflow.org/#activation=sigmoid&amp;amp;batchSize=10&amp;amp;dataset=circle&amp;amp;regDataset=reg-plane&amp;amp;learningRate=0.03&amp;amp;regularizationRate=0&amp;amp;noise=0&amp;amp;networkShape=8,8&amp;amp;seed=0.63137&amp;amp;showTestData=false&amp;amp;discretize=false&amp;amp;percTrainData=50&amp;amp;x=true&amp;amp;y=true&amp;amp;xTimesY=false&amp;amp;xSquared=false&amp;amp;ySquared=false&amp;amp;cosX=false&amp;amp;sinX=false&amp;amp;cosY=false&amp;amp;sinY=false&amp;amp;collectStats=false&amp;amp;problem=classification&amp;amp;initZero=false&amp;amp;hideText=false" rel="noreferrer" target="_blank">this in-browser neural network training visualization</a>. You can play with different neural network sizes, activation functions, etc. The visualizer will then show you the output of <em>every neuron</em> in the neural network. As you increase the size of your neural network, can you make sense of what each individual neuron is doing? It’s very difficult to understand neural networks by looking at their parameters… But when ML models touch human lives, we often need to understand the “reasoning” behind an ML model’s prediction. Understanding the model’s reasoning is important for several reasons:</p>
 <ol class="arabic simple">
-<li><p><em>Models can be incorrect and discriminatory.</em> We need to be able to verify the model’s output before making decisions on it. For example, in many medical imaging contexts, ML models can learn to <a class="reference external" href="https://www.nature.com/articles/s41591-024-03113-4" rel="noopener noreferrer" target="_blank">make predictions based on the demographic proxies hidden in the image, rather than based on the physiological content of an image</a>.</p></li>
+<li><p><em>Models can be incorrect and discriminatory.</em> We need to be able to verify the model’s output before making decisions on it. For example, in many medical imaging contexts, ML models can learn to <a class="reference external" href="https://www.nature.com/articles/s41591-024-03113-4" rel="noreferrer" target="_blank">make predictions based on the demographic proxies hidden in the image, rather than based on the physiological content of an image</a>.</p></li>
 <li><p><em>Models don’t understand context.</em> Sometimes, we need to synthesize a model’s output with additional information about our decision-making context. For example, what if a model prescribes penicillin to a patient who’s allergic it?</p></li>
 <li><p><em>Humans need a mechanism for recourse under AI systems.</em> For example, if an AI system decides whether you qualify for a loan from the bank, wouldn’t you like to know what you can do to alter the AI’s decision?</p></li>
 <li><p><em>When something goes wrong with an automated system, who takes responsibility?</em> For legal reasons, it’s often argued that a model should only make <em>recommendations</em> to a human user, who will make the final decision. In this way, the human can be held responsible for any negative outcomes (do you think this is reasonable?).</p></li>
 </ol>
-<p>To address all of the above challenges, “interpretable ML” or “explainable AI” has emerged as an exciting field of research. Since interpretability is a human-facing property of ML systems, this field draws on both ML and human-computer interaction (HCI)—you may enjoy the paper, <em><a class="reference external" href="https://arxiv.org/pdf/1702.08608" rel="noopener noreferrer" target="_blank">Towards A Rigorous Science of Interpretable Machine Learning</a></em>. Of course, interpretable ML has its own challenges (this is why it is an active area of research!)</p>
+<p>To address all of the above challenges, “interpretable ML” or “explainable AI” has emerged as an exciting field of research. Since interpretability is a human-facing property of ML systems, this field draws on both ML and human-computer interaction (HCI)—you may enjoy the paper, <em><a class="reference external" href="https://arxiv.org/pdf/1702.08608" rel="noreferrer" target="_blank">Towards A Rigorous Science of Interpretable Machine Learning</a></em>. Of course, interpretable ML has its own challenges (this is why it is an active area of research!)</p>
 <ul class="simple">
-<li><p>Explanations of ML models can be misleading. In the paper, <em><a class="reference external" href="https://www.nature.com/articles/s41398-021-01224-x" rel="noopener noreferrer" target="_blank">How machine-learning recommendations influence clinician treatment selections: the example of antidepressant selection</a></em>, the authors found that clinicians interacting with incorrect recommendations paired with simple explanations experienced a significant reduction in treatment selection accuracy.</p></li>
-<li><p>Explanations of ML models can be manipulative. In the paper, <em><a class="reference external" href="https://arxiv.org/pdf/1901.07694" rel="noopener noreferrer" target="_blank">Explaining Models: An Empirical Study of How Explanations
+<li><p>Explanations of ML models can be misleading. In the paper, <em><a class="reference external" href="https://www.nature.com/articles/s41398-021-01224-x" rel="noreferrer" target="_blank">How machine-learning recommendations influence clinician treatment selections: the example of antidepressant selection</a></em>, the authors found that clinicians interacting with incorrect recommendations paired with simple explanations experienced a significant reduction in treatment selection accuracy.</p></li>
+<li><p>Explanations of ML models can be manipulative. In the paper, <em><a class="reference external" href="https://arxiv.org/pdf/1901.07694" rel="noreferrer" target="_blank">Explaining Models: An Empirical Study of How Explanations
 Impact Fairness Judgment</a></em>, the authors show that the type of explanation shapes our judgement of fairness.</p></li>
-<li><p>Explanations can fail when integrated into the broader sociotechnical system. For example, in the paper, <em><a class="reference external" href="https://arxiv.org/pdf/2205.05424" rel="noopener noreferrer" target="_blank">“If it didn’t happen, why would I change my decision?”: How Judges Respond to Counterfactual Explanations for the Public Safety Assessment</a></em>, explanations of an AI system were entirely ignored by human users.</p></li>
+<li><p>Explanations can fail when integrated into the broader sociotechnical system. For example, in the paper, <em><a class="reference external" href="https://arxiv.org/pdf/2205.05424" rel="noreferrer" target="_blank">“If it didn’t happen, why would I change my decision?”: How Judges Respond to Counterfactual Explanations for the Public Safety Assessment</a></em>, explanations of an AI system were entirely ignored by human users.</p></li>
 </ul>
-<p><strong>The Guise of Objectivity.</strong> Because neural networks are so expressive, as a society, we’ve crafted a narrative about their objectivity—that they are able to recover objective truths in a purely data-driven fashion, no human-assumptions necessary. However, <em>this is not theoretically or practically possible</em>. All models make assumptions that have significant downstream consequences. Some models, like neural networks, however, are complicated enough to better <em>hide</em> their underlying assumptions. This means we have to be extra careful when reasoning about them. As an example, the paper <em><a class="reference external" href="https://arxiv.org/pdf/1806.07572" rel="noopener noreferrer" target="_blank">Neural Tangent Kernel: Convergence and Generalization in Neural Networks</a></em> shows that, under mild conditions, neural networks trained with gradient descent actually behave like a type of regression, known as <a class="reference external" href="https://en.wikipedia.org/wiki/Kernel_regression#:~:text=In%20statistics%2C%20kernel%20regression%20is,variable%20relative%20to%20a%20variable" rel="noopener noreferrer" target="_blank">kernel regression</a>. And kernel regression <em>does make assumptions</em> (that are in fact, in many ways easier to understand than those underlying a neural network).</p>
+<p><strong>The Guise of Objectivity.</strong> Because neural networks are so expressive, as a society, we’ve crafted a narrative about their objectivity—that they are able to recover objective truths in a purely data-driven fashion, no human-assumptions necessary. However, <em>this is not theoretically or practically possible</em>. All models make assumptions that have significant downstream consequences. Some models, like neural networks, however, are complicated enough to better <em>hide</em> their underlying assumptions. This means we have to be extra careful when reasoning about them. As an example, the paper <em><a class="reference external" href="https://arxiv.org/pdf/1806.07572" rel="noreferrer" target="_blank">Neural Tangent Kernel: Convergence and Generalization in Neural Networks</a></em> shows that, under mild conditions, neural networks trained with gradient descent actually behave like a type of regression, known as <a class="reference external" href="https://en.wikipedia.org/wiki/Kernel_regression#:~:text=In%20statistics%2C%20kernel%20regression%20is,variable%20relative%20to%20a%20variable" rel="noreferrer" target="_blank">kernel regression</a>. And kernel regression <em>does make assumptions</em> (that are in fact, in many ways easier to understand than those underlying a neural network).</p>
 </section>
 </section>
 
@@ -755,11 +787,10 @@ Impact Fairness Judgment</a></em>, the authors show that the type of explanation
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer d-print-none">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="classification.html"
@@ -779,10 +810,7 @@ Impact Fairness Judgment</a></em>, the authors show that the type of explanation
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -790,6 +818,7 @@ Impact Fairness Judgment</a></em>, the authors show that the type of explanation
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -819,6 +848,7 @@ Impact Fairness Judgment</a></em>, the authors show that the type of explanation
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -856,8 +886,8 @@ Impact Fairness Judgment</a></em>, the authors show that the type of explanation
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

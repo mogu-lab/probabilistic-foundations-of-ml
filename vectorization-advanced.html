@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-theme="light">
+<html lang="en" data-content_root="./" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>3. Advanced Vectorization &#8212; Probabilistic Foundations of Machine Learning (CS345)</title>
   
@@ -19,58 +18,53 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css?v=244d4a68" />
+    <link rel="stylesheet" type="text/css" href="_static/css/main.css?v=19873a65" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'vectorization-advanced';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs345/vectorization-advanced.html" />
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="4. Probability (Discrete)" href="probability-discrete.html" />
@@ -84,19 +78,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -118,12 +116,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -138,6 +144,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -145,15 +154,27 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
+  
     
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -171,18 +192,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="skills-check.html">Skills Check</a></li>
 <li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="oh.html">Office Hours</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noopener noreferrer" target="_blank">Found a Typo?</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noreferrer" target="_blank">Found a Typo?</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="hw-instructions.html">How to Download/Run/Submit</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noopener noreferrer" target="_blank">Homework 1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noopener noreferrer" target="_blank">Homework 2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noopener noreferrer" target="_blank">Homework 3</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noopener noreferrer" target="_blank">Homework 4</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noopener noreferrer" target="_blank">Homework 5</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noopener noreferrer" target="_blank">Homework 6</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noopener noreferrer" target="_blank">Homework 7</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noreferrer" target="_blank">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noreferrer" target="_blank">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noreferrer" target="_blank">Homework 3</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noreferrer" target="_blank">Homework 4</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noreferrer" target="_blank">Homework 5</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noreferrer" target="_blank">Homework 6</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noreferrer" target="_blank">Homework 7</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="current nav bd-sidenav">
@@ -243,7 +264,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -252,14 +273,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -334,26 +355,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -387,23 +410,23 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="advanced-vectorization">
-<h1><span class="section-number">3. </span>Advanced Vectorization<a class="headerlink" href="#advanced-vectorization" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">3. </span>Advanced Vectorization<a class="headerlink" href="#advanced-vectorization" title="Link to this heading">#</a></h1>
 <p>In the previous guide on <code class="docutils literal notranslate"><span class="pre">Jax</span></code>, we introduced the basic building blocks—multi-dimensional arrays—as well as a new paradigm for writing code without loops or if/else-expressions. Here, we continue building on this paradigm with more advanced (yet common) uses of <code class="docutils literal notranslate"><span class="pre">Jax</span></code> in ML.</p>
 <p>Let’s get ourselves started by importing some libraries.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">import</span> <span class="nn">chex</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">chex</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Acknowledgement.</strong> Parts of this tutorial have been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html" rel="noopener noreferrer" target="_blank">this NumPy tutorial</a>.</p>
+<p><strong>Acknowledgement.</strong> Parts of this tutorial have been adapted from <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html" rel="noreferrer" target="_blank">this NumPy tutorial</a>.</p>
 <section id="indexing-with-boolean-arrays">
-<h2><span class="section-number">3.1. </span>Indexing with Boolean Arrays<a class="headerlink" href="#indexing-with-boolean-arrays" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.1. </span>Indexing with Boolean Arrays<a class="headerlink" href="#indexing-with-boolean-arrays" title="Link to this heading">#</a></h2>
 <p>Whereas <em>slicing</em> is typically used to extract contiguous chunks from an array (i.e. a subsection of elements that belonged together in the original array), <em>indexing</em> will allow us to extract non-contiguous parts. How? It’s easier shown than explained.</p>
 <p>You may remember from the introductory guide to <code class="docutils literal notranslate"><span class="pre">Jax</span></code> that performing boolean operations on an array returns a boolean array. Here’s an example:</p>
 <div class="cell docutils container">
@@ -446,7 +469,7 @@ x^3 &amp; \text{if $x$ is odd} \\
 <p>can be implemented as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="n">is_even</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">is_even</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">+</span> <span class="o">~</span><span class="n">is_even</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mf">3.0</span><span class="p">)</span>
 
@@ -464,7 +487,7 @@ x^3 &amp; \text{if $x$ is odd} \\
 <p>While the above example has pedagogical value, the logic does become a little obfuscated with all of the casting and such. Here’s another, cleaner way to implement the above function using <code class="docutils literal notranslate"><span class="pre">jnp.where</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x</span> <span class="o">**</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">x</span> <span class="o">**</span> <span class="mf">3.0</span><span class="p">)</span>
     
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
@@ -564,7 +587,7 @@ x^3 &amp; \text{if $x$ is odd} \\
 </pre></div>
 </div>
 <p>Use the following function signature:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">boolean_indexing_q1</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">boolean_indexing_q1</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
@@ -595,14 +618,14 @@ x^3 &amp; \text{if $x$ is odd} \\
 </pre></div>
 </div>
 <p>Use the following function signature:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">boolean_indexing_q2</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">boolean_indexing_q2</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
 </div>
 </section>
 <section id="indexing-with-arrays-of-indices">
-<h2><span class="section-number">3.2. </span>Indexing with Arrays of Indices<a class="headerlink" href="#indexing-with-arrays-of-indices" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.2. </span>Indexing with Arrays of Indices<a class="headerlink" href="#indexing-with-arrays-of-indices" title="Link to this heading">#</a></h2>
 <p>Sometimes, it’s useful to select elements an array not just using a single index, but using an array of indices.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -718,7 +741,7 @@ x^3 &amp; \text{if $x$ is odd} \\
 </div>
 <p>the function should return, <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">15]</span></code>. Note that there already exists a function in <code class="docutils literal notranslate"><span class="pre">Jax</span></code> that does exactly this: <code class="docutils literal notranslate"><span class="pre">jnp.diagonal</span></code>. Please <strong>do not</strong> use it for the sake of this exercise!</p>
 <p>Use the following function signature:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">integer_indexing_q1</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">integer_indexing_q1</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
@@ -732,14 +755,14 @@ x^3 &amp; \text{if $x$ is odd} \\
 </ul>
 <p>Again, this functionality is already built-in to <code class="docutils literal notranslate"><span class="pre">jnp.diagonal</span></code>, but for the purpose of the exercise, implement this yourself.</p>
 <p>Use the following function signature:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">integer_indexing_q2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">integer_indexing_q2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
 </div>
 </section>
 <section id="broadcasting">
-<h2><span class="section-number">3.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.3. </span>Broadcasting<a class="headerlink" href="#broadcasting" title="Link to this heading">#</a></h2>
 <p>The term <em>broadcasting</em> describes how <code class="docutils literal notranslate"><span class="pre">Jax</span></code> treats arrays with different shapes during arithmetic operations. Subject to certain constraints, the smaller array is “broadcast” across the larger array so that they have compatible shapes. Broadcasting provides a means of vectorizing array operations so that looping occurs very fast under the hood without making needless copies of data. Broadcasting follows two rules:</p>
 <p><strong>Rule 1:</strong> If all input arrays do not have the same number of dimensions, a “1” will be repeatedly prepended to the shapes of the smaller arrays until all the arrays have the same number of dimensions.</p>
 <blockquote>
@@ -853,7 +876,7 @@ b =
 </pre></div>
 </div>
 <p>Use the following function signature:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">broadcasting_q1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">broadcasting_q1</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
@@ -873,15 +896,15 @@ b =
 <li><p>Given <span class="math notranslate nohighlight">\(N = 2\)</span>, <span class="math notranslate nohighlight">\(a = [5.0, -2.0, 3.0]\)</span>, and <span class="math notranslate nohighlight">\(x = [1.0, 2.0, 3.0, 4.0, 5.0]\)</span>, your function should return <span class="math notranslate nohighlight">\([6.0, 19.0, 42.0, 75.0, 118.0]\)</span>.</p></li>
 </ul>
 <p>Use the following function signature:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">broadcasting_q2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">broadcasting_q2</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="k">pass</span> <span class="c1"># TODO implement</span>
 </pre></div>
 </div>
 </div>
-<p>For more information on broadcasting, checkout <a class="reference external" href="https://numpy.org/doc/stable/user/basics.broadcasting.html#basics-broadcasting" rel="noopener noreferrer" target="_blank">this tutorial</a>.</p>
+<p>For more information on broadcasting, checkout <a class="reference external" href="https://numpy.org/doc/stable/user/basics.broadcasting.html#basics-broadcasting" rel="noreferrer" target="_blank">this tutorial</a>.</p>
 </section>
 <section id="catching-bugs-early-with-chex">
-<h2><span class="section-number">3.4. </span>Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code><a class="headerlink" href="#catching-bugs-early-with-chex" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">3.4. </span>Catching Bugs Early with <code class="docutils literal notranslate"><span class="pre">chex</span></code><a class="headerlink" href="#catching-bugs-early-with-chex" title="Link to this heading">#</a></h2>
 <p><strong>What’s <code class="docutils literal notranslate"><span class="pre">chex</span></code>?</strong> As we just saw, while powerful, <code class="docutils literal notranslate"><span class="pre">Jax</span></code>’s broadcasting can subtly sneak in bugs into your code. Luckily, there’s a great Python library that can help us: <code class="docutils literal notranslate"><span class="pre">chex</span></code>. <code class="docutils literal notranslate"><span class="pre">chex</span></code> is a library for asserting <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array shapes.</p>
 <p><strong>What are assertions?</strong> Assertions are lines in your code that raise an exception if something that should be true is false. They are useful for catching bugs and for debugging. For example, if you write a function that takes in argument <span class="math notranslate nohighlight">\(p \in [0, 1]\)</span>, you can write:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
@@ -907,7 +930,7 @@ b =
 <p>We can implement this as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">split_2d_array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">split_2d_array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
     <span class="c1"># ensure &#39;p&#39; is between 0 and 1</span>
     <span class="k">assert</span><span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">)</span>
 
@@ -929,7 +952,7 @@ b =
 </div>
 </div>
 <p>If you were to pass in an array that is not 2-dimensional, or if there was a bug in the array-splitting code inside the function, <code class="docutils literal notranslate"><span class="pre">chex</span></code> would have raised an exception (try it!)</p>
-<p>You can find the <code class="docutils literal notranslate"><span class="pre">chex</span></code> documentation <a class="reference external" href="https://chex.readthedocs.io/en/latest/api.html" rel="noopener noreferrer" target="_blank">here</a>. For this course, we will only focus on assertions that have to do with <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array shapes. That is, only consider the following:</p>
+<p>You can find the <code class="docutils literal notranslate"><span class="pre">chex</span></code> documentation <a class="reference external" href="https://chex.readthedocs.io/en/latest/api.html" rel="noreferrer" target="_blank">here</a>. For this course, we will only focus on assertions that have to do with <code class="docutils literal notranslate"><span class="pre">Jax</span></code> array shapes. That is, only consider the following:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">assert_shape</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">assert_equal_shape</span></code></p></li>
@@ -970,11 +993,10 @@ b =
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer d-print-none">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="vectorization-basics.html"
@@ -994,10 +1016,7 @@ b =
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1005,6 +1024,7 @@ b =
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1033,6 +1053,7 @@ b =
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -1070,8 +1091,8 @@ b =
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

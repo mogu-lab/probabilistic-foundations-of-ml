@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-theme="light">
+<html lang="en" data-content_root="./" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>16. Model Selection &amp; Evaluation &#8212; Probabilistic Foundations of Machine Learning (CS345)</title>
   
@@ -19,58 +18,53 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css?v=244d4a68" />
+    <link rel="stylesheet" type="text/css" href="_static/css/main.css?v=19873a65" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'model-selection';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs345/model-selection.html" />
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="17. The Ethics of Predictive Models in Sociotechnical Systems" href="ethics-of-predictive-models.html" />
@@ -84,19 +78,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -118,12 +116,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -138,6 +144,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -145,15 +154,27 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
+  
     
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -171,18 +192,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="skills-check.html">Skills Check</a></li>
 <li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="oh.html">Office Hours</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noopener noreferrer" target="_blank">Found a Typo?</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noreferrer" target="_blank">Found a Typo?</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="hw-instructions.html">How to Download/Run/Submit</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noopener noreferrer" target="_blank">Homework 1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noopener noreferrer" target="_blank">Homework 2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noopener noreferrer" target="_blank">Homework 3</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noopener noreferrer" target="_blank">Homework 4</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noopener noreferrer" target="_blank">Homework 5</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noopener noreferrer" target="_blank">Homework 6</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noopener noreferrer" target="_blank">Homework 7</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noreferrer" target="_blank">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noreferrer" target="_blank">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noreferrer" target="_blank">Homework 3</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noreferrer" target="_blank">Homework 4</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noreferrer" target="_blank">Homework 5</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noreferrer" target="_blank">Homework 6</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noreferrer" target="_blank">Homework 7</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="nav bd-sidenav">
@@ -243,7 +264,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -252,14 +273,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -334,26 +355,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -387,15 +410,21 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="model-selection-evaluation">
-<h1><span class="section-number">16. </span>Model Selection &amp; Evaluation<a class="headerlink" href="#model-selection-evaluation" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">16. </span>Model Selection &amp; Evaluation<a class="headerlink" href="#model-selection-evaluation" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">import</span> <span class="nn">probabilistic_foundations_of_ml</span> <span class="k">as</span> <span class="nn">pfml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">probabilistic_foundations_of_ml</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pfml</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
 </div>
@@ -414,10 +443,10 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import a bunch of libraries we&#39;ll be using below</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">import</span> <span class="nn">jax.random</span> <span class="k">as</span> <span class="nn">jrandom</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.random</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jrandom</span>
 
 <span class="c1"># Load the data into a pandas dataframe</span>
 <span class="n">csv_fname</span> <span class="o">=</span> <span class="s1">&#39;data/IHH-CRD-train.csv&#39;</span>
@@ -459,78 +488,78 @@ document.write(`
   <tbody>
     <tr>
       <th>45</th>
-      <td>0.308006</td>
-      <td>0.977233</td>
+      <td>0.400600</td>
+      <td>0.964841</td>
     </tr>
     <tr>
       <th>59</th>
-      <td>0.502982</td>
-      <td>1.359451</td>
+      <td>0.396205</td>
+      <td>1.056692</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>0.125683</td>
-      <td>0.405900</td>
+      <td>0.258072</td>
+      <td>0.857226</td>
     </tr>
     <tr>
       <th>50</th>
-      <td>0.520344</td>
-      <td>1.185005</td>
+      <td>0.207297</td>
+      <td>0.725486</td>
     </tr>
     <tr>
       <th>92</th>
-      <td>0.404359</td>
-      <td>0.955264</td>
+      <td>0.502688</td>
+      <td>1.024173</td>
     </tr>
     <tr>
       <th>27</th>
-      <td>0.471006</td>
-      <td>1.138226</td>
+      <td>0.128112</td>
+      <td>0.425399</td>
     </tr>
     <tr>
       <th>131</th>
-      <td>0.767512</td>
-      <td>1.025494</td>
+      <td>0.379528</td>
+      <td>1.328371</td>
     </tr>
     <tr>
       <th>137</th>
-      <td>0.534193</td>
-      <td>0.828949</td>
+      <td>0.331724</td>
+      <td>0.774225</td>
     </tr>
     <tr>
       <th>122</th>
-      <td>0.661706</td>
-      <td>1.179636</td>
+      <td>0.748351</td>
+      <td>1.289176</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>0.183754</td>
-      <td>0.742592</td>
+      <td>0.073868</td>
+      <td>0.264080</td>
     </tr>
     <tr>
       <th>111</th>
-      <td>0.378024</td>
-      <td>0.670647</td>
+      <td>0.627877</td>
+      <td>1.186544</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>0.416132</td>
-      <td>0.664669</td>
+      <td>0.555007</td>
+      <td>1.332022</td>
     </tr>
     <tr>
       <th>63</th>
-      <td>0.239045</td>
-      <td>0.871169</td>
+      <td>0.374981</td>
+      <td>0.883373</td>
     </tr>
     <tr>
       <th>76</th>
-      <td>0.449077</td>
-      <td>0.933577</td>
+      <td>0.602109</td>
+      <td>1.202155</td>
     </tr>
     <tr>
       <th>123</th>
-      <td>0.216425</td>
-      <td>0.722563</td>
+      <td>0.704252</td>
+      <td>1.399664</td>
     </tr>
   </tbody>
 </table>
@@ -559,11 +588,11 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b8ce20a34c186e11ab20e302e1db51c799b9f83ab87caa543c423949275592e5.png" src="_images/b8ce20a34c186e11ab20e302e1db51c799b9f83ab87caa543c423949275592e5.png" />
+<img alt="_images/f3a7d37526784c7d0f4df3dbbb6f8280092b5ca6bc93c1b7a92f5f81ef1a0275.png" src="_images/f3a7d37526784c7d0f4df3dbbb6f8280092b5ca6bc93c1b7a92f5f81ef1a0275.png" />
 </div>
 </div>
 <section id="preventing-over-and-under-fitting">
-<h2><span class="section-number">16.1. </span>Preventing Over- and Under-fitting<a class="headerlink" href="#preventing-over-and-under-fitting" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">16.1. </span>Preventing Over- and Under-fitting<a class="headerlink" href="#preventing-over-and-under-fitting" title="Link to this heading">#</a></h2>
 <p><strong>Decomposition into Signal vs. Noise.</strong> In probabilistic models, we often term one part of the model the “trend” or the “signal,” and we term the rest “noise” or “observation error.” For example, recall that in regression, our trend is captured by a function of the inputs, <span class="math notranslate nohighlight">\(\mu(\cdot; W)\)</span>, around which we assume a Gaussian observation error. Similarly, in the classification model we introduced, our trend is captured by a function of the inputs, <span class="math notranslate nohighlight">\(\rho(\cdot; W)\)</span>, which computes the probability of belonging to class 1 (as opposed to class 0). We then sample from a Bernoulli distribution with that probability—this represents the “noise” or “observation error.” When fitting a probabilistic model, we’re always at risk of learning models that mix up what’s signal vs. what’s noise. This can happen in two ways:</p>
 <ul class="simple">
 <li><p><strong>Overfitting:</strong> When the “signal” part of the model memorizes the “noise” part, and as a result, interpolates poorly. By <em>interpolation</em>, we mean, how well the model fits data points <em>near</em> our training data.</p></li>
@@ -571,13 +600,14 @@ document.write(`
 </ul>
 <p>Let’s illustrate what overfitting and underfitting each look like, in both classification and regression:</p>
 <figure class="align-center" id="model-fitting-illustration">
-<a class="reference internal image-reference" href="_images/model-fitting-illustration.png"><img alt="_images/model-fitting-illustration.png" src="_images/model-fitting-illustration.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="_images/model-fitting-illustration.png"><img alt="_images/model-fitting-illustration.png" src="_images/model-fitting-illustration.png" style="width: 100%;" />
+</a>
 <figcaption>
-<p><span class="caption-number">Fig. 16.1 </span><span class="caption-text">Illustration of overfitting and underfitting, adapted from <a class="reference external" href="https://i.pinimg.com/originals/72/e2/22/72e222c1542539754df1d914cb671bd7.png" rel="noopener noreferrer" target="_blank">this image</a>.</span><a class="headerlink" href="#model-fitting-illustration" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 16.1 </span><span class="caption-text">Illustration of overfitting and underfitting, adapted from <a class="reference external" href="https://i.pinimg.com/originals/72/e2/22/72e222c1542539754df1d914cb671bd7.png" rel="noreferrer" target="_blank">this image</a>.</span><a class="headerlink" href="#model-fitting-illustration" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p><strong>Preventing Inappropriate Decomposition into Signal vs. Noise.</strong> How can we tell if a model overfit or underfit? Well, looking at the definition above, we said a model over/under-fitts if it <em>interpolates</em> poorly. This means that, to determine if a model over/under-fit, we should check its fit <em>on data it has not seen yet</em>—specifically, on data that’s similar to our training data.</p>
-<p>But where can we get such extra data points? Oftentimes, it’s hard to collect additional data. For example, at the IHH, data collection is expensive; it’s funded by large government grants and requires approval of an <a class="reference external" href="https://en.wikipedia.org/wiki/Institutional_review_board" rel="noopener noreferrer" target="_blank">Institutional Review Board (IRB)</a> to ensure data collection and analysis is ethical. As a result, we often cannot collect additional data. Instead, however, we can <em>split our data into parts</em>—one part for training and one part for validating the model’s interpolation. Specifically, after fitting the model on the training data, we compare the model’s fit on the training data with its fit on the validation data:</p>
+<p>But where can we get such extra data points? Oftentimes, it’s hard to collect additional data. For example, at the IHH, data collection is expensive; it’s funded by large government grants and requires approval of an <a class="reference external" href="https://en.wikipedia.org/wiki/Institutional_review_board" rel="noreferrer" target="_blank">Institutional Review Board (IRB)</a> to ensure data collection and analysis is ethical. As a result, we often cannot collect additional data. Instead, however, we can <em>split our data into parts</em>—one part for training and one part for validating the model’s interpolation. Specifically, after fitting the model on the training data, we compare the model’s fit on the training data with its fit on the validation data:</p>
 <ul class="simple">
 <li><p>If the fit on the training data is better than that on the validation data, we <em>overfit</em>.</p></li>
 <li><p>If the fit on neither the training data nor the validation data is good, we <em>underfit.</em></p></li>
@@ -594,16 +624,16 @@ document.write(`
 <p><strong>But which metric should we use?</strong> That’s a million-dollar question! We will next present several common metrics for evaluating model performance numerically. As you will see, model performance is multi-faceted—there’s more to consider than just how well the model fits. For example, is the model fair? and will the model be understandable to a human? If we have multiple factors to consider, how can we possibly design a metric that gives us a single ranking of models from best to worst? The answer is: we can’t. We will have to use multiple metrics to evaluate our models. At times, these metrics will present us with contradictory information, and we will have to determine what to do.</p>
 </section>
 <section id="log-likelihood">
-<h2><span class="section-number">16.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">16.2. </span>Log-Likelihood<a class="headerlink" href="#log-likelihood" title="Link to this heading">#</a></h2>
 <p><strong>A General Purpose Metric.</strong> Since so far, we fit our models by finding parameters that maximize the data log-likelihood (MLE). Can we also use log-likelihood as an evaluation metric? If we trust this metric for <em>fitting</em> our model, surely we should trust it for <em>evaluation</em> as well. And what’s nice about log-likelihood is that, unlike some of the other metrics we’ll introduce next, it’s not model-specific. We can evaluate the log-likelihood of <em>any</em> probabilistic model.</p>
 <p><strong>Log-Likelihood as an Evaluation Metric.</strong> Recall that the data log-likelihood is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7d4b8bae-aa5d-4904-af65-a3a52259b086">
-<span class="eqno">(16.1)<a class="headerlink" href="#equation-7d4b8bae-aa5d-4904-af65-a3a52259b086" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3b0887e7-0d62-4879-96e7-4d2fa5bda712">
+<span class="eqno">(16.1)<a class="headerlink" href="#equation-3b0887e7-0d62-4879-96e7-4d2fa5bda712" title="Permalink to this equation">#</a></span>\[\begin{align}
 \log p(\mathcal{D}; \theta) &amp;= \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is our entire data set of <span class="math notranslate nohighlight">\(N\)</span> observations, each <span class="math notranslate nohighlight">\(\mathcal{D}_n\)</span> is an observation, and <span class="math notranslate nohighlight">\(\theta\)</span> is the model parameters. However, notice that in this definition, the data log-likelihood grows as <span class="math notranslate nohighlight">\(N\)</span> increases due to the sum. This means that, if our train, validation and test sets each have a different number of points, we cannot compare their log-likelihoods directly. To fix this problem, we instead compute the <em>average</em> log-likelihood (this is just the above equation divided by <span class="math notranslate nohighlight">\(N\)</span>):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9276a24d-2d22-40bd-b127-d5d92413ac5d">
-<span class="eqno">(16.2)<a class="headerlink" href="#equation-9276a24d-2d22-40bd-b127-d5d92413ac5d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ffb20ee4-6d83-4766-8d5c-95db61c80c26">
+<span class="eqno">(16.2)<a class="headerlink" href="#equation-ffb20ee4-6d83-4766-8d5c-95db61c80c26" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Avg. Log-Likelihood} = \frac{1}{N} \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta).
 \end{align}\]</div>
 <div class="admonition-exercise-getting-intuition-for-log-likelihood admonition">
@@ -612,7 +642,7 @@ document.write(`
 <p><strong>Part 2:</strong> For each model, evaluate the average log-likelihood on the training, validation, and test set. Do this by,</p>
 <ul>
 <li><p>Loading in the list of models (using the function we provided above). Each model in the list has the following signature:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">model</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="c1"># Expects x to be of shape (N, 1)</span>
     <span class="c1"># Expects y to be of shape (N, 1)</span>
     <span class="k">pass</span> <span class="c1"># already implemented</span>
@@ -629,16 +659,16 @@ document.write(`
 <p><strong>Human-meaningful Notions of Model-fit.</strong> So log-likelihood seems to work well when <em>comparing</em> models; given a collection of trained models, we can use log-likelihood on the validation set to select a model that is likely to fit the test set well. However, suppose we’re given a single model—how do we know if this model is good? For example, if our model’s log-likelihood is <span class="math notranslate nohighlight">\(0.123\)</span>, is that good? is that bad? The <em>units</em> of log-likelihood hold little meaning to us. Because of this, log-likelihood is difficult to interpret on its own, leading us to search for other metrics we can more easily interpret.</p>
 </section>
 <section id="metrics-for-regression">
-<h2><span class="section-number">16.3. </span>Metrics for Regression<a class="headerlink" href="#metrics-for-regression" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">16.3. </span>Metrics for Regression<a class="headerlink" href="#metrics-for-regression" title="Link to this heading">#</a></h2>
 <p><strong>Mean Squared Error (MSE).</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, MSE, specific to regression. This metric can be used together with log-likelihood to paint a clearer picture of model fit. This is, of course, not the only evaluation metric for regression, but it’s a common one, so we’ll focus on it here. For 1-dimensional output data, the MSE is defined as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-40823438-3d58-4bce-9991-e539a0d62424">
-<span class="eqno">(16.3)<a class="headerlink" href="#equation-40823438-3d58-4bce-9991-e539a0d62424" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3e1710c1-4324-4e40-bf39-1fe43e591b01">
+<span class="eqno">(16.3)<a class="headerlink" href="#equation-3e1710c1-4324-4e40-bf39-1fe43e591b01" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{MSE} &amp;= \frac{1}{N} \sum\limits_{n=1}^N (\underbrace{y_n - \widehat{y}_n}_{\text{error}})^2,
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(y_n\)</span> is an observation and <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> the model’s prediction. As the name suggests, we compute the error between our model’s prediction and the observation, square it, and average. The MSE can be thought of as a measure of “spread” (or, in statistical lingo, the <em>variance</em>) of the data around the model’s prediction. Hopefully, in contrast to log-likelihood, it’s a little easier to understand, since we may have domain knowledge of what error, <span class="math notranslate nohighlight">\(y_n - \widehat{y}_n\)</span>, is considered high/low.</p>
 <p>But for a probabilistic model, what is the model’s “prediction”? In a probabilistic regression model, we have a <em>distribution</em> of outputs given inputs, <span class="math notranslate nohighlight">\(p_{Y | X}\)</span>, and a distribution is <em>not</em> a single prediction. Because of this, we have to summarize the conditional distribution using a single value. Here, we will use the mean (which also happens to be the mode—or the most likely value of <span class="math notranslate nohighlight">\(y\)</span>). For our regression model, the mean of the distribion is the “trend,” so</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c28c071c-41fb-4da6-b87f-a75102abc921">
-<span class="eqno">(16.4)<a class="headerlink" href="#equation-c28c071c-41fb-4da6-b87f-a75102abc921" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a861c409-79d1-45a8-9339-e5976c8cfe15">
+<span class="eqno">(16.4)<a class="headerlink" href="#equation-a861c409-79d1-45a8-9339-e5976c8cfe15" title="Permalink to this equation">#</a></span>\[\begin{align}
 \hat{y}_n &amp;= \mu(x_n; W^\text{MLE}).
 \end{align}\]</div>
 <div class="admonition-exercise-implement-and-use-mse admonition">
@@ -655,16 +685,16 @@ document.write(`
 </div>
 </section>
 <section id="metrics-for-classification">
-<h2><span class="section-number">16.4. </span>Metrics for Classification<a class="headerlink" href="#metrics-for-classification" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">16.4. </span>Metrics for Classification<a class="headerlink" href="#metrics-for-classification" title="Link to this heading">#</a></h2>
 <p><strong>Accuracy.</strong> Since log-likelihood is hard to interpret on its own, we will now introduce another metric, accuracy, that’s specific to classification. Simply put, accuracy is the fraction of predictions the model got correct:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f7c97efd-de13-4331-a064-b506486e81d2">
-<span class="eqno">(16.5)<a class="headerlink" href="#equation-f7c97efd-de13-4331-a064-b506486e81d2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c94a9822-da77-45fd-874f-1a94d706bff0">
+<span class="eqno">(16.5)<a class="headerlink" href="#equation-c94a9822-da77-45fd-874f-1a94d706bff0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Accuracy} &amp;= \frac{1}{N} \underbrace{\sum\limits_{n=1}^N \mathbb{I}(y_n = \widehat{y}_n),}_{\text{count correct predictions}}
 \end{align}\]</div>
 <p>where, as before, <span class="math notranslate nohighlight">\(\widehat{y}_n\)</span> is the model’s prediction, and <span class="math notranslate nohighlight">\(\mathbb{I}(\cdot)\)</span> is an indicator function—a function that evaluates to <span class="math notranslate nohighlight">\(1\)</span> when the condition inside is true and <span class="math notranslate nohighlight">\(0\)</span> otherwise. The sum over the indicators counts the number of correct predictions. When divided by <span class="math notranslate nohighlight">\(N\)</span>, we get the fraction of correct predictions.</p>
 <p>Just like before, a probabilistic model does not make “predictions;” it models a full distribution over outputs given inputs. We, again, have to choose how to summarize this distribution using a single value. Remember that in our classification model, <span class="math notranslate nohighlight">\(\rho(x_n)\)</span> outputted the probability of <span class="math notranslate nohighlight">\(x_n\)</span> belonging to class 1 (vs. class 0). To turn this into a prediction, we will threshold it: if <span class="math notranslate nohighlight">\(\rho(x_n) \geq 0.5\)</span>, we’ll say <span class="math notranslate nohighlight">\(x_n\)</span> belongs to class 1—otherwise, it belongs to class 0. We can formalize this using an indicator function:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5ce9de31-eb5e-49ff-98fe-aa15085e774f">
-<span class="eqno">(16.6)<a class="headerlink" href="#equation-5ce9de31-eb5e-49ff-98fe-aa15085e774f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aaa3d221-6687-49b0-817e-27b2fe5a343b">
+<span class="eqno">(16.6)<a class="headerlink" href="#equation-aaa3d221-6687-49b0-817e-27b2fe5a343b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \widehat{y}_n &amp;= \mathbb{I}(\rho(x_n) \geq 0.5)
 \end{align}\]</div>
 <div class="admonition-exercise-the-shortcomings-of-accuracy admonition">
@@ -672,18 +702,18 @@ document.write(`
 <p><strong>Context.</strong> Since the disease is incredibly rare, occurring only in <span class="math notranslate nohighlight">\(0.1\%\)</span> of the population, doctors don’t yet know what are its causes. The doctors have managed to acquire a large fund to collect data about a large swath of the population, ranging from genetic factors to environmental factors (demographics, occupation, diet, physiology, etc.). They just finished collecting the data and have run a preliminary analysis to determine which factors contribute most.</p>
 <p><strong>Challenge.</strong> Even though their model is <span class="math notranslate nohighlight">\(99.9\%\)</span> accurate, they have found that none of the factors seem to matter to the model—how is this possible? They recruited you to help understand what’s going on with their model.</p>
 <p><strong>Part 1:</strong> You decided to inspect the parameters of the model. In the model, <span class="math notranslate nohighlight">\(1\)</span> represents having the disease and <span class="math notranslate nohighlight">\(0\)</span> represents no disease. Lucky for you, the doctors used a linear classification model (so interpreting it is possible):</p>
-<div class="amsmath math notranslate nohighlight" id="equation-474c4ff7-6396-40ff-a830-c7311cfc303a">
-<span class="eqno">(16.7)<a class="headerlink" href="#equation-474c4ff7-6396-40ff-a830-c7311cfc303a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-822db580-efe3-47f9-a0c9-3257e2f94ef6">
+<span class="eqno">(16.7)<a class="headerlink" href="#equation-822db580-efe3-47f9-a0c9-3257e2f94ef6" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right) 
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c81218fb-ee97-4a7a-82f1-75afb4859a95">
-<span class="eqno">(16.8)<a class="headerlink" href="#equation-c81218fb-ee97-4a7a-82f1-75afb4859a95" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-b56430f6-d056-45e2-94e0-b6954cb484cd">
+<span class="eqno">(16.8)<a class="headerlink" href="#equation-b56430f6-d056-45e2-94e0-b6954cb484cd" title="Permalink to this equation">#</a></span>\[\begin{align}
 \rho(x_n; \theta) &amp;= \mathrm{sigmoid}\left( \theta^{(0)} + \sum\limits_{d=1}^{D_x} \theta^{(d)} \cdot x_n^{(d)} \right),
 \end{align}\]</div>
 <p>where the <span class="math notranslate nohighlight">\((d)\)</span>-superscript notation represents the <span class="math notranslate nohighlight">\(d\)</span>th dimension, and <span class="math notranslate nohighlight">\(D_x\)</span> is the dimensionality of the inputs <span class="math notranslate nohighlight">\(x_n\)</span>. When inspecting the parameters, you found that,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-52d1daf6-1697-4c98-89a9-2522a671caf6">
-<span class="eqno">(16.9)<a class="headerlink" href="#equation-52d1daf6-1697-4c98-89a9-2522a671caf6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-43f1689c-1a89-41a8-ade0-c17a79180c26">
+<span class="eqno">(16.9)<a class="headerlink" href="#equation-43f1689c-1a89-41a8-ade0-c17a79180c26" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta &amp;= [\underbrace{-6.90675}_{\theta^{(0)}}, \underbrace{0.0, 0.0, \dots, 0.0}_{\theta^{(1)}, \dots, \theta^{(D_x)}}].
 \end{align}\]</div>
 <p>Looking at the parameters, <span class="math notranslate nohighlight">\(\theta\)</span>, which dimensions of the input matter most?</p>
@@ -691,7 +721,7 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
 <p><strong>Part 3:</strong> Suppose the IHH were to deploy this model as a screening tool for beings coming into the IHH’s emergency room. The model would be used to identify beings at high risk of Antenna Infection for early treatment. What problems may arise?</p>
 </div>
 <p><strong>Confusion Matrices.</strong> Although accuracy is easy to evaluate and understand, it has some major shortcomings, as you’ve shown in the exercise above. Confusion matrices aim to address this issue by looking at the ways in which the model makes mistakes when it’s incorrect. Why are they called “confusion” matrices? Maybe to alleviate our confusion? Unclear. Anyways, we define a confusion matrix as follows:</p>
-<table class="table">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p></p></th>
 <th class="head"><p><strong>Predicted: Disease</strong></p></th>
@@ -709,6 +739,7 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
 </tr>
 </tbody>
 </table>
+</div>
 <p>As you can see, a confusion matrix presents a breakdown of the model’s correct and incorrect predictions.</p>
 <div class="admonition-exercise-understanding-confusion-matrices admonition">
 <p class="admonition-title">Exercise: Understanding Confusion Matrices</p>
@@ -718,14 +749,14 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
 <li><p>Model 1:</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-    \text{Accuracy} = 90.0\%, \quad \text{Confusion Matrix} = \begin{bmatrix} 200 &amp; 800 \\ 99000 &amp; 900000 \\ \end{bmatrix}.
-    \end{align*}\]</div>
+\text{Accuracy} = 90.0\%, \quad \text{Confusion Matrix} = \begin{bmatrix} 200 &amp; 800 \\ 99000 &amp; 900000 \\ \end{bmatrix}.
+\end{align*}\]</div>
 </li>
 <li><p>Model 2:</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-    \text{Accuracy} = 80.0\%, \quad \text{Confusion Matrix} = \begin{bmatrix} 900 &amp; 100 \\ 199000 &amp; 800000 \\ \end{bmatrix}.
-    \end{align*}\]</div>
+\text{Accuracy} = 80.0\%, \quad \text{Confusion Matrix} = \begin{bmatrix} 900 &amp; 100 \\ 199000 &amp; 800000 \\ \end{bmatrix}.
+\end{align*}  \]</div>
 </li>
 </ul>
 <p>For the screening tool described in the previous problem, which model would you prefer? Why?</p>
@@ -759,11 +790,10 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer d-print-none">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="neural-networks.html"
@@ -783,10 +813,7 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -794,6 +821,7 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -822,6 +850,7 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -859,8 +888,8 @@ p_{Y | X}(y_n | x_n; \theta) &amp;= \mathrm{Ber}\left( \rho(x_n; \theta) \right)
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

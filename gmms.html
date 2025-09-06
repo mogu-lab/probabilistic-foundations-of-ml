@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-theme="light">
+<html lang="en" data-content_root="./" data-theme="light">
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>18. Gaussian Mixture Models (Clustering) &#8212; Probabilistic Foundations of Machine Learning (CS345)</title>
   
@@ -19,58 +18,53 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css" />
-    <link rel="stylesheet" type="text/css" href="_static/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/course_schedule.css?v=244d4a68" />
+    <link rel="stylesheet" type="text/css" href="_static/css/main.css?v=19873a65" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'gmms';</script>
     <link rel="canonical" href="https://mogu-lab.github.io/cs345/gmms.html" />
-    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="19. Factor Analysis (Dimensionality Reduction)" href="factor-analysis.html" />
@@ -84,19 +78,23 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -118,12 +116,20 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -138,6 +144,9 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="index.html">
@@ -145,15 +154,27 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
+  
     
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>`);</script>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -171,18 +192,18 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="skills-check.html">Skills Check</a></li>
 <li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
 <li class="toctree-l1"><a class="reference internal" href="oh.html">Office Hours</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noopener noreferrer" target="_blank">Found a Typo?</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/document/d/1qukk9gJaKuDjHYCPRQ7mwlWUcrGfGDb6uQ2HdDQM2Z4/edit?usp=sharing" rel="noreferrer" target="_blank">Found a Typo?</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="hw-instructions.html">How to Download/Run/Submit</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noopener noreferrer" target="_blank">Homework 1</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noopener noreferrer" target="_blank">Homework 2</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noopener noreferrer" target="_blank">Homework 3</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noopener noreferrer" target="_blank">Homework 4</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noopener noreferrer" target="_blank">Homework 5</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noopener noreferrer" target="_blank">Homework 6</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noopener noreferrer" target="_blank">Homework 7</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-1-Vectorization-in-Jax-c708e3de-1cae-4339-983a-6537242ff685?utm_content=c708e3de-1cae-4339-983a-6537242ff685" rel="noreferrer" target="_blank">Homework 1</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/CS-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-2-Directed-Graphical-Models-3e5555d9-b5ea-4956-8918-6a2312219447/notebook/90a08ad4fbec4b78be01fb8be7e3d897" rel="noreferrer" target="_blank">Homework 2</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-3-Frequentist-Learning-6ed8e371-3576-48c2-8b2d-2560ffc7373a?utm_content=6ed8e371-3576-48c2-8b2d-2560ffc7373a" rel="noreferrer" target="_blank">Homework 3</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-4-Predictive-Models-f7594194-db85-4784-9805-fe49570a0a9f?utm_content=f7594194-db85-4784-9805-fe49570a0a9f" rel="noreferrer" target="_blank">Homework 4</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-5-Generative-Models-0d20529f-bb70-431a-bb54-0632f8f91b82?utm_content=0d20529f-bb70-431a-bb54-0632f8f91b82" rel="noreferrer" target="_blank">Homework 5</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://deepnote.com/workspace/cs-345-310c9b73-880a-47f6-bf25-ce4447f74107/project/Homework-6-Bayesian-Models-3eea7ffa-b4f0-46de-b252-15fcebfec2f1?utm_content=3eea7ffa-b4f0-46de-b252-15fcebfec2f1" rel="noreferrer" target="_blank">Homework 6</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/drive/folders/1JP8d7OAeiw-Ff7cUhtMUBXRg-y2qkUMt?usp=sharing" rel="noreferrer" target="_blank">Homework 7</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="nav bd-sidenav">
@@ -243,7 +264,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -252,14 +273,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -334,26 +355,28 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
+
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
 
+
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -388,14 +411,20 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="gaussian-mixture-models-clustering">
-<h1><span class="section-number">18. </span>Gaussian Mixture Models (Clustering)<a class="headerlink" href="#gaussian-mixture-models-clustering" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">18. </span>Gaussian Mixture Models (Clustering)<a class="headerlink" href="#gaussian-mixture-models-clustering" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import some helper functions (please ignore this!)</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.10.18/x64/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from .autonotebook import tqdm as notebook_tqdm
 </pre></div>
 </div>
 </div>
@@ -413,8 +442,8 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import a bunch of libraries we&#39;ll be using below</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># Load the data into a pandas dataframe</span>
 <span class="n">csv_fname</span> <span class="o">=</span> <span class="s1">&#39;data/IHH-CTR.csv&#39;</span>
@@ -534,26 +563,26 @@ document.write(`
 </div></div></div>
 </div>
 <section id="latent-variable-models-lvms">
-<h2><span class="section-number">18.1. </span>Latent Variable Models (LVMs)<a class="headerlink" href="#latent-variable-models-lvms" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">18.1. </span>Latent Variable Models (LVMs)<a class="headerlink" href="#latent-variable-models-lvms" title="Link to this heading">#</a></h2>
 <p><strong>Overview.</strong> Latent variable models allow us to model variables we actually did not observe. We will do this using the very same toolkit we’ve used so far; we’ll write down a joint distribution for all variables—observed and latent—as well as a directed graphical model. We will then perform MLE on the resultant model. We will instantiate everything with a specific model—Gaussian Mixture Model (GMM)—which will help us find patient types in the above IHH data.</p>
 <p><strong>Gaussian Mixture Models (GMMs).</strong> In our IHH example, we assume the patients’ underlying type in some way “explains” their observed data. We can encode this into a model by saying that each patient’s data is generated by:</p>
 <ol class="arabic">
 <li><p>Sampling their <em>patient type</em> from some distribution. We’ll call the latent type <span class="math notranslate nohighlight">\(z\)</span>, and assume it’s drawn from a Categorical distribution with parameter <span class="math notranslate nohighlight">\(\pi\)</span>:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9da278e7-de9b-4eea-b54f-fe27b11537ef">
-<span class="eqno">(18.1)<a class="headerlink" href="#equation-9da278e7-de9b-4eea-b54f-fe27b11537ef" title="Permalink to this equation">#</a></span>\[\begin{align}
-    z_n &amp;\sim \mathrm{Cat}(\pi)
-    \end{align}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-6ea95471-2273-4e30-af92-da3b0288adf6">
+<span class="eqno">(18.1)<a class="headerlink" href="#equation-6ea95471-2273-4e30-af92-da3b0288adf6" title="Permalink to this equation">#</a></span>\[\begin{align}
+z_n &amp;\sim \mathrm{Cat}(\pi)
+\end{align}\]</div>
 </li>
 <li><p>Given the type, we can now sample the <em>observed data</em>, <span class="math notranslate nohighlight">\(x\)</span>. As the name suggests, we’ll set this distribution to be a Gaussian. The Gaussian’s mean and variance will be selected by <span class="math notranslate nohighlight">\(z_n\)</span>. By this we mean that if the patient has underlying type 1 (i.e. <span class="math notranslate nohighlight">\(z_n = 1\)</span>), then their observed data is sampled from <span class="math notranslate nohighlight">\(\mathcal{N}(\mu_1, \sigma^2_1)\)</span>. Similarly, if they have underlying type 2, their observed data is sampled from <span class="math notranslate nohighlight">\(\mathcal{N}(\mu_2, \sigma^2_2)\)</span>. Putting this together, we have:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-01e3ee3e-63bd-4363-b3c9-9bcfdb915a0a">
-<span class="eqno">(18.2)<a class="headerlink" href="#equation-01e3ee3e-63bd-4363-b3c9-9bcfdb915a0a" title="Permalink to this equation">#</a></span>\[\begin{align}
-    x_n | z_n &amp;\sim \mathcal{N}(\mu_{z_n}, \sigma^2_{z_n})
-    \end{align}\]</div>
+<div class="amsmath math notranslate nohighlight" id="equation-652d9229-9501-401c-ad49-0741887d37ba">
+<span class="eqno">(18.2)<a class="headerlink" href="#equation-652d9229-9501-401c-ad49-0741887d37ba" title="Permalink to this equation">#</a></span>\[\begin{align}
+x_n | z_n &amp;\sim \mathcal{N}(\mu_{z_n}, \sigma^2_{z_n})
+\end{align}\]</div>
 </li>
 </ol>
 <p>For 1-dimensional <span class="math notranslate nohighlight">\(x\)</span>, the final data-generating process is then:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d6c3bf21-5f03-416d-86e2-5c16ca097610">
-<span class="eqno">(18.3)<a class="headerlink" href="#equation-d6c3bf21-5f03-416d-86e2-5c16ca097610" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-48bd0dff-f4c3-4b96-b96f-d641f758ee2b">
+<span class="eqno">(18.3)<a class="headerlink" href="#equation-48bd0dff-f4c3-4b96-b96f-d641f758ee2b" title="Permalink to this equation">#</a></span>\[\begin{align}
 z_n &amp;\sim p_Z(\cdot; \pi) = \mathrm{Cat}(\pi) \quad (\text{mixture})\\
 x_n | z_n &amp;\sim p_{X | Z}(\cdot | z_n; \mu_0, \dots, \mu_{K-1}, \sigma_0, \dots, \sigma_{K-1}) = \mathcal{N}(\mu_{z_n}, \sigma^2_{z_n}) \quad (\text{components})
 \end{align}\]</div>
@@ -571,7 +600,7 @@ x_n | z_n &amp;\sim p_{X | Z}(\cdot | z_n; \mu_0, \dots, \mu_{K-1}, \sigma_0, \d
 <figure class="align-center" id="fig-gmm-1d">
 <img alt="_images/example_1d_gmm.png" src="_images/example_1d_gmm.png" />
 <figcaption>
-<p><span class="caption-number">Fig. 18.1 </span><span class="caption-text">The PDF of a GMM’s mixture components (left) and data marginal (right).</span><a class="headerlink" href="#fig-gmm-1d" title="Permalink to this image">#</a></p>
+<p><span class="caption-number">Fig. 18.1 </span><span class="caption-text">The PDF of a GMM’s mixture components (left) and data marginal (right).</span><a class="headerlink" href="#fig-gmm-1d" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>On the left, you can see the GMM’s mixture components (i.e. each Gaussian), and on the right, you can see the probability of the <em>observed</em> data, <span class="math notranslate nohighlight">\(p_X(\cdot; \theta)\)</span>. Looking at the above figure, you can see two things:</p>
@@ -580,34 +609,34 @@ x_n | z_n &amp;\sim p_{X | Z}(\cdot | z_n; \mu_0, \dots, \mu_{K-1}, \sigma_0, \d
 <li><p><em>Complicated Distributions.</em> Looking at the right plot, you can see that GMMs can describe more complicated distributions. Unlikely the continuous distributions we’ve used so far, which all have one mode (or one “bump”), using a GMM we can easily describe a distribution with multiple bumps.</p></li>
 </ol>
 <p><strong>Challenges Deriving the MLE for GMMs.</strong> Now that we have our directed graphical model and our data generating process, we can try to derive the MLE for GMMs. Unfortunately, as you will see, we’ll run into some issues. Then our joint data likelihood (which we’d like to maximize) is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b5f4758b-17ac-47be-9a6d-c7546ae34c2c">
-<span class="eqno">(18.4)<a class="headerlink" href="#equation-b5f4758b-17ac-47be-9a6d-c7546ae34c2c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-89029ba5-399a-44ab-b85b-ef94dbe1c2d8">
+<span class="eqno">(18.4)<a class="headerlink" href="#equation-89029ba5-399a-44ab-b85b-ef94dbe1c2d8" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \theta) &amp;= \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \\
 &amp;= \prod\limits_{n=1}^N p_X(x_n; \theta)
 \end{align}\]</div>
 <p>Looking at the above, what is <span class="math notranslate nohighlight">\(p_X(x_n; \theta)\)</span>? Our data-generating process gives us the following joint distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ac575ba5-32ca-4d02-b2b1-2439f261e431">
-<span class="eqno">(18.5)<a class="headerlink" href="#equation-ac575ba5-32ca-4d02-b2b1-2439f261e431" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ac39abb7-018f-47a2-ab40-32251584ba19">
+<span class="eqno">(18.5)<a class="headerlink" href="#equation-ac39abb7-018f-47a2-ab40-32251584ba19" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{X | Z}(x_n, z_n; \theta) &amp;= p_{X | Z}(x_n | z_n; \theta) \cdot p_Z(z_n; \theta)
 \end{align}\]</div>
 <p>Somehow, we need to compute <span class="math notranslate nohighlight">\(p_X(x_n; \theta)\)</span> from <span class="math notranslate nohighlight">\(p_{X | Z}(x_n, z_n; \theta)\)</span>.</p>
 <p>As we will show next, we can compute <span class="math notranslate nohighlight">\(p_X(x_n; \theta)\)</span> as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c3a358c1-8137-4263-8930-6fc3c6d9b9d7">
-<span class="eqno">(18.6)<a class="headerlink" href="#equation-c3a358c1-8137-4263-8930-6fc3c6d9b9d7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e0acb337-8105-41bb-a274-d7f1de798b5c">
+<span class="eqno">(18.6)<a class="headerlink" href="#equation-e0acb337-8105-41bb-a274-d7f1de798b5c" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_X(x_n; \theta) &amp;= \sum\limits_{z_n \in S} p_{X, Z}(x_n, z_n; \theta),
 \end{align}\]</div>
 <p>where <span class="math notranslate nohighlight">\(S = \{0, \dots, K - 1 \}\)</span> is the support of <span class="math notranslate nohighlight">\(Z\)</span>, and <span class="math notranslate nohighlight">\(K\)</span> is the number of clusters. This formula shows that we can compute <span class="math notranslate nohighlight">\(p_X(x_n; \theta)\)</span> by summing the joint over every value of <span class="math notranslate nohighlight">\(z_n\)</span>.</p>
 </section>
 <section id="the-law-of-total-probability-discrete">
-<h2><span class="section-number">18.2. </span>The Law of Total Probability (Discrete)<a class="headerlink" href="#the-law-of-total-probability-discrete" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">18.2. </span>The Law of Total Probability (Discrete)<a class="headerlink" href="#the-law-of-total-probability-discrete" title="Link to this heading">#</a></h2>
 <p><strong>Definition.</strong> The law of total probability tells us how to compute a marginal distribution from a joint distribution. Suppose you have two random variables, <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, and suppose that <span class="math notranslate nohighlight">\(A\)</span> is discrete with support <span class="math notranslate nohighlight">\(S\)</span>. Then the law of total probability says we can compute the marginal <span class="math notranslate nohighlight">\(p_B(b)\)</span> from the joint <span class="math notranslate nohighlight">\(p_{A, B}(a, b)\)</span> as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5d3fb4f0-46ed-4140-917f-1c45d2c60458">
-<span class="eqno">(18.7)<a class="headerlink" href="#equation-5d3fb4f0-46ed-4140-917f-1c45d2c60458" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0ab0462c-706b-401e-92f3-ebc4246f6137">
+<span class="eqno">(18.7)<a class="headerlink" href="#equation-0ab0462c-706b-401e-92f3-ebc4246f6137" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_B(b) &amp;= \sum\limits_{a \in S} p_{A, B}(a, b)
 \end{align}\]</div>
 <p>We can also write it using expectations by factorizing the joint distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-975c5e3e-4fed-4074-9747-369f8a6cb01d">
-<span class="eqno">(18.8)<a class="headerlink" href="#equation-975c5e3e-4fed-4074-9747-369f8a6cb01d" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5003b719-56b6-464d-a86b-363b938840c2">
+<span class="eqno">(18.8)<a class="headerlink" href="#equation-5003b719-56b6-464d-a86b-363b938840c2" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_B(b) &amp;= \sum\limits_{a \in S} p_{A, B}(a, b) \\
 &amp;= \sum\limits_{a \in S} p_{B | A}(b | a) \cdot p_A(a) \\
 &amp;= \mathbb{E}_{a \sim p_A(\cdot)} \left[ p_{B | A}(b | a) \right] \\
@@ -631,8 +660,8 @@ p_B(b) &amp;= \sum\limits_{a \in S} p_{A, B}(a, b) \\
 </div>
 </div>
 <p>Using the law of total probability, we can equivalently compute the marginal probability <span class="math notranslate nohighlight">\(p_B(1)\)</span> as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-53c243ce-c09d-44e1-86d8-4a1ec3902b6a">
-<span class="eqno">(18.9)<a class="headerlink" href="#equation-53c243ce-c09d-44e1-86d8-4a1ec3902b6a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-80e40b63-11d6-490f-b48f-0bf5f5a8e97b">
+<span class="eqno">(18.9)<a class="headerlink" href="#equation-80e40b63-11d6-490f-b48f-0bf5f5a8e97b" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
 &amp;= p_{A, B}(0, 1) + p_{A, B}(1, 1) \\
 \end{align}\]</div>
@@ -644,24 +673,24 @@ p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
   </iframe>
 </div>
 </div><p>As you can see from the diagram, this formula holds. Now let’s add to our pictoral intuition by assigning meaning to <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>. Suppose <span class="math notranslate nohighlight">\(B = 1\)</span> is the event in which a patient has pneumonia (<span class="math notranslate nohighlight">\(B = 0\)</span> implies they don’t have pneumonia), and suppose that <span class="math notranslate nohighlight">\(A = 1\)</span> is the event of rain. We can attribute meaning to the law of total probability as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ee54b155-199f-4ba4-885c-76e8277fa615">
-<span class="eqno">(18.10)<a class="headerlink" href="#equation-ee54b155-199f-4ba4-885c-76e8277fa615" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0a14d903-b9e4-45dc-bd5d-b416b3564905">
+<span class="eqno">(18.10)<a class="headerlink" href="#equation-0a14d903-b9e4-45dc-bd5d-b416b3564905" title="Permalink to this equation">#</a></span>\[\begin{align}
 \underbrace{p_B(1)}_{\text{has pneumonia}} &amp;= \underbrace{p_{A, B}(0, 1)}_{\text{has pneumonia and no rain}} + \underbrace{p_{A, B}(1, 1)}_{\text{has pneumonia and rain}}
 \end{align}\]</div>
 <p>As you can see, the formula aggregates the probability of a patient having pneumonia across all possible scenarios—rain or no rain.</p>
 </section>
 <section id="mle-for-gmms">
-<h2><span class="section-number">18.3. </span>MLE for GMMs<a class="headerlink" href="#mle-for-gmms" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">18.3. </span>MLE for GMMs<a class="headerlink" href="#mle-for-gmms" title="Link to this heading">#</a></h2>
 <p><strong>MLE Objective.</strong> Using the law of total probability, we can now write our MLE objective:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1950bf94-6ac4-43a9-85fd-ccda0d1ac7b5">
-<span class="eqno">(18.11)<a class="headerlink" href="#equation-1950bf94-6ac4-43a9-85fd-ccda0d1ac7b5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d1990935-1e33-4126-b6c7-9d95a8980993">
+<span class="eqno">(18.11)<a class="headerlink" href="#equation-d1990935-1e33-4126-b6c7-9d95a8980993" title="Permalink to this equation">#</a></span>\[\begin{align}
 \theta^\text{MLE} &amp;= \mathrm{argmax}_\theta \log p(\mathcal{D}; \theta) \\
 &amp;= \mathrm{argmax}_\theta \log \prod\limits_{n=1}^N p(\mathcal{D}_n; \theta) \\
 &amp;= \mathrm{argmax}_\theta \sum\limits_{n=1}^N \log p(\mathcal{D}_n; \theta) \\
 &amp;= \mathrm{argmax}_\theta \sum\limits_{n=1}^N \log p_X(x_n; \theta) \\
 &amp;= \mathrm{argmax}_\theta \sum\limits_{n=1}^N \log \sum\limits_{z_n \in S} p_{X, Z}(x_n, z_n; \theta) \\
 \end{align}\]</div>
-<p><strong>Optimization.</strong> We can optimize the GMM’s MLE objective using gradient descent, as we’ve done for every other model so far. However, note that in practice, there’s a much better algorithm to perform this optimization. This algorithm is called <a class="reference external" href="https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm" rel="noopener noreferrer" target="_blank">Expectation Maximization (EM)</a>, and it converges faster and better avoids local optima. We will unfortunately not get into the details of this algorithm.</p>
+<p><strong>Optimization.</strong> We can optimize the GMM’s MLE objective using gradient descent, as we’ve done for every other model so far. However, note that in practice, there’s a much better algorithm to perform this optimization. This algorithm is called <a class="reference external" href="https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm" rel="noreferrer" target="_blank">Expectation Maximization (EM)</a>, and it converges faster and better avoids local optima. We will unfortunately not get into the details of this algorithm.</p>
 <div class="admonition-exercise-law-of-total-probability admonition">
 <p class="admonition-title">Exercise: Law of Total Probability</p>
 <p><strong>Part 1:</strong> Suppose you have three random variables, <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(B\)</span>, and <span class="math notranslate nohighlight">\(C\)</span>, with supports <span class="math notranslate nohighlight">\(S_A\)</span>, <span class="math notranslate nohighlight">\(S_B\)</span>, and <span class="math notranslate nohighlight">\(S_C\)</span>. Using the law of total probability, how would you compute the following probabilities?</p>
@@ -682,34 +711,34 @@ p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
 </div>
 </section>
 <section id="multivariate-gmms">
-<h2><span class="section-number">18.4. </span>Multivariate GMMs<a class="headerlink" href="#multivariate-gmms" title="Permalink to this heading">#</a></h2>
-<p>When given low dimensional data, we can often inspect it (by visualizing it) to determine what types of hidden structures (e.g. clusters) exist. However, in higher dimensional data, this is no longer possible. In our GMM model, above, we’ve used 1-dimensional Gaussian distributions (for one-dimensional observed data). To work with higher dimensional data, we can use a <a class="reference external" href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution" rel="noopener noreferrer" target="_blank"><em>multivariate</em> Gaussian distribution</a>. A multivariate Gaussian allows us to write down a single formula for a collection of random variables, whose <em>joint</em> distribution is Gaussian.</p>
+<h2><span class="section-number">18.4. </span>Multivariate GMMs<a class="headerlink" href="#multivariate-gmms" title="Link to this heading">#</a></h2>
+<p>When given low dimensional data, we can often inspect it (by visualizing it) to determine what types of hidden structures (e.g. clusters) exist. However, in higher dimensional data, this is no longer possible. In our GMM model, above, we’ve used 1-dimensional Gaussian distributions (for one-dimensional observed data). To work with higher dimensional data, we can use a <a class="reference external" href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution" rel="noreferrer" target="_blank"><em>multivariate</em> Gaussian distribution</a>. A multivariate Gaussian allows us to write down a single formula for a collection of random variables, whose <em>joint</em> distribution is Gaussian.</p>
 <p>A multivariate Gaussian requires two parameters: a mean, <span class="math notranslate nohighlight">\(\mu\)</span>, and a covariance, <span class="math notranslate nohighlight">\(\Sigma\)</span>. The mean plays the same role as it does in the univariate case—it is the center of the distribution. For example, suppose we have a 2-dimensional multivariate Gaussian over random variables <span class="math notranslate nohighlight">\(X_1\)</span> and <span class="math notranslate nohighlight">\(X_2\)</span>. And suppose their mean,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4b1995c8-0503-43ee-b4ae-6510ce786680">
-<span class="eqno">(18.12)<a class="headerlink" href="#equation-4b1995c8-0503-43ee-b4ae-6510ce786680" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3bf44358-aa02-436a-966e-aa59aa34089f">
+<span class="eqno">(18.12)<a class="headerlink" href="#equation-3bf44358-aa02-436a-966e-aa59aa34089f" title="Permalink to this equation">#</a></span>\[\begin{align}
 \mu &amp;= \begin{bmatrix} -1.0 \\ 1.0 \end{bmatrix},
 \end{align}\]</div>
 <p>then the distribution of <span class="math notranslate nohighlight">\(X_1\)</span> will be centered at <span class="math notranslate nohighlight">\(-1.0\)</span> and the distribution of <span class="math notranslate nohighlight">\(X_2\)</span> will be centered at <span class="math notranslate nohighlight">\(1.0\)</span>.</p>
 <p>Next, the covariance plays the same role as the variance (or standard deviation)—it tells us about the spread of the distribution around its mean. In the multivariate case, you can think of the covariance as telling us how pairs of variables correlate. For example,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6dab9ffd-774d-464e-a1af-5c91789b3226">
-<span class="eqno">(18.13)<a class="headerlink" href="#equation-6dab9ffd-774d-464e-a1af-5c91789b3226" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-f24742c5-8f51-4989-a387-bd4389f788b0">
+<span class="eqno">(18.13)<a class="headerlink" href="#equation-f24742c5-8f51-4989-a387-bd4389f788b0" title="Permalink to this equation">#</a></span>\[\begin{align}
 \Sigma &amp;= \begin{bmatrix} 2.0 &amp; 0.9 \\ 0.9 &amp; 1.0 \end{bmatrix}.
 \end{align}\]</div>
 <p>The values along the diagonal, <span class="math notranslate nohighlight">\(2.0\)</span> and <span class="math notranslate nohighlight">\(1.0\)</span>, tell us about the variance (or spread) of <span class="math notranslate nohighlight">\(X_1\)</span> and <span class="math notranslate nohighlight">\(X_2\)</span>, respectively. Specifically, they tell us that <span class="math notranslate nohighlight">\(X_1\)</span> is more spread out than <span class="math notranslate nohighlight">\(X_2\)</span>. The values in the off-diagonal tell us about how the variables correlate. A value of <span class="math notranslate nohighlight">\(0.9\)</span> indicates <span class="math notranslate nohighlight">\(X_1\)</span> and <span class="math notranslate nohighlight">\(X_2\)</span> correlate more strongly than a value of <span class="math notranslate nohighlight">\(0.0\)</span> (which indicates no correlation, i.e. independence). Note that <span class="math notranslate nohighlight">\(\Sigma\)</span> needs to satisfy certain properties; for example, it needs to be <em>symmetric</em> (since <span class="math notranslate nohighlight">\(X_1\)</span> covaries with <span class="math notranslate nohighlight">\(X_2\)</span> as much as <span class="math notranslate nohighlight">\(X_2\)</span> covaries with <span class="math notranslate nohighlight">\(X_1\)</span>).</p>
 <p>Let’s get more intuition by creating some multivariate Gaussians and visualizing their samples. But first, let’s import stuff!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">import</span> <span class="nn">jax.random</span> <span class="k">as</span> <span class="nn">jrandom</span>
-<span class="kn">import</span> <span class="nn">numpyro.distributions</span> <span class="k">as</span> <span class="nn">D</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.random</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jrandom</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpyro.distributions</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">D</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>Now we will visualize samples from a 2-dimensional multivariate Gaussian with the above mean and covariance:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d18aa4ca-99c4-4a92-a3cc-87fb822224c2">
-<span class="eqno">(18.14)<a class="headerlink" href="#equation-d18aa4ca-99c4-4a92-a3cc-87fb822224c2" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-683b5c13-1e63-4f9b-ad8b-e31a3013810e">
+<span class="eqno">(18.14)<a class="headerlink" href="#equation-683b5c13-1e63-4f9b-ad8b-e31a3013810e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \begin{bmatrix} X_1 \\ X_2 \end{bmatrix} 
 \sim \mathcal{N}\left( 
 \begin{bmatrix} -1.0 \\ 1.0 \end{bmatrix},
@@ -755,15 +784,15 @@ p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5ed8ea47a8d0014ca23232f449d19a0d631126546721b96499227fc1f5c045a0.png" src="_images/5ed8ea47a8d0014ca23232f449d19a0d631126546721b96499227fc1f5c045a0.png" />
+<img alt="_images/58e49dd8cd534c74cbdbf66c1f3a7318ad98de54bf73805ebfbddf6eaa8d20fb.png" src="_images/58e49dd8cd534c74cbdbf66c1f3a7318ad98de54bf73805ebfbddf6eaa8d20fb.png" />
 </div>
 </div>
 <p>To extend GMMs to multivariate data, we can replace the univariate Gaussian components in our model with multivariate Gaussians. Using the MLE, we can learn the parameters, <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\Sigma\)</span>, of each Gaussian.</p>
 </section>
 <section id="fitting-gmms-to-data">
-<h2><span class="section-number">18.5. </span>Fitting GMMs to Data<a class="headerlink" href="#fitting-gmms-to-data" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">18.5. </span>Fitting GMMs to Data<a class="headerlink" href="#fitting-gmms-to-data" title="Link to this heading">#</a></h2>
 <p><strong>GMMs in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</strong> To fit a GMM using <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, we have to explicitly marginalize out the discrete latent variable. While it’s possible to do this, we find that it tends to be a little finicky. As a result, we will show you how to write the model in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code> instead of implementing it yourself. We’ll then have you play with an existing implementation to gain intuition.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">univariate_gmm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">univariate_gmm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
     <span class="c1"># Parameter for the mixing distribution</span>
     <span class="n">pi</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
         <span class="s1">&#39;pi&#39;</span><span class="p">,</span>
@@ -802,10 +831,10 @@ p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
 <div class="admonition-exercise-fitting-gmms-to-data admonition">
 <p class="admonition-title">Exercise: Fitting GMMs to Data</p>
 <p><strong>Part 1:</strong> We’ll use an existing implementation of GMMs from <code class="docutils literal notranslate"><span class="pre">Scikit-Learn</span></code>. You can import the model as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.mixture</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianMixture</span>
 </pre></div>
 </div>
-<p>Then, following the example in their <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture" rel="noopener noreferrer" target="_blank">documentation</a>, fit the data to the IHH data set above.</p>
+<p>Then, following the example in their <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture" rel="noreferrer" target="_blank">documentation</a>, fit the data to the IHH data set above.</p>
 <p><strong>Part 2:</strong> Using a histogram, visualize the IHH’s data and samples generated by the fitted model. Do they look the same? If not, figure out what went wrong and retry!</p>
 <p><strong>Part 3:</strong> Using the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method, determine the most likely “cluster” for each patient. Then compare against the ground-truth <code class="docutils literal notranslate"><span class="pre">Condition</span></code> in the data. How well do the two match? If they do not match perfectly, why?</p>
 <p><strong>Part 4:</strong> Unfortunately, an unknown epidemic hit the IHH hard this week. Clinicians at the IHH’s Center for Epidemiology have been working around the clock to try to understand the nature of the disease. They have collected data about patient symptoms—fever and heart-rate—that they were hoping would help them see if there are any underlying patient types. They have obtained an initial sample of data (already normalized): <code class="docutils literal notranslate"><span class="pre">'data/IHH-CE-clustering.csv'</span></code>. Fit a bunch of GMMs to the data, varying their number of components and their random seed. Then, visualize the model against the data. You can visualize the data by scatter plotting it, with color corresponding to the predicted cluster. How many types of patients did you identify? How do you know?</p>
@@ -839,11 +868,10 @@ p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
 
               
               
-                <footer class="bd-footer-article">
+              
+              
+                <footer class="prev-next-footer d-print-none">
                   
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="ethics-of-predictive-models.html"
@@ -863,10 +891,7 @@ p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -874,6 +899,7 @@ p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -903,6 +929,7 @@ p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
   
   <div class="footer-item">
     
+
   </div>
   
   <div class="footer-item">
@@ -940,8 +967,8 @@ p_B(1) &amp;= \sum\limits_{a \in S} p_{A, B}(a, 1) \\
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
