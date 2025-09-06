@@ -57,7 +57,7 @@ def main():
         USER_NAME,
         REPO_NAME,
         'data',
-        skip_downloaded=True,
+        skip_downloaded=False,
     )
     
     # Load helper Python files
@@ -66,7 +66,7 @@ def main():
         USER_NAME,
         REPO_NAME,
         ['probabilistic_foundations_of_ml.py', 'utils.py'],
-        skip_downloaded=True,
+        skip_downloaded=False,
     )
 
     print('Done.')
