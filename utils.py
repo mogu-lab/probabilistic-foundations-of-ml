@@ -148,9 +148,11 @@ def plot_classifier_of_control_vs_age_and_dose(
     plt.show()
 
 
-def load_all_regression_models_of_comfort_vs_intensity():
+def load_all_regression_models_of_comfort_vs_intensity(deepnote=True):
+    prefix = 'dp_' if deepnote else ''
+    
     models = []
-    for fname in sorted(glob.glob('data/regression_model_eval_metrics_*.dill')):
+    for fname in sorted(glob.glob(f'data/{prefix}regression_model_eval_metrics_*.dill')):
         models.append(pfml.load_trained_numpyro_model(fname))
 
     return models
