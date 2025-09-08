@@ -23,7 +23,7 @@
 **Uploading.**
 1. Run each notebook from start to finish (with no interruptions) so we can see the output of every cell.
 2. Download the `.ipynb` files of your notebooks from DeepNote.
-3. Using [this tool](https://www.convert.ploomber.io/pdf?converter=nbconvert-webpdf), convert your `.ipynb` files to `.pdf` files (make sure the "WebPDF" format is selected).
+3. Using [this tool](https://www.convert.ploomber.io/pdf?converter=nbconvert-webpdf), convert your `.ipynb` files to `.pdf` files (make sure the "WebPDF" format is selected). If for some mysterious reason, that doesn't work, try following [these instructions](https://deepnote.com/docs/export-pdf) instead (just don't forget to "delete the app" afterwards).
 4. Navigate to the course's Gradescope and submit them there (please **only** submit the `.pdf` files).
 
 **Checking.** Check to make sure that, in your *Gradescope* submission,
