@@ -50,7 +50,7 @@ We will be using [DeepNote](https://deepnote.com/) for all assignments in the co
 \end{align*}
 For example, $\mathbb{I}(A = a)$ will evaluate to 1 only when $A = a$. 
 
-**Single Variable Calculus.** Derivatives, integrals, and limits (all in 1-dimension) will appear in some of the derivations. We will not ask you to do these by hand, but we expect you to know what they mean, conceptually and intuitively. To review these concepts, we recommend reading Chapters 3, 4, 8, 16, and 20 from [this tutorial](https://www.elevri.com/courses/calculus).
+**Single Variable Calculus.** Derivatives, integrals, and limits (all in 1-dimension) will appear in some of the derivations. We will not ask you to do these by hand, but we expect you to know what they mean, conceptually and intuitively. To review these concepts, we recommend reading Chapter 1 from [this tutorial]([https://www.elevri.com/courses/calculus](https://people.math.harvard.edu/~jjchen/math21a/handouts/svc-review.html)), as well as [this tutorial](https://www.khanacademy.org/math/ap-calculus-ab/ab-limits-new/ab-1-2/a/limits-intro).
 
 
 
