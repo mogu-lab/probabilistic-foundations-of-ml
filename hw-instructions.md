@@ -17,6 +17,13 @@
 4. After the project has been duplicated. Rename it to say: `HW-N: FIRST LAST`, where `N` is the homework number, and `FIRST` and `LAST` are your first and last names.
 
 
+## DeepNote Setup
+
+**Disabling Generative AI.** Follow [these instructions](https://deepnote.com/docs/deepnote-ai) to disable any Generative AI or autocomplete in your notebook.
+
+**Increasing Notebook Timeout.** If you notice that after a few minutes, the machine running your notebook shut off, you're welcome to increase the timeout following [these instructions](https://deepnote.com/docs/long-running-jobs).
+
+
 
 ## Submitting Homework
 
