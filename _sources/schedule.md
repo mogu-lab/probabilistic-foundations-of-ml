@@ -473,7 +473,7 @@ We may adapt the course schedule to accomodate your learning!
         <ul class="day_agenda">
           <li>
             <span class="tag topic_tag">Topic:</span>
-            <span>Guest Lecture: Dr. <a href="https://onefishy.github.io/">Weiwei Pan</a> on the Ethics of Generative Models in Sociotechnical Systems</span>
+            <span>The Ethics of Generative Models in Sociotechnical Systems</span>
           </li>
           <li>
             <span class="tag preclass_tag">Pre-Class:</span>
