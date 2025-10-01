@@ -52,14 +52,14 @@ def animate_gradient_descent(
     grad_fn = jax.grad(fn)
     
     images = []    
-    fig, ax = plt.subplots(figsize=figsize)
+    fig, axes = plt.subplots(1, 2, figsize=figsize)
     x = jnp.arange(*x_domain)
     trajectory = [float(start_x)]
 
     # Function plot
-    f = plt.plot(x, fn(x), color='blue', label=r'$\mathcal{L}(\theta)$')
+    f = axes[0].plot(x, fn(x), color='blue', label=r'$\mathcal{L}(\theta)$')
 
-    init = plt.scatter(
+    init = axes[0].scatter(
         [start_x], [fn(start_x)],
         c='black', marker='*', s=200.0, zorder=3.0,
         label=r'$\theta^{\mathrm{initial}}$',
@@ -73,7 +73,7 @@ def animate_gradient_descent(
         history = []
         for h in range(num_points):
             plot_cur_legend = (h == num_points - 1 and frame == 1) 
-            history.append(plt.scatter(
+            history.append(axes[0].scatter(
                 trajectory[-num_points + h + 1],
                 fn(trajectory[-num_points + h + 1]), 
                 color='r',
@@ -89,12 +89,21 @@ def animate_gradient_descent(
         # Plot text info
         bbox_args = dict(boxstyle='round', fc='0.8')
         text = f'Iteration: {frame}\nPoint: ({trajectory[-2]:.2f}, {fn_at_y:.2f})\nSlope: {slope:.2f}\nStep: {step:.4f}'
-        text = ax.annotate(text, xy=(trajectory[-2], fn_at_y), xytext=annotation_loc, textcoords='axes fraction', bbox=bbox_args, fontsize=12)
+        text = axes[0].annotate(text, xy=(trajectory[-2], fn_at_y), xytext=annotation_loc, textcoords='axes fraction', bbox=bbox_args, fontsize=12)
 
-        plt.title(f'Animation of Gradient Descent: Learning Rate = {lr}')
-        plt.legend()
+        axes[0].set_title(f'Gradient Descent with Learning Rate = {lr}')
+        axes[0].set_xlabel(r'$\theta$')
+        axes[0].set_ylabel(r'$\mathcal{L}(\theta)$')
+        axes[0].legend()
 
-        images.append([f[0], init, text] + history)
+        convergence = axes[1].scatter(jnp.arange(len(trajectory)) + 1, -jnp.array(trajectory), color='red', alpha=0.6)
+        axes[1].set_title('Convergence of Loss')
+        axes[1].set_xlabel(r'Iteration of Gradient Descent')
+        axes[1].set_ylabel(r'$\mathcal{L}(\theta^{\mathrm{current}})$')
+
+        plt.tight_layout()
+        
+        images.append([f[0], init, text] + history + [convergence])
         
         # Stopping algorithm if desired precision have been met
         if precision is not None and step <= precision:
@@ -105,6 +114,8 @@ def animate_gradient_descent(
 
 
 def all_gradient_descent_plots():
+    figsize = (10, 4)
+    
     animate_gradient_descent(
         lambda theta: theta ** 2.0,
         start_x=-2.0, 
@@ -113,7 +124,7 @@ def all_gradient_descent_plots():
         lr=0.1, 
         tangent_length=1.0,
         history_length=20,        
-        figsize=(6, 4),
+        figsize=figsize,
         annotation_loc=(0.34, 0.7),
         name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn_lr0p1.gif'), 
         fps=5,
@@ -127,7 +138,7 @@ def all_gradient_descent_plots():
         lr=0.01, 
         tangent_length=1.0,
         history_length=20,        
-        figsize=(6, 4),
+        figsize=figsize,
         annotation_loc=(0.34, 0.7),
         name=os.path.join(OUTPUT_DIR, 'gradient_descent_quadratic_fn_lr0p01.gif'), 
         fps=5,
@@ -141,7 +152,7 @@ def all_gradient_descent_plots():
         lr=0.1, 
         tangent_length=1.0,
         history_length=20,        
-        figsize=(6, 4),
+        figsize=figsize,
         annotation_loc=(0.34, 0.7),
         name=os.path.join(
             OUTPUT_DIR,
@@ -158,7 +169,7 @@ def all_gradient_descent_plots():
         lr=0.01, 
         tangent_length=1.0,
         history_length=20,        
-        figsize=(6, 4),
+        figsize=figsize,
         annotation_loc=(0.34, 0.7),
         name=os.path.join(
             OUTPUT_DIR,
