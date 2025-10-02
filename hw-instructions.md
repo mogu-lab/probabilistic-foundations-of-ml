@@ -27,6 +27,10 @@
 
 ## Submitting Homework
 
+Given challenges with DeepNote and Gradescope, follow the instructions for submission listed on the schedule.
+
+<!--
+
 **Uploading.**
 1. Run each notebook from start to finish (with no interruptions) so we can see the output of every cell.
 2. Download the `.ipynb` files of your notebooks from DeepNote.
@@ -41,6 +45,7 @@
 
 Homework problems that do not include the output of the code, as described above, create substantial additional work for us to grade, and **will therefore be given zero credit**.
 
+-->
 
 
 ## Including Graphics in DeepNote
