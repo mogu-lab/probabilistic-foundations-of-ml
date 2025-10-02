@@ -275,7 +275,7 @@ We may adapt the course schedule to accomodate your learning!
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW3: Frequentist Learning (by midnight the <strong>night before</strong>)</span>
+            <span>HW3: Frequentist Learning (by midnight the <strong>night before</strong>). Follow <a href="https://docs.google.com/forms/d/e/1FAIpQLScxqCIboUOsL5hoSOyyUlg7YZWVh1tvimcpZ2GkNq4XLBeJ_A/viewform?usp=header">these instructions</a>.</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
@@ -409,7 +409,7 @@ We may adapt the course schedule to accomodate your learning!
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW4: Predictive Models (by midnight the <strong>night before</strong>)</span>
+            <span>HW4: Predictive Models (by midnight the <strong>night before</strong>). Follow <a href="https://docs.google.com/forms/d/e/1FAIpQLSfEZuK1O9v9Gpo-JamVkRFVsKbQTBNkLbUhSYcJKK-rt65Pmw/viewform?usp=header">these instructions</a>.</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
@@ -500,7 +500,7 @@ We may adapt the course schedule to accomodate your learning!
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW5: Generative Models (by midnight the <strong>night before</strong>)</span>
+            <span>HW5: Generative Models (by midnight the <strong>night before</strong>). Follow <a href="https://docs.google.com/forms/d/e/1FAIpQLSf9ANB1YZgVueJI2URDpjR12oBTzyuaHVDxVsYiHGqDGnUEVQ/viewform?usp=header">these instructions</a>.</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
@@ -596,7 +596,7 @@ We may adapt the course schedule to accomodate your learning!
           </li>
           <li>
             <span class="tag due_tag">Due:</span>
-            <span>HW6: Bayesian Models (by midnight the <strong>night before</strong>)</span>
+            <span>HW6: Bayesian Models (by midnight the <strong>night before</strong>). Follow <a href="https://docs.google.com/forms/d/e/1FAIpQLScdmo-rkZy_KpKns9SH5uhenZcO6porLBaE9M8EoQvBMARnVg/viewform?usp=header">these instructions</a>.</span>
           </li>
           <li>
             <span class="tag released_tag">Released:</span>
