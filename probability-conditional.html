@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>5. Conditional Probability (Discrete) &#8212; Probabilistic Foundations of Machine Learning (CS345)</title>
+    <title>5. Conditional Probability (Discrete) &#8212; Probabilistic Foundations of Machine Learning</title>
   
   
   
@@ -63,7 +63,7 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'probability-conditional';</script>
-    <link rel="canonical" href="https://mogu-lab.github.io/cs345/probability-conditional.html" />
+    <link rel="canonical" href="https://mogu-lab.github.io/probabilistic-foundations-of-ml/probability-conditional.html" />
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -158,8 +158,8 @@
     
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Probabilistic Foundations of Machine Learning (CS345) - Home"/>`);</script>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Probabilistic Foundations of Machine Learning - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Probabilistic Foundations of Machine Learning - Home"/>`);</script>
   
   
 </a></div>
@@ -599,8 +599,8 @@ document.write(`
 <p>As with (non-conditional) discrete probability, the statistical language—terminology and notation—we introduce here will allow us to precisely specify to a computer how to model our data. In the future, we will translate statements in this language directly into code that a computer can run.</p>
 <p><strong>Concept.</strong> Conditional probabilities allow us to ask questions of the form, “given that <span class="math notranslate nohighlight">\(A\)</span> is true, what’s the probability of <span class="math notranslate nohighlight">\(B\)</span>?”. Although simple, this idea is actually quite powerful; all <em>predictive models</em> you may have heard of (e.g. regression, classification, etc.) are formulated using <em>conditional distributions</em>. To see what we mean, let’s start with an example.</p>
 <p><strong>Example.</strong> Suppose you’re working at the IHH ER, and you want to <em>predict</em> what is the probability that the next patient comes in with <code class="docutils literal notranslate"><span class="pre">Condition</span> <span class="pre">==</span> <span class="pre">&quot;Intoxication&quot;</span></code>. Given previously collected data, you can estimate this probability by counting the number of patients for which <code class="docutils literal notranslate"><span class="pre">Condition</span> <span class="pre">==</span> <span class="pre">&quot;Intoxication&quot;</span></code> and dividing by the total number of patients:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ae8e6a56-010e-45be-b5d2-ae3f4d856be0">
-<span class="eqno">(5.1)<a class="headerlink" href="#equation-ae8e6a56-010e-45be-b5d2-ae3f4d856be0" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-97800306-047f-4b0a-b879-b5280ab70f3b">
+<span class="eqno">(5.1)<a class="headerlink" href="#equation-97800306-047f-4b0a-b879-b5280ab70f3b" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Probability of intoxication} = \frac{\text{Number of patients with intoxication}}{\text{Total number of patients}}
 \end{align}\]</div>
 <p>We’ll call this probability the “naive predictor.” Now, let’s compute this naive predictor on our IHH ER data:</p>
@@ -622,8 +622,8 @@ document.write(`
 </div>
 <p>However, you also know that even in far reaches of the outer universe, beings work Mondays through Fridays, taking Saturdays and Sundays off. Therefore, you suspect intoxication may be more likely to occur on weekends. You decide to check whether your intuition is true here. If it’s true, will you improve your ability to predict how likely the next patient is to come with intoxication?</p>
 <p>We can modify the naive predictor above as follows to condition on the day of the week:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b791bf6f-e537-4181-baac-7c396e2e91e7">
-<span class="eqno">(5.2)<a class="headerlink" href="#equation-b791bf6f-e537-4181-baac-7c396e2e91e7" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aec5c252-c8a1-464b-944b-c2c675e717f5">
+<span class="eqno">(5.2)<a class="headerlink" href="#equation-aec5c252-c8a1-464b-944b-c2c675e717f5" title="Permalink to this equation">#</a></span>\[\begin{align}
 \text{Probability of intoxication given day $d$} = \frac{\text{Number of patients with intoxication on day $d$}}{\text{Total number of patients on day $d$}}
 \end{align}\]</div>
 <div class="cell docutils container">
@@ -685,18 +685,18 @@ document.write(`
 <p><strong>Probability Mass Function (PMF):</strong> The PMF is, again, that of the variable to the left of the vertical line. What makes a conditional probability different from a non-conditional distribution, however, is that the parameter of the distribution is now a <em>function of the condition</em>.</p>
 <blockquote>
 <div><p>In our example, the PMF is that of a Bernoulli random variable (since <span class="math notranslate nohighlight">\(I\)</span> can only take on two values). Since it’s a <em>conditional</em> distribution, it’s parameter depends on the condition (the day <span class="math notranslate nohighlight">\(D = d\)</span>). We can write this as follows:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-14bf0c49-8c9d-4ba9-b358-d93daf660142">
-<span class="eqno">(5.3)<a class="headerlink" href="#equation-14bf0c49-8c9d-4ba9-b358-d93daf660142" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-4a3b8985-74eb-43f5-b894-42f0413a90e8">
+<span class="eqno">(5.3)<a class="headerlink" href="#equation-4a3b8985-74eb-43f5-b894-42f0413a90e8" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(\cdot | d) = \mathrm{Ber}(\rho(d)),
 \end{align}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2eeee455-359e-4dab-88d8-85dc2490efe5">
-<span class="eqno">(5.4)<a class="headerlink" href="#equation-2eeee455-359e-4dab-88d8-85dc2490efe5" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2c67317c-ba39-4c84-a81b-6741546a796e">
+<span class="eqno">(5.4)<a class="headerlink" href="#equation-2c67317c-ba39-4c84-a81b-6741546a796e" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i | d) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - i}}_{\text{Bernoulli PMF (see Wikipedia)}},
 \end{align}\]</div>
 <p>and where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7cc81e92-fbde-46c0-9164-1bfcdbf6cbfe">
-<span class="eqno">(5.5)<a class="headerlink" href="#equation-7cc81e92-fbde-46c0-9164-1bfcdbf6cbfe" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
+<div class="amsmath math notranslate nohighlight" id="equation-81a63ea4-ece5-4d70-976d-b3124f6ce3d1">
+<span class="eqno">(5.5)<a class="headerlink" href="#equation-81a63ea4-ece5-4d70-976d-b3124f6ce3d1" title="Permalink to this equation">#</a></span>\[\begin{align} \rho(d) &amp;= \begin{cases}
 0.1 &amp; \text{if $d$ is weekday} \\
 0.4 &amp; \text{if $d$ is weekend} 
 \end{cases} 
@@ -752,8 +752,8 @@ p_{I | D}(i | d) = \underbrace{\rho(d)^{i} \cdot \left(1 - \rho(d) \right)^{1 - 
 </div>
 </div>
 <p>Now, let’s instantiate the simplest discrete distribution we know, the Bernoulli distribution, to describe the naive predictor from earlier.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-de638ccf-1bd0-4c19-9e79-19d154a10757">
-<span class="eqno">(5.6)<a class="headerlink" href="#equation-de638ccf-1bd0-4c19-9e79-19d154a10757" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-084fd656-315b-43bd-aab9-867bf56767d9">
+<span class="eqno">(5.6)<a class="headerlink" href="#equation-084fd656-315b-43bd-aab9-867bf56767d9" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_I(i) &amp;= \mathrm{Ber}(\rho) = \rho^i \cdot (1 - \rho)^{1 - i}
 \end{align}\]</div>
 <p>Recall that a Bernoulli distribution takes in just one parameter, <span class="math notranslate nohighlight">\(\rho \in [0, 1]\)</span>, which determines the probability of sampling <span class="math notranslate nohighlight">\(I = 1\)</span> vs. <span class="math notranslate nohighlight">\(I = 0\)</span> (or Yes vs. No). Here let’s instantiate the Bernoulli distribution with <span class="math notranslate nohighlight">\(\rho = 0.2\)</span>.</p>
@@ -895,8 +895,8 @@ Third batch drawn with key_third:   [0 0 0 0 0 0 0 0 0 1 1 0 0 0 1]
 <li><p>Let <span class="math notranslate nohighlight">\(O = \)</span> RV denoting the <strong>output</strong> or “response” of the LLM.</p></li>
 </ul>
 <p>Using these RVs, you can think of having a chat with an LLM as sampling from the following distributions:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f955558b-589a-4a11-9941-c17f5e2c1967">
-<span class="eqno">(5.7)<a class="headerlink" href="#equation-f955558b-589a-4a11-9941-c17f5e2c1967" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-04e84cb7-7cee-4820-9015-b2c3dd60ee54">
+<span class="eqno">(5.7)<a class="headerlink" href="#equation-04e84cb7-7cee-4820-9015-b2c3dd60ee54" title="Permalink to this equation">#</a></span>\[\begin{align}
 o_1 &amp;\sim p_{O | I}(\cdot | i_1) \\
 o_2 &amp;\sim p_{O | I}(\cdot | i_1 + o_1 + i_2) \\
 &amp;\vdots
