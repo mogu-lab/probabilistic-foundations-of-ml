@@ -1,5 +1,5 @@
 ###############################################################################
-# CS345 DeepNote Setup. DO NOT EDIT.
+# Probabilistic Foundations of ML DeepNote Setup. DO NOT EDIT.
 # Version 0
 ###############################################################################
 
@@ -9,7 +9,7 @@ import requests
 
 
 USER_NAME = 'mogu-lab'
-REPO_NAME = 'cs345'
+REPO_NAME = 'probabilistic-foundations-of-ml'
 
 
 def download_directory_from_github(user_name, repo_name, path, skip_downloaded=True):
