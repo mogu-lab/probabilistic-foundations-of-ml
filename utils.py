@@ -138,8 +138,6 @@ def plot_classifier_of_control_vs_age_and_dose(
     
     ax.set_title('Telekinetic Control vs. Age and Dose')
     leg = ax.legend()
-    for lh in leg.legend_handles:
-        lh.set_alpha(1.0)
     
     cbar = fig.colorbar(dbd.surface_, ticks=prob_levels)
     cbar.ax.set_ylabel('Probability of Telekinetic Control')
