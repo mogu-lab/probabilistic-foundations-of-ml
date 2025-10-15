@@ -1,6 +1,6 @@
 ###############################################################################
 # Helper Functions for Assignments. DO NOT EDIT.
-# Version 0
+# Version 1
 ###############################################################################
 
 import math
@@ -137,7 +137,7 @@ def plot_classifier_of_control_vs_age_and_dose(
     ax.set_ylim(test_dose.min(), test_dose.max())
     
     ax.set_title('Telekinetic Control vs. Age and Dose')
-    leg = ax.legend()
+    ax.legend()
     
     cbar = fig.colorbar(dbd.surface_, ticks=prob_levels)
     cbar.ax.set_ylabel('Probability of Telekinetic Control')
