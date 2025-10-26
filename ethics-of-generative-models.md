@@ -26,13 +26,16 @@ Then answer these questions:
 ````
 
 
-## Assessing Generative Models
+## The "Price" of Generative AI
 
-````{admonition} Exercise: Qualitative Approaches to Evaluating Generative AI
-Read, ["I wouldn’t say offensive but...": Disability-Centered Perspectives on Large Language Models](https://dl.acm.org/doi/pdf/10.1145/3593013.3593989).
-* What methodology did the authors use to assess the model? How did their approach differ from the purely metric-based approach from class?
-* What does their methodology capture that cannot be captured via metric-based evaluation?
-* Using this methodology, what did the authors learn?
+````{admonition} Exercise: The "Price" of Generative AI
+In this exercise, we will extend the broader impact analysis you conducted in the problem above to better understand some of the "hidden costs" associated with Generative AI.
+* Read: ["It’s destroyed me completely": Kenyan moderators decry toll of training of AI models](https://www.theguardian.com/technology/2023/aug/02/ai-chatbot-training-human-toll-content-moderator-meta-openai). **Content Warning:** This article discusses experiences of psychological trauma among content moderators, including references to graphic, violent, and sexually explicit material.
+* Watch: [I Live 400 Yards From Mark Zuckerberg’s Massive Data Center](https://www.youtube.com/watch?v=DGjj7wDYaiI).
+
+Then answer:
+* Was there anything that surprised you about the reading/video?
+* Go back to your broader impact analysis above and revise it based on the reading and video.
 ````
 
 
