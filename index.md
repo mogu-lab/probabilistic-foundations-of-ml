@@ -15,3 +15,7 @@
 * Apply critical lenses to the development and applications of current ML systems.
 
 **Course Design:** In this course we take a "framework-focused" approach to connect theory to application to ethics. You can learn more about our approach in our [paper](https://arxiv.org/abs/2510.25049). 
+
+<center>
+    <img src="_static/figs/course-design.png" width="300px" />
+</center>
