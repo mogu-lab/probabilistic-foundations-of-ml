@@ -1,5 +1,10 @@
 # Probabilistic Foundations of ML
 
+```{admonition} Update
+:class: tip
+Looking to learn more about the design of this course? Check out our [recent paper](https://arxiv.org/abs/2510.25049) about it!
+```
+
 **Author:** [Yaniv Yacoby](https://yanivyacoby.github.io/)
 
 **Courses:** This is the textbook for courses [CS 245](https://mogu-lab.github.io/cs245/) and [CS 345](https://mogu-lab.github.io/cs345) @ <img alt="Wellesley College" class="only-light" style="display: inline;" height=15 src="img/wc-name-logo-blue.png" /><img alt="Wellesley College" class="only-dark" style="display: inline;" height=15 src="img/wc-name-logo-white.png" />
