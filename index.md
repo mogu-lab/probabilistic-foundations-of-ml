@@ -24,6 +24,6 @@
 
 <br/>
 
-**Using This Book.** If you use these materials, let us know how it went---we'd love to hear about it! And if you use it, please link to it and cite [our paper](https://arxiv.org/abs/2510.25049).
+**Using This Book.** If you use these materials, let us know how it went---we'd love to hear about it! And of course, please link to them and cite [our paper](https://arxiv.org/abs/2510.25049).
 
 <br/>
