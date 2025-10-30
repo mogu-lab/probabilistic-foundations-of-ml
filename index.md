@@ -19,7 +19,7 @@ Looking to learn more about the design of this course? Check out our [recent pap
 * Evaluate ML systems in their sociotechnical context.
 * Apply critical lenses to the development and applications of current ML systems.
 
-**Approach:** In this book, we take a *"framework-focused"* approach to connect theory to application to ethics, an approach we developed in [this paper](https://arxiv.org/abs/2510.25049). 
+**Approach:** In this book, we take a *"framework-focused"* approach to connect theory to application to ethics---an approach we developed in [this paper](https://arxiv.org/abs/2510.25049). 
 
 <br/>
 
