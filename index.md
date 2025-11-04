@@ -1,5 +1,10 @@
 # Probabilistic Foundations of ML
 
+```{admonition} Update
+:class: tip
+Looking to learn more about the design of this course? Check out our [recent paper](https://arxiv.org/abs/2510.25049) about it!
+```
+
 **Author:** [Yaniv Yacoby](https://yanivyacoby.github.io/)
 
 **Courses:** This is the textbook for courses [CS 245](https://mogu-lab.github.io/cs245/) and [CS 345](https://mogu-lab.github.io/cs345) @ <img alt="Wellesley College" class="only-light" style="display: inline;" height=15 src="img/wc-name-logo-blue.png" /><img alt="Wellesley College" class="only-dark" style="display: inline;" height=15 src="img/wc-name-logo-white.png" />
@@ -14,3 +19,16 @@
 * Evaluate ML systems in their sociotechnical context.
 * Apply critical lenses to the development and applications of current ML systems.
 
+**Approach:** In this book, we take a *"framework-focused"* approach to connect theory to application to ethics---an approach we developed in [this paper](https://arxiv.org/abs/2510.25049). 
+
+<br/>
+
+<center>
+    <img src="_static/figs/course-design.png" />
+</center>
+
+<br/>
+
+**Using This Book.** If you use these materials, let us know how it went---we'd love to hear about it! And of course, please link to them and cite [our paper](https://arxiv.org/abs/2510.25049).
+
+<br/>
