@@ -19,6 +19,8 @@ import numpyro.distributions.constraints as C
 import numpyro.handlers as H
 import chex
 
+from utils import *
+
 
 DATA_DIR = 'data'
 
@@ -31,24 +33,6 @@ def jax_int_array_to_str_list(a, idx_to_s):
 # IHH ER Discrete Data
 #########################################################################
 
-IDX_TO_DAY_OF_WEEK = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-]
-
-
-IDX_TO_CONDITION = [
-    'High Fever',    
-    'Broken Limb',    
-    'Entangled Antennas',
-    'Allergic Reaction',
-    'Intoxication',
-]
 
 IDX_TO_BOOL = [
     'No',
@@ -75,15 +59,15 @@ def model_discrete_IHH_ER(N, data=None):
     pi_condition_given_is_weekend = numpyro.param(
         'pi_condition_given_is_weekend',
         jnp.array([
-            [0.3, 0.1, 0.1, 0.4, 0.1],
-            [0.2, 0.06666667, 0.06666667, 0.26666667, 0.4],
+            [0.1, 0.4, 0.1, 0.3, 0.1],
+            [0.06666667, 0.26666667, 0.4, 0.2, 0.06666667],
         ]),
         constraint=C.simplex,        
     )
 
     pi_hospitalized_given_condition = numpyro.param(
         'pi_hospitalized_given_condition',
-        jnp.array([0.7, 0.1, 0.0, 0.5, 0.1]),
+        jnp.array([0.03, 0.5, 0.1, 0.7, 0.07]),
         constraint=C.unit_interval,
     )
 
@@ -117,7 +101,7 @@ def model_discrete_IHH_ER(N, data=None):
         )
         chex.assert_shape(hospitalized, (N,))
 
-        allergy_and_hospitalized = ((condition == 3) & hospitalized).astype('int32')
+        allergy_and_hospitalized = ((condition == 1) & hospitalized).astype('int32')
         p_antibiotics = D.Bernoulli(
             pi_antibiotics_given_is_allergy_and_hospitalized[allergy_and_hospitalized]
         )
@@ -135,11 +119,11 @@ def generate_IHH_ER_data_discrete():
     df = pd.DataFrame({
         'Day-of-Week': jax_int_array_to_str_list(
             exec_trace['Day-of-Week']['value'],
-            IDX_TO_DAY_OF_WEEK,
+            DAYS_OF_WEEK,
         ),
         'Condition': jax_int_array_to_str_list(
             exec_trace['Condition']['value'],
-            IDX_TO_CONDITION,
+            CONDITIONS,
         ),
         'Hospitalized': jax_int_array_to_str_list(
             exec_trace['Hospitalized']['value'],
@@ -421,7 +405,7 @@ def IHH_microscope_data():
 
     
 def main():
-    #generate_IHH_ER_data_discrete()
+    generate_IHH_ER_data_discrete()
     #generate_IHH_CTR_data_discrete_continuous()
     #generate_IHH_CGLF_data_regression()
     #generate_IHH_CGLF_data_classification()
