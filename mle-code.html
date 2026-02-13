@@ -411,20 +411,20 @@ document.write(`
 <h2><span class="section-number">9.1. </span>The Data Generating Process<a class="headerlink" href="#the-data-generating-process" title="Link to this heading">#</a></h2>
 <p>In <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>, models are implemented as Python functions. In these functions, we describe the model’s “generative process”—or, a procedure we use to sample the observed data. You just learned how to represent a whole data set using a model (using the plate notation above). We will therefore walk through a specific example that we will then code in <code class="docutils literal notranslate"><span class="pre">NumPyro</span></code>.</p>
 <p><strong>Example:</strong> We’ll illustrate how to do this using an example. Suppose we want to model the joint distribution of the day-of-the-week, <span class="math notranslate nohighlight">\(D\)</span>, and whether a patient is intoxicated, <span class="math notranslate nohighlight">\(I\)</span>. We can do this via the model,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8459008a-18d7-447f-a501-cc1aa85ff17e">
-<span class="eqno">(9.1)<a class="headerlink" href="#equation-8459008a-18d7-447f-a501-cc1aa85ff17e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ebc856f2-3fda-4ffe-9e3e-d4bece21cc86">
+<span class="eqno">(9.1)<a class="headerlink" href="#equation-ebc856f2-3fda-4ffe-9e3e-d4bece21cc86" title="Permalink to this equation">#</a></span>\[\begin{align}
 p(\mathcal{D}; \pi, \rho) &amp;= \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi).
 \end{align}\]</div>
 <p>In this model,</p>
 <p><strong>(a)</strong> <em>Marginal:</em> <span class="math notranslate nohighlight">\(p_D(\cdot; \pi)\)</span> is a distribution over the days of the week. We will therefore define it to be a Categorical distribution:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-dbe2d6a3-8783-458a-a7cb-88c96198c1cf">
-<span class="eqno">(9.2)<a class="headerlink" href="#equation-dbe2d6a3-8783-458a-a7cb-88c96198c1cf" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-65f68d84-4cd6-454c-b7a7-1c8172c27a61">
+<span class="eqno">(9.2)<a class="headerlink" href="#equation-65f68d84-4cd6-454c-b7a7-1c8172c27a61" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_D(\cdot; \pi) = \mathrm{Cat}(\pi).
 \end{align} \]</div>
 <p>Here, the parameter <span class="math notranslate nohighlight">\(\pi\)</span> is a 7-dimensional array describing the probability of an observation coming from each of the 7 days of the week. That is, the probability of <span class="math notranslate nohighlight">\(D = d_n\)</span> is given by the <span class="math notranslate nohighlight">\(d_n\)</span>-th entry of <span class="math notranslate nohighlight">\(\pi\)</span>: i.e. <span class="math notranslate nohighlight">\(p_{D}(d_n; \pi) = \pi_{d_n}\)</span>.</p>
 <p><strong>(b)</strong> <em>Conditional:</em> <span class="math notranslate nohighlight">\(p_{I | D}(\cdot | d_n; \rho)\)</span> is the probability that a patient arrives at the ER with intoxication given that <span class="math notranslate nohighlight">\(D = d_n\)</span>. Since “intoxication” is a binary outcome, we will model it using a Bernoulli. However, recall that the probability of intoxication <em>changes with the day of the week</em>—on some days, we’re more likely to treat patients with intoxication. The parameter of the Bernoulli distribution therefore needs to change depending on the day of the week. We therefore define:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b458c385-ab87-4679-a716-15ca5cddaf58">
-<span class="eqno">(9.3)<a class="headerlink" href="#equation-b458c385-ab87-4679-a716-15ca5cddaf58" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3df00733-98e5-4135-96dd-f0ec8d81fde9">
+<span class="eqno">(9.3)<a class="headerlink" href="#equation-3df00733-98e5-4135-96dd-f0ec8d81fde9" title="Permalink to this equation">#</a></span>\[\begin{align}
 p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 \end{align} \]</div>
 <p>By this, we mean that <span class="math notranslate nohighlight">\(\rho\)</span> is a 7-dimensional vector, where the <span class="math notranslate nohighlight">\(d_n\)</span>-th entry, denoted by <span class="math notranslate nohighlight">\(\rho_{d_n}\)</span>, is the probability of intoxication on day <span class="math notranslate nohighlight">\(d_n\)</span>.</p>
@@ -568,8 +568,8 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <p><strong>Performing the MLE:</strong> We will now perform the MLE using another helper function we’ve created. Recall that the MLE for this model is:</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4ea47ef7-d36c-4cec-9df6-e9dc11ca4767">
-<span class="eqno">(9.4)<a class="headerlink" href="#equation-4ea47ef7-d36c-4cec-9df6-e9dc11ca4767" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-1251753c-7ab2-4254-9c15-67b542220e33">
+<span class="eqno">(9.4)<a class="headerlink" href="#equation-1251753c-7ab2-4254-9c15-67b542220e33" title="Permalink to this equation">#</a></span>\[\begin{align}
 \pi^\text{MLE}, \rho^\text{MLE} &amp;= \mathrm{argmax}_{\pi, \rho} \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \log \prod\limits_{n=1}^N p_{I | D}(i_n | d_n; \rho) \cdot p_D(d_n; \pi) \\
 &amp;= \mathrm{argmax}_{\pi, \rho} \sum\limits_{n=1}^N \log p_{I | D}(i_n | d_n; \rho) + \log p_D(d_n; \pi)
@@ -629,108 +629,108 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
   <tbody>
     <tr>
       <th>9394</th>
-      <td>Friday</td>
-      <td>Allergic Reaction</td>
+      <td>Monday</td>
+      <td>Intoxication</td>
       <td>No</td>
       <td>No</td>
     </tr>
     <tr>
       <th>898</th>
       <td>Sunday</td>
-      <td>Allergic Reaction</td>
-      <td>Yes</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <th>2398</th>
-      <td>Saturday</td>
-      <td>Entangled Antennas</td>
-      <td>No</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>5906</th>
-      <td>Saturday</td>
-      <td>Allergic Reaction</td>
-      <td>No</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>2343</th>
-      <td>Monday</td>
-      <td>High Fever</td>
-      <td>Yes</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>8225</th>
-      <td>Thursday</td>
-      <td>High Fever</td>
-      <td>Yes</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>5506</th>
-      <td>Tuesday</td>
-      <td>High Fever</td>
-      <td>No</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>6451</th>
-      <td>Thursday</td>
-      <td>Allergic Reaction</td>
-      <td>No</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>2670</th>
-      <td>Sunday</td>
       <td>Intoxication</td>
       <td>No</td>
       <td>No</td>
     </tr>
     <tr>
-      <th>3497</th>
-      <td>Tuesday</td>
+      <th>2398</th>
+      <td>Monday</td>
       <td>Allergic Reaction</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <th>5906</th>
+      <td>Friday</td>
+      <td>High Fever</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>2343</th>
+      <td>Wednesday</td>
+      <td>Intoxication</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>8225</th>
+      <td>Thursday</td>
+      <td>Allergic Reaction</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>5506</th>
+      <td>Monday</td>
+      <td>Allergic Reaction</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>6451</th>
+      <td>Friday</td>
+      <td>Broken Limb</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>2670</th>
+      <td>Tuesday</td>
+      <td>Entangled Antennas</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>3497</th>
+      <td>Sunday</td>
+      <td>High Fever</td>
       <td>No</td>
       <td>No</td>
     </tr>
     <tr>
       <th>1087</th>
-      <td>Monday</td>
+      <td>Wednesday</td>
       <td>High Fever</td>
-      <td>Yes</td>
+      <td>No</td>
       <td>No</td>
     </tr>
     <tr>
       <th>1819</th>
-      <td>Tuesday</td>
-      <td>High Fever</td>
-      <td>Yes</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>2308</th>
-      <td>Tuesday</td>
+      <td>Saturday</td>
       <td>Allergic Reaction</td>
       <td>No</td>
       <td>No</td>
     </tr>
     <tr>
+      <th>2308</th>
+      <td>Saturday</td>
+      <td>Allergic Reaction</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
       <th>6084</th>
-      <td>Monday</td>
-      <td>High Fever</td>
+      <td>Thursday</td>
+      <td>Allergic Reaction</td>
       <td>No</td>
       <td>No</td>
     </tr>
     <tr>
       <th>3724</th>
-      <td>Tuesday</td>
-      <td>Allergic Reaction</td>
-      <td>Yes</td>
-      <td>Yes</td>
+      <td>Saturday</td>
+      <td>Intoxication</td>
+      <td>No</td>
+      <td>No</td>
     </tr>
   </tbody>
 </table>
@@ -784,19 +784,19 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 0/1000 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;08:36,  1.93it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|          | 1/1000 [00:00&lt;09:02,  1.84it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|██▌       | 255/1000 [00:00&lt;00:01, 551.29it/s, init loss: 26390.5733, avg. loss [201-250]: 23521.5939]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 24%|██▍       | 242/1000 [00:00&lt;00:01, 502.99it/s, init loss: 26390.5733, avg. loss [151-200]: 23652.0466]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 55%|█████▌    | 550/1000 [00:00&lt;00:00, 1116.84it/s, init loss: 26390.5733, avg. loss [501-550]: 23338.8734]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 49%|████▊     | 486/1000 [00:00&lt;00:00, 946.31it/s, init loss: 26390.5733, avg. loss [401-450]: 23293.1851]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 85%|████████▍ | 847/1000 [00:00&lt;00:00, 1583.87it/s, init loss: 26390.5733, avg. loss [751-800]: 23335.6070]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 77%|███████▋  | 773/1000 [00:00&lt;00:00, 1419.92it/s, init loss: 26390.5733, avg. loss [701-750]: 23275.9761]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:00&lt;00:00, 1149.52it/s, init loss: 26390.5733, avg. loss [951-1000]: 23335.5544]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [00:00&lt;00:00, 1070.06it/s, init loss: 26390.5733, avg. loss [951-1000]: 23275.7546]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -825,7 +825,7 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7e161bed37f698193f822106201c9e7272e6cf0319ea61896d4cd871bb8647fd.png" src="_images/7e161bed37f698193f822106201c9e7272e6cf0319ea61896d4cd871bb8647fd.png" />
+<img alt="_images/6ff6cbd32e76b4123b44e049390ee16c6775263a3171f6503243ad961b0bdc28.png" src="_images/6ff6cbd32e76b4123b44e049390ee16c6775263a3171f6503243ad961b0bdc28.png" />
 </div>
 </div>
 <p><strong>Visualizing the Model’s Parameters:</strong> The learned model’s parameters, <span class="math notranslate nohighlight">\(\pi\)</span> and <span class="math notranslate nohighlight">\(\rho\)</span>, can be accessed as below.</p>
@@ -836,9 +836,9 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.1987, 0.1529, 0.1399, 0.1419, 0.136 , 0.113 , 0.1176], dtype=float64),
- &#39;rho&#39;: Array([0.09473922, 0.09301582, 0.09448023, 0.10785802, 0.10519358,
-        0.4079646 , 0.41496599], dtype=float64)}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.2001, 0.1498, 0.1392, 0.14  , 0.1292, 0.1166, 0.1251], dtype=float64),
+ &#39;rho&#39;: Array([0.08964866, 0.10020879, 0.08645934, 0.09653428, 0.0922598 ,
+        0.38936535, 0.4068745 ], dtype=float64)}
 </pre></div>
 </div>
 </div>
@@ -889,7 +889,7 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/60da6573e06cd5dd2eba20b2b0fe9d9c328c80961262becfd412a71eb313590f.png" src="_images/60da6573e06cd5dd2eba20b2b0fe9d9c328c80961262becfd412a71eb313590f.png" />
+<img alt="_images/d96563f86c22e27d70bfd6525683c6a416ffb9cca52c610279f92fda262b520d.png" src="_images/d96563f86c22e27d70bfd6525683c6a416ffb9cca52c610279f92fda262b520d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -910,7 +910,7 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0977b069c1ca36d1f29b5927cdd311bc6269b604136e714acc9d77cd3bc34078.png" src="_images/0977b069c1ca36d1f29b5927cdd311bc6269b604136e714acc9d77cd3bc34078.png" />
+<img alt="_images/b51871cc068fcdf06af65d809aae97f14f01a6934999c3f8513b1f44a55173c5.png" src="_images/b51871cc068fcdf06af65d809aae97f14f01a6934999c3f8513b1f44a55173c5.png" />
 </div>
 </div>
 <p><strong>Sampling from the Fitted Model:</strong> We can sample from the fitted model using the code below. Notice that, as with sampling before, we pass in <code class="docutils literal notranslate"><span class="pre">None</span></code> for the data (i.e. <code class="docutils literal notranslate"><span class="pre">d=None,</span> <span class="pre">i=None</span></code>).</p>
@@ -924,10 +924,10 @@ p_{I | D}(i_n | d_n; \rho) = \mathrm{Ber}(\rho_{d_n}).
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.1987, 0.1529, 0.1399, 0.1419, 0.136 , 0.113 , 0.1176], dtype=float64),
- &#39;rho&#39;: Array([0.09473922, 0.09301582, 0.09448023, 0.10785802, 0.10519358,
-        0.4079646 , 0.41496599], dtype=float64),
- &#39;d&#39;: Array([0, 6, 4, 3, 3, 4, 5, 6, 0, 5, 1, 4, 1, 4, 3, 2, 5, 4, 6, 6], dtype=int64),
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;pi&#39;: Array([0.2001, 0.1498, 0.1392, 0.14  , 0.1292, 0.1166, 0.1251], dtype=float64),
+ &#39;rho&#39;: Array([0.08964866, 0.10020879, 0.08645934, 0.09653428, 0.0922598 ,
+        0.38936535, 0.4068745 ], dtype=float64),
+ &#39;d&#39;: Array([0, 6, 4, 3, 3, 4, 5, 6, 0, 5, 1, 4, 1, 4, 4, 2, 5, 4, 6, 6], dtype=int64),
  &#39;i&#39;: Array([0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1], dtype=int64)}
 </pre></div>
 </div>
