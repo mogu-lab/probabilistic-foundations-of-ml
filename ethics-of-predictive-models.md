@@ -62,7 +62,7 @@ However, our analysis of ML models *should not stop here*. For us to responsibly
 
 ````{admonition} Exercise: Conducting a Broader Impact Analysis
 Choose one of the following articles:
-1. [What happens when an algorithm cuts your health care](https://www.theverge.com/2018/3/21/17144260/healthcare-medicaid-algorithm-arkansas-cerebral-palsy)
+1. [What happens when an algorithm cuts your health care](https://ihpi.umich.edu/news/what-happens-when-algorithm-cuts-your-health-care)
 2. [Dissecting racial bias in an algorithm used to manage the health of populations](https://www.science.org/doi/10.1126/science.aax2342)
 3. [Rooting Out AI’s Biases](https://magazine.publichealth.jhu.edu/2023/rooting-out-ais-biases)
 
