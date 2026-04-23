@@ -20,7 +20,7 @@
 * What form did eugenics take in the US? In Nazi Germany?
 * Who participated in the eugenics movement?
 
-**Part 2:** From, *[The Mismeasure of Man](http://tankona.free.fr/gould1981.pdf)*, read "The allure of numbers" and "Masters of craniometry: Paul Broca and his school" from Chapter 3. **Content Warning:** This text provides a criticism of eugenics. It does so using *dated* language and by explicitly referencing elitist, white supremacist ideas and visualizations. 
+**Part 2:** From, *[The Mismeasure of Man](http://biopolitics.kom.uni.st/Stephen%20Jay%20Gould/The%20Mismeasure%20of%20Man%20(148)/The%20Mismeasure%20of%20Man%20-%20Stephen%20Jay%20Gould.pdf)*, read "The allure of numbers" and "Masters of craniometry: Paul Broca and his school" from Chapter 3. **Content Warning:** This text provides a criticism of eugenics. It does so using *dated* language and by explicitly referencing elitist, white supremacist ideas and visualizations. 
 
 Then, answer:
 * What's the "allure of numbers"?
